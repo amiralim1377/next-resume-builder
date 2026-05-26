@@ -24,8 +24,17 @@ export default async function RootLayout({
   const { locale } = getParams;
 
   return (
-    <html lang={locale} dir={locale === "fa" ? "rtl" : "ltr"} className="">
-      <body className="min-h-full flex flex-col">{children}</body>
+    <html
+      lang={locale}
+      dir={locale === "fa" ? "rtl" : "ltr"}
+      suppressHydrationWarning
+    >
+      <body
+        className="min-h-full flex flex-col"
+        suppressHydrationWarning={true}
+      >
+        {children}
+      </body>
     </html>
   );
 }
