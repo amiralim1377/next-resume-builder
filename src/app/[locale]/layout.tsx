@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Language, languages } from "@/lib/i18n/settings";
 import "./globals.css";
+import { Header } from "@/components/ui/header";
+import { MainProvider } from "@/provider/mainProvider";
 
 type Params = Promise<{ locale: Language }>;
 
@@ -33,7 +35,10 @@ export default async function RootLayout({
         className="min-h-full flex flex-col"
         suppressHydrationWarning={true}
       >
-        {children}
+        <MainProvider lng={locale}>
+          <Header />
+          {children}
+        </MainProvider>
       </body>
     </html>
   );
