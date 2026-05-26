@@ -1,4 +1,8 @@
 {
-  "ansar": "بانک انصار",
-  "siteName": "next resume builder"
+  "ansar": "Ansar Bank",
+  "siteName": "Next Resume Builder",
+  "login": "Login",
+  "register": "Register",
+  "blog": "Blog",
+  "aboutUs": "About Us"
 }
