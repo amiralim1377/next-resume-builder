@@ -5,6 +5,8 @@ import { Header } from "@/components/ui/header";
 import { MainProvider } from "@/provider/mainProvider";
 import { ConditionalRenderer } from "@/components/shared/ConditionalRenderer";
 import MobileComponents from "@/components/ui/header/mobile";
+import { inter, yekanbakh } from "@/font";
+import { cn } from "@/utils/cn";
 
 type Params = Promise<{ locale: Language }>;
 
@@ -31,18 +33,21 @@ export default async function RootLayout({
     <html
       lang={locale}
       dir={locale === "fa" ? "rtl" : "ltr"}
+      className={cn("font-inter", "font-yekanbakh")}
       suppressHydrationWarning
+      style={{
+        fontFamily: locale === "en" ? inter.variable : yekanbakh.variable,
+      }}
     >
-      <body
-        className="min-h-screen flex flex-col"
-        suppressHydrationWarning={true}
-      >
+      <body suppressHydrationWarning={true}>
         <MainProvider lng={locale}>
           <ConditionalRenderer
             desktop={<Header />}
             mobile={<MobileComponents />}
           />
-          {children}
+          <main className="container mx-auto px-4 md:px-8 grow">
+            {children}
+          </main>
         </MainProvider>
       </body>
     </html>
