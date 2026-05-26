@@ -1,4 +1,5 @@
 "use client";
+import { useWindowSize } from "@/hooks/useWindowSize";
 import {
   createContext,
   ReactNode,
@@ -38,32 +39,28 @@ const getDeviceType = () => {
 const SizeContext = createContext(initialValue);
 
 export const SizeProvider = ({ children }: SizeProviderProps) => {
-  const [width, setWidth] = useState<number>(0);
+  const { width, height } = useWindowSize();
   const [userAgent] = useState<userAgentType>(getDeviceType);
-  const [isMobileClient, setIsMobileClient] = useState<boolean>(false);
+  const isMobileClient = width > 0 && width <= 768;
 
   useEffect(() => {
     const handleResize = () => {
-      const currentWidth = window.innerWidth;
-      const vh = window.innerHeight * 0.01;
-
-      setWidth(currentWidth);
-
-      setIsMobileClient(currentWidth > 0 && currentWidth <= 768);
+      const vh = height * 0.01;
 
       document.documentElement.style.setProperty("--vh", `${vh}px`);
     };
     handleResize();
     return () => window.removeEventListener("resize", handleResize);
-  }, []);
+  }, [height]);
 
   const value = useMemo(
     () => ({
       isMobileClient,
       width,
+      height,
       userAgent,
     }),
-    [isMobileClient, width, userAgent],
+    [isMobileClient, width, userAgent, height],
   );
   return <SizeContext.Provider value={value}>{children}</SizeContext.Provider>;
 };
