@@ -3,6 +3,8 @@ import { Language, languages } from "@/lib/i18n/settings";
 import "./globals.css";
 import { Header } from "@/components/ui/header";
 import { MainProvider } from "@/provider/mainProvider";
+import { ConditionalRenderer } from "@/components/shared/ConditionalRenderer";
+import MobileComponents from "@/components/ui/header/mobile";
 
 type Params = Promise<{ locale: Language }>;
 
@@ -32,11 +34,14 @@ export default async function RootLayout({
       suppressHydrationWarning
     >
       <body
-        className="min-h-full flex flex-col"
+        className="min-h-screen flex flex-col"
         suppressHydrationWarning={true}
       >
         <MainProvider lng={locale}>
-          <Header />
+          <ConditionalRenderer
+            desktop={<Header />}
+            mobile={<MobileComponents />}
+          />
           {children}
         </MainProvider>
       </body>
