@@ -65,7 +65,7 @@ export default async function RootLayout({ children, params }: LayoutProps) {
             desktop={<Header />}
             mobile={<MobileComponents />}
           />
-          <main className="bg-ui-border flex items-center justify-center">
+          <main className="bg-ui-bg flex items-center justify-center">
             <div className="container mx-auto px-4 md:px-8 grow ">
               {children}
             </div>
