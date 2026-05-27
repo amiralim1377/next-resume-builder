@@ -1,4 +1,5 @@
-import { useTranslation as getTranslation } from "@/lib/i18n/server";
+import { HomePage } from "@/components/pages/HomePage";
+import { ConditionalRenderer } from "@/components/shared/ConditionalRenderer";
 import { Language } from "@/lib/i18n/settings";
 
 interface IHomePageProps {
@@ -6,10 +7,7 @@ interface IHomePageProps {
 }
 
 async function Home({ params }: IHomePageProps) {
-  const { locale } = await params;
-
-  const { t } = await getTranslation(locale, "home");
-  return <div>{t("ansar")}</div>;
+  return <ConditionalRenderer mobile={<HomePage />} desktop={<HomePage />} />;
 }
 
 export default Home;
