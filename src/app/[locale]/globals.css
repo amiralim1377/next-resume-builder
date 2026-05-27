@@ -15,7 +15,12 @@ body {
   /* Brand Colors */
   --color-brand-primary: var(--brand-primary);
   --color-brand-hover: var(--brand-hover);
-  --color-brand-accent: var(--brand-accent);
+
+  /* accent-color */
+  --color-accentLight: var(--brand-accent-light);
+  --color-accent: var(--brand-accent);
+  --color-accentDark: var(--brand-accent-dark);
+
   /* Text Colors */
   --color-text-primary: var(--text-primary);
   --color-text-secondary: var(--text-secondary);
