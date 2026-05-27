@@ -10,19 +10,22 @@ import { CheckCircle } from "@/components/svg/checkCircle";
 function HeroSectionContent() {
   const { lng } = useLang();
   const { t } = useTranslation(lng, "home");
-  const { colors } = useThemeColors();
+  const { colors, theme } = useThemeColors();
   return (
     <div className="flex flex-col items-start w-1/2 space-y-4 ">
       <CustomBadge
-        color={colors.brand?.accent}
-        className={"text-xs rounded-xl text-text-inverse"}
+        className={
+          "text-xs rounded-xl  bg-brandLight text-reverse-text-primary"
+        }
       >
         {t("v2Available")}
       </CustomBadge>
       <div className="">
         <div>
           {lng == "fa" ? (
-            <CustomText className="capitalize font-black text-6xl leading-tight   ">
+            <CustomText
+              className={`capitalize font-black  text-6xl leading-tight ${theme === "dark" ? "text-brandPrimary" : ""}  `}
+            >
               {t("inMinutes")}
             </CustomText>
           ) : (
@@ -33,7 +36,9 @@ function HeroSectionContent() {
         </div>
 
         <div className="flex gap-3   ">
-          <CustomText className="font-black text-6xl leading-tight capitalize text-brand-primary  ">
+          <CustomText
+            className={`font-black text-6xl leading-tight capitalize ${theme === "light" ? "text-brandPrimary" : "text-white"} `}
+          >
             {t("resume")}
           </CustomText>
           {lng == "en" ? (
@@ -41,7 +46,9 @@ function HeroSectionContent() {
               {t("inMinutes")}
             </CustomText>
           ) : (
-            <CustomText className="font-black  text-6xl leading-tight capitalize  ">
+            <CustomText
+              className={`font-black  text-6xl leading-tight capitalize ${theme === "dark" ? "text-brandPrimary" : ""} `}
+            >
               {t("craftYourResume")}
             </CustomText>
           )}
@@ -52,7 +59,7 @@ function HeroSectionContent() {
       </div>
       <div className="flex items-center gap-6">
         <CustomLink
-          className="capitalize px-6 py-3 rounded-lg text-white bg-linear-to-r from-brand-primary to-state-info transition-all hover:-translate-y-1"
+          className="capitalize px-6 py-3 rounded-lg text-white bg-linear-to-r from-brandPrimary to-state-info transition-all hover:-translate-y-1"
           href={"#"}
         >
           {t("buildMyResume")}
