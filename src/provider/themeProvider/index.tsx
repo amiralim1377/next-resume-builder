@@ -31,17 +31,34 @@ interface ThemeProviderProps {
 const ThemeProvider = ({ children, themeFromCookie }: ThemeProviderProps) => {
   const [theme, setTheme] = useState<ThemeScheme>(themeFromCookie || "dark");
 
+  console.log(theme);
+
   const switchTheme = () => {
     const themeToSet = theme === "dark" ? "light" : "dark";
+
+    console.log(persistKeys);
+
     setCookie(persistKeys.NEXT_RESUME_BUILDER_THEME, themeToSet, {
       path: "/",
       maxAge: 60 * 60 * 24 * 30,
     });
+
     setTheme((prev) => (prev === "dark" ? "light" : "dark"));
+
     if (typeof document !== "undefined") {
-      document
-        ?.querySelector("html")
-        ?.setAttribute("data-color-scheme", themeToSet);
+      const htmlElement = document.documentElement; // Gets the <html> tag
+
+      // Update attribute
+      htmlElement.setAttribute("data-color-scheme", themeToSet);
+
+      // Update classes instantly for Tailwind/CSS variables
+      if (themeToSet === "dark") {
+        htmlElement.classList.add("dark");
+        htmlElement.classList.remove("light");
+      } else {
+        htmlElement.classList.remove("dark");
+        htmlElement.classList.add("light");
+      }
     }
   };
 
