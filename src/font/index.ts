@@ -33,8 +33,7 @@ export const yekanbakh = localFont({
       style: "normal",
     },
   ],
-  variable: "--font-yekanbakh",
-  display: "swap",
+  variable: "--yekanbakh",
 });
 
 export const inter = localFont({
@@ -70,6 +69,5 @@ export const inter = localFont({
       style: "normal",
     },
   ],
-  variable: "--font-inter",
-  display: "swap",
+  variable: "--inter",
 });
