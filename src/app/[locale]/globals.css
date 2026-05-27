@@ -13,8 +13,10 @@ body {
   --font-yekanbakh: var(--yekanbakh);
   /* colors */
   /* Brand Colors */
-  --color-brand-primary: var(--brand-primary);
-  --color-brand-hover: var(--brand-hover);
+  --color-brandPrimary: var(--brand-primary);
+  --color-brandHover: var(--brand-hover);
+  --color-brandLight: var(--brand-light);
+  --color-brandActive: var(--brand-active);
 
   /* accent-color */
   --color-accentLight: var(--brand-accent-light);
@@ -25,9 +27,10 @@ body {
   --color-text-primary: var(--text-primary);
   --color-text-secondary: var(--text-secondary);
   --color-text-muted: var(--text-muted);
-  --color-text-inverse: var(--text-inverse);
-  /* State Colors */
-  --color-state-success: var(--state-success);
+  --color-brandText: var(--brandText);
+  --color-brandTextHover: var(--brandTextHover);
+  --color-textTertiary: var(--text-tertiary)
+    --color-state-success: var(--state-success);
   --color-state-error: var(--state-error);
   --color-state-warning: var(--state-warning);
   --color-state-info: var(--state-info);
@@ -36,6 +39,19 @@ body {
   --color-ui-surface: var(--ui-surface);
   --color-ui-border: var(--ui-border);
   --color-ui-divider: var(--ui-divider);
+
+  /* --- REVERSE COLORS --- */
+  --color-reverse-text-primary: var(--reverse-text-primary);
+  --color-reverse-text-secondary: var(--reverse-text-secondary);
+  --color-reverse-text-muted: var(--reverse-text-muted);
+  --color-reverse-text-inverse: var(--reverse-text-inverse);
+  --color-reverse-brandText: var(--reverse-brandText);
+  --color-reverse-brandTextHover: var(--reverse-brandTextHover);
+
+  --color-reverse-ui-bg: var(--reverse-ui-background);
+  --color-reverse-ui-surface: var(--reverse-ui-surface);
+  --color-reverse-ui-border: var(--reverse-ui-border);
+  --color-reverse-ui-divider: var(--reverse-ui-divider);
 
   /* animation */
   --animate-float: float 6s ease-in-out infinite;
@@ -69,6 +85,9 @@ body {
   --text-secondary: #4b5563;
   --text-muted: #9ca3af;
   --text-inverse: #ffffff;
+  --brandText: #e5dff7;
+  --brandTextHover: #c9bbea;
+  --text-tertiary: #4f46e5;
   /* state */
   --state-success: #059669;
   --state-error: #dc2626;
@@ -79,6 +98,19 @@ body {
   --ui-surface: #ffffff;
   --ui-border: #e5e7eb;
   --ui-divider: #f3f4f6;
+
+  /* --- REVERSE (Holds Dark Mode values) --- */
+  --reverse-text-primary: #f9fafb;
+  --reverse-text-secondary: #d1d5db;
+  --reverse-text-muted: #9ca3af;
+  --reverse-text-inverse: #111827;
+  --reverse-brandText: #d4cbed;
+  --reverse-brandTextHover: #b6a5e0;
+
+  --reverse-ui-background: #111827;
+  --reverse-ui-surface: #1f2937;
+  --reverse-ui-border: #374151;
+  --reverse-ui-divider: #1f2937;
 }
 .dark {
   /* --- DARK THEME --- */
@@ -96,8 +128,12 @@ body {
   /*dark-text */
   --text-primary: #f9fafb;
   --text-secondary: #d1d5db;
+  --text-tertiary: #b9b5f5;
+
   --text-muted: #9ca3af;
   --text-inverse: #111827;
+  --brandText: #d4cbed;
+  --brandTextHover: #b6a5e0;
   /* dark-state */
   --state-success: #10b981;
   --state-error: #ef4444;
@@ -108,4 +144,17 @@ body {
   --ui-surface: #1f2937;
   --ui-border: #374151;
   --ui-divider: #1f2937;
+
+  /* --- REVERSE (Holds Light Mode values) --- */
+  --reverse-text-primary: #111827;
+  --reverse-text-secondary: #4b5563;
+  --reverse-text-muted: #9ca3af;
+  --reverse-text-inverse: #ffffff;
+  --reverse-brandText: #e5dff7;
+  --reverse-brandTextHover: #c9bbea;
+
+  --reverse-ui-background: #f9fafb;
+  --reverse-ui-surface: #ffffff;
+  --reverse-ui-border: #e5e7eb;
+  --reverse-ui-divider: #f3f4f6;
 }

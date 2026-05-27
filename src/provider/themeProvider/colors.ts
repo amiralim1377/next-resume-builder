@@ -23,6 +23,9 @@ export const COLORS: {
       secondary: "#D1D5DB", // Light gray for secondary text
       muted: "#9CA3AF", // Medium gray for placeholders/disabled
       inverse: "#111827", // Dark text for inside primary buttons
+      brandText: "#d4cbed",
+      brandTextHover: "#b6a5e0",
+      textTertiary: "#b9b5f5",
     },
     state: {
       success: "#10B981", // Emerald green
@@ -36,9 +39,23 @@ export const COLORS: {
       border: "#374151", // Subtle dark borders
       divider: "#1F2937",
     },
+    reverse: {
+      text: {
+        primary: "#111827",
+        secondary: "#4B5563",
+        muted: "#9CA3AF",
+        inverse: "#FFFFFF",
+        brandText: "#e5dff7",
+        brandTextHover: "#c9bbea",
+      },
+      ui: {
+        background: "#F9FAFB",
+        surface: "#FFFFFF",
+        border: "#E5E7EB",
+        divider: "#F3F4F6",
+      },
+    },
   },
-
-  // --- LIGHT THEME ---
   lightTheme: {
     brand: {
       brandLight: "#9378d1" /* Lighter shade */,
@@ -57,6 +74,9 @@ export const COLORS: {
       secondary: "#4B5563", // Dark gray for subheadings
       muted: "#9CA3AF", // Medium gray for placeholders
       inverse: "#FFFFFF", // White text for inside primary buttons
+      brandText: "#e5dff7",
+      brandTextHover: "#c9bbea",
+      textTertiary: "#4f46e5",
     },
     state: {
       success: "#059669", // Slightly darker emerald for light bg
@@ -69,6 +89,22 @@ export const COLORS: {
       surface: "#FFFFFF", // Pure white for resume preview and cards
       border: "#E5E7EB", // Clean, light borders
       divider: "#F3F4F6",
+    },
+    reverse: {
+      text: {
+        primary: "#F9FAFB",
+        secondary: "#D1D5DB",
+        muted: "#9CA3AF",
+        inverse: "#111827",
+        brandText: "#d4cbed",
+        brandTextHover: "#b6a5e0",
+      },
+      ui: {
+        background: "#111827",
+        surface: "#1F2937",
+        border: "#374151",
+        divider: "#1F2937",
+      },
     },
   },
 };
