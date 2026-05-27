@@ -7,14 +7,86 @@ body {
   box-sizing: border-box;
 }
 
-@theme {
+@theme inline {
   /* fonts */
-  --font-inter: var(--inter), sans-serif;
-  --font-yekanbakh: var(--yekanbakh), sans-serif;
+  --font-inter: var(--inter);
+  --font-yekanbakh: var(--yekanbakh);
   /* colors */
-  --color-brand-primary: #5a3eb5;
-  --color-accent: #989fb3;
-  --color-mainText: #f7f7f7;
-  --color-mainBg: #f8f9fa;
-  --color-headerBg: #051844;
+  /* Brand Colors */
+  --color-brand-primary: var(--brand-primary);
+  --color-brand-hover: var(--brand-hover);
+  --color-brand-accent: var(--brand-accent);
+  /* Text Colors */
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-muted: var(--text-muted);
+  --color-text-inverse: var(--text-inverse);
+  /* State Colors */
+  --color-state-success: var(--state-success);
+  --color-state-error: var(--state-error);
+  --color-state-warning: var(--state-warning);
+  --color-state-info: var(--state-info);
+  /* UI Colors */
+  --color-ui-bg: var(--ui-background);
+  --color-ui-surface: var(--ui-surface);
+  --color-ui-border: var(--ui-border);
+  --color-ui-divider: var(--ui-divider);
+
+  /* animation */
+  --animate-float: float 6s ease-in-out infinite;
+
+  @keyframes float {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+
+    50% {
+      transform: translateY(-20px);
+    }
+  }
+}
+
+:root {
+  /* brand */
+  --brand-primary: #5a3eb5;
+  --brand-hover: #483291;
+  --brand-accent: #e9e5f5;
+  /* text */
+  --text-primary: #111827;
+  --text-secondary: #4b5563;
+  --text-muted: #9ca3af;
+  --text-inverse: #ffffff;
+  /* state */
+  --state-success: #059669;
+  --state-error: #dc2626;
+  --state-warning: #d97706;
+  --state-info: #2563eb;
+  /* ui */
+  --ui-background: #f9fafb;
+  --ui-surface: #ffffff;
+  --ui-border: #e5e7eb;
+  --ui-divider: #f3f4f6;
+}
+.dark {
+  /* --- DARK THEME --- */
+  /* brand */
+  --brand-primary: #5a3eb5;
+  --brand-hover: #6e52c8;
+  --brand-accent: #8b7ce0;
+  /*dark-text */
+  --text-primary: #f9fafb;
+  --text-secondary: #d1d5db;
+  --text-muted: #9ca3af;
+  --text-inverse: #111827;
+  /* dark-state */
+  --state-success: #10b981;
+  --state-error: #ef4444;
+  --state-warning: #f59e0b;
+  --state-info: #3b82f6;
+  /* dark-ui */
+  --ui-background: #111827;
+  --ui-surface: #1f2937;
+  --ui-border: #374151;
+  --ui-divider: #1f2937;
 }
