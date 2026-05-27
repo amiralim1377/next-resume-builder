@@ -1,11 +1,9 @@
-import { HeroSectionContent } from "./components/HeroSectionContent";
-import { HeroSectionImage } from "./components/HeroSectionImage/HeroSectionImage";
+import { HeroSection } from "./components/HeroSection";
 
 async function HomePage() {
   return (
-    <div className="flex w-full items-center  mx-auto justify-between max-w-300">
-      <HeroSectionContent />
-      <HeroSectionImage />
+    <div className=" w-full   mx-auto  max-w-300">
+      <HeroSection />
     </div>
   );
 }
