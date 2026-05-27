@@ -49,9 +49,16 @@ body {
 
 :root {
   /* brand */
+  --brand-light: #9378d1;
   --brand-primary: #5a3eb5;
   --brand-hover: #483291;
+  --brand-active: #3d2a7a;
+
+  /* Brand Accents - Light Mode */
+  --brand-accent-light: #f4f2fa; /* Extremely light */
   --brand-accent: #e9e5f5;
+  --brand-accent-dark: #d4cbed; /* Darker accent */
+
   /* text */
   --text-primary: #111827;
   --text-secondary: #4b5563;
@@ -71,9 +78,16 @@ body {
 .dark {
   /* --- DARK THEME --- */
   /* brand */
+  --brand-light: #b6a5e0; /* Lighter shade */
   --brand-primary: #5a3eb5;
-  --brand-hover: #6e52c8;
-  --brand-accent: #8b7ce0;
+  --brand-hover: #9378d1; /* Lighter hover for dark backgrounds */
+  --brand-active: #5a3eb5; /* Darker active state */
+
+  /* Brand Accents - Dark Mode (Deep dark purples) */
+  --brand-accent-light: #332561; /* Lighter dark accent */
+  --brand-accent: #211645; /* Base dark accent */
+  --brand-accent-dark: #160e2e; /* Extremely dark */
+
   /*dark-text */
   --text-primary: #f9fafb;
   --text-secondary: #d1d5db;

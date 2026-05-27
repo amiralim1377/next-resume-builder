@@ -7,9 +7,16 @@ export const COLORS: {
   // --- DARK THEME ---
   darkTheme: {
     brand: {
+      brandLight: "#b6a5e0" /* Lighter shade */,
       brandPrimary: "#5a3eb5",
-      primaryHover: "#6e52c8", // Slightly lighter for dark mode hover visibility
-      accent: "#8b7ce0", // Soft purple for subtle accents
+      brandHover: "#9378d1", // Slightly lighter for dark mode hover visibility
+      brandActive: "#5a3eb5" /* Darker active state */,
+    },
+    accent: {
+      /* Brand Accents - Dark Mode (Deep dark purples) */
+      accentLight: "#332561",
+      accent: "#211645", // Soft purple for subtle accents
+      accentDark: "#160e2e" /* Extremely dark */,
     },
     text: {
       primary: "#F9FAFB", // Near white for high readability
@@ -34,9 +41,16 @@ export const COLORS: {
   // --- LIGHT THEME ---
   lightTheme: {
     brand: {
+      brandLight: "#9378d1" /* Lighter shade */,
       brandPrimary: "#5a3eb5",
-      primaryHover: "#483291", // Slightly darker for light mode hover
-      accent: "#e9e5f5", // Very pale purple for subtle highlights/tags
+      brandHover: "#483291", // Slightly lighter for dark mode hover visibility
+      brandActive: "#3d2a7a",
+    },
+    accent: {
+      /* Brand Accents - Dark Mode (Deep dark purples) */
+      accentLight: "#f4f2fa",
+      accent: "#e9e5f5", // Soft purple for subtle accents
+      accentDark: "#d4cbed" /* Extremely dark */,
     },
     text: {
       primary: "#111827", // Near black for crisp reading

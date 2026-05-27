@@ -1,8 +1,14 @@
 export type ColorPalette = {
   brand: {
+    brandLight: string;
     brandPrimary: string;
-    primaryHover: string;
-    accent: string;
+    brandHover: string;
+    brandActive: string;
+  };
+  accent: {
+    accentLight: string;
+    accent: string; // Soft purple for subtle accents
+    accentDark: string;
   };
   ui: {
     background: string;
