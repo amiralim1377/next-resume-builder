@@ -1,14 +1,23 @@
 import type { Metadata } from "next";
 import { Language, languages } from "@/lib/i18n/settings";
 import "./globals.css";
-import { Header } from "@/components/ui/header";
-import { MainProvider } from "@/provider/mainProvider";
+import { Header } from "@/components/layout/header";
 import { ConditionalRenderer } from "@/components/shared/ConditionalRenderer";
-import MobileComponents from "@/components/ui/header/mobile";
+import MobileComponents from "@/components/layout/header/mobile";
 import { inter, yekanbakh } from "@/font";
+import { ThemeScheme } from "@/provider/themeProvider";
+import { cookies } from "next/headers";
+import { persistKeys } from "@/core/constants/persistKeys";
+import { MainProvider } from "@/provider/MainProvider";
 import { cn } from "@/utils/cn";
+import { ReactNode } from "react";
 
-type Params = Promise<{ locale: Language }>;
+type Params = Promise<{ locale: string }>;
+
+type LayoutProps = {
+  children: ReactNode;
+  params: Params; // Next.js expects this to be a Promise of a string
+};
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -19,37 +28,51 @@ export async function generateStaticParams() {
   return languages.map((lng) => ({ locale: lng }));
 }
 
-export default async function RootLayout({
-  children,
-  params,
-}: Readonly<{
-  children: React.ReactNode;
-  params: Params;
-}>) {
+export default async function RootLayout({ children, params }: LayoutProps) {
   const getParams = await params;
-  const { locale } = getParams;
+  const locale = getParams.locale as Language;
+  const coookies = await cookies();
+  // #BUG
+  const themeFromCookie = coookies.get(
+    persistKeys.NEXT_RESUME_BUILDER_THEME,
+  )?.value;
+
+  const activeTheme = themeFromCookie || "dark";
 
   return (
     <html
+      data-color-scheme={activeTheme}
       lang={locale}
       dir={locale === "fa" ? "rtl" : "ltr"}
-      className={cn("font-inter", "font-yekanbakh")}
+      className={cn(inter.variable, yekanbakh.variable, activeTheme)}
       suppressHydrationWarning
       style={{
         fontFamily: locale === "en" ? inter.variable : yekanbakh.variable,
       }}
     >
-      <body suppressHydrationWarning={true}>
-        <MainProvider lng={locale}>
+      <MainProvider
+        themeFromCookie={themeFromCookie as ThemeScheme}
+        lng={locale}
+      >
+        <body
+          className={cn(
+            locale === "fa" ? "font-yekanbakh" : "font-inter",
+            "grid grid-rows-[auto_1fr_50px] min-h-screen",
+          )}
+          suppressHydrationWarning={true}
+        >
           <ConditionalRenderer
             desktop={<Header />}
             mobile={<MobileComponents />}
           />
-          <main className="container mx-auto px-4 md:px-8 grow">
-            {children}
+          <main className="bg-ui-border flex items-center justify-center">
+            <div className="container mx-auto px-4 md:px-8 grow ">
+              {children}
+            </div>
           </main>
-        </MainProvider>
-      </body>
+          <footer>3</footer>
+        </body>
+      </MainProvider>
     </html>
   );
 }
