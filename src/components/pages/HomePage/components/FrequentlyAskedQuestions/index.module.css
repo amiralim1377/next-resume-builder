@@ -1,0 +1,28 @@
+.rootFaqWrapper {
+  max-width: 950px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 30px 24px;
+}
+
+.faqLabelWrapper {
+  padding: 20px 0px;
+}
+
+.faqlabel {
+  font-size: 16px;
+  font-weight: 900;
+  text-transform: capitalize;
+  color: var(--color-brandPrimary);
+}
+
+.faqContent {
+  padding: 10px 5px 20px 5px;
+  margin-right: 10px;
+  font-size: 14px;
+  color: var(--color-text-secondary);
+}
+
+.faqChevron {
+  color: var(--color-text-secondary);
+}
