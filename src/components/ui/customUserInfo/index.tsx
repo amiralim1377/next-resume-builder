@@ -27,11 +27,13 @@ const CustomUserInfo: React.FC<UserInfoProps> = ({
 
   return (
     <div
-      className={`flex ${
+      className={cn(
+        "flex",
         isHorizontal
           ? "items-center space-x-3 text-left"
-          : "flex-col items-center space-y-2 text-center"
-      } ${className}`}
+          : "flex-col items-center space-y-2 text-center",
+        className,
+      )}
       {...props}
     >
       {avatarProps && <CustomAvatar name={name} {...avatarProps} />}
