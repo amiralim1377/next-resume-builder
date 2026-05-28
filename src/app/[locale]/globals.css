@@ -96,7 +96,7 @@ body {
   --state-warning: #d97706;
   --state-info: #2563eb;
   --state-activeStar: #fbbf24;
-  --state-inactiveColor: "#E5E7EB";
+  --state-inactiveColor: #e5e7eb;
   /* ui */
   --ui-background: #f9fafb;
   --ui-surface: #ffffff;
@@ -143,7 +143,7 @@ body {
   --state-error: #ef4444;
   --state-warning: #f59e0b;
   --state-activeStar: #fbbf24;
-  --state-inactiveColor: "#E5E7EB";
+  --state-inactiveColor: #e5e7eb;
   --state-info: #3b82f6;
   /* dark-ui */
   --ui-background: #111827;
