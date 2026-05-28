@@ -31,12 +31,8 @@ interface ThemeProviderProps {
 const ThemeProvider = ({ children, themeFromCookie }: ThemeProviderProps) => {
   const [theme, setTheme] = useState<ThemeScheme>(themeFromCookie || "dark");
 
-  console.log(theme);
-
   const switchTheme = () => {
     const themeToSet = theme === "dark" ? "light" : "dark";
-
-    console.log(persistKeys);
 
     setCookie(persistKeys.NEXT_RESUME_BUILDER_THEME, themeToSet, {
       path: "/",
@@ -46,7 +42,7 @@ const ThemeProvider = ({ children, themeFromCookie }: ThemeProviderProps) => {
     setTheme((prev) => (prev === "dark" ? "light" : "dark"));
 
     if (typeof document !== "undefined") {
-      const htmlElement = document.documentElement; // Gets the <html> tag
+      const htmlElement = document.documentElement;
 
       // Update attribute
       htmlElement.setAttribute("data-color-scheme", themeToSet);
