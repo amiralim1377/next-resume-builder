@@ -1,4 +1,5 @@
 import { HeroSection } from "./components/HeroSection";
+import { HomePageFAQ } from "./components/HomePageFAQ";
 import { SuccessStories } from "./components/SuccessStories";
 import { SummaryStats } from "./components/SummaryStats";
 
@@ -8,6 +9,7 @@ function HomePage() {
       <HeroSection />
       <SummaryStats />
       <SuccessStories />
+      <HomePageFAQ />
     </div>
   );
 }
