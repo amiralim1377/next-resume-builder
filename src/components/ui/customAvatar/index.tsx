@@ -1,19 +1,20 @@
+import PersonSvg from "@/components/svg/PersonSvg";
+import { useThemeColors } from "@/provider/themeProvider/useThemeColors";
 import { cn } from "@/utils/cn";
-import Image from "next/image";
+import Image, { StaticImageData } from "next/image";
 import React, { useState } from "react";
 
-type AvatarSize = "sm" | "md" | "lg" | "xl";
-type AvatarShape = "circle" | "square";
-type AvatarStatus = "online" | "offline" | "away" | "busy" | "none";
+export type AvatarSize = "sm" | "md" | "lg" | "xl";
+export type AvatarShape = "circle" | "square";
+export type AvatarStatus = "online" | "offline" | "away" | "busy" | "none";
 
 export interface AvatarProps extends React.HTMLAttributes<HTMLDivElement> {
-  src?: string;
+  src?: string | StaticImageData;
   alt?: string;
   name?: string;
   size?: AvatarSize;
   shape?: AvatarShape;
   status?: AvatarStatus;
-  fallbackDelay?: number;
 }
 
 const getInitials = (name: string) => {
@@ -31,10 +32,10 @@ const sizeClasses: Record<AvatarSize, string> = {
 };
 
 const statusColors: Record<Exclude<AvatarStatus, "none">, string> = {
-  online: "bg-green-500",
-  offline: "bg-gray-400",
-  away: "bg-yellow-500",
-  busy: "bg-red-500",
+  online: "bg-state-success",
+  offline: "bg-text-muted",
+  away: "bg-stateActiveStar",
+  busy: "bg-state-error",
 };
 
 const CustomAvatar: React.FC<AvatarProps> = ({
@@ -50,7 +51,12 @@ const CustomAvatar: React.FC<AvatarProps> = ({
   const [imgError, setImgError] = useState(false);
 
   const roundedClass = shape === "circle" ? "rounded-full" : "rounded-xl";
-  const baseClasses = `relative inline-flex items-center justify-center shrink-0 bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 font-medium ${sizeClasses[size]} ${roundedClass} ${className}`;
+  const baseClasses = cn(
+    "relative inline-flex items-center justify-center shrink-0 bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 font-medium ",
+    sizeClasses[size],
+    roundedClass,
+    className,
+  );
 
   return (
     <div className={baseClasses} {...props}>
@@ -62,7 +68,13 @@ const CustomAvatar: React.FC<AvatarProps> = ({
           className={cn("h-full w-full object-cover", roundedClass)}
         />
       ) : (
-        <span className="select-none">{name ? getInitials(name) : "?"}</span>
+        <span className="select-none">
+          {name ? (
+            getInitials(name)
+          ) : (
+            <PersonSvg size={20} className="text-brandLight" />
+          )}
+        </span>
       )}
 
       {status !== "none" && (
