@@ -4,8 +4,8 @@ import { cn } from "@/utils/cn";
 
 type AvatarProps = React.ComponentProps<typeof CustomAvatar>;
 
-interface UserInfoProps extends React.HTMLAttributes<HTMLDivElement> {
-  name: string;
+export interface UserInfoProps extends React.HTMLAttributes<HTMLDivElement> {
+  userName: string;
   label?: string;
   avatarProps?: Omit<AvatarProps, "name">;
   layout?: "horizontal" | "vertical";
@@ -14,7 +14,7 @@ interface UserInfoProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 const CustomUserInfo: React.FC<UserInfoProps> = ({
-  name,
+  userName,
   label,
   avatarProps,
   layout = "horizontal",
@@ -36,10 +36,10 @@ const CustomUserInfo: React.FC<UserInfoProps> = ({
       )}
       {...props}
     >
-      {avatarProps && <CustomAvatar name={name} {...avatarProps} />}
+      {avatarProps && <CustomAvatar name={userName} {...avatarProps} />}
 
       <div className="flex flex-col">
-        <span className={cn(nameClassName)}>{name}</span>
+        <span className={cn(nameClassName)}>{userName}</span>
         {label && <span className={cn(labelClassName)}>{label}</span>}
       </div>
     </div>
