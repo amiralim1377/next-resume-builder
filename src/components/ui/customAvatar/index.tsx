@@ -6,7 +6,7 @@ type AvatarSize = "sm" | "md" | "lg" | "xl";
 type AvatarShape = "circle" | "square";
 type AvatarStatus = "online" | "offline" | "away" | "busy" | "none";
 
-interface AvatarProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface AvatarProps extends React.HTMLAttributes<HTMLDivElement> {
   src?: string;
   alt?: string;
   name?: string;
