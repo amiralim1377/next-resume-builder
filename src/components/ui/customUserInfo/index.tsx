@@ -1,6 +1,7 @@
 import React from "react";
 import { CustomAvatar } from "../customAvatar";
 import { cn } from "@/utils/cn";
+import { useLang } from "@/provider/lngProvider";
 
 type AvatarProps = React.ComponentProps<typeof CustomAvatar>;
 
@@ -24,14 +25,17 @@ const CustomUserInfo: React.FC<UserInfoProps> = ({
   ...props
 }) => {
   const isHorizontal = layout === "horizontal";
+  const { lng } = useLang();
 
   return (
     <div
       className={cn(
         "flex",
         isHorizontal
-          ? "items-center space-x-3 text-left"
+          ? "items-center space-x-3"
           : "flex-col items-center space-y-2 text-center",
+        lng === "fa" ? "text-right" : "text-left",
+
         className,
       )}
       {...props}
