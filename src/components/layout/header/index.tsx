@@ -18,51 +18,58 @@ function Header() {
     switchTheme();
   };
   return (
-    <div className="flex items-center justify-between w-full bg-ui-surface   px-8 py-6 ">
+    <div className="bg-ui-surface flex w-full items-center justify-between px-8 py-6">
       <div className="flex items-center gap-1">
-        <SiteLogo size={50} color={colors.brand?.brandPrimary} />
+        <SiteLogo
+          size={50}
+          color={
+            theme === "light"
+              ? colors.brand?.brandPrimary
+              : colors.text?.secondary
+          }
+        />
         <CustomText
-          className={cn(" font-black capitalize")}
-          color={colors.brand?.brandPrimary}
+          className={cn("font-black capitalize")}
+          color={
+            theme === "light"
+              ? colors.brand?.brandPrimary
+              : colors.text?.secondary
+          }
           size={24}
         >
           {t("siteName")}
         </CustomText>
         <div>
-          <button onClick={handleChangeTheme} className="border rounded-md p-2">
+          <button onClick={handleChangeTheme} className="rounded-md border p-2">
             change theme
           </button>
         </div>
       </div>
-      <nav className="flex items-center justify-between gap-5 capitalize text-lg font-light">
+      <nav className="flex items-center justify-between gap-5 text-lg font-light capitalize">
         <CustomLink
           href={"#"}
-          className="relative text-text-secondary transition-all duration-300 ease-in-out hover:text-brandLight hover:scale-105 active:scale-95"
+          className="text-text-secondary hover:text-brandLight relative transition-all duration-300 ease-in-out hover:scale-105 active:scale-95"
         >
           {t("login")}
         </CustomLink>
 
         <CustomLink
           href={"#"}
-          className="relative text-text-secondary transition-all duration-300 ease-in-out hover:text-brandLight hover:scale-105 active:scale-95"
+          className="text-text-secondary hover:text-brandLight relative transition-all duration-300 ease-in-out hover:scale-105 active:scale-95"
         >
           {t("register")}
         </CustomLink>
 
         <CustomLink
           href={"#"}
-          className="relative text-text-secondary transition-all duration-300 ease-in-out hover:text-brandLight hover:scale-105 active:scale-95"
+          className="text-text-secondary hover:text-brandLight relative transition-all duration-300 ease-in-out hover:scale-105 active:scale-95"
         >
           {t("blog")}
         </CustomLink>
 
-        {/* Primary Action Button */}
         <CustomLink
           href={"#"}
-          className="bg-brandPrimary text-brandText px-5 py-2 rounded-xl 
-               transition-all duration-300 ease-in-out 
-               hover:bg-brandHover hover:shadow-lg hover:shadow-brandPrimary/20 
-               active:scale-95"
+          className="bg-brandPrimary text-brandText hover:bg-brandHover hover:shadow-brandPrimary/20 rounded-xl px-5 py-2 transition-all duration-300 ease-in-out hover:shadow-lg active:scale-95"
         >
           {t("aboutUs")}
         </CustomLink>
