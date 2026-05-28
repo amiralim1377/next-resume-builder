@@ -1,28 +1,34 @@
-import { CustomAvatar } from "@/components/ui/customAvatar";
+import { CustomAvatar, type AvatarProps } from "@/components/ui/customAvatar";
 import { CustomRateStar } from "@/components/ui/customRateStar";
 import { CustomText } from "@/components/ui/customText";
-import { CustomUserInfo } from "@/components/ui/customUserInfo";
+import {
+  CustomUserInfo,
+  type UserInfoProps,
+} from "@/components/ui/customUserInfo";
 
-type SuccessStoriesCardProps = {
-  name: string;
+interface SuccessStoriesCardProps extends UserInfoProps, AvatarProps {
   stories: string;
   initialRating: number;
-};
+}
 
 function SuccessStoriesCard({
   name = "amirali",
+  label,
   stories,
   initialRating,
+  ...avatarProps
 }: SuccessStoriesCardProps) {
   return (
     <div>
       <div className="flex">
-        <CustomAvatar />
-        <CustomUserInfo name={name} />
+        <CustomAvatar {...avatarProps} />
+        <CustomUserInfo userName={name} label={label} />
       </div>
+
       <div>
         <CustomRateStar initialRating={initialRating} />
       </div>
+
       <CustomText>{stories}</CustomText>
     </div>
   );
