@@ -1,3 +1,4 @@
+import { cn } from "@/utils/cn";
 import { useState } from "react";
 
 export interface CustomRateStarProps {
@@ -17,7 +18,7 @@ const CustomRateStar = ({
   isReadOnly = false,
   size = 24,
   activeColor = "var(--color-stateActiveStar)",
-  inactiveColor = "var(--color-stateInactiveColor)",
+  inactiveColor = "var(--state-inactiveColor)",
 }: CustomRateStarProps) => {
   const [rating, setRating] = useState<number>(initialRating);
   const [hoverRating, setHoverRating] = useState<number>(0);
@@ -52,12 +53,14 @@ const CustomRateStar = ({
             onClick={() => handleClick(index)}
             onMouseEnter={() => handleMouseEnter(index)}
             onMouseLeave={handleMouseLeave}
-            className={`transition-colors duration-200 ${
-              isReadOnly ? "cursor-default" : "cursor-pointer"
-            }`}
+            className={cn(
+              "transition-colors duration-200",
+              isReadOnly ? "cursor-default" : "cursor-pointer",
+            )}
             width={size}
             height={size}
             viewBox="0 0 24 24"
+            style={{ fill: isFilled ? activeColor : inactiveColor }}
             fill={isFilled ? activeColor : inactiveColor}
             xmlns="http://www.w3.org/2000/svg"
           >
