@@ -1,0 +1,6 @@
+/* ChildrenMode */
+@layer atom {
+  .childrenContent {
+    display: block;
+  }
+}

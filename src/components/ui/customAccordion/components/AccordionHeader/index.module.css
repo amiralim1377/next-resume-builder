@@ -1,0 +1,38 @@
+/* headerClassName */
+@layer atom {
+  .accordionHeaderWrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 5px;
+  }
+
+  .accordionHeaderInnerContainer {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .headerIconClassName {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .headerTitleClassName {
+    font-family: var(--Vazirmatn);
+    line-height: 1;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .motionDivElem {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
+  }
+}

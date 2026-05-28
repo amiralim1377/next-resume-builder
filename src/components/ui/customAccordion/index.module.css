@@ -1,0 +1,15 @@
+/* CustomAccordionWrapper */
+@layer atom {
+  .accBodyWrapper {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    user-select: none;
+  }
+
+  .disabled {
+    opacity: 0.6;
+    pointer-events: none;
+    user-select: none;
+  }
+}
