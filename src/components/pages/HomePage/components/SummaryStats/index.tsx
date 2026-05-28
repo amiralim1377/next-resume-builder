@@ -1,0 +1,34 @@
+"use client";
+import { CustomStats, StatItem } from "@/components/ui/customStat";
+import { useTranslation } from "@/lib/i18n/client";
+import { useLang } from "@/provider/lngProvider";
+
+function SummaryStats() {
+  const { lng } = useLang();
+  const { t } = useTranslation(lng, "home");
+  const summaryStatsArray: StatItem[] = [
+    { content: "10K", label: t("happyUsers"), id: 1 },
+    { content: "98%", label: t("successRate"), id: 2 },
+    { content: "1200k+", label: t("resumesCreated"), id: 3 },
+  ];
+  return (
+    <div className="px-30 py-10">
+      <div className="bg-ui-surface flex items-center justify-center rounded-lg shadow-lg">
+        {summaryStatsArray.map((item, i) => {
+          return (
+            <CustomStats
+              data={item}
+              key={i}
+              labelLocation="bottom"
+              size="lg"
+              labelClassName="text-sm text-text-primary"
+              contentClassName="text-5xl text-textTertiary font-bold"
+            />
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+export { SummaryStats };
