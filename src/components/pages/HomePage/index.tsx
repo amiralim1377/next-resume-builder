@@ -1,3 +1,4 @@
+import { CareerBoostHub } from "./components/CareerBoostHub";
 import { HeroSection } from "./components/HeroSection";
 import { HomePageFAQ } from "./components/HomePageFAQ";
 import { SuccessStories } from "./components/SuccessStories";
@@ -10,6 +11,7 @@ function HomePage() {
       <SummaryStats />
       <SuccessStories />
       <HomePageFAQ />
+      <CareerBoostHub />
     </div>
   );
 }
