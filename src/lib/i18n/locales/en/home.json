@@ -22,5 +22,13 @@
   "meysamAhmadVand": "meysam ahmadvand",
   "financeManager": "finance Manager",
   "secondSuccessStories": "I was struggling with my resume format for days. With this tool, I built a professional-looking resume in under 30 minutes.",
-  "thirdSuccessStories": "As a Finance Manager, I needed a polished resume that reflected my experience clearly. With this tool, I created a professional resume in less than 30 minutes."
+  "thirdSuccessStories": "As a Finance Manager, I needed a polished resume that reflected my experience clearly. With this tool, I created a professional resume in less than 30 minutes.",
+  "FAQ": "Frequently Asked Questions",
+  "CommQuesResumeBuilder": "Common questions about our resume builder.",
+  "firstFaqLabel": "Is Next Resume really free?",
+  "firstFaqContent": "Yes! You can create, edit, and download your resume entirely for free. We are committed to helping job seekers succeed.",
+  "secondFaqLabel": "Are the templates ATS-friendly?",
+  "secondFaqContent": "Absolutely. All our templates are designed following best practices for Applicant Tracking Systems to ensure your resume reaches human recruiters.",
+  "thirdFaqLabel": "Are the templates ATS-friendly?",
+  "thirdFaqContent": "Yes, you can create and manage multiple versions of your resume tailored for different job applications from your dashboard."
 }
