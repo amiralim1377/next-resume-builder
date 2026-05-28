@@ -29,10 +29,12 @@ body {
   --color-text-muted: var(--text-muted);
   --color-brandText: var(--brandText);
   --color-brandTextHover: var(--brandTextHover);
-  --color-textTertiary: var(--text-tertiary)
-    --color-state-success: var(--state-success);
+  --color-textTertiary: var(--text-tertiary);
+  --color-state-success: var(--state-success);
   --color-state-error: var(--state-error);
   --color-state-warning: var(--state-warning);
+  --color-stateActiveStar: var(--state-activeStar);
+  --color-stateInactiveColor: var(--state-inactiveColor);
   --color-state-info: var(--state-info);
   /* UI Colors */
   --color-ui-bg: var(--ui-background);
@@ -93,6 +95,8 @@ body {
   --state-error: #dc2626;
   --state-warning: #d97706;
   --state-info: #2563eb;
+  --state-activeStar: #fbbf24;
+  --state-inactiveColor: "#E5E7EB";
   /* ui */
   --ui-background: #f9fafb;
   --ui-surface: #ffffff;
@@ -138,6 +142,8 @@ body {
   --state-success: #10b981;
   --state-error: #ef4444;
   --state-warning: #f59e0b;
+  --state-activeStar: #fbbf24;
+  --state-inactiveColor: "#E5E7EB";
   --state-info: #3b82f6;
   /* dark-ui */
   --ui-background: #111827;
