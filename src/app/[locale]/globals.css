@@ -30,6 +30,9 @@ body {
   --color-brandText: var(--brandText);
   --color-brandTextHover: var(--brandTextHover);
   --color-textTertiary: var(--text-tertiary);
+  --color-inverse: var(--text-inverse);
+
+  /* state */
   --color-state-success: var(--state-success);
   --color-state-error: var(--state-error);
   --color-state-warning: var(--state-warning);
