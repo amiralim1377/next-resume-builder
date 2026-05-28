@@ -1,0 +1,54 @@
+import { TFunction } from "i18next";
+import {
+  SuccessStoriesCard,
+  SuccessStoriesCardProps,
+} from "../SuccessStoriesCard";
+import amiralimoradiniaImage from "@public/images/IMG_20251101_203439_943.jpg";
+
+type SuccessStoriesListProps = {
+  t: TFunction<string, undefined>;
+};
+
+function SuccessStoriesList({ t }: SuccessStoriesListProps) {
+  const SuccessStoriesListDataArray: SuccessStoriesCardProps[] = [
+    {
+      initialRating: 5,
+      stories: t("firstSuccessStories"),
+      userName: t("amirAliMoradiNia"),
+      label: t("froneEndDeveloper"),
+      avatarShape: "circle",
+      avatarSrc: amiralimoradiniaImage,
+      avatarStatus: "online",
+    },
+    {
+      initialRating: 5,
+      stories: t("secondSuccessStories"),
+      userName: t("sabaMoradiNia"),
+      label: t("AdministrativeStaff"),
+      avatarShape: "circle",
+    },
+    {
+      initialRating: 5,
+      stories: t("thirdSuccessStories"),
+      userName: t("meysamAhmadVand"),
+      label: t("financeManager"),
+      avatarShape: "circle",
+    },
+  ];
+
+  return (
+    <div className="mt-8 flex flex-col items-center justify-center gap-10 lg:flex-row">
+      {SuccessStoriesListDataArray.map((storiesItem, i) => {
+        return (
+          <SuccessStoriesCard
+            {...storiesItem}
+            avatarAlt={storiesItem.userName}
+            key={i}
+          />
+        );
+      })}
+    </div>
+  );
+}
+
+export { SuccessStoriesList };
