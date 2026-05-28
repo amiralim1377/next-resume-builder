@@ -1,35 +1,65 @@
-import { CustomAvatar, type AvatarProps } from "@/components/ui/customAvatar";
+import {
+  AvatarShape,
+  AvatarSize,
+  AvatarStatus,
+  CustomAvatar,
+} from "@/components/ui/customAvatar";
 import { CustomRateStar } from "@/components/ui/customRateStar";
 import { CustomText } from "@/components/ui/customText";
-import {
-  CustomUserInfo,
-  type UserInfoProps,
-} from "@/components/ui/customUserInfo";
+import { CustomUserInfo } from "@/components/ui/customUserInfo";
+import { StaticImageData } from "next/image";
 
-interface SuccessStoriesCardProps extends UserInfoProps, AvatarProps {
+export interface SuccessStoriesCardProps {
+  userName: string;
   stories: string;
+  label: string;
   initialRating: number;
+  avatarSrc?: string | StaticImageData;
+  avatarAlt?: string;
+  avatarShape?: AvatarShape;
+  avatarSize?: AvatarSize;
+  avatarStatus?: AvatarStatus;
 }
 
 function SuccessStoriesCard({
-  name = "amirali",
+  userName = "amirali",
   label,
   stories,
   initialRating,
+  avatarSrc,
+  avatarAlt = `${userName}-image`,
+  avatarShape,
+  avatarSize,
+  avatarStatus,
   ...avatarProps
 }: SuccessStoriesCardProps) {
   return (
-    <div>
-      <div className="flex">
-        <CustomAvatar {...avatarProps} />
-        <CustomUserInfo userName={name} label={label} />
+    <div className="bg-ui-surface min-h-65 rounded-lg p-5 shadow-xl hover:shadow-2xl">
+      <div className="flex items-center gap-3 pb-2">
+        <CustomAvatar
+          src={avatarSrc}
+          alt={avatarAlt}
+          shape={avatarShape}
+          size={avatarSize}
+          status={avatarStatus}
+          {...avatarProps}
+          className="border"
+        />
+        <CustomUserInfo
+          nameClassName="capitalize text-base text-text-primary font-semibold"
+          labelClassName="text-xs text-textTertiary"
+          userName={userName}
+          label={label}
+        />
       </div>
 
       <div>
-        <CustomRateStar initialRating={initialRating} />
+        <CustomRateStar isReadOnly initialRating={initialRating} />
       </div>
 
-      <CustomText>{stories}</CustomText>
+      <CustomText className="text-text-secondary max-w-72.5 pt-5 pb-6 text-sm leading-6">
+        {`"${stories}"`}
+      </CustomText>
     </div>
   );
 }
