@@ -18,7 +18,7 @@ function Header() {
     switchTheme();
   };
   return (
-    <div className="bg-ui-surface flex w-full items-center justify-between px-8 py-6">
+    <div className="bg-ui-bg border-ui-border flex w-full items-center justify-between border-b px-8 py-6">
       <div className="flex items-center gap-1">
         <SiteLogo
           size={50}
