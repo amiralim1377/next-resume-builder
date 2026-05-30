@@ -37,7 +37,7 @@ function SuccessStoriesList({ t }: SuccessStoriesListProps) {
   ];
 
   return (
-    <div className="mt-8 flex flex-col items-center justify-center gap-10 lg:flex-row">
+    <div className="flex flex-col items-center justify-center gap-10 py-5 lg:flex-row">
       {SuccessStoriesListDataArray.map((storiesItem, i) => {
         return (
           <SuccessStoriesCard
