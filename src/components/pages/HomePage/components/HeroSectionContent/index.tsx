@@ -19,7 +19,7 @@ function HeroSectionContent() {
   return (
     <div
       className={cn(
-        "mx-auto flex flex-col items-center space-y-4 text-center md:w-1/2 md:items-start",
+        "flex flex-col items-center space-y-4 text-center md:w-1/2 md:items-start",
         lng === "fa" ? "md:text-right" : "md:text-left",
       )}
     >
