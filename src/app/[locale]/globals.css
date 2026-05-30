@@ -45,6 +45,9 @@ body {
   --color-ui-border: var(--ui-border);
   --color-ui-divider: var(--ui-divider);
 
+  /* components */
+  --color-progressContainer: var(--progressContainer);
+
   /* --- REVERSE COLORS --- */
   --color-reverse-text-primary: var(--reverse-text-primary);
   --color-reverse-text-secondary: var(--reverse-text-secondary);
@@ -80,7 +83,8 @@ body {
   --brand-hover: #483291;
   --brand-active: #3d2a7a;
   --brand-footer: #0d1117;
-  /* Brand Accents - Light Mode */
+
+  /* Brand Accents 
   --brand-accent-light: #f4f2fa; /* Extremely light */
   --brand-accent: #e9e5f5;
   --brand-accent-dark: #d4cbed; /* Darker accent */
@@ -105,6 +109,9 @@ body {
   --ui-surface: #ffffff;
   --ui-border: #e5e7eb;
   --ui-divider: #f3f4f6;
+
+  /* components */
+  --progressContainer: #424242;
 
   /* --- REVERSE (Holds Dark Mode values) --- */
   --reverse-text-primary: #f9fafb;
@@ -154,6 +161,9 @@ body {
   --ui-surface: #1f2937;
   --ui-border: #374151;
   --ui-divider: #1f2937;
+
+  /* components */
+  --progressContainer: #424242;
 
   /* --- REVERSE (Holds Light Mode values) --- */
   --reverse-text-primary: #111827;
