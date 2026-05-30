@@ -11,12 +11,13 @@ import { persistKeys } from "@/core/constants/persistKeys";
 import { MainProvider } from "@/provider/MainProvider";
 import { cn } from "@/utils/cn";
 import { ReactNode } from "react";
+import { Footer } from "@/components/layout/footer";
 
 type Params = Promise<{ locale: string }>;
 
 type LayoutProps = {
   children: ReactNode;
-  params: Params; // Next.js expects this to be a Promise of a string
+  params: Params;
 };
 
 export const metadata: Metadata = {
@@ -57,7 +58,7 @@ export default async function RootLayout({ children, params }: LayoutProps) {
         <body
           className={cn(
             locale === "fa" ? "font-yekanbakh" : "font-inter",
-            "grid grid-rows-[auto_1fr_50px] min-h-screen",
+            "grid min-h-screen grid-rows-[auto_1fr_auto]",
           )}
           suppressHydrationWarning={true}
         >
@@ -66,11 +67,13 @@ export default async function RootLayout({ children, params }: LayoutProps) {
             mobile={<MobileComponents />}
           />
           <main className="bg-ui-bg flex items-center justify-center">
-            <div className="container mx-auto px-4 md:px-8 grow ">
+            <div className="container mx-auto grow px-4 md:px-8">
               {children}
             </div>
           </main>
-          <footer>3</footer>
+          <footer className="bg-brandFooter">
+            <Footer />
+          </footer>
         </body>
       </MainProvider>
     </html>
