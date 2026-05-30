@@ -1,4 +1,5 @@
 "use client";
+import { GitHubSvg } from "@/components/svg/gitHubSvg";
 import { LinkdinSvg } from "@/components/svg/linkdinSvg";
 import { CustomLabel } from "@/components/ui/customLabel";
 import { CustomLink } from "@/components/ui/customLink";
@@ -9,23 +10,22 @@ function ConnectWithUs() {
   const { lng } = useLang();
   const { t } = useTranslation(lng, "footer");
   const amiraliMoradiLinkdin = "https://www.linkedin.com/in/amiralimoradi/";
+  // const amiraliMoradiGitHub = "https://github.com/amiralim1377";
 
   return (
-    <div>
-      <div className="w-fit">
-        <CustomLabel
-          classNames={{
-            labelClassName: "text-white text-base font-semibold",
-            wrapperClassName: "flex flex-col ",
-          }}
-        >
-          {t("connectWithUs")}
-        </CustomLabel>
-        <div className="mt-8">
-          <CustomLink href={amiraliMoradiLinkdin}>
-            <LinkdinSvg size={25} />
-          </CustomLink>
-        </div>
+    <div className="flex w-fit flex-col items-start">
+      <CustomLabel
+        classNames={{
+          labelClassName: "text-white text-base font-semibold",
+          wrapperClassName: "flex flex-col ",
+        }}
+      >
+        {t("connectWithUs")}
+      </CustomLabel>
+      <div className="mt-4 lg:mt-8">
+        <CustomLink href={amiraliMoradiLinkdin}>
+          <LinkdinSvg size={25} />
+        </CustomLink>
       </div>
     </div>
   );
