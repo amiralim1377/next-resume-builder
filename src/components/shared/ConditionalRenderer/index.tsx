@@ -11,9 +11,6 @@ export const ConditionalRenderer = ({
   mobile,
 }: ConditionalRendererProps) => {
   const { width, isMobileClient, userAgent } = useSize();
-  // console.log(width);
-  // console.log(isMobileClient);
-  // console.log(userAgent);
 
   const isMobileSSR = /Android|iPhone|iPad|iPod/i.test(userAgent);
 
