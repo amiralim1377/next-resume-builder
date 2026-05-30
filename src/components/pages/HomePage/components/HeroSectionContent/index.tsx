@@ -60,11 +60,12 @@ function HeroSectionContent() {
 
       <div className="flex items-center gap-6">
         <CustomLink
-          className="from-brandPrimary to-state-info rounded-md bg-linear-to-r px-3 py-1.5 text-sm text-white capitalize transition-all hover:-translate-y-1 md:rounded-lg md:px-6 md:py-3"
+          className="from-brandPrimary to-state-info rounded-md bg-linear-to-r px-3 py-1.5 text-sm text-white capitalize transition-all duration-700 ease-in-out hover:-translate-y-1 hover:shadow-lg md:rounded-lg md:px-6 md:py-3"
           href={"#"}
         >
           {t("buildMyResume")}
         </CustomLink>
+
         <CustomLink
           className="border-text-muted text-text-primary hover:bg-brand-accent rounded-sm border px-3 py-1.5 text-sm capitalize md:rounded-lg md:px-6 md:py-3"
           href={"#"}
