@@ -34,7 +34,7 @@ function SuccessStoriesCard({
   ...avatarProps
 }: SuccessStoriesCardProps) {
   return (
-    <div className="bg-ui-surface min-h-65 w-full rounded-lg p-5 shadow-xl hover:shadow-2xl">
+    <div className="bg-ui-surface flex h-full w-full flex-col rounded-lg p-5 shadow-xl hover:shadow-2xl">
       <div className="flex items-center gap-3 pb-2">
         <CustomAvatar
           src={avatarSrc}
@@ -57,7 +57,7 @@ function SuccessStoriesCard({
         <CustomRateStar isReadOnly initialRating={initialRating} />
       </div>
 
-      <CustomText className="text-text-secondary w-full pt-5 pb-6 text-sm leading-6 md:max-w-72.5">
+      <CustomText className="text-text-secondary w-full pt-5 pb-5 text-sm leading-6 lg:max-w-72.5 lg:pb-6">
         {`"${stories}"`}
       </CustomText>
     </div>
