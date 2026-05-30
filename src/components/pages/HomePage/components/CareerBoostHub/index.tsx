@@ -13,7 +13,7 @@ function CareerBoostHub() {
   return (
     <div
       className={cn(
-        "flex items-center justify-center rounded-2xl bg-linear-to-r p-8 py-25",
+        "mb-8 flex items-center justify-center rounded-2xl bg-linear-to-r p-12",
         theme === "light"
           ? "from-brandPrimary to-brandActive text-inverse"
           : "from-accent to-accentDark text-textTertiary",
