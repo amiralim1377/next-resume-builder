@@ -4,7 +4,6 @@ import {
   AccordionItemProps,
   ICustomAccordionClassNamesProps,
 } from "../../index";
-import classes from "./index.module.css";
 import { cn } from "@/utils/cn";
 import { useThemeColors } from "@/provider/themeProvider/useThemeColors";
 import { ChevronDown } from "@/components/svg/chevronDown";
@@ -42,7 +41,7 @@ export const AccordionDataMode: FC<AccordionDataModeProps> = ({
 
   return (
     <div
-      className={cn(classes.accMainContainer, classNames?.itemWrapper)}
+      className={cn("cursor-pointer", classNames?.itemWrapper)}
       style={{
         borderBottom:
           showDivider && !(hideLastDivider && isLastItem)
@@ -57,10 +56,9 @@ export const AccordionDataMode: FC<AccordionDataModeProps> = ({
     >
       <div
         className={cn(
-          classes.labelAndChevroneWrapper,
           classNames?.labelWrapper,
           isOpen ? classNames?.select : classNames?.unSelect,
-          item.disabledItem && classes.triggerDisabled,
+          item.disabledItem && "cursor-not-allowed",
         )}
         onClick={
           isDisabled ? undefined : () => onToggle(item.id, item.disabledItem)
@@ -68,24 +66,27 @@ export const AccordionDataMode: FC<AccordionDataModeProps> = ({
       >
         <div
           className={cn(
-            classes.innerLabelAndChevroneContainer,
+            "flex w-full items-center justify-between",
             classNames?.labelChevronIconContainer,
           )}
         >
           <div
             className={cn(
-              classes.labelIconWrapper,
+              "flex justify-center gap-1.25",
               classNames?.labelIconContainer,
             )}
           >
             {item?.icon}
-            <p className={cn(classes.label, classNames?.label)}>
+            <p className={cn("font-[inherit] text-sm", classNames?.label)}>
               {item?.label}
             </p>
           </div>
 
           <div
-            className={cn(classes.chevronWrapper, classNames?.chevronWrapper)}
+            className={cn(
+              "flex items-center justify-center",
+              classNames?.chevronWrapper,
+            )}
           >
             <motion.div
               animate={{ rotate: isOpen ? 180 : 0 }}
@@ -95,7 +96,7 @@ export const AccordionDataMode: FC<AccordionDataModeProps> = ({
                   : { duration: 0 }
               }
               {...motionProps}
-              className={classes.chevronMotionContainer}
+              className={"flex items-center justify-center"}
             >
               <ChevronDown
                 size={chevronSize}
@@ -108,7 +109,9 @@ export const AccordionDataMode: FC<AccordionDataModeProps> = ({
                       }
                 }
                 className={cn(
-                  item.disabledItem ? classes.triggerDisabled : classes.chevron,
+                  item.disabledItem
+                    ? "text-accent cursor-not-allowed"
+                    : "m-0 cursor-pointer transition-transform duration-300",
                   classNames?.chevron,
                 )}
               />
@@ -133,14 +136,9 @@ export const AccordionDataMode: FC<AccordionDataModeProps> = ({
             style={{ overflow: "hidden" }}
             {...motionProps}
           >
-            <div
-              className={cn(classes.contentWrapper, classNames?.contentWrapper)}
-            >
+            <div className={cn(classNames?.contentWrapper)}>
               <div
-                className={cn(
-                  classes.innerContentContainer,
-                  classNames?.content,
-                )}
+                className={cn("font-[inherit] text-sm", classNames?.content)}
               >
                 {item.content}
               </div>

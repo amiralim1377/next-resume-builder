@@ -1,6 +1,5 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { ICustomAccordionProps } from "../..";
-import classes from "./index.module.css";
 import { cn } from "@/utils/cn";
 
 interface AccordionChildrenModeProps extends ICustomAccordionProps {
@@ -32,9 +31,7 @@ export const AccordionChildrenMode: React.FC<AccordionChildrenModeProps> = ({
           }
           style={{ overflow: "hidden" }}
         >
-          <div className={cn(classes.childrenContent, classNames?.content)}>
-            {children}
-          </div>
+          <div className={cn("block", classNames?.content)}>{children}</div>
         </motion.div>
       )}
     </AnimatePresence>
