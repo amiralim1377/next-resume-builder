@@ -6,7 +6,7 @@ import { SummaryStats } from "./components/SummaryStats";
 
 function HomePage() {
   return (
-    <div className="mx-auto flex w-full max-w-300 flex-col space-y-10">
+    <div className="mx-auto mt-8 flex w-full max-w-300 flex-col space-y-12">
       <HeroSection />
       <SummaryStats />
       <SuccessStories />
