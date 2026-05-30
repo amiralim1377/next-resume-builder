@@ -111,7 +111,7 @@ body {
   --ui-divider: #f3f4f6;
 
   /* components */
-  --progressContainer: #424242;
+  --progressContainer: #0d1117;
 
   /* --- REVERSE (Holds Dark Mode values) --- */
   --reverse-text-primary: #f9fafb;
@@ -163,7 +163,7 @@ body {
   --ui-divider: #1f2937;
 
   /* components */
-  --progressContainer: #424242;
+  --progressContainer: #0d1117;
 
   /* --- REVERSE (Holds Light Mode values) --- */
   --reverse-text-primary: #111827;
