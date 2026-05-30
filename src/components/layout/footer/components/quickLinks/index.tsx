@@ -33,7 +33,7 @@ function QuickLinks() {
     },
   ];
   return (
-    <div>
+    <div className="flex flex-col items-start md:items-start">
       <div className="w-fit">
         <CustomLabel
           classNames={{
@@ -44,7 +44,7 @@ function QuickLinks() {
           {t("quickLinks")}
         </CustomLabel>
       </div>
-      <div className="text-text-secondary mt-8 flex flex-col">
+      <div className="text-text-secondary mt-4 flex flex-col items-start lg:mt-8">
         {quickLinksDataArray.map((item, i) => {
           return (
             <CustomLink

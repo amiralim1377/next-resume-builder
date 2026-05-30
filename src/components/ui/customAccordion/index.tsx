@@ -4,7 +4,6 @@ import { FC, ReactNode, useState } from "react";
 import { AccordionHeader } from "./components/AccordionHeader";
 import { AccordionChildrenMode } from "./components/ChildrenMode";
 import { AccordionDataMode } from "./components/DataMode";
-import classes from "./index.module.css";
 import { cn } from "@/utils/cn";
 
 export interface AccordionItemProps {
@@ -109,9 +108,9 @@ const CustomAccordion: FC<ICustomAccordionProps> = ({
     <div
       aria-disabled={isDisabled}
       className={cn(
-        classes.accBodyWrapper,
+        "mx-auto w-full select-none",
         classNames?.root,
-        isDisabled && classes.disabled,
+        isDisabled && "pointer-none: opacity-5 select-none",
       )}
     >
       <AccordionHeader

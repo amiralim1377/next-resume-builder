@@ -1,7 +1,6 @@
 import { motion } from "framer-motion";
 import { Dispatch, SetStateAction } from "react";
 import { ICustomAccordionProps } from "../..";
-import classes from "./index.module.css";
 import { cn } from "@/utils/cn";
 import { ChevronDown } from "@/components/svg/chevronDown";
 
@@ -34,7 +33,7 @@ const AccordionHeader: React.FC<AccordionHeaderProps> = ({
   return (
     <div
       className={cn(
-        classes.accordionHeaderWrapper,
+        "flex w-full items-center justify-between p-1.25",
         classNames?.header,
         isChildrenMode && isChildrenOpen
           ? classNames?.select
@@ -45,14 +44,14 @@ const AccordionHeader: React.FC<AccordionHeaderProps> = ({
       }
     >
       <div
-        className={cn(
-          classes.accordionHeaderInnerContainer,
-          classNames?.headerInner,
-        )}
+        className={cn("flex items-center gap-1.25", classNames?.headerInner)}
       >
         {headerIcon && (
           <span
-            className={cn(classes.headerIconClassName, classNames?.headerIcon)}
+            className={cn(
+              "inline-flex cursor-pointer items-center justify-center select-none",
+              classNames?.headerIcon,
+            )}
           >
             {headerIcon}
           </span>
@@ -61,7 +60,7 @@ const AccordionHeader: React.FC<AccordionHeaderProps> = ({
         {headerTitle && (
           <span
             className={cn(
-              classes.headerTitleClassName,
+              "font-inter cursor-pointer leading-none select-none",
               classNames?.headerTitle,
             )}
           >
@@ -73,7 +72,10 @@ const AccordionHeader: React.FC<AccordionHeaderProps> = ({
       {isChildrenMode && (
         <motion.div
           animate={{ rotate: isChildrenOpen ? 180 : 0 }}
-          className={cn(classes.motionDivElem, classNames?.chevronWrapper)}
+          className={cn(
+            "inline-flex items-center justify-center p-1.25",
+            classNames?.chevronWrapper,
+          )}
           transition={
             disableAnimation
               ? { duration: 0 }
@@ -81,10 +83,7 @@ const AccordionHeader: React.FC<AccordionHeaderProps> = ({
           }
           {...motionProps}
         >
-          <ChevronDown
-            className={cn(classes.chevron, classNames?.chevron)}
-            size={chevronSize}
-          />
+          <ChevronDown className={cn(classNames?.chevron)} size={chevronSize} />
         </motion.div>
       )}
     </div>

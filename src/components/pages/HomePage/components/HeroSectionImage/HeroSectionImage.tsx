@@ -3,18 +3,12 @@ import heroSectionImage from "@public/images/hero-illustration.webp";
 
 function HeroSectionImage() {
   return (
-    <div className="relative z-10 w-2/5 overflow-hidden rounded-xl ">
+    <div className="relative z-10 hidden w-2/5 overflow-hidden rounded-xl lg:block">
       <Image
         src={heroSectionImage}
         alt="Hero Illustration"
         priority
-        className="
-          w-full h-auto 
-          drop-shadow2xl 
-          animate-float
-          p-4
-          rounded-lg
-        "
+        className="drop-shadow2xl animate-float h-auto w-full rounded-lg p-4"
       />
     </div>
   );

@@ -4,7 +4,7 @@ import { QuickLinks } from "./components/quickLinks";
 
 function Footer() {
   return (
-    <div className="bg-brandFooter mx-auto grid max-w-300 grid-cols-1 justify-items-center-safe py-16 md:grid-cols-3">
+    <div className="bg-brandFooter mx-auto grid max-w-300 grid-cols-1 space-y-10 p-16 lg:grid-cols-3 lg:justify-items-center">
       <AboutSite />
       <QuickLinks />
       <ConnectWithUs />

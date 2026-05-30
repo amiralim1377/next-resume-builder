@@ -8,19 +8,17 @@ function AboutSite() {
   const { lng } = useLang();
   const { t } = useTranslation(lng, "footer");
   return (
-    <div className="flex flex-col space-y-6">
-      <div className="w-fit">
-        <CustomLabel
-          classNames={{
-            labelClassName: " text-white  font-semibold ",
-            wrapperClassName: "flex flex-col  ",
-          }}
-        >
-          {t("aboutNextResume")}
-        </CustomLabel>
-      </div>
+    <div className="flex flex-col items-start">
+      <CustomLabel
+        classNames={{
+          labelClassName: " text-white  font-semibold ",
+          wrapperClassName: "flex flex-col  ",
+        }}
+      >
+        {t("aboutNextResume")}
+      </CustomLabel>
 
-      <CustomText className="text-text-secondary mt-4 text-justify text-xs text-wrap md:text-sm">
+      <CustomText className="text-text-secondary mt-4 text-justify text-xs text-wrap md:text-sm lg:mt-8">
         {t("aboutNextResumeContent")}
       </CustomText>
     </div>
