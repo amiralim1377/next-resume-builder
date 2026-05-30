@@ -45,7 +45,7 @@ export const AccordionDataMode: FC<AccordionDataModeProps> = ({
       style={{
         borderBottom:
           showDivider && !(hideLastDivider && isLastItem)
-            ? `1px solid ${colors.accent?.accent}`
+            ? `1px solid ${colors.ui?.border}`
             : "",
       }}
       role="button"
