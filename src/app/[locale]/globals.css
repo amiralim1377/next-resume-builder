@@ -17,7 +17,7 @@ body {
   --color-brandHover: var(--brand-hover);
   --color-brandLight: var(--brand-light);
   --color-brandActive: var(--brand-active);
-
+  --color-brandFooter: var(--brand-footer);
   /* accent-color */
   --color-accentLight: var(--brand-accent-light);
   --color-accent: var(--brand-accent);
@@ -79,7 +79,7 @@ body {
   --brand-primary: #5a3eb5;
   --brand-hover: #483291;
   --brand-active: #3d2a7a;
-
+  --brand-footer: #0d1117;
   /* Brand Accents - Light Mode */
   --brand-accent-light: #f4f2fa; /* Extremely light */
   --brand-accent: #e9e5f5;
@@ -126,6 +126,7 @@ body {
   --brand-primary: #5a3eb5;
   --brand-hover: #9378d1; /* Lighter hover for dark backgrounds */
   --brand-active: #5a3eb5; /* Darker active state */
+  --brand-footer: #0d1117;
 
   /* Brand Accents - Dark Mode (Deep dark purples) */
   --brand-accent-light: #332561; /* Lighter dark accent */
