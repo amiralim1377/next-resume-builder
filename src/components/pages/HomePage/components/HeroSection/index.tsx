@@ -4,7 +4,7 @@ import { HeroSectionImage } from "../HeroSectionImage/HeroSectionImage";
 
 const HeroSection = () => {
   return (
-    <div className="flex flex-col items-center justify-between md:flex-row">
+    <div className="flex items-center justify-between">
       <HeroSectionContent />
       <HeroSectionImage />
     </div>

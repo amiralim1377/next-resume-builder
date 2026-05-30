@@ -19,7 +19,7 @@ function HeroSectionContent() {
   return (
     <div
       className={cn(
-        "flex flex-col items-center space-y-4 text-center md:w-1/2 md:items-start",
+        "flex flex-col items-center space-y-4 text-center lg:w-1/2 lg:items-start",
         lng === "fa" ? "md:text-right" : "md:text-left",
       )}
     >
@@ -73,7 +73,7 @@ function HeroSectionContent() {
           {t("login")}
         </CustomLink>
       </div>
-      <div className="flex w-full flex-col items-center gap-6 md:flex-row">
+      <div className="flex w-full flex-col items-center gap-6 lg:flex-row lg:justify-stretch">
         <div className="flex items-center gap-1">
           <CheckCircle size={14} color={colors.state?.success} />
           <CustomText className="text-text-secondary text-xs md:text-sm">
