@@ -12,8 +12,8 @@ function SummaryStats() {
     { content: "1200k+", label: t("resumesCreated"), id: 3 },
   ];
   return (
-    <div className="px-30 py-10">
-      <div className="bg-ui-surface flex items-center justify-center rounded-lg shadow-lg">
+    <div className="">
+      <div className="bg-ui-surface grid w-full grid-cols-1 justify-items-center rounded-lg shadow-lg md:grid-cols-3">
         {summaryStatsArray.map((item, i) => {
           return (
             <CustomStats
@@ -23,6 +23,7 @@ function SummaryStats() {
               size="lg"
               labelClassName="text-sm text-text-primary"
               contentClassName="text-5xl text-textTertiary font-bold"
+              className="mx-auto flex w-full items-center justify-center"
             />
           );
         })}
