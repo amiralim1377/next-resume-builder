@@ -39,7 +39,7 @@ function FrequentlyAskedQuestions() {
         classNames={{
           root: cn("w-full md:max-w-237.5 mx-auto "),
           labelWrapper: cn("py-5"),
-          label: cn("text-base font-black capitalize text-brandPrimary"),
+          label: cn("text-base font-black capitalize text-textTertiary"),
           content: cn("pt-2.5 pb-5 px-1.25 mr-2.5 text-sm text-text-secondary"),
           chevron: cn("text-text-secondary"),
         }}
