@@ -6,7 +6,7 @@ import {
 } from "@/components/ui/customAccordion";
 import { useTranslation } from "@/lib/i18n/client";
 import { useLang } from "@/provider/lngProvider";
-import classes from "./index.module.css";
+import { cn } from "@/utils/cn";
 
 function FrequentlyAskedQuestions() {
   const { lng } = useLang();
@@ -31,17 +31,17 @@ function FrequentlyAskedQuestions() {
   ];
 
   return (
-    <div className="p-5">
+    <div className="py-5">
       <CustomAccordion
         data={FAQDataArray}
         showDivider={true}
         headerTitle={t("faq")}
         classNames={{
-          root: classes.rootFaqWrapper,
-          labelWrapper: classes.faqLabelWrapper,
-          label: classes.faqlabel,
-          content: classes.faqContent,
-          chevron: classes.faqChevron,
+          root: cn("w-full md:max-w-237.5 mx-auto "),
+          labelWrapper: cn("py-5"),
+          label: cn("text-base font-black capitalize text-brandPrimary"),
+          content: cn("pt-2.5 pb-5 px-1.25 mr-2.5 text-sm text-text-secondary"),
+          chevron: cn("text-text-secondary"),
         }}
       />
     </div>
