@@ -3,7 +3,6 @@ import { Language, languages } from "@/lib/i18n/settings";
 import "./globals.css";
 import { Header } from "@/components/layout/header";
 import { ConditionalRenderer } from "@/components/shared/ConditionalRenderer";
-import MobileComponents from "@/components/layout/header/mobile";
 import { inter, yekanbakh } from "@/font";
 import { ThemeScheme } from "@/provider/themeProvider";
 import { cookies } from "next/headers";
@@ -12,6 +11,7 @@ import { MainProvider } from "@/provider/MainProvider";
 import { cn } from "@/utils/cn";
 import { ReactNode } from "react";
 import { Footer } from "@/components/layout/footer";
+import { MobileHeader } from "@/components/layout/header/mobileHeader";
 
 type Params = Promise<{ locale: string }>;
 
@@ -62,12 +62,9 @@ export default async function RootLayout({ children, params }: LayoutProps) {
           )}
           suppressHydrationWarning={true}
         >
-          <ConditionalRenderer
-            desktop={<Header />}
-            mobile={<MobileComponents />}
-          />
+          <ConditionalRenderer desktop={<Header />} mobile={<MobileHeader />} />
           <main className="bg-ui-bg flex items-center justify-center">
-            <div className="container mx-auto grow px-4 md:px-8">
+            <div className="container mx-auto grow px-6 md:px-8">
               {children}
             </div>
           </main>
