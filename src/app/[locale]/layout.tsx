@@ -11,7 +11,7 @@ import { MainProvider } from "@/provider/MainProvider";
 import { cn } from "@/utils/cn";
 import { ReactNode } from "react";
 import { Footer } from "@/components/layout/footer";
-import { MobileHeader } from "@/components/layout/header/mobileHeader";
+import { MobileHeader } from "@/components/layout/header/components/mobileHeader";
 
 type Params = Promise<{ locale: string }>;
 
