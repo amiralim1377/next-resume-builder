@@ -6,17 +6,18 @@ import SiteLogo from "../../svg/SiteLogo";
 import { useThemeColors } from "@/provider/themeProvider/useThemeColors";
 import { cn } from "@/utils/cn";
 import { CustomLink } from "@/components/ui/customLink";
+import { ThemeToggleButton } from "./ThemeToggleButton";
 
 function Header() {
   const { lng } = useLang();
   const { t } = useTranslation(lng, "common");
   const { colors } = useThemeColors();
   const { switchTheme, theme } = useThemeColors();
-  console.log(theme);
 
   const handleChangeTheme = () => {
     switchTheme();
   };
+
   return (
     <div className="bg-ui-bg border-ui-border flex w-full items-center justify-between border-b px-8 py-6">
       <div className="flex items-center gap-1">
@@ -39,11 +40,6 @@ function Header() {
         >
           {t("siteName")}
         </CustomText>
-        <div>
-          <button onClick={handleChangeTheme} className="rounded-md border p-2">
-            change theme
-          </button>
-        </div>
       </div>
       <nav className="flex items-center justify-between gap-5 text-lg font-light capitalize">
         <CustomLink
@@ -73,6 +69,11 @@ function Header() {
         >
           {t("aboutUs")}
         </CustomLink>
+        <ThemeToggleButton
+          onChange={handleChangeTheme}
+          colors={colors}
+          theme={theme}
+        />
       </nav>
     </div>
   );
