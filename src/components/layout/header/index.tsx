@@ -8,15 +8,25 @@ import { cn } from "@/utils/cn";
 import { CustomLink } from "@/components/ui/customLink";
 import { ThemeToggleButton } from "./components/themeToggleButton";
 import { LanguageToggle } from "./components/languageToggle";
+import { usePathname } from "next/navigation";
+import { Language } from "@/lib/i18n/settings";
 
 function Header() {
   const { lng } = useLang();
   const { t } = useTranslation(lng, "common");
   const { colors } = useThemeColors();
+  const pathname = usePathname();
   const { switchTheme, theme } = useThemeColors();
 
   const handleChangeTheme = () => {
     switchTheme();
+  };
+
+  const changeLanguage = (next: Language) => {
+    window.location.href =
+      next === "fa"
+        ? pathname.replace(/^\/en(?=\/|$)/, "/fa")
+        : pathname.replace(/^\/fa(?=\/|$)/, "/en");
   };
 
   return (
@@ -75,7 +85,7 @@ function Header() {
           colors={colors}
           theme={theme}
         />
-        <LanguageToggle />
+        <LanguageToggle onChangeLanguage={changeLanguage} t={t} lng={lng} />
       </nav>
     </div>
   );
