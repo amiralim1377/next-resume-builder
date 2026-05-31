@@ -75,7 +75,7 @@ function Header() {
           colors={colors}
           theme={theme}
         />
-        <LanguageToggle />
+        <LanguageToggle t={t} lng={lng} />
       </nav>
     </div>
   );
