@@ -13,9 +13,7 @@ function Header() {
 
   return (
     <div className="bg-ui-bg border-ui-border flex w-full items-center justify-between border-b px-8 py-6">
-      <div className="flex items-center gap-1">
-        <LogoWithText theme={theme} colors={colors} t={t} />
-      </div>
+      <LogoWithText theme={theme} colors={colors} lng={lng} t={t} />
       <DesktopHeaderNavigation
         t={t}
         colors={colors}
