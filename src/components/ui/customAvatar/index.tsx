@@ -1,5 +1,5 @@
+"use client";
 import PersonSvg from "@/components/svg/PersonSvg";
-import { useThemeColors } from "@/provider/themeProvider/useThemeColors";
 import { cn } from "@/utils/cn";
 import Image, { StaticImageData } from "next/image";
 import React, { useState } from "react";
