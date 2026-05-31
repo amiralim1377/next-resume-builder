@@ -8,9 +8,7 @@ type PanelLayoutProps = {
 export default function PanelLayout({ children }: PanelLayoutProps) {
   return (
     <div className="grid h-auto w-full grid-cols-[250px_1fr] gap-9">
-      <aside className="">
-        <PanelSidebar />
-      </aside>
+      <PanelSidebar />
       <main>{children}</main>
     </div>
   );
