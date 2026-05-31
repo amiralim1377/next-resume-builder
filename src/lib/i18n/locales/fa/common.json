@@ -6,5 +6,13 @@
   "blog": "بلاگ",
   "aboutUs": "درباره ی ما",
   "farsi": "فارسی",
-  "english": "انگلیسی"
+  "english": "انگلیسی",
+  "buildNewResume": "ساخت رزومه جدید",
+  "myResumes": "رزومه های من",
+  "myInformation": "اطلاعات من",
+  "settings": "تنظیمات حساب کاربری",
+  "helpGuide": "راهنما",
+  "exit": "خروج",
+  "resumeTemplates": "قالب های رزومه",
+  "dashboard": "نمای کلی"
 }

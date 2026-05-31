@@ -6,5 +6,13 @@
   "blog": "Blog",
   "aboutUs": "About Us",
   "farsi": "Farsi",
-  "english": "English"
+  "english": "English",
+  "buildNewResume": "build new resume",
+  "myResumes": "my Resumes",
+  "myInformation": "My Information",
+  "settings": "Settings",
+  "helpGuide": "Help/Guide",
+  "exit": "Exit",
+  "resumeTemplates": "Resume Templates",
+  "dashboard": "Overview"
 }
