@@ -5,12 +5,16 @@ type ChevronDownProps = {
   className?: string;
   color?: string;
   onClick?: (e: React.MouseEvent<HTMLDivElement>) => void;
+  fill?: string;
+  stroke?: string;
 };
 
 function ChevronDown({
   size = 24,
   className,
+  fill,
   onClick,
+  stroke,
   color = "currentColor",
 }: ChevronDownProps) {
   return (
@@ -21,7 +25,9 @@ function ChevronDown({
         viewBox="0 -960 960 960"
         width={size}
         className={className}
-        fill={color}
+        color={color}
+        fill={fill}
+        stroke={stroke}
       >
         <path d="M480-360 280-560h400L480-360Z" />
       </svg>

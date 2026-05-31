@@ -6,7 +6,8 @@ import SiteLogo from "../../svg/SiteLogo";
 import { useThemeColors } from "@/provider/themeProvider/useThemeColors";
 import { cn } from "@/utils/cn";
 import { CustomLink } from "@/components/ui/customLink";
-import { ThemeToggleButton } from "./ThemeToggleButton";
+import { ThemeToggleButton } from "./components/themeToggleButton";
+import { LanguageToggle } from "./components/languageToggle";
 
 function Header() {
   const { lng } = useLang();
@@ -74,6 +75,7 @@ function Header() {
           colors={colors}
           theme={theme}
         />
+        <LanguageToggle />
       </nav>
     </div>
   );

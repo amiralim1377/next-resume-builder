@@ -4,5 +4,7 @@
   "login": "Login",
   "register": "Register",
   "blog": "Blog",
-  "aboutUs": "About Us"
+  "aboutUs": "About Us",
+  "farsi": "Farsi",
+  "english": "English"
 }
