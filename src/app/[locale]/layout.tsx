@@ -63,11 +63,7 @@ export default async function RootLayout({ children, params }: LayoutProps) {
           suppressHydrationWarning={true}
         >
           <ConditionalRenderer desktop={<Header />} mobile={<MobileHeader />} />
-          <main className="bg-ui-bg flex items-center justify-center">
-            <div className="container mx-auto grow px-6 md:px-8">
-              {children}
-            </div>
-          </main>
+          <main className="bg-ui-bg flex grow">{children}</main>
           <footer className="bg-brandFooter">
             <Footer />
           </footer>
