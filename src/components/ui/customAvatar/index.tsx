@@ -46,7 +46,7 @@ const CustomAvatar: React.FC<AvatarProps> = ({
   shape = "circle",
   status = "none",
   className = "",
-  ...props
+  ...rest
 }) => {
   const [imgError, setImgError] = useState(false);
 
@@ -59,13 +59,14 @@ const CustomAvatar: React.FC<AvatarProps> = ({
   );
 
   return (
-    <div className={baseClasses} {...props}>
+    <div className={baseClasses} {...rest}>
       {src && !imgError ? (
         <Image
           src={src}
           alt={alt}
           onError={() => setImgError(true)}
           className={cn("h-full w-full object-cover", roundedClass)}
+          fill
         />
       ) : (
         <span className="select-none">

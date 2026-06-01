@@ -1,17 +1,21 @@
 import React from "react";
-import { CustomAvatar } from "../customAvatar";
+import { AvatarSize, CustomAvatar } from "../customAvatar";
 import { cn } from "@/utils/cn";
 import { useLang } from "@/provider/lngProvider";
+import { useTranslation } from "@/lib/i18n/client";
+import { StaticImageData } from "next/image";
 
 type AvatarProps = React.ComponentProps<typeof CustomAvatar>;
 
 export interface UserInfoProps extends React.HTMLAttributes<HTMLDivElement> {
   userName: string;
   label?: string;
-  avatarProps?: Omit<AvatarProps, "name">;
+  avatarProps?: Omit<AvatarProps, "name" | "src" | "size">;
   layout?: "horizontal" | "vertical";
   nameClassName?: string;
   labelClassName?: string;
+  avatarSize?: AvatarSize;
+  avatarSrc?: string | StaticImageData;
 }
 
 const CustomUserInfo: React.FC<UserInfoProps> = ({
@@ -22,10 +26,14 @@ const CustomUserInfo: React.FC<UserInfoProps> = ({
   className = "",
   nameClassName = "",
   labelClassName = "",
+  avatarSize,
+  avatarSrc,
   ...props
 }) => {
   const isHorizontal = layout === "horizontal";
   const { lng } = useLang();
+  const { t } = useTranslation(lng, "home");
+  const shouldRenderAvatar = Boolean(avatarSrc || avatarProps);
 
   return (
     <div
@@ -40,10 +48,17 @@ const CustomUserInfo: React.FC<UserInfoProps> = ({
       )}
       {...props}
     >
-      {avatarProps && <CustomAvatar name={userName} {...avatarProps} />}
+      {shouldRenderAvatar && (
+        <CustomAvatar
+          size={avatarSize}
+          name={userName}
+          src={avatarSrc}
+          {...avatarProps}
+        />
+      )}
 
       <div className="flex flex-col">
-        <span className={cn(nameClassName)}>{userName}</span>
+        <span className={cn(nameClassName)}>{t(`${userName}`)}</span>
         {label && <span className={cn(labelClassName)}>{label}</span>}
       </div>
     </div>
