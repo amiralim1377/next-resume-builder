@@ -1,3 +1,4 @@
+import { FormStepperItem } from "@/components/ui/CustomFormStepperItem";
 import { StepConfig, StepName } from "../../types/resume.types";
 
 type FormStepperProps = {
@@ -14,16 +15,25 @@ const FormStepper = ({
   steps,
 }: FormStepperProps) => {
   return (
-    <div className="flex justify-between">
-      {steps.map((step, index) => (
-        <StepItem
-          key={step.id}
-          step={step}
-          isActive={currentStep === index}
-          isCompleted={completedSteps.has(step.id)}
-          onClick={() => onStepClick(index)}
-        />
-      ))}
+    <div className="flex w-full justify-between">
+      {steps.map((step, index) => {
+        const isCompleted = completedSteps.has(step.id);
+        const isActive = index === currentStep;
+        const isPending = index > currentStep && !isCompleted;
+
+        return (
+          <FormStepperItem
+            key={step.id}
+            stepNumber={index + 1}
+            title={step.titleEn}
+            isActive={isActive}
+            isCompleted={isCompleted}
+            isPending={isPending}
+            isLast={index === steps.length - 1}
+            onClick={() => onStepClick(index)}
+          />
+        );
+      })}
     </div>
   );
 };
