@@ -1,14 +1,15 @@
-import { BasicInfoStep } from "../components/steps/basicInfoStep";
-import { EducationStep } from "../components/steps/educationStep";
-import { ProjectsStep } from "../components/steps/projectsStep";
-import { ResearchStep } from "../components/steps/researchStep";
-import { SkillsStep } from "../components/steps/skillsStep";
+import { BasicInfoStep } from "../components/Steps/basicInfoStep";
+import { EducationStep } from "../components/Steps/educationStep";
+import { ProjectsStep } from "../components/Steps/projectsStep";
+import { ResearchStep } from "../components/Steps/researchStep";
+import { SkillsStep } from "../components/Steps/skillsStep";
 import { StepConfig } from "../types/resume.types";
 
 export const RESUME_STEPS: StepConfig[] = [
   {
     id: "basic",
     title: "اطلاعات پایه",
+    titleKey: "stepsBasic",
     titleEn: "Basic Information",
     component: BasicInfoStep,
     fieldNames: ["basicInfo"] as const,
@@ -18,6 +19,7 @@ export const RESUME_STEPS: StepConfig[] = [
   {
     id: "education",
     title: "تحصیلات",
+    titleKey: "stepsEducation",
     titleEn: "Education History",
     component: EducationStep,
     fieldNames: ["education"] as const,
@@ -27,6 +29,7 @@ export const RESUME_STEPS: StepConfig[] = [
   {
     id: "skills",
     title: "مهارت‌ها",
+    titleKey: "stepsSkills",
     titleEn: "Skills",
     component: SkillsStep,
     fieldNames: ["skills"] as const,
@@ -36,6 +39,7 @@ export const RESUME_STEPS: StepConfig[] = [
   {
     id: "projects",
     title: "پروژه‌ها",
+    titleKey: "stepsProjects",
     titleEn: "Projects",
     component: ProjectsStep,
     fieldNames: ["projects"] as const,
@@ -45,6 +49,7 @@ export const RESUME_STEPS: StepConfig[] = [
   {
     id: "research",
     title: "تحقیقات و مقالات",
+    titleKey: "stepsResearch",
     titleEn: "Research & Publications",
     component: ResearchStep,
     fieldNames: ["research"] as const,
