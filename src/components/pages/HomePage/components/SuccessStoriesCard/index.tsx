@@ -3,10 +3,10 @@ import {
   AvatarSize,
   AvatarStatus,
   CustomAvatar,
-} from "@/components/ui/customAvatar";
-import { CustomRateStar } from "@/components/ui/customRateStar";
-import { CustomText } from "@/components/ui/customText";
-import { CustomUserInfo } from "@/components/ui/customUserInfo";
+} from "@/components/ui/CustomAvatar";
+import { CustomRateStar } from "@/components/ui/CustomRateStar";
+import { CustomText } from "@/components/ui/CustomText";
+import { CustomUserInfo } from "@/components/ui/CustomUserInfo";
 import { StaticImageData } from "next/image";
 
 export interface SuccessStoriesCardProps {

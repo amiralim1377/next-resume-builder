@@ -1,6 +1,6 @@
-import SiteLogo from "@/components/svg/SiteLogo";
-import { CustomLink } from "@/components/ui/customLink";
-import { CustomText } from "@/components/ui/customText";
+import { SiteLogo } from "@/components/svg/SiteLogo";
+import { CustomLink } from "@/components/ui/CustomLink";
+import { CustomText } from "@/components/ui/CustomText";
 import { Language } from "@/lib/i18n/settings";
 import { ThemeScheme } from "@/provider/themeProvider";
 import { ColorPalette } from "@/provider/themeProvider/types";

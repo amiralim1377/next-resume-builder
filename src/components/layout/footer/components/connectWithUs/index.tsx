@@ -1,7 +1,7 @@
 "use client";
-import { LinkdinSvg } from "@/components/svg/linkdinSvg";
-import { CustomLabel } from "@/components/ui/customLabel";
-import { CustomLink } from "@/components/ui/customLink";
+import { LinkdinSvg } from "@/components/svg/LinkdinSvg";
+import { CustomLabel } from "@/components/ui/CustomLabel";
+import { CustomLink } from "@/components/ui/CustomLink";
 import { socialLinks } from "@/core/constants/socialLinks";
 import { useTranslation } from "@/lib/i18n/client";
 import { useLang } from "@/provider/lngProvider";

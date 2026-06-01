@@ -6,7 +6,7 @@ import {
 } from "../../index";
 import { cn } from "@/utils/cn";
 import { useThemeColors } from "@/provider/themeProvider/useThemeColors";
-import { ChevronDown } from "@/components/svg/chevronDown";
+import { ChevronDown } from "@/components/svg/ChevronDown";
 
 interface AccordionDataModeProps {
   item: AccordionItemProps;

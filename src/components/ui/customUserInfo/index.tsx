@@ -1,5 +1,5 @@
 import React from "react";
-import { AvatarSize, CustomAvatar } from "../customAvatar";
+import { AvatarSize, CustomAvatar } from "../CustomAvatar";
 import { cn } from "@/utils/cn";
 import { useLang } from "@/provider/lngProvider";
 import { useTranslation } from "@/lib/i18n/client";

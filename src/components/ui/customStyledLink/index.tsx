@@ -1,7 +1,7 @@
 "use client";
 
 import { CSSProperties, ReactNode, RefObject } from "react";
-import { CustomLink } from "../customLink";
+import { CustomLink } from "../CustomLink";
 import { cn } from "@/utils/cn";
 import { useThemeColors } from "@/provider/themeProvider/useThemeColors";
 import { useBoldFontWeight } from "@/hooks/useBoldFontWeight";

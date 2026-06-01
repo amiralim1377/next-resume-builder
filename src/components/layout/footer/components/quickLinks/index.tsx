@@ -1,6 +1,6 @@
 "use client";
-import { CustomLabel } from "@/components/ui/customLabel";
-import { CustomLink } from "@/components/ui/customLink";
+import { CustomLabel } from "@/components/ui/CustomLabel";
+import { CustomLink } from "@/components/ui/CustomLink";
 import { useTranslation } from "@/lib/i18n/client";
 import { useLang } from "@/provider/lngProvider";
 import { ReactNode } from "react";

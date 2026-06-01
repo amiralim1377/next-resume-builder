@@ -1,6 +1,6 @@
-import { AboutSite } from "./components/aboutSite";
-import { ConnectWithUs } from "./components/connectWithUs";
-import { QuickLinks } from "./components/quickLinks";
+import { AboutSite } from "./components/AboutSite";
+import { ConnectWithUs } from "./components/ConnectWithUs";
+import { QuickLinks } from "./components/QuickLinks";
 
 function Footer() {
   return (
