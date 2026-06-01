@@ -2,8 +2,8 @@
 import { useTranslation } from "@/lib/i18n/client";
 import { useLang } from "@/provider/lngProvider";
 import { useThemeColors } from "@/provider/themeProvider/useThemeColors";
-import { DesktopHeaderNavigation } from "./components/desktopHeaderNavigation";
-import { LogoWithText } from "./components/logoWithText";
+import { DesktopHeaderNavigation } from "./components/DesktopHeaderNavigation";
+import { LogoWithText } from "./components/LogoWithText";
 
 function Header() {
   const { lng } = useLang();

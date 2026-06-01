@@ -2,7 +2,7 @@
 import { useHover } from "@/hooks/useHover";
 import { cn } from "@/utils/cn";
 import { CSSProperties, ReactNode } from "react";
-import { CustomProgress } from "../customProgress";
+import { CustomProgress } from "../CustomProgress";
 
 type CustomLabelClassName = {
   labelClassName: string | CSSProperties;

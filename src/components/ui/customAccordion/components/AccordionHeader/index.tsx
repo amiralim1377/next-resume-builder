@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { Dispatch, SetStateAction } from "react";
 import { ICustomAccordionProps } from "../..";
 import { cn } from "@/utils/cn";
-import { ChevronDown } from "@/components/svg/chevronDown";
+import { ChevronDown } from "@/components/svg/ChevronDown";
 
 interface AccordionHeaderProps extends ICustomAccordionProps {
   isChildrenMode: boolean;

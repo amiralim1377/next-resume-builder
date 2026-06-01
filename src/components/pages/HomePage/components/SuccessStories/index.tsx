@@ -1,6 +1,6 @@
 "use client";
 
-import { CustomText } from "@/components/ui/customText";
+import { CustomText } from "@/components/ui/CustomText";
 import { useTranslation } from "@/lib/i18n/client";
 import { useLang } from "@/provider/lngProvider";
 import { SuccessStoriesList } from "../SuccessStoriesList";

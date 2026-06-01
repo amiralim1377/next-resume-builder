@@ -1,11 +1,11 @@
 "use client";
 import { Ref, RefObject, useState } from "react";
-import { CustomText } from "../customText";
+import { CustomText } from "../CustomText";
 import { cn } from "@/utils/cn";
 import { useLang } from "@/provider/lngProvider";
 import { useThemeColors } from "@/provider/themeProvider/useThemeColors";
 import { getFontFamily } from "@/utils/getFontFamily";
-import { LoadingView } from "../loadingView";
+import { LoadingView } from "../CustomLoadingView";
 import { useBoldFontWeight } from "@/hooks/useBoldFontWeight";
 
 interface CustomButtonProps {

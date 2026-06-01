@@ -1,10 +1,4 @@
-export default function SiteLogo({
-  color,
-  size,
-}: {
-  color?: string;
-  size?: number;
-}) {
+function SiteLogo({ color, size }: { color?: string; size?: number }) {
   return (
     <svg
       width={size}

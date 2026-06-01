@@ -3,7 +3,7 @@
 import {
   AccordionItemProps,
   CustomAccordion,
-} from "@/components/ui/customAccordion";
+} from "@/components/ui/CustomAccordion";
 import { useTranslation } from "@/lib/i18n/client";
 import { useLang } from "@/provider/lngProvider";
 import { cn } from "@/utils/cn";

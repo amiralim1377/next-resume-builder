@@ -1,7 +1,7 @@
 import { TFunction } from "i18next";
 import { getHref } from "@/utils/getHref";
-import { CustomButton } from "@/components/ui/customButton";
-import { StyledLink } from "@/components/ui/customStyledLink";
+import { CustomButton } from "@/components/ui/CustomButton";
+import { StyledLink } from "@/components/ui/CustomStyledLink";
 import { RoutesName } from "@/core/constants/routesName";
 import { Language } from "@/lib/i18n/settings";
 

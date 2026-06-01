@@ -1,6 +1,6 @@
 "use client";
-import { CustomDropdown } from "@/components/ui/customDropdown";
-import { CustomText } from "@/components/ui/customText";
+import { CustomDropdown } from "@/components/ui/CustomDropdown";
+import { CustomText } from "@/components/ui/CustomText";
 import { Language } from "@/lib/i18n/settings";
 import { TFunction } from "i18next";
 import { memo } from "react";

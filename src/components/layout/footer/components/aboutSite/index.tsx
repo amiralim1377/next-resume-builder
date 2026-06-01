@@ -1,6 +1,6 @@
 "use client";
-import { CustomLabel } from "@/components/ui/customLabel";
-import { CustomText } from "@/components/ui/customText";
+import { CustomLabel } from "@/components/ui/CustomLabel";
+import { CustomText } from "@/components/ui/CustomText";
 import { useTranslation } from "@/lib/i18n/client";
 import { useLang } from "@/provider/lngProvider";
 

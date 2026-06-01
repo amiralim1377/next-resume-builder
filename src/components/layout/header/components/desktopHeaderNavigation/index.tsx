@@ -1,12 +1,12 @@
 "use client";
-import { CustomLink } from "@/components/ui/customLink";
-import { ThemeToggleButton } from "../themeToggleButton";
+import { CustomLink } from "@/components/ui/CustomLink";
+import { ThemeToggleButton } from "../ThemeToggleButton";
 import { usePathname } from "next/navigation";
 import { Language } from "@/lib/i18n/settings";
 import { TFunction } from "i18next";
 import { ThemeScheme } from "@/provider/themeProvider";
 import { ColorPalette } from "@/provider/themeProvider/types";
-import { LanguageToggle } from "../languageToggle";
+import { LanguageToggle } from "../LanguageToggle";
 
 type DesktopHeaderNavigationProps = {
   onSwitchTheme: () => void;
