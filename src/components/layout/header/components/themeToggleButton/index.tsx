@@ -1,6 +1,6 @@
 import { memo } from "react";
-import { DarkSvg } from "@/components/svg/darkSvg";
-import { LightSvg } from "@/components/svg/lightSvg";
+import { DarkSvg } from "@/components/svg/DarkSvg";
+import { LightSvg } from "@/components/svg/LightSvg";
 import { ThemeScheme } from "@/provider/themeProvider";
 import { ColorPalette } from "@/provider/themeProvider/types";
 

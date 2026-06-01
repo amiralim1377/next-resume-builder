@@ -1,6 +1,6 @@
 "use client";
-import { CustomLink } from "@/components/ui/customLink";
-import { CustomText } from "@/components/ui/customText";
+import { CustomLink } from "@/components/ui/CustomLink";
+import { CustomText } from "@/components/ui/CustomText";
 import { useTranslation } from "@/lib/i18n/client";
 import { useLang } from "@/provider/lngProvider";
 import { useThemeColors } from "@/provider/themeProvider/useThemeColors";

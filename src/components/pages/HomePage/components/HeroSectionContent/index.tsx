@@ -1,11 +1,11 @@
 "use client";
-import { CustomBadge } from "@/components/ui/customBadge";
-import { CustomLink } from "@/components/ui/customLink";
-import { CustomText } from "@/components/ui/customText";
+import { CustomBadge } from "@/components/ui/CustomBadge";
+import { CustomLink } from "@/components/ui/CustomLink";
+import { CustomText } from "@/components/ui/CustomText";
 import { useTranslation } from "@/lib/i18n/client";
 import { useLang } from "@/provider/lngProvider";
 import { useThemeColors } from "@/provider/themeProvider/useThemeColors";
-import { CheckCircle } from "@/components/svg/checkCircle";
+import { CheckCircle } from "@/components/svg/CheckCircle";
 import { cn } from "@/utils/cn";
 import { useHeroClasses } from "./hook/useHeroClasses";
 

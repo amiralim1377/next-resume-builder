@@ -1,4 +1,4 @@
-import { CustomUserInfo } from "@/components/ui/customUserInfo";
+import { CustomUserInfo } from "@/components/ui/CustomUserInfo";
 import amiralimoradiniaImage from "@public/images/IMG_20251101_203439_943.jpg";
 import { TFunction } from "i18next";
 

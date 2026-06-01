@@ -2,9 +2,9 @@
 import { useHover } from "@/hooks/useHover";
 import { cn } from "@/utils/cn";
 import { CSSProperties, Fragment, ReactNode } from "react";
-import { CustomLink } from "../customLink";
+import { CustomLink } from "../CustomLink";
 import { useThemeColors } from "@/provider/themeProvider/useThemeColors";
-import { ChevronDown } from "@/components/svg/chevronDown";
+import { ChevronDown } from "@/components/svg/ChevronDown";
 import { useRouter } from "next/navigation";
 
 type CustomDropdownClassNames = {

@@ -1,5 +1,5 @@
 "use client";
-import { CustomStats, StatItem } from "@/components/ui/customStat";
+import { CustomStats, StatItem } from "@/components/ui/CustomStat";
 import { useTranslation } from "@/lib/i18n/client";
 import { useLang } from "@/provider/lngProvider";
 

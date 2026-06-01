@@ -4,7 +4,7 @@ import { DetailedHTMLProps, HTMLAttributes, HTMLProps, Ref } from "react";
 import { UrlObject } from "url";
 import { cn } from "@/utils/cn";
 import { getFontFamily } from "@/utils/getFontFamily";
-import { ClickEffect } from "../customClickEffect";
+import { ClickEffect } from "../CustomClickEffect";
 import { usePageLoading } from "@/provider/PageLoadingProvider";
 
 type CustomLinkType = LinkProps &
