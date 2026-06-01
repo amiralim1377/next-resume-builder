@@ -21,6 +21,7 @@ export const COLORS: {
     text: {
       primary: "#F9FAFB", // Near white for high readability
       secondary: "#D1D5DB", // Light gray for secondary text
+      disabledText: "#6b7280",
       muted: "#9CA3AF", // Medium gray for placeholders/disabled
       inverse: "#111827", // Dark text for inside primary buttons
       brandText: "#d4cbed",
@@ -32,6 +33,8 @@ export const COLORS: {
       error: "#EF4444", // Red
       warning: "#F59E0B", // Amber
       info: "#3B82F6", // Blue
+      stateActiveStar: "#fbbf24",
+      stateInactiveColor: "#e5e7eb",
     },
     ui: {
       background: "#111827", // Deep slate for main app background
@@ -55,6 +58,11 @@ export const COLORS: {
         divider: "#F3F4F6",
       },
     },
+    components: {
+      disabledButton: "#374151",
+      dropdown: "#303131",
+      progressContainer: "#0d1117",
+    },
   },
   lightTheme: {
     brand: {
@@ -72,17 +80,20 @@ export const COLORS: {
     text: {
       primary: "#111827", // Near black for crisp reading
       secondary: "#4B5563", // Dark gray for subheadings
+      textTertiary: "#4f46e5",
       muted: "#9CA3AF", // Medium gray for placeholders
       inverse: "#FFFFFF", // White text for inside primary buttons
       brandText: "#e5dff7",
       brandTextHover: "#c9bbea",
-      textTertiary: "#4f46e5",
+      disabledText: "#9ca3af",
     },
     state: {
       success: "#059669", // Slightly darker emerald for light bg
       error: "#DC2626", // Slightly darker red
       warning: "#D97706", // Darker amber
       info: "#2563EB", // Darker blue
+      stateActiveStar: "#fbbf24",
+      stateInactiveColor: "#e5e7eb",
     },
     ui: {
       background: "#F9FAFB", // Very soft gray, easier on eyes than pure white
@@ -105,6 +116,11 @@ export const COLORS: {
         border: "#374151",
         divider: "#1F2937",
       },
+    },
+    components: {
+      progressContainer: "#0d1117",
+      dropdown: "#f2f4f5",
+      disabledButton: "#e5e7eb",
     },
   },
 };

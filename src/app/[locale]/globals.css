@@ -36,6 +36,7 @@ body {
   --color-brandTextHover: var(--brandTextHover);
   --color-textTertiary: var(--text-tertiary);
   --color-inverse: var(--text-inverse);
+  --color-disabledText: var(--disabledText);
 
   /* state */
   --color-state-success: var(--state-success);
@@ -53,6 +54,7 @@ body {
   /* components */
   --color-progressContainer: var(--progressContainer);
   --color-dropdown: var(--dropdown);
+  --color-disabledButton: var(--disabledButton);
 
   /* --- REVERSE COLORS --- */
   --color-reverse-text-primary: var(--reverse-text-primary);
@@ -116,6 +118,8 @@ body {
   --brandText: #e5dff7;
   --brandTextHover: #c9bbea;
   --text-tertiary: #4f46e5;
+  --disabledText: #9ca3af;
+
   /* state */
   --state-success: #059669;
   --state-error: #dc2626;
@@ -132,6 +136,7 @@ body {
   /* components */
   --progressContainer: #0d1117;
   --dropdown: #f2f4f5;
+  --disabledButton: #e5e7eb;
 
   /* --- REVERSE (Holds Dark Mode values) --- */
   --reverse-text-primary: #f9fafb;
@@ -165,11 +170,12 @@ body {
   --text-primary: #f9fafb;
   --text-secondary: #d1d5db;
   --text-tertiary: #b9b5f5;
-
   --text-muted: #9ca3af;
   --text-inverse: #111827;
   --brandText: #d4cbed;
   --brandTextHover: #b6a5e0;
+  --disabledText: #6b7280;
+
   /* dark-state */
   --state-success: #10b981;
   --state-error: #ef4444;
@@ -186,6 +192,7 @@ body {
   /* components */
   --progressContainer: #0d1117;
   --dropdown: #303131;
+  --disabledButton: #374151;
 
   /* --- REVERSE (Holds Light Mode values) --- */
   --reverse-text-primary: #111827;

@@ -24,12 +24,15 @@ export type ColorPalette = {
     brandText: string;
     brandTextHover: string;
     textTertiary: string;
+    disabledText: string;
   };
   state: {
     success: string;
     warning: string;
     error: string;
     info: string;
+    stateActiveStar: string;
+    stateInactiveColor: string;
   };
   reverse: {
     text: {
@@ -46,5 +49,10 @@ export type ColorPalette = {
       border: string;
       divider: string;
     };
+  };
+  components: {
+    progressContainer: string;
+    dropdown: string;
+    disabledButton: string;
   };
 };
