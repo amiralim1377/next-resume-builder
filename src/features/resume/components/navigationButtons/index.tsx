@@ -2,8 +2,8 @@
 
 import { useFormContext } from "react-hook-form";
 import { ResumeFormValues } from "../../schemas/resume.schema";
-import { CustomButton } from "@/components/ui/customButton";
-import { LoadingView } from "@/components/ui/loadingView";
+import { CustomButton } from "@/components/ui/CustomButton";
+import { LoadingView } from "@/components/ui/CustomLoadingView";
 
 interface NavigationButtonsProps {
   onNext: () => void;
