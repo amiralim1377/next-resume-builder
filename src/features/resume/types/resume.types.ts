@@ -1,4 +1,5 @@
 import { ComponentType } from "react";
+import { BasicInfo } from "./form.types";
 
 export interface Resume {
   id?: string;
@@ -17,6 +18,7 @@ export type StepName =
 export interface StepConfig {
   id: StepName;
   title: string;
+  titleKey: string;
   titleEn: string;
   component: ComponentType;
   fieldNames: readonly string[];
