@@ -7,4 +7,9 @@ export enum RoutesName {
 
   // panel
   newResume = "/panel/new",
+  myResume = "/panel/myresume",
+  resumeTemplates = "/panel/resumetemplates",
+  help = "/help",
+  settings = "/panel/settings",
+  panel = "/panel",
 }
