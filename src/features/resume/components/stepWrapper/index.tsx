@@ -4,8 +4,12 @@ import { useFormContext } from "react-hook-form";
 import { motion, AnimatePresence } from "framer-motion";
 import { ResumeFormValues } from "../../schemas/resume.schema";
 import { RESUME_STEPS } from "../../constants/steps";
+import { useLang } from "@/provider/lngProvider";
+import { useTranslation } from "@/lib/i18n/client";
 
 const StepWrapper = ({ currentStep }: { currentStep: number }) => {
+  const { lng } = useLang();
+  const { t } = useTranslation(lng, "form");
   const {
     formState: { errors },
   } = useFormContext<ResumeFormValues>();
@@ -25,9 +29,10 @@ const StepWrapper = ({ currentStep }: { currentStep: number }) => {
   if (!StepComponent) {
     return <div>Component for this step is not defined.</div>;
   }
+  const stepTitle = t(stepConfig.titleKey);
 
   return (
-    <div className="mx-auto max-w-3xl">
+    <div className="mx-auto w-full px-6">
       <div className="mb-8">
         <div className="flex items-center gap-3">
           {stepConfig.icon && (
@@ -36,15 +41,11 @@ const StepWrapper = ({ currentStep }: { currentStep: number }) => {
 
           <div>
             <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
-              {stepConfig.title}
+              {stepTitle}
             </h2>
-            <p className="mt-1 text-sm text-gray-500">
-              Step {currentStep + 1} of {RESUME_STEPS.length}
-            </p>
           </div>
         </div>
       </div>
-
       <AnimatePresence mode="wait">
         <motion.div
           key={currentStep}
@@ -57,7 +58,6 @@ const StepWrapper = ({ currentStep }: { currentStep: number }) => {
           <StepComponent />
         </motion.div>
       </AnimatePresence>
-
       {Object.keys(errors).length > 0 && (
         <div className="mt-6 rounded-xl border border-red-200 bg-red-50 p-4 dark:border-red-900 dark:bg-red-950">
           <p className="mb-2 text-sm font-medium text-red-600 dark:text-red-400">
