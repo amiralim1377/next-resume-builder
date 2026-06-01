@@ -5,15 +5,15 @@ import { useResumeForm } from "../../hooks/useResumeForm";
 import { StepName } from "../../types/resume.types";
 import { ResumeFormValues } from "../../schemas/resume.schema";
 import { RESUME_STEPS } from "../../constants/steps";
-import { FormStepper } from "../formStepper";
-import StepWrapper from "../stepWrapper";
-import { NavigationButtons } from "../navigationButtons";
+import { NavigationButtons } from "../NavigationButtons";
+import { FormStepper } from "../FormStepper";
+import StepWrapper from "../StepWrapper";
 type ResumeFormProviderProps = {
   initialData?: Partial<ResumeFormValues>;
   mode?: "create" | "edit";
 };
 
-export const ResumeFormProvider = ({
+const ResumeFormProvider = ({
   initialData,
   mode = "create",
 }: ResumeFormProviderProps) => {
@@ -61,6 +61,7 @@ export const ResumeFormProvider = ({
           completedSteps={completedSteps}
           onStepClick={handleStepClick}
         />
+
         <StepWrapper currentStep={currentStep} />
         <NavigationButtons
           onNext={handleNext}
@@ -72,3 +73,5 @@ export const ResumeFormProvider = ({
     </FormProvider>
   );
 };
+
+export { ResumeFormProvider };
