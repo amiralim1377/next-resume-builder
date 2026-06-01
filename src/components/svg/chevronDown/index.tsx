@@ -12,24 +12,20 @@ type ChevronDownProps = {
 function ChevronDown({
   size = 24,
   className,
-  fill,
   onClick,
-  stroke,
-  color = "currentColor",
+  color,
 }: ChevronDownProps) {
   return (
     <div onClick={onClick}>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         height={size}
-        viewBox="0 -960 960 960"
         width={size}
+        viewBox="0 -960 960 960"
         className={className}
-        color={color}
-        fill={fill}
-        stroke={stroke}
+        style={{ color }}
       >
-        <path d="M480-360 280-560h400L480-360Z" />
+        <path d="M480-360 280-560h400L480-360Z" fill="currentColor" />
       </svg>
     </div>
   );
