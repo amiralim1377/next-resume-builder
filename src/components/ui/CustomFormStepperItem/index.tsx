@@ -1,10 +1,14 @@
+"use client";
 import { cn } from "@/utils/cn";
 import { CheckCircle } from "@/components/svg/CheckCircle";
 import { ConnectorLine } from "./components/ConnectorLine";
+import { useLang } from "@/provider/lngProvider";
+import { useTranslation } from "@/lib/i18n/client";
+import { useThemeColors } from "@/provider/themeProvider/useThemeColors";
 
 type Props = {
   stepNumber: number;
-  title: string;
+  title: string[];
   isActive: boolean;
   isCompleted: boolean;
   isPending: boolean;
@@ -21,6 +25,9 @@ export const FormStepperItem = ({
   isLast,
   onClick,
 }: Props) => {
+  const { lng } = useLang();
+  const { t } = useTranslation(lng, "form");
+  const { colors } = useThemeColors();
   return (
     <div
       className="relative flex flex-1 cursor-pointer flex-col items-center gap-2"
@@ -32,14 +39,14 @@ export const FormStepperItem = ({
       <div
         className={cn(
           "z-10 flex h-8 w-8 items-center justify-center rounded-full border-2 transition-colors",
-          isCompleted && "border-teal-600 bg-teal-600 text-white",
+          isCompleted && "border-teal-600 text-white",
           isActive &&
             "border-blue-600 bg-white text-blue-600 ring-4 ring-blue-50",
           isPending && "border-gray-200 bg-gray-100 text-gray-400",
         )}
       >
         {isCompleted ? (
-          <CheckCircle size={16} />
+          <CheckCircle color={colors.state?.success} size={16} />
         ) : (
           <div className="h-3 w-3 rounded-full bg-current" />
         )}
@@ -55,7 +62,7 @@ export const FormStepperItem = ({
             isActive ? "text-gray-900" : "text-gray-600",
           )}
         >
-          {title}
+          {t(`${title}`)}
         </p>
         <p
           className={cn(
@@ -67,7 +74,11 @@ export const FormStepperItem = ({
                 : "text-gray-400",
           )}
         >
-          {isCompleted ? "Completed" : isActive ? "In Progress" : "Pending"}
+          {isCompleted
+            ? t("completed")
+            : isActive
+              ? t("inProgress")
+              : t("pending")}
         </p>
       </div>
     </div>
