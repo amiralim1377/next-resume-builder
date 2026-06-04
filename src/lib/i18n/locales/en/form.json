@@ -41,5 +41,16 @@
   "employmentHistory": "employment history",
   "Skills": "skills",
   "Projects": "Projects",
-  "research": "research publications"
+  "research": "research publications",
+  "firstNamerequired": "first name is required",
+  "jobTitlerequired": "job title is required",
+  "selectGender": "Please select your gender",
+  "invalidEmail": "Please enter a valid email format",
+  "birthdayDayRequired": "Please enter your birth day",
+  "birthdayMonthRequired": "Please enter your birth month",
+  "birthdayYearRequired": "Please enter your birth year",
+  "militaryServiceStatusMessage": "Please select your military service status",
+  "maritalStatusMessage": "Please select your marital status",
+  "invalidMobile": "the mobile phone number is not valid",
+  "invalidUrl": "invalid url"
 }

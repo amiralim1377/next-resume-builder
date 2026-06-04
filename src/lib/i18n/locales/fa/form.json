@@ -41,5 +41,17 @@
   "employmentHistory": "سوابق شغلی",
   "skills": "مهارت ها",
   "projects": "پروژه ها",
-  "research": "تحقیقات"
+  "research": "تحقیقات",
+  "firstNamerequired": "نام الزامی است",
+  "lastNamerequired": "نام خانوداگی الزامی است",
+  "jobTitlerequired": "عنوان شغلی رزومه الزامی است",
+  "selectGender": "   جنسیت خود راانتخاب کنید",
+  "invalidEmail": "ایمیل با فرمت مناسب وارد نمایید",
+  "birthdayDayRequired": "روز تولد الزامی است",
+  "birthdayMonthRequired": "ماه تولد الزامی است",
+  "birthdayYearRequired": "سال تولد الزامی است",
+  "militaryServiceStatusMessage": "وضعیت سربازی خود را انتخاب نمایید",
+  "maritalStatusMessage": "وضعیت تاهل خود را انتخاب نمایید",
+  "invalidMobile": "شماره تلفن همراه معتبر نیست",
+  "invalidUrl": "آدرس وارد شده معتبر نیست"
 }
