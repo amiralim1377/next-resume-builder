@@ -1,19 +1,23 @@
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { useForm } from "react-hook-form";
-import { ResumeFormValues, resumeSchema } from "../schemas/resume.schema";
+import { createResumeSchema, ResumeFormValues } from "../schemas/resume.schema";
 import { getDefaultResumeValues } from "../utils/form.utils";
 import { useLang } from "@/provider/lngProvider";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useTranslation } from "@/lib/i18n/client";
 
 export const useResumeForm = (
   initialData?: Partial<ResumeFormValues>,
   mode: "create" | "edit" = "create",
 ) => {
   const { lng } = useLang();
+  const { t } = useTranslation(lng, "form");
+  const schema = useMemo(() => createResumeSchema(t), [t]);
+
   const form = useForm<ResumeFormValues>({
-    resolver: zodResolver(resumeSchema),
+    resolver: zodResolver(schema),
     defaultValues: initialData || getDefaultResumeValues({ lng }),
-    mode: "onBlur",
+    mode: "onChange",
     shouldUnregister: false,
     criteriaMode: "all",
   });
