@@ -29,23 +29,9 @@ const StepWrapper = ({ currentStep }: { currentStep: number }) => {
   if (!StepComponent) {
     return <div>Component for this step is not defined.</div>;
   }
-  const stepTitle = t(stepConfig.titleKey);
 
   return (
-    <div className="mx-auto w-full px-6">
-      <div className="mb-8">
-        <div className="flex items-center gap-3">
-          {stepConfig.icon && (
-            <span className="text-3xl">{stepConfig.icon}</span>
-          )}
-
-          <div>
-            <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
-              {stepTitle}
-            </h2>
-          </div>
-        </div>
-      </div>
+    <div className="w-full">
       <AnimatePresence mode="wait">
         <motion.div
           key={currentStep}
@@ -53,18 +39,18 @@ const StepWrapper = ({ currentStep }: { currentStep: number }) => {
           animate={{ opacity: 1, x: 0 }}
           exit={{ opacity: 0, x: -20 }}
           transition={{ duration: 0.3 }}
-          className="rounded-2xl border border-gray-200 bg-white p-8 shadow-sm dark:border-gray-800 dark:bg-gray-900"
+          className=""
         >
           <StepComponent />
         </motion.div>
       </AnimatePresence>
-      {Object.keys(errors).length > 0 && (
+      {/* {Object.keys(errors).length > 0 && (
         <div className="mt-6 rounded-xl border border-red-200 bg-red-50 p-4 dark:border-red-900 dark:bg-red-950">
           <p className="mb-2 text-sm font-medium text-red-600 dark:text-red-400">
             لطفاً خطاهای زیر را برطرف کنید:
           </p>
         </div>
-      )}
+      )} */}
     </div>
   );
 };
