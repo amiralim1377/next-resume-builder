@@ -2,7 +2,11 @@ import { cities } from "@/core/data/cities";
 import { countriesData } from "@/core/data/countries";
 import { monthsData } from "@/core/data/monthsData";
 import { provincesData } from "@/core/data/province";
-import { basicInfoSchema } from "@/features/resume/schemas/resume.schema";
+import {
+  MARITAL_OPTIONS,
+  MILITARY_OPTIONS,
+  SEX_OPTIONS,
+} from "@/features/resume/schemas/resume.schema";
 import { Language } from "@/lib/i18n/settings";
 import { TFunction } from "i18next";
 import { toJalaali } from "jalaali-js";
@@ -18,31 +22,27 @@ const useGetBasicInfoStepData = ({
   lng,
   provinceId,
 }: useGetBasicInfoStepData) => {
-  const sexEnum = basicInfoSchema.shape.sex.options;
-  const militaryEnum = basicInfoSchema.shape.militaryServiceStatus.options;
-  const maritalEnum = basicInfoSchema.shape.maritalStatus.options;
-
   // eslint-disable-next-line
   const addEmptyOption = (options: any[]): any[] => [
     { value: "", text: "" },
     ...options,
   ];
   const sexOptions = addEmptyOption(
-    sexEnum.map((val) => ({
+    SEX_OPTIONS.map((val) => ({
       value: val,
       text: val === "" ? t("none") : t(`sex.${val}`),
     })),
   );
 
   const maritalOptions = addEmptyOption(
-    maritalEnum.map((val) => ({
+    MARITAL_OPTIONS.map((val) => ({
       value: val,
       text: val === "" ? t("none") : t(`marital.${val}`),
     })),
   );
 
   const militaryOptions = addEmptyOption(
-    militaryEnum.map((val) => ({
+    MILITARY_OPTIONS?.map((val) => ({
       value: val,
       text: val === "" ? t("none") : t(`military.${val}`),
     })),
