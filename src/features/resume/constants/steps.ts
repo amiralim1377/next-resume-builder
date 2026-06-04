@@ -1,8 +1,8 @@
-import { BasicInfoStep } from "../components/Steps/basicInfoStep";
-import { EducationStep } from "../components/Steps/educationStep";
-import { ProjectsStep } from "../components/Steps/projectsStep";
-import { ResearchStep } from "../components/Steps/researchStep";
-import { SkillsStep } from "../components/Steps/skillsStep";
+import { BasicInfoStep } from "../components/Steps/BasicInfoStep";
+import { EducationStep } from "../components/Steps/EducationStep";
+import { ProjectsStep } from "../components/Steps/ProjectsStep";
+import { ResearchStep } from "../components/Steps/ResearchStep";
+import { SkillsStep } from "../components/Steps/SkillsStep";
 import { StepConfig } from "../types/resume.types";
 
 export const RESUME_STEPS: StepConfig[] = [
@@ -12,7 +12,7 @@ export const RESUME_STEPS: StepConfig[] = [
     titleKey: "stepsBasic",
     titleEn: "Basic Information",
     component: BasicInfoStep,
-    fieldNames: ["basicInfo"] as const,
+    fieldNames: ["basicInformation"] as const,
     isOptional: false,
     icon: "👤",
   },
@@ -22,9 +22,19 @@ export const RESUME_STEPS: StepConfig[] = [
     titleKey: "stepsEducation",
     titleEn: "Education History",
     component: EducationStep,
-    fieldNames: ["education"] as const,
+    fieldNames: ["educationHistory"] as const,
     isOptional: false,
     icon: "🎓",
+  },
+  {
+    id: "job",
+    title: "سوابق شغلی",
+    titleKey: "stepsEmploymentHistory",
+    titleEn: "Employment History",
+    component: EducationStep,
+    fieldNames: ["employmentHistory"] as const,
+    isOptional: false,
+    icon: "👷🏻‍♂️",
   },
   {
     id: "skills",
