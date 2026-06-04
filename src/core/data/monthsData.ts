@@ -1,4 +1,10 @@
-const monthsData = [
+type MonthsDataType = {
+  month_en: string;
+  month_fa: string;
+  month_shamsi: string;
+};
+
+const monthsData: MonthsDataType[] = [
   {
     month_en: "April",
     month_fa: "آوریل",
