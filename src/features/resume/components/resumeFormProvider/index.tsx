@@ -54,7 +54,7 @@ const ResumeFormProvider = ({
 
   return (
     <FormProvider {...form}>
-      <div className="space-y-10">
+      <div className="mx-auto px-6">
         <FormStepper
           steps={RESUME_STEPS}
           currentStep={currentStep}
