@@ -1,9 +1,9 @@
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { ResumeFormValues, resumeSchema } from "../schemas/resume.schema";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { getDefaultResumeValues } from "../utils/form.utils";
 import { useLang } from "@/provider/lngProvider";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 export const useResumeForm = (
   initialData?: Partial<ResumeFormValues>,
