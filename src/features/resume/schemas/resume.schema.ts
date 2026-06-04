@@ -1,40 +1,59 @@
+import { TFunction } from "i18next";
 import { z } from "zod";
 
-export const basicInfoSchema = z.object({
-  firstName: z.string().min(1, "required"),
-  lastName: z.string().min(1, "required"),
-  jobTitle: z.string().optional(),
-  sex: z.enum(["male", "female", ""]).refine(Boolean, {
-    message: "لطفاً جنسیت را انتخاب کنید",
-  }),
-  email: z.email("Invalid email format"),
-  birthday: z.object({
-    day: z.string(),
-    month: z.string(),
-    year: z.string(),
-  }),
-  militaryServiceStatus: z.enum(["completed", "exempt", "in_progress", ""]),
-  maritalStatus: z.enum(["single", "married", ""]),
-  mobileNumber: z.string().regex(/^(09\d{9}|\+989\d{9}|0989\d{9})$/, {
-    message:
-      "شماره موبایل وارد شده معتبر نیست. لطفاً با فرمت‌های 09xxxxxxxxx، 0989xxxxxxxxx یا +989xxxxxxxxx وارد کنید.",
-  }),
+export const SEX_OPTIONS = ["male", "female", ""] as const;
+export const MARITAL_OPTIONS = ["single", "married", ""] as const;
+export const MILITARY_OPTIONS = ["completed", "exempt", ""] as const;
 
-  phone: z.string().min(10, "Invalid phone number"),
-  webSite: z.url("Please enter a valid website URL").optional(),
-  country: z.string(),
-  province: z.string(),
-  city: z.string(),
-  address: z.string(),
-  summary: z.string().optional(),
-});
+export const createBasicInfoSchema = (t: TFunction<string, undefined>) => {
+  return z.object({
+    firstName: z.string().min(1, { message: t("firstNamerequired") }),
+    lastName: z.string().min(1, { message: t("lastNamerequired") }),
+    jobTitle: z.string().min(1, { message: t("jobTitlerequired") }),
+    sex: z.enum(SEX_OPTIONS).refine(Boolean, {
+      message: t("selectGender"),
+    }),
+    email: z.email({ message: t("invalidEmail") }),
+    birthday: z.object({
+      day: z.string().min(1, "birthdayDayRequired"),
+      month: z.string().min(1, "birthdayMonthRequired"),
+      year: z.string().min(1, "birthdayYearRequired"),
+    }),
+    militaryServiceStatus: z
+      .enum(MILITARY_OPTIONS)
+      .refine((val) => ["completed", "exempt", "in_progress"].includes(val), {
+        message: t("militaryServiceStatusMessage"),
+      }),
+    maritalStatus: z
+      .enum(MARITAL_OPTIONS)
+      .refine((val) => ["single", "married"].includes(val), {
+        message: t("maritalStatusMessage"),
+      }),
+    mobileNumber: z.string().regex(/^(09\d{9}|\+989\d{9}|0989\d{9})$/, {
+      message: t("invalidMobile"),
+    }),
+    phone: z.string().min(10, { message: t("invalidMobile") }),
+    webSite: z.url({ message: t("invalidUrl") }).optional(),
+    country: z.string(),
+    province: z.string(),
+    city: z.string(),
+    address: z.string(),
+    summary: z.string().optional(),
+  });
+};
 
-export const resumeSchema = z.object({
-  basicInfo: basicInfoSchema,
-});
+// eslint-disable-next-line
+export const createResumeSchema = (t: TFunction<string, undefined>) => {
+  return z.object({
+    basicInfo: createBasicInfoSchema(t),
+  });
+};
 
-export type ResumeFormValues = z.infer<typeof resumeSchema>;
-export type BasicInfoValues = z.infer<typeof basicInfoSchema>;
+export type BasicInfoValues = z.infer<ReturnType<typeof createBasicInfoSchema>>;
+
+export type ResumeFormValues = {
+  basicInfo: BasicInfoValues;
+};
 
 // eslint-disable-next-line
 export const STEP_FIELDS: Record<number, any[]> = {
