@@ -25,7 +25,7 @@ const FormStepper = ({
           <FormStepperItem
             key={step.id}
             stepNumber={index + 1}
-            title={step.fieldNames}
+            title={step.titleKey}
             isActive={isActive}
             isCompleted={isCompleted}
             isPending={isPending}

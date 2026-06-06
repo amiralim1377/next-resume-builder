@@ -8,7 +8,7 @@ import { useThemeColors } from "@/provider/themeProvider/useThemeColors";
 
 type Props = {
   stepNumber: number;
-  title: string[];
+  title: string;
   isActive: boolean;
   isCompleted: boolean;
   isPending: boolean;
