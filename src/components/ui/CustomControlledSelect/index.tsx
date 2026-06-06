@@ -20,16 +20,20 @@ const CustomControlledSelect = ({
     <Controller
       control={control}
       name={name}
-      render={({ field, fieldState: { error } }) => {
+      render={({ field, fieldState }) => {
         const { value, onChange, onBlur, ref, ...safeField } = field;
+
+        const isValid = !fieldState.invalid && Boolean(field.value);
+
         return (
           <CustomSelect
-            error={error?.message}
+            error={fieldState?.error?.message}
             label={label}
             value={value as string | number | readonly string[] | undefined}
             onChange={onChange}
             onBlur={onBlur}
             ref={ref}
+            isValid={isValid}
             {...safeField}
             {...props}
           />
