@@ -21,6 +21,7 @@ type SelectProps = React.SelectHTMLAttributes<HTMLSelectElement> & {
   options: SelectOption[];
   classNames?: CustomSelectClassName;
   ref?: React.Ref<HTMLSelectElement>;
+  isValid?: boolean;
 };
 
 const CustomSelect = ({
@@ -30,6 +31,7 @@ const CustomSelect = ({
   error,
   options,
   ref,
+  isValid,
   ...otherProps
 }: SelectProps) => {
   const id = useId();
@@ -47,10 +49,25 @@ const CustomSelect = ({
       >
         {label}
       </label>
-
       <select
         className={cn(
-          "border-ui-border focus-visible:border-brandLight focus-visible:ring-brandPrimary focus:ring-brandActive text-text-secondary h-10 w-full cursor-pointer rounded-md border px-3 py-2 text-sm font-medium shadow-sm focus:ring focus:outline-0 disabled:cursor-not-allowed disabled:opacity-50", // Added h-10
+          // Base styles
+          "text-text-secondary h-10 w-full cursor-pointer rounded-md border px-3 py-2 text-sm font-medium shadow-sm focus:outline-0 disabled:cursor-not-allowed disabled:opacity-50",
+
+          // Error State
+          error &&
+            "border-state-error focus-visible:ring-state-error focus:ring-state-error",
+
+          // Valid (Success) State
+          !error &&
+            isValid &&
+            "border-state-success focus-visible:border-state-success focus-visible:ring-state-success focus:ring-state-success",
+
+          // Default State
+          !error &&
+            !isValid &&
+            "border-ui-border focus-visible:border-brandLight focus-visible:ring-brandPrimary focus:ring-brandActive",
+
           classNames?.select,
         )}
         id={id}
