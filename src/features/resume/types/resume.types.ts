@@ -1,20 +1,17 @@
 import { ComponentType } from "react";
+import { BasicInfoValues } from "../schemas/resume.schema";
 
-// ==================== MAIN RESUME TYPE ====================
-// export interface Resume {
-//   id?: string;
-//   basicInfo: BasicInfo;
-//   education: Education[];
-//   experience: Experience[];
-//   skills: Skill[];
-//   projects: Project[];
-//   research: Research[];
-//   metadata: {
-//     language: "fa" | "en";
-//     lastSaved: Date;
-//     isCompleted?: boolean;
-//   };
-// }
+export interface Resume {
+  id?: string;
+  basicInfo: BasicInfoValues;
+  education: [];
+  job: [];
+  experience: [];
+  skills: [];
+  projects: [];
+  research: [];
+  metadata: { language: "fa" | "en"; lastSaved: Date };
+}
 
 // ==================== STEPPER TYPES ====================
 
@@ -33,7 +30,7 @@ export interface StepConfig {
   titleKey: string;
   titleEn: string;
   component: ComponentType;
-  fieldNames: string[];
+  fieldNames: (keyof Resume)[];
   isOptional: boolean;
   icon?: string;
 }
