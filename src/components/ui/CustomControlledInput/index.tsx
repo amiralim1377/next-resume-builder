@@ -20,12 +20,16 @@ const CustomControlledInput = ({
     <Controller
       control={control}
       name={name}
-      render={({ field, fieldState: { error } }) => {
+      render={({ field, fieldState }) => {
         const { value, onChange, onBlur, ref, ...safeField } = field;
+
+        const isValid = !fieldState.invalid && Boolean(field.value);
+
         return (
           <CustomInput
             label={label}
-            error={error?.message}
+            isValid={isValid}
+            error={fieldState.error?.message}
             value={value as string | number | readonly string[] | undefined}
             onChange={onChange}
             onBlur={onBlur}
