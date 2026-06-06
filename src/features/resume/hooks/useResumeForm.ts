@@ -22,11 +22,7 @@ export const useResumeForm = (
     criteriaMode: "all",
   });
 
-  const {
-    trigger: triggerStep,
-    reset,
-    formState: { errors, isDirty },
-  } = form;
+  const { trigger: triggerStep, reset } = form;
 
   useEffect(() => {
     if (initialData && mode === "edit") {
