@@ -11,83 +11,94 @@ import { Language } from "@/lib/i18n/settings";
 import { TFunction } from "i18next";
 import { toJalaali } from "jalaali-js";
 
-type useGetBasicInfoStepData = {
+type Option<T = string | number> = {
+  value: T | "";
+  text: string;
+};
+
+type UseGetBasicInfoStepDataProps = {
   t: TFunction<string, undefined>;
   lng: Language;
   provinceId?: number;
+};
+
+const addEmptyOption = <T extends Option>(
+  options: T[],
+): Option<T["value"]>[] => [{ value: "", text: "" }, ...options];
+
+const createTranslatedOptions = <T extends readonly string[]>(
+  options: T,
+  translationKey: string,
+  t: TFunction,
+): Option<string>[] =>
+  addEmptyOption(
+    options.map((value) => ({
+      value,
+      text: t(`${translationKey}.${value}`),
+    })),
+  );
+
+const generateYearOptions = (lng: Language): Option<string>[] => {
+  const startYear = 1941;
+  const currentYear = new Date().getFullYear();
+
+  const years = Array.from(
+    { length: currentYear - startYear + 1 },
+    (_, index) => {
+      const gregorianYear = startYear + index;
+
+      if (lng === "fa") {
+        const { jy } = toJalaali(gregorianYear, 3, 21);
+
+        return {
+          value: String(jy),
+          text: String(jy),
+        };
+      }
+
+      return {
+        value: String(gregorianYear),
+        text: String(gregorianYear),
+      };
+    },
+  );
+
+  return addEmptyOption(years);
 };
 
 const useGetBasicInfoStepData = ({
   t,
   lng,
   provinceId,
-}: useGetBasicInfoStepData) => {
-  // eslint-disable-next-line
-  const addEmptyOption = (options: any[]): any[] => [
-    { value: "", text: "" },
-    ...options,
-  ];
-  const sexOptions = addEmptyOption(
-    SEX_OPTIONS.map((val) => ({
-      value: val,
-      text: val === "" ? t("none") : t(`sex.${val}`),
-    })),
-  );
+}: UseGetBasicInfoStepDataProps) => {
+  const sexOptions = createTranslatedOptions(SEX_OPTIONS, "sex", t);
 
-  const maritalOptions = addEmptyOption(
-    MARITAL_OPTIONS.map((val) => ({
-      value: val,
-      text: val === "" ? t("none") : t(`marital.${val}`),
-    })),
-  );
+  const maritalOptions = createTranslatedOptions(MARITAL_OPTIONS, "marital", t);
 
-  const militaryOptions = addEmptyOption(
-    MILITARY_OPTIONS?.map((val) => ({
-      value: val,
-      text: val === "" ? t("none") : t(`military.${val}`),
-    })),
+  const militaryOptions = createTranslatedOptions(
+    MILITARY_OPTIONS,
+    "military",
+    t,
   );
-
-  const daysInMonth = Array.from({ length: 31 }, (_, i) => i + 1);
 
   const daysInMonthOptions = addEmptyOption(
-    daysInMonth.map((val) => ({
-      value: val,
-      text: val,
+    Array.from({ length: 31 }, (_, index) => ({
+      value: String(index + 1),
+      text: String(index + 1),
     })),
   );
 
   const monthOptions = addEmptyOption(
-    monthsData.map((month) => ({
-      value: lng === "fa" ? month.month_shamsi : month.month_en,
-      text: lng === "fa" ? month.month_shamsi : month.month_en,
-    })),
+    lng === "fa"
+      ? monthsData.jalali.map((month) => ({
+          value: month.month_shamsi,
+          text: month.month_shamsi,
+        }))
+      : monthsData.gregorian.map((month) => ({
+          value: month.month_en,
+          text: month.month_en,
+        })),
   );
-
-  function generateYearOptions(lng: Language) {
-    const start = 1941;
-    const end = 2026;
-
-    const years = Array.from({ length: end - start + 1 }, (_, i) => {
-      const gYear = start + i;
-
-      if (lng === "fa") {
-        const j = toJalaali(gYear, 3, 21);
-        return {
-          value: String(j.jy),
-          text: j.jy,
-        };
-      }
-
-      return {
-        value: String(gYear),
-        text: gYear,
-      };
-    });
-
-    return addEmptyOption(years);
-  }
-  const yearOptions = generateYearOptions(lng);
 
   const countryOptions = addEmptyOption(
     countriesData.map((country) => ({
@@ -120,7 +131,7 @@ const useGetBasicInfoStepData = ({
     militaryOptions,
     daysInMonthOptions,
     monthOptions,
-    yearOptions,
+    yearOptions: generateYearOptions(lng),
     countryOptions,
     provinceOptions,
     cityOptions,
