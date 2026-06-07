@@ -53,9 +53,11 @@ const ResumeFormProvider = ({
   };
 
   const handleStepClick = (index: number) => {
-    if (index <= currentStep || completedSteps.has(RESUME_STEPS[index].id)) {
-      setCurrentStep(index);
-    }
+    // if (index <= currentStep || completedSteps.has(RESUME_STEPS[index].id)) {
+    //   setCurrentStep(index);
+    // }
+
+    setCurrentStep(index);
   };
 
   return (
