@@ -42,18 +42,12 @@ const JobSection = ({ lng, t, index, onDelete }: JobSectionType) => {
     }
   }, [isCurrentlyWorkingHere, setValue, t, index]);
 
-  const {
-    degreeOptions,
-    countryOptions,
-    provinceOptions,
-    cityOptions,
-    monthOptions,
-  } = useGetJobInfoStepData({
-    t,
-    lng,
-    provinceId,
-    calendarType,
-  });
+  const { countryOptions, provinceOptions, cityOptions, monthOptions } =
+    useGetJobInfoStepData({
+      lng,
+      provinceId,
+      calendarType,
+    });
   return (
     <CustomResumeCardComponents calssName="grid grid-cols-12 gap-4">
       {/* Job Title */}

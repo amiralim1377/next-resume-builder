@@ -2,7 +2,7 @@ import { cities } from "@/core/data/cities";
 import { countriesData } from "@/core/data/countries";
 import { monthsData } from "@/core/data/monthsData";
 import { provincesData } from "@/core/data/province";
-import { Degree_OPTIONS } from "@/features/resume/schemas/resume.schema";
+import { Degree_OPTIONS } from "@/features/resume/schemas/EducationSchema";
 import { Language } from "@/lib/i18n/settings";
 import { CalendarType } from "@/types";
 import { TFunction } from "i18next";

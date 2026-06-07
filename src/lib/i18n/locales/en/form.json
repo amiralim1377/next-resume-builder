@@ -96,5 +96,13 @@
   "employmentEndMonth": "employment End Month",
   "employmentEndYear": "employment End Year",
   "CurrentlyWorkingHere": "CurrentlyWorkingHere",
-  "WorkingHere": "Working Here"
+  "WorkingHere": "Working Here",
+  "selectLanguage": "please choose your language",
+  "languageName": "language Name",
+  "languageDisplayType": "Language Display Type",
+  "level": "level",
+  "reading": "reading",
+  "writing": "writing",
+  "listening": "listening",
+  "speaking": "speaking"
 }

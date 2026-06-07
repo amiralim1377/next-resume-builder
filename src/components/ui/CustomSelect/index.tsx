@@ -1,10 +1,5 @@
 import { cn } from "@/utils/cn";
-import React, { useId } from "react";
-
-interface SelectOption {
-  value: string | number;
-  text: string;
-}
+import React, { ReactNode, useId } from "react";
 
 type CustomSelectClassName = {
   label: string;
@@ -14,9 +9,14 @@ type CustomSelectClassName = {
   errorContainer: string;
 };
 
+interface SelectOption {
+  value: string | number;
+  text: string | number | ReactNode;
+}
+
 type SelectProps = React.SelectHTMLAttributes<HTMLSelectElement> & {
   className?: string;
-  label?: string;
+  label?: string | ReactNode;
   error?: undefined | string;
   options: SelectOption[];
   classNames?: CustomSelectClassName;

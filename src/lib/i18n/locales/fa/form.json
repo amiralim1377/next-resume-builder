@@ -97,5 +97,14 @@
   "employmentEndMonth": "ماه اتمام همکاری",
   "employmentEndYear": "سال اتمام همکاری",
   "CurrentlyWorkingHere": "مشغول فعالیت در این شرکت هستم",
-  "WorkingHere": "مشغول فعالیت"
+  "WorkingHere": "مشغول فعالیت",
+  "selectLanguage": "لطفا زبان خود را انتخاب نمایید",
+  "languagesDisplayRequired": "نحوه ی نمایش الزامی است",
+  "languageName": "نام زبان",
+  "languageDisplayType": "نوع نمایش زبان",
+  "level": "سطح",
+  "reading": "مهارت خواندن",
+  "writing": "مهارت نوشتن",
+  "listening": "مهارت شنیداری",
+  "speaking": "مهارت گفتاری"
 }

@@ -6,7 +6,8 @@ import {
   MARITAL_OPTIONS,
   MILITARY_OPTIONS,
   SEX_OPTIONS,
-} from "@/features/resume/schemas/resume.schema";
+} from "@/features/resume/schemas/BasicInfoSchema";
+
 import { Language } from "@/lib/i18n/settings";
 import { TFunction } from "i18next";
 import { toJalaali } from "jalaali-js";
