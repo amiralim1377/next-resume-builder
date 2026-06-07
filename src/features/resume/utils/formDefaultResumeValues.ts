@@ -63,4 +63,12 @@ export const getDefaultResumeValues = ({
       isCurrentlyWorkingHere: false,
     },
   ],
+  languages: [
+    {
+      language: "",
+      displayMode: "",
+      proficiencyData: { level: "" },
+      description: "",
+    },
+  ],
 });
