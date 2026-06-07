@@ -105,19 +105,42 @@ export const createEducationSchema = (t: TFunction<string, undefined>) => {
   });
 };
 
+export const createJobSchema = (t: TFunction<string, undefined>) => {
+  return z.object({
+    summary: z.string().optional(),
+    jobTitle: z.string().min(1, { message: t("jobeRoleRequired") }),
+    companyName: z.string().min(1, { message: t("companyNameRequired") }),
+    country: z.string().min(1, { message: t("countryRequired") }),
+    province: z.string().min(1, { message: t("provinceRequired") }),
+    city: z.string().min(1, { message: t("cityRequired") }),
+    entryMonth: z.string().min(1, { message: t("entryMonthRequired") }),
+    entryYear: z.string().min(1, { message: t("entryYearRequired") }),
+    employmentEndMonth: z
+      .string()
+      .min(1, { message: t("graduationMonthRequired") }),
+    employmentEndYear: z
+      .string()
+      .min(1, { message: t("graduationYearRequired") }),
+    isCurrentlyWorkingHere: z.boolean(),
+  });
+};
+
 export const createResumeSchema = (t: TFunction<string, undefined>) => {
   return z.object({
     basicInfo: createBasicInfoSchema(t),
-    education: createEducationSchema(t),
+    education: z.array(createEducationSchema(t)),
+    job: z.array(createJobSchema(t)),
   });
 };
 
 export type BasicInfoValues = z.infer<ReturnType<typeof createBasicInfoSchema>>;
 export type EducationValues = z.infer<ReturnType<typeof createEducationSchema>>;
+export type JobValues = z.infer<ReturnType<typeof createJobSchema>>;
 
 export type ResumeFormValues = {
   basicInfo: BasicInfoValues;
-  education: EducationValues;
+  education: EducationValues[];
+  job: JobValues[];
 };
 
 export const STEP_FIELDS: Record<number, string[]> = {
