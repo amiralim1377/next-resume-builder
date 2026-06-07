@@ -1,3 +1,4 @@
+import { CustomResumeCardComponents } from "@/components/ui/CustomResumeCardComponents";
 import { Language } from "@/lib/i18n/settings";
 import { TFunction } from "i18next";
 
@@ -7,7 +8,9 @@ type CoreSkillsSectionSectionProps = {
 };
 
 const CoreSkillsSection = ({}: CoreSkillsSectionSectionProps) => {
-  return <div>CoreSkillsSection</div>;
+  return (
+    <CustomResumeCardComponents>CoreSkillsSection</CustomResumeCardComponents>
+  );
 };
 
 export { CoreSkillsSection };
