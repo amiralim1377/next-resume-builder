@@ -4,8 +4,8 @@ import { monthsData } from "@/core/data/monthsData";
 import { provincesData } from "@/core/data/province";
 import { Degree_OPTIONS } from "@/features/resume/schemas/resume.schema";
 import { Language } from "@/lib/i18n/settings";
+import { CalendarType } from "@/types";
 import { TFunction } from "i18next";
-import { CalendarType } from "../../components/EducationSection";
 
 type Option<T = string | number> = {
   value: T | "";
