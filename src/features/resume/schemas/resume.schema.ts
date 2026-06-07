@@ -3,24 +3,30 @@ import { z } from "zod";
 import { createBasicInfoSchema } from "./BasicInfoSchema";
 import { createEducationSchema } from "./EducationSchema";
 import { createJobSchema } from "./JobSchema";
+import { createLanguageSchema } from "./LanguageSchema";
 
 export const createResumeSchema = (t: TFunction<string, undefined>) => {
   return z.object({
     basicInfo: createBasicInfoSchema(t),
     education: z.array(createEducationSchema(t)),
     job: z.array(createJobSchema(t)),
+    languages: z.array(createLanguageSchema(t)).default([]),
   });
 };
 
 export type BasicInfoValues = z.infer<ReturnType<typeof createBasicInfoSchema>>;
 export type EducationValues = z.infer<ReturnType<typeof createEducationSchema>>;
 export type JobValues = z.infer<ReturnType<typeof createJobSchema>>;
+export type LanguageValues = z.infer<ReturnType<typeof createLanguageSchema>>;
 
 export type ResumeFormValues = {
   basicInfo: BasicInfoValues;
   education: EducationValues[];
   job: JobValues[];
+  languages: LanguageValues[];
 };
+// or this one-below
+// export type ResumeFormValues = z.infer<ReturnType<typeof createResumeSchema>>;
 
 export const STEP_FIELDS: Record<number, string[]> = {
   0: [
