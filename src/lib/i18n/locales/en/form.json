@@ -87,5 +87,14 @@
   "isStudyingNow": "is Studying Now",
   "calendarType": "Calendar Type",
   "solarHijri": "solar Hijri",
-  "gregorian": "Gregorian"
+  "gregorian": "Gregorian",
+  "deleteThis": "delete this",
+  "jobTitleRole": "Role-Position",
+  "jobeRoleRequired": "Please enter your job title.",
+  "companyName": "company Name",
+  "companyNameRequired": "Company name is required",
+  "employmentEndMonth": "employment End Month",
+  "employmentEndYear": "employment End Year",
+  "CurrentlyWorkingHere": "CurrentlyWorkingHere",
+  "WorkingHere": "Working Here"
 }
