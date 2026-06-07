@@ -54,7 +54,7 @@ const LocationDetails = ({ t }: LocationDetailsProps) => {
           name="basicInfo.city"
           label={t("city")}
           options={cityOptions}
-          disabled={provinceId === undefined}
+          disabled={provinceId === undefined || provinceId === ""}
         />
       ) : (
         <CustomControlledInput
