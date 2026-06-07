@@ -88,5 +88,14 @@
   "isStudyingNow": "در حال تحصیل",
   "calendarType": "نوع تقویم",
   "solarHijri": "شمسی",
-  "gregorian": "قمری"
+  "gregorian": "میلادی",
+  "deleteThis": "حذف این مورد",
+  "jobTitleRole": "سمت شغلی",
+  "jobeRoleRequired": "سمت شغلی مربوطه الزامی است",
+  "companyName": "نام شرکت",
+  "companyNameRequired": "نام شرکت الزامی است",
+  "employmentEndMonth": "ماه اتمام همکاری",
+  "employmentEndYear": "سال اتمام همکاری",
+  "CurrentlyWorkingHere": "مشغول فعالیت در این شرکت هستم",
+  "WorkingHere": "مشغول فعالیت"
 }

@@ -1,11 +1,15 @@
 import { ComponentType } from "react";
-import { BasicInfoValues } from "../schemas/resume.schema";
+import {
+  BasicInfoValues,
+  EducationValues,
+  JobValues,
+} from "../schemas/resume.schema";
 
 export interface Resume {
   id?: string;
   basicInfo: BasicInfoValues;
-  education: [];
-  job: [];
+  education: EducationValues[];
+  job: JobValues[];
   experience: [];
   skills: [];
   projects: [];
@@ -14,7 +18,6 @@ export interface Resume {
 }
 
 // ==================== STEPPER TYPES ====================
-
 export type StepName =
   | "basic"
   | "education"

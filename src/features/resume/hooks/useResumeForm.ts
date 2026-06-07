@@ -1,7 +1,7 @@
 import { useEffect, useMemo } from "react";
 import { useForm } from "react-hook-form";
 import { createResumeSchema, ResumeFormValues } from "../schemas/resume.schema";
-import { getDefaultResumeValues } from "../utils/form.utils";
+import { getDefaultResumeValues } from "../utils/formDefaultResumeValues";
 import { useLang } from "@/provider/lngProvider";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslation } from "@/lib/i18n/client";

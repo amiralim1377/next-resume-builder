@@ -1,5 +1,6 @@
 import { BasicInfoStep } from "../components/Steps/BasicInfoStep";
 import { EducationStep } from "../components/Steps/EducationStep";
+import { JobStep } from "../components/Steps/JobStep";
 import { ProjectsStep } from "../components/Steps/ProjectsStep";
 import { ResearchStep } from "../components/Steps/ResearchStep";
 import { SkillsStep } from "../components/Steps/SkillsStep";
@@ -31,7 +32,7 @@ export const RESUME_STEPS: StepConfig[] = [
     title: "سوابق شغلی",
     titleKey: "employmentHistory",
     titleEn: "Employment History",
-    component: EducationStep,
+    component: JobStep,
     fieldNames: ["job"] as const,
     isOptional: false,
     icon: "👷🏻‍♂️",

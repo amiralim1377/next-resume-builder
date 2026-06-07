@@ -1,58 +1,46 @@
-import { CustomControlledSelect } from "@/components/ui/CustomControlledSelect";
-import { CustomResumeCardComponents } from "@/components/ui/CustomResumeCardComponents";
-import { TFunction } from "i18next";
-import { useGetEducationInfoStepData } from "../../hooks/useGetEducationInfoStepData";
 import { CustomControlledInput } from "@/components/ui/CustomControlledInput";
+import { CustomResumeCardComponents } from "@/components/ui/CustomResumeCardComponents";
 import { Language } from "@/lib/i18n/settings";
-import { useFormContext, useWatch } from "react-hook-form";
-import { CustomControlledCheckBox } from "@/components/ui/CustomControlledCheckBox";
-import { useEffect, useState } from "react";
-import { CustomRadio } from "@/components/ui/CustomRadio";
-import { CustomButton } from "@/components/ui/CustomButton";
 import { CalendarType } from "@/types";
+import { TFunction } from "i18next";
+import { useEffect, useState } from "react";
+import { useGetJobInfoStepData } from "../../hooks/useGetJobInfoStepData";
+import { useFormContext, useWatch } from "react-hook-form";
+import { CustomControlledSelect } from "@/components/ui/CustomControlledSelect";
+import { CustomControlledCheckBox } from "@/components/ui/CustomControlledCheckBox";
+import { CustomButton } from "@/components/ui/CustomButton";
+import { CustomRadio } from "@/components/ui/CustomRadio";
 
-type EducationSectionProps = {
+type JobSectionType = {
   t: TFunction<string, undefined>;
   lng: Language;
-  index: number;
   onDelete: (index: number) => void;
+  index: number;
 };
 
-const EducationSection = ({
-  t,
-  lng,
-  index,
-  onDelete,
-}: EducationSectionProps) => {
+const JobSection = ({ lng, t, index, onDelete }: JobSectionType) => {
   const [calendarType, setCalendarType] = useState<CalendarType>(
     lng === "en" ? "gregorian" : "jalali",
   );
-
   const { setValue } = useFormContext();
 
-  const countryWatch = useWatch({
-    name: `education.${index}.country`,
-    exact: true,
-  });
-  const provinceId = useWatch({
-    name: `education.${index}.province`,
-    exact: true,
-  });
+  const countryWatch = useWatch({ name: `job.${index}.country`, exact: true });
+  const provinceId = useWatch({ name: `job.${index}.province`, exact: true });
   const isIranSelected = countryWatch === "Iran";
-  const isStudyingNow = useWatch({
-    name: `education.${index}.isStudyingNow`,
+  const isCurrentlyWorkingHere = useWatch({
+    name: `job.${index}.isCurrentlyWorkingHere`,
     exact: true,
   });
 
   useEffect(() => {
-    if (isStudyingNow) {
-      setValue(`education.${index}.graduationMonth`, t("isStudyingNow"));
-      setValue(`education.${index}.graduationYear`, t("isStudyingNow"));
+    if (isCurrentlyWorkingHere) {
+      setValue(`job.${index}.employmentEndMonth`, t("WorkingHere"));
+      setValue(`job.${index}.employmentEndYear`, t("WorkingHere"));
     } else {
-      setValue(`education.${index}.graduationMonth`, "");
-      setValue(`education.${index}.graduationYear`, "");
+      setValue(`job.${index}.employmentEndMonth`, "");
+      setValue(`job.${index}.employmentEndYear`, "");
     }
-  }, [isStudyingNow, setValue, t, index]);
+  }, [isCurrentlyWorkingHere, setValue, t, index]);
 
   const {
     degreeOptions,
@@ -60,75 +48,49 @@ const EducationSection = ({
     provinceOptions,
     cityOptions,
     monthOptions,
-  } = useGetEducationInfoStepData({
+  } = useGetJobInfoStepData({
     t,
     lng,
     provinceId,
     calendarType,
   });
-
   return (
-    <CustomResumeCardComponents calssName="grid grid-cols-12 gap-3">
+    <CustomResumeCardComponents calssName="grid grid-cols-12 gap-4">
+      {/* Job Title */}
       <div className="col-span-12 md:col-span-6">
-        <CustomControlledSelect
-          name={`education.${index}.degreeLevel`}
-          label={t("degree")}
-          options={degreeOptions}
+        <CustomControlledInput
+          name={`job.${index}.jobTitle` as const}
+          label={t("jobTitleRole")}
         />
       </div>
-
+      {/* Company Name */}
       <div className="col-span-12 md:col-span-6">
         <CustomControlledInput
-          name={`education.${index}.academicMajor`}
-          label={t("major")}
+          name={`job.${index}.companyName`}
+          label={t("companyName")}
         />
-      </div>
-
-      {/* Concentration */}
-      <div className="col-span-12 md:col-span-6">
-        <CustomControlledInput
-          name={`education.${index}.concentration`}
-          label={t("concentration")}
-        />{" "}
-      </div>
-
-      {/* Institution */}
-      <div className="col-span-12 md:col-span-6">
-        <CustomControlledInput
-          name={`education.${index}.institutionName`}
-          label={t("institutionName")}
-        />{" "}
-      </div>
-
-      {/* GPA */}
-      <div className="col-span-12 md:col-span-3">
-        <CustomControlledInput
-          name={`education.${index}.gradeAverage`}
-          label={t("gradeAverage")}
-        />{" "}
       </div>
 
       {/* Country */}
-      <div className="col-span-12 md:col-span-3">
+      <div className="col-span-12 md:col-span-4">
         <CustomControlledSelect
           options={countryOptions}
           label={t("country")}
-          name={`education.${index}.country`}
-        />{" "}
+          name={`job.${index}.country`}
+        />
       </div>
-
       {/* Province */}
-      <div className="col-span-12 md:col-span-3">
+      <div className="col-span-12 md:col-span-4">
         {isIranSelected ? (
           <CustomControlledSelect
             options={provinceOptions}
             label={t("province")}
-            name={`education.${index}.province`}
+            name={`job.${index}.province`}
             disabled={countryWatch === undefined}
           />
         ) : (
           <CustomControlledInput
-            name={`education.${index}.province`}
+            name={`job.${index}.province`}
             label={t("province")}
             disabled={
               countryWatch === undefined ||
@@ -138,19 +100,18 @@ const EducationSection = ({
           />
         )}
       </div>
-
       {/* City */}
-      <div className="col-span-12 md:col-span-3">
+      <div className="col-span-12 md:col-span-4">
         {isIranSelected ? (
           <CustomControlledSelect
-            name={`education.${index}.city`}
+            name={`job.${index}.city`}
             label={t("city")}
             options={cityOptions}
             disabled={provinceId === undefined}
           />
         ) : (
           <CustomControlledInput
-            name={`education.${index}.city`}
+            name={`job.${index}.city`}
             label={t("city")}
             disabled={countryWatch === undefined || countryWatch === ""}
           />
@@ -160,7 +121,7 @@ const EducationSection = ({
       {/* Entry Month */}
       <div className="col-span-12 md:col-span-6">
         <CustomControlledSelect
-          name={`education.${index}.entryMonth`}
+          name={`job.${index}.entryMonth`}
           label={t("entryMonth")}
           options={monthOptions}
         />
@@ -169,12 +130,12 @@ const EducationSection = ({
       {/* Entry Year */}
       <div className="col-span-12 md:col-span-6">
         <CustomControlledInput
-          name={`education.${index}.entryYear`}
+          name={`job.${index}.entryYear`}
           label={t("entryYear")}
         />
       </div>
 
-      {/* btn  */}
+      {/* Calendar Type */}
       <div className="col-span-12">
         <CustomRadio.Group className="flex flex-row">
           <CustomRadio
@@ -191,39 +152,39 @@ const EducationSection = ({
         </CustomRadio.Group>
       </div>
 
-      {/* Graduation Month */}
+      {/* employmentEndMonth */}
       <div className="col-span-12 md:col-span-6">
-        {isStudyingNow ? (
+        {isCurrentlyWorkingHere ? (
           <CustomControlledInput
-            name={`education.${index}.graduationMonth`}
-            label={t("graduationMonth")}
-            disabled={isStudyingNow}
+            name={`job.${index}.employmentEndMonth`}
+            label={t("employmentEndMonth")}
+            disabled={isCurrentlyWorkingHere}
           />
         ) : (
           <CustomControlledSelect
-            name={`education.${index}.graduationMonth`}
-            label={t("graduationMonth")}
+            name={`job.${index}.employmentEndMonth`}
+            label={t("employmentEndMonth")}
             options={monthOptions}
-            disabled={isStudyingNow}
+            disabled={isCurrentlyWorkingHere}
           />
         )}
       </div>
 
-      {/* Graduation Year */}
+      {/* employmentEndYear*/}
       <div className="col-span-12 md:col-span-6">
         <CustomControlledInput
-          name={`education.${index}.graduationYear`}
-          label={t("graduationYear")}
-          disabled={isStudyingNow}
+          name={`job.${index}.employmentEndYear`}
+          label={t("employmentEndYear")}
+          disabled={isCurrentlyWorkingHere}
         />
       </div>
 
-      {/* Studying Now */}
+      {/* Current Working */}
       <div className="col-span-12">
         <div className="flex items-center justify-between">
           <CustomControlledCheckBox
-            name={`education.${index}.isStudyingNow`}
-            label={t("isStudyingNow")}
+            name={`job.${index}.isCurrentlyWorkingHere`}
+            label={t("CurrentlyWorkingHere")}
           />
           {index !== 0 && (
             <CustomButton
@@ -239,4 +200,4 @@ const EducationSection = ({
   );
 };
 
-export { EducationSection };
+export { JobSection };

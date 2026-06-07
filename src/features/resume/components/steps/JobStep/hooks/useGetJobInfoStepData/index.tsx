@@ -12,7 +12,7 @@ type Option<T = string | number> = {
   text: string;
 };
 
-type UseGetBasicInfoStepDataProps = {
+type UseGetJobInfoStepDataProps = {
   t: TFunction<string, undefined>;
   lng?: Language;
   provinceId: string;
@@ -35,12 +35,12 @@ const createTranslatedOptions = <T extends readonly string[]>(
     })),
   );
 
-const useGetEducationInfoStepData = ({
+const useGetJobInfoStepData = ({
   lng,
   t,
   provinceId,
   calendarType,
-}: UseGetBasicInfoStepDataProps) => {
+}: UseGetJobInfoStepDataProps) => {
   const degreeOptions = createTranslatedOptions(Degree_OPTIONS, "degree", t);
 
   const countryOptions = addEmptyOption(
@@ -89,4 +89,4 @@ const useGetEducationInfoStepData = ({
   };
 };
 
-export { useGetEducationInfoStepData };
+export { useGetJobInfoStepData };
