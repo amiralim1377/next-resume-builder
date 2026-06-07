@@ -8,38 +8,51 @@ import { useFormContext, useWatch } from "react-hook-form";
 import { CustomControlledCheckBox } from "@/components/ui/CustomControlledCheckBox";
 import { useEffect, useState } from "react";
 import { CustomRadio } from "@/components/ui/CustomRadio";
+import { CustomButton } from "@/components/ui/CustomButton";
+import { CalendarType } from "@/types";
 
 type EducationSectionProps = {
   t: TFunction<string, undefined>;
   lng: Language;
+  index: number;
+  onDelete: (index: number) => void;
 };
 
-export type CalendarType = "jalali" | "gregorian";
-
-const EducationSection = ({ t, lng }: EducationSectionProps) => {
+const EducationSection = ({
+  t,
+  lng,
+  index,
+  onDelete,
+}: EducationSectionProps) => {
   const [calendarType, setCalendarType] = useState<CalendarType>(
     lng === "en" ? "gregorian" : "jalali",
   );
 
   const { setValue } = useFormContext();
 
-  const countryWatch = useWatch({ name: "education.country", exact: true });
-  const provinceId = useWatch({ name: "education.province", exact: true });
+  const countryWatch = useWatch({
+    name: `education.${index}.country`,
+    exact: true,
+  });
+  const provinceId = useWatch({
+    name: `education.${index}.province`,
+    exact: true,
+  });
   const isIranSelected = countryWatch === "Iran";
   const isStudyingNow = useWatch({
-    name: "education.isStudyingNow",
+    name: `education.${index}.isStudyingNow`,
     exact: true,
   });
 
   useEffect(() => {
     if (isStudyingNow) {
-      setValue("education.graduationMonth", t("isStudyingNow"));
-      setValue("education.graduationYear", t("isStudyingNow"));
+      setValue(`education.${index}.graduationMonth`, t("isStudyingNow"));
+      setValue(`education.${index}.graduationYear`, t("isStudyingNow"));
     } else {
-      setValue("education.graduationMonth", "");
-      setValue("education.graduationYear", "");
+      setValue(`education.${index}.graduationMonth`, "");
+      setValue(`education.${index}.graduationYear`, "");
     }
-  }, [isStudyingNow, setValue, t]);
+  }, [isStudyingNow, setValue, t, index]);
 
   const {
     degreeOptions,
@@ -58,7 +71,7 @@ const EducationSection = ({ t, lng }: EducationSectionProps) => {
     <CustomResumeCardComponents calssName="grid grid-cols-12 gap-3">
       <div className="col-span-12 md:col-span-6">
         <CustomControlledSelect
-          name="education.degreeLevel"
+          name={`education.${index}.degreeLevel`}
           label={t("degree")}
           options={degreeOptions}
         />
@@ -66,7 +79,7 @@ const EducationSection = ({ t, lng }: EducationSectionProps) => {
 
       <div className="col-span-12 md:col-span-6">
         <CustomControlledInput
-          name="education.academicMajor"
+          name={`education.${index}.academicMajor`}
           label={t("major")}
         />
       </div>
@@ -74,7 +87,7 @@ const EducationSection = ({ t, lng }: EducationSectionProps) => {
       {/* Concentration */}
       <div className="col-span-12 md:col-span-6">
         <CustomControlledInput
-          name="education.concentration"
+          name={`education.${index}.concentration`}
           label={t("concentration")}
         />{" "}
       </div>
@@ -82,7 +95,7 @@ const EducationSection = ({ t, lng }: EducationSectionProps) => {
       {/* Institution */}
       <div className="col-span-12 md:col-span-6">
         <CustomControlledInput
-          name="education.institutionName"
+          name={`education.${index}.institutionName`}
           label={t("institutionName")}
         />{" "}
       </div>
@@ -90,7 +103,7 @@ const EducationSection = ({ t, lng }: EducationSectionProps) => {
       {/* GPA */}
       <div className="col-span-12 md:col-span-3">
         <CustomControlledInput
-          name="education.gradeAverage"
+          name={`education.${index}.gradeAverage`}
           label={t("gradeAverage")}
         />{" "}
       </div>
@@ -100,7 +113,7 @@ const EducationSection = ({ t, lng }: EducationSectionProps) => {
         <CustomControlledSelect
           options={countryOptions}
           label={t("country")}
-          name="education.country"
+          name={`education.${index}.country`}
         />{" "}
       </div>
 
@@ -110,12 +123,12 @@ const EducationSection = ({ t, lng }: EducationSectionProps) => {
           <CustomControlledSelect
             options={provinceOptions}
             label={t("province")}
-            name="education.province"
+            name={`education.${index}.province`}
             disabled={countryWatch === undefined}
           />
         ) : (
           <CustomControlledInput
-            name="education.province"
+            name={`education.${index}.province`}
             label={t("province")}
             disabled={
               countryWatch === undefined ||
@@ -130,14 +143,14 @@ const EducationSection = ({ t, lng }: EducationSectionProps) => {
       <div className="col-span-12 md:col-span-3">
         {isIranSelected ? (
           <CustomControlledSelect
-            name="education.city"
+            name={`education.${index}.city`}
             label={t("city")}
             options={cityOptions}
             disabled={provinceId === undefined}
           />
         ) : (
           <CustomControlledInput
-            name="education.city"
+            name={`education.${index}.city`}
             label={t("city")}
             disabled={countryWatch === undefined || countryWatch === ""}
           />
@@ -147,7 +160,7 @@ const EducationSection = ({ t, lng }: EducationSectionProps) => {
       {/* Entry Month */}
       <div className="col-span-12 md:col-span-6">
         <CustomControlledSelect
-          name="education.entryMonth"
+          name={`education.${index}.entryMonth`}
           label={t("entryMonth")}
           options={monthOptions}
         />
@@ -156,7 +169,7 @@ const EducationSection = ({ t, lng }: EducationSectionProps) => {
       {/* Entry Year */}
       <div className="col-span-12 md:col-span-6">
         <CustomControlledInput
-          name="education.entryYear"
+          name={`education.${index}.entryYear`}
           label={t("entryYear")}
         />
       </div>
@@ -182,13 +195,13 @@ const EducationSection = ({ t, lng }: EducationSectionProps) => {
       <div className="col-span-12 md:col-span-6">
         {isStudyingNow ? (
           <CustomControlledInput
-            name="education.graduationMonth"
+            name={`education.${index}.graduationMonth`}
             label={t("graduationMonth")}
             disabled={isStudyingNow}
           />
         ) : (
           <CustomControlledSelect
-            name="education.graduationMonth"
+            name={`education.${index}.graduationMonth`}
             label={t("graduationMonth")}
             options={monthOptions}
             disabled={isStudyingNow}
@@ -199,7 +212,7 @@ const EducationSection = ({ t, lng }: EducationSectionProps) => {
       {/* Graduation Year */}
       <div className="col-span-12 md:col-span-6">
         <CustomControlledInput
-          name="education.graduationYear"
+          name={`education.${index}.graduationYear`}
           label={t("graduationYear")}
           disabled={isStudyingNow}
         />
@@ -207,10 +220,20 @@ const EducationSection = ({ t, lng }: EducationSectionProps) => {
 
       {/* Studying Now */}
       <div className="col-span-12">
-        <CustomControlledCheckBox
-          name="education.isStudyingNow"
-          label={t("isStudyingNow")}
-        />
+        <div className="flex items-center justify-between">
+          <CustomControlledCheckBox
+            name={`education.${index}.isStudyingNow`}
+            label={t("isStudyingNow")}
+          />
+          {index !== 0 && (
+            <CustomButton
+              onClick={() => onDelete(index)}
+              variant="outlined-negative"
+            >
+              {t("deleteThis")}
+            </CustomButton>
+          )}
+        </div>
       </div>
     </CustomResumeCardComponents>
   );
