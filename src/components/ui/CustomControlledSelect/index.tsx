@@ -1,10 +1,11 @@
 import { ResumeFormValues } from "@/features/resume/schemas/resume.schema";
 import { Controller, Path, useFormContext } from "react-hook-form";
 import { CustomSelect } from "../CustomSelect";
+import { ReactNode } from "react";
 
 type CustomControlledSelectProps = {
   name: Path<ResumeFormValues>;
-  label: string;
+  label: string | ReactNode;
 } & Omit<
   React.ComponentProps<typeof CustomSelect>,
   "name" | "label" | "error" | "value" | "onChange" | "onBlur" | "ref"
