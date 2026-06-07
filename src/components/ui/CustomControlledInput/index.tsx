@@ -1,9 +1,9 @@
 import { ResumeFormValues } from "@/features/resume/schemas/resume.schema";
-import { Controller, Path, useFormContext } from "react-hook-form";
+import { Controller, FieldPath, useFormContext } from "react-hook-form";
 import { CustomInput } from "../CustomInput";
 
 type CustomControlledInputProps = {
-  name: Path<ResumeFormValues>;
+  name: FieldPath<ResumeFormValues>;
   label: string;
 } & Omit<
   React.ComponentProps<typeof CustomInput>,
