@@ -31,11 +31,11 @@ const ResumeFormProvider = ({
     if (!currentStepConfig) return;
 
     // eslint-disable-next-line
-    // const isValid = await triggerStep(currentStepConfig.fieldNames as any, {
-    //   shouldFocus: true,
-    // });
+    const isValid = await triggerStep(currentStepConfig.fieldNames as any, {
+      shouldFocus: true,
+    });
 
-    const isValid = true;
+    // const isValid = true;
 
     if (isValid) {
       setCompletedSteps((prev) => new Set(prev).add(currentStepConfig.id));
@@ -53,11 +53,11 @@ const ResumeFormProvider = ({
   };
 
   const handleStepClick = (index: number) => {
-    // if (index <= currentStep || completedSteps.has(RESUME_STEPS[index].id)) {
-    //   setCurrentStep(index);
-    // }
+    if (index <= currentStep || completedSteps.has(RESUME_STEPS[index].id)) {
+      setCurrentStep(index);
+    }
 
-    setCurrentStep(index);
+    // setCurrentStep(index);
   };
 
   return (
