@@ -71,4 +71,40 @@ export const getDefaultResumeValues = ({
       description: "",
     },
   ],
+  skills: [
+    { skillName: "", skillLevel: "", summary: "" },
+    {
+      skillName: "",
+      skillLevel: "",
+      summary: "",
+    },
+  ],
+  coursesAndCertifications: [
+    {
+      coursesAndCertificationsName: "",
+      instituteName: "",
+      certificateIssueMonth: "",
+      certificateIssueYear: "",
+      certificateUrl: "",
+    },
+  ],
+  projects: [
+    {
+      clientName: "",
+      description: "",
+      projectMonth: "",
+      projectTitle: "",
+      projectUrl: "",
+      projectYear: "",
+    },
+  ],
+  research: [
+    {
+      publicationMonth: "",
+      publicationYear: "",
+      publisher: "",
+      researchTitle: "",
+      researchUrl: "",
+    },
+  ],
 });
