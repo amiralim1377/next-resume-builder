@@ -3,6 +3,9 @@ import {
   BasicInfoValues,
   EducationValues,
   JobValues,
+  ProjectsValues,
+  ResearchValues,
+  SkillsValues,
 } from "../schemas/resume.schema";
 
 export interface Resume {
@@ -10,10 +13,9 @@ export interface Resume {
   basicInfo: BasicInfoValues;
   education: EducationValues[];
   job: JobValues[];
-  experience: [];
-  skills: [];
-  projects: [];
-  research: [];
+  skills: SkillsValues[];
+  projects: ProjectsValues[];
+  research: ResearchValues[];
   metadata: { language: "fa" | "en"; lastSaved: Date };
 }
 
