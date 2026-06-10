@@ -20,7 +20,7 @@ const BasicInformation = ({ t, lng }: BasicInformationProps) => {
   } = useGetBasicInfoStepData({ t, lng });
 
   return (
-    <div className="grid w-3/4 grid-cols-12 gap-4">
+    <div className="grid w-full grid-cols-12 gap-4">
       <div className="col-span-6">
         <CustomControlledInput
           name="basicInfo.firstName"

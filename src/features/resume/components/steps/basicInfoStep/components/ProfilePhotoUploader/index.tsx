@@ -1,3 +1,4 @@
+import { CustomResumeCardComponents } from "@/components/ui/CustomResumeCardComponents";
 import { TFunction } from "i18next";
 
 type ProfilePhotoUploaderProps = {
@@ -5,7 +6,11 @@ type ProfilePhotoUploaderProps = {
 };
 
 const ProfilePhotoUploader = ({ t }: ProfilePhotoUploaderProps) => {
-  return <div className="w-1/4">ProfilePhotoUploader</div>;
+  return (
+    <CustomResumeCardComponents calssName="w-full">
+      ProfilePhotoUploader
+    </CustomResumeCardComponents>
+  );
 };
 
 export { ProfilePhotoUploader };
