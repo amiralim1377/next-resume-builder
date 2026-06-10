@@ -1,5 +1,6 @@
 import { TFunction } from "i18next";
 import { z } from "zod";
+import { CefrLevels, createDisplayMode, DescriptiveLevels } from "./language";
 
 const baseLanguageSchema = z.object({
   language: z
@@ -14,25 +15,16 @@ const baseLanguageSchema = z.object({
 // نوع نمایش زبان:سطح کلی
 //  نوع نمایش سطح تسلط:توصیفی
 export const overallDescriptiveSchema = baseLanguageSchema.extend({
-  displayMode: z.literal("overall-descriptive"),
+  displayMode: z.literal(createDisplayMode("overall", "descriptive")),
   proficiencyData: z.object({
-    level: z
-      .enum([
-        "Beginner",
-        "Elementary",
-        "Intermediate",
-        "Advanced",
-        "Proficient",
-      ])
-      .optional()
-      .or(z.literal("")),
+    level: z.enum(DescriptiveLevels).optional().or(z.literal("")),
   }),
 });
 
 // نوع نمایش زبان:سطح کلی
 //  نوع نمایش سطح تسلط:گرافیکی
 export const overallGraphicSchema = baseLanguageSchema.extend({
-  displayMode: z.literal("overall-graphic"),
+  displayMode: z.literal(createDisplayMode("overall", "graphic")),
   proficiencyData: z.object({
     level: z.number().min(1).max(5).optional().or(z.literal("")),
   }),
@@ -41,12 +33,9 @@ export const overallGraphicSchema = baseLanguageSchema.extend({
 // نوع نمایش زبان:سطح کلی
 // A-C :نوع نمایش سطح تسلط
 export const overallCefrSchema = baseLanguageSchema.extend({
-  displayMode: z.literal("overall-cefr"),
+  displayMode: z.literal(createDisplayMode("overall", "cefr")),
   proficiencyData: z.object({
-    level: z
-      .enum(["A1", "A2", "B1", "B2", "C1", "C2"])
-      .optional()
-      .or(z.literal("")),
+    level: z.enum(CefrLevels).optional().or(z.literal("")),
   }),
 });
 
@@ -54,54 +43,18 @@ export const overallCefrSchema = baseLanguageSchema.extend({
 // نوع نمایش زبان:تفکیک مهارت ها
 //  نوع نمایش سطح تسلط:توصیفی
 export const breakdownDescriptiveSchema = baseLanguageSchema.extend({
-  displayMode: z.literal("breakdown-descriptive"),
+  displayMode: z.literal(createDisplayMode("breakdown", "descriptive")),
   proficiencyData: z.object({
-    reading: z
-      .enum([
-        "Beginner",
-        "Elementary",
-        "Intermediate",
-        "Advanced",
-        "Proficient",
-      ])
-      .optional()
-      .or(z.literal("")),
-    writing: z
-      .enum([
-        "Beginner",
-        "Elementary",
-        "Intermediate",
-        "Advanced",
-        "Proficient",
-      ])
-      .optional()
-      .or(z.literal("")),
-    listening: z
-      .enum([
-        "Beginner",
-        "Elementary",
-        "Intermediate",
-        "Advanced",
-        "Proficient",
-      ])
-      .optional()
-      .or(z.literal("")),
-    speaking: z
-      .enum([
-        "Beginner",
-        "Elementary",
-        "Intermediate",
-        "Advanced",
-        "Proficient",
-      ])
-      .optional()
-      .or(z.literal("")),
+    reading: z.enum(DescriptiveLevels).optional().or(z.literal("")),
+    writing: z.enum(DescriptiveLevels).optional().or(z.literal("")),
+    listening: z.enum(DescriptiveLevels).optional().or(z.literal("")),
+    speaking: z.enum(DescriptiveLevels).optional().or(z.literal("")),
   }),
 });
 // نوع نمایش زبان:تفکیک مهارت ها
 //  نوع نمایش سطح تسلط: گرافیکی
 export const breakdownGraphicSchema = baseLanguageSchema.extend({
-  displayMode: z.literal("breakdown-graphic"),
+  displayMode: z.literal(createDisplayMode("breakdown", "graphic")),
   proficiencyData: z.object({
     reading: z.number().min(1).max(5).optional().or(z.literal("")),
     writing: z.number().min(1).max(5).optional().or(z.literal("")),
@@ -113,39 +66,14 @@ export const breakdownGraphicSchema = baseLanguageSchema.extend({
 // نوع نمایش زبان:تفکیک مهارت ها
 // A-C:نوع نمایش سطح تسل
 export const breakdownCefrSchema = baseLanguageSchema.extend({
-  displayMode: z.literal("breakdown-cefr"),
+  displayMode: z.literal(createDisplayMode("breakdown", "cefr")),
   proficiencyData: z.object({
-    reading: z
-      .enum(["A1", "A2", "B1", "B2", "C1", "C2"])
-      .optional()
-      .or(z.literal("")),
-    writing: z
-      .enum(["A1", "A2", "B1", "B2", "C1", "C2"])
-      .optional()
-      .or(z.literal("")),
-    listening: z
-      .enum(["A1", "A2", "B1", "B2", "C1", "C2"])
-      .optional()
-      .or(z.literal("")),
-    speaking: z
-      .enum(["A1", "A2", "B1", "B2", "C1", "C2"])
-      .optional()
-      .or(z.literal("")),
+    reading: z.enum(CefrLevels).optional().or(z.literal("")),
+    writing: z.enum(CefrLevels).optional().or(z.literal("")),
+    listening: z.enum(CefrLevels).optional().or(z.literal("")),
+    speaking: z.enum(CefrLevels).optional().or(z.literal("")),
   }),
 });
-
-// displayModeSchema
-
-export const displayModeSchema = z
-  .enum([
-    "overall-descriptive",
-    "overall-graphic",
-    "overall-cefr",
-    "breakdown-descriptive",
-    "breakdown-graphic",
-    "breakdown-cefr",
-  ])
-  .or(z.literal(""));
 
 export const createLanguageSchema = (t?: TFunction<string, undefined>) => {
   return z

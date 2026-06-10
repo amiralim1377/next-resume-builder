@@ -4,6 +4,10 @@ import { createBasicInfoSchema } from "./BasicInfoSchema";
 import { createEducationSchema } from "./EducationSchema";
 import { createJobSchema } from "./JobSchema";
 import { createLanguageSchema } from "./LanguageSchema";
+import { createSkillsSchema } from "./SkillsSchema";
+import { createCoursesAndCertificationsSchema } from "./CoursesAndCertificationsSchema";
+import { createProjectsSchema } from "./ProjectsSchema";
+import { createResearchSchema } from "./ResearchSchema";
 
 export const createResumeSchema = (t: TFunction<string, undefined>) => {
   return z.object({
@@ -11,6 +15,12 @@ export const createResumeSchema = (t: TFunction<string, undefined>) => {
     education: z.array(createEducationSchema(t)),
     job: z.array(createJobSchema(t)),
     languages: z.array(createLanguageSchema(t)).default([]),
+    skills: z.array(createSkillsSchema(t)).default([]),
+    coursesAndCertifications: z
+      .array(createCoursesAndCertificationsSchema(t))
+      .default([]),
+    projects: z.array(createProjectsSchema(t)).default([]),
+    research: z.array(createResearchSchema(t)).default([]),
   });
 };
 
@@ -18,12 +28,22 @@ export type BasicInfoValues = z.infer<ReturnType<typeof createBasicInfoSchema>>;
 export type EducationValues = z.infer<ReturnType<typeof createEducationSchema>>;
 export type JobValues = z.infer<ReturnType<typeof createJobSchema>>;
 export type LanguageValues = z.infer<ReturnType<typeof createLanguageSchema>>;
+export type SkillsValues = z.infer<ReturnType<typeof createSkillsSchema>>;
+export type CoursesAndCertificationsValues = z.infer<
+  ReturnType<typeof createCoursesAndCertificationsSchema>
+>;
+export type ProjectsValues = z.infer<ReturnType<typeof createProjectsSchema>>;
+export type ResearchValues = z.infer<ReturnType<typeof createResearchSchema>>;
 
 export type ResumeFormValues = {
   basicInfo: BasicInfoValues;
   education: EducationValues[];
   job: JobValues[];
   languages: LanguageValues[];
+  skills: SkillsValues[];
+  coursesAndCertifications: CoursesAndCertificationsValues[];
+  projects: ProjectsValues[];
+  research: ResearchValues[];
 };
 // or this one-below
 // export type ResumeFormValues = z.infer<ReturnType<typeof createResumeSchema>>;
@@ -41,5 +61,31 @@ export const STEP_FIELDS: Record<number, string[]> = {
     "basicInfo.militaryServiceStatus",
     "basicInfo.maritalStatus",
     "basicInfo.webSite",
+  ],
+  1: [],
+  2: [],
+  3: [],
+  4: ["skills.skillName", "skills.skillLevel"],
+  5: [
+    "CoursesAndCertifications.coursesAndCertificationsName",
+    "CoursesAndCertifications.instituteName",
+    "CoursesAndCertifications.certificateIssueMonth",
+    "CoursesAndCertifications.certificateIssueYear",
+    "CoursesAndCertifications.certificateUrl",
+  ],
+  6: [
+    "projects.projectTitle",
+    "projects.clientName",
+    "projects.projectUrl",
+    "projects.projectMonth",
+    "projects.projectYear",
+    "projects.description",
+  ],
+  7: [
+    "research.researchTitle",
+    "research.publisher",
+    "research.researchUrl",
+    "research.publicationMonth",
+    "research.publicationYear",
   ],
 };

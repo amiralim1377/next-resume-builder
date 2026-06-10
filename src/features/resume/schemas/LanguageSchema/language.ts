@@ -29,3 +29,9 @@ export const GraphicLevels = [1, 2, 3, 4, 5] as const;
 export type DescriptiveLevel = (typeof DescriptiveLevels)[number];
 export type CefrLevel = (typeof CefrLevels)[number];
 export type GraphicLevel = (typeof GraphicLevels)[number];
+
+// Helper to generate displayMode string
+export const createDisplayMode = (
+  langType: LanguageDisplayType,
+  profType: ProficiencyDisplayType,
+): DisplayMode => `${langType}-${profType}`;

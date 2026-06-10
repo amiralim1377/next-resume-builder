@@ -64,15 +64,7 @@ const LocationDetails = ({ t }: LocationDetailsProps) => {
         />
       )}
       <div className="col-span-3">
-        <CustomControlledInput
-          name="basicInfo.address"
-          label={t("address")}
-          disabled={
-            countryWatch === undefined ||
-            countryWatch === "" ||
-            !Boolean(countryWatch)
-          }
-        />
+        <CustomControlledInput name="basicInfo.address" label={t("address")} />
       </div>
     </div>
   );

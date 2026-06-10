@@ -1,10 +1,11 @@
-import { StarSvg } from "@/components/svg/StarSvg";
 import { CEFR_LEVELS_DATA } from "@/core/data/CefrLevelsData";
 import { DESCRIPTIVE_LEVELS_DATA } from "@/core/data/descriptiveLevelsData";
 import { DISPLAY_MODE_DATA } from "@/core/data/languageDisplayModeData";
 import { LANGUAGES_DATA } from "@/core/data/languagesData";
-import { GraphicLevels } from "@/features/resume/types/language";
+import { monthsData } from "@/core/data/monthsData";
+import { GraphicLevels } from "@/features/resume/schemas/LanguageSchema/language";
 import { Language } from "@/lib/i18n/settings";
+import { CalendarType } from "@/types";
 import { ReactNode } from "react";
 
 type Option<T = string | number> = {
@@ -14,13 +15,17 @@ type Option<T = string | number> = {
 
 type useGetSkillsInfoStepDataProps = {
   lng?: Language;
+  calendarType?: CalendarType;
 };
 
 const addEmptyOption = <T extends Option>(
   options: T[],
 ): Option<T["value"]>[] => [{ value: "", text: "" }, ...options];
 
-const useGetSkillsInfoStepData = ({ lng }: useGetSkillsInfoStepDataProps) => {
+const useGetSkillsInfoStepData = ({
+  lng,
+  calendarType,
+}: useGetSkillsInfoStepDataProps) => {
   const languageOptions = addEmptyOption(
     (lng === "fa" ? LANGUAGES_DATA.fa : LANGUAGES_DATA.en).map(
       (languageItem) => ({
@@ -62,12 +67,26 @@ const useGetSkillsInfoStepData = ({ lng }: useGetSkillsInfoStepDataProps) => {
       text: "★".repeat(starItem),
     })),
   );
+
+  const monthOptions = addEmptyOption(
+    calendarType === "jalali"
+      ? monthsData.jalali.map((month) => ({
+          value: month.month_shamsi,
+          text: month.month_shamsi,
+        }))
+      : monthsData.gregorian.map((month) => ({
+          value: month.month_en,
+          text: lng === "fa" ? month.month_en : month.month_en,
+        })),
+  );
+
   return {
     languageOptions,
     displayModeOptions,
     descripitveLevelOptions,
     cefrLevelsLevelOptions,
     graphicLevelsOptions,
+    monthOptions,
   };
 };
 
