@@ -3,7 +3,6 @@ import { TFunction } from "i18next";
 import { useGetSkillsInfoStepData } from "../../../../hooks/useGetSkillsInfoStepData";
 import { Language } from "@/lib/i18n/settings";
 import { useFormContext, useWatch } from "react-hook-form";
-import { DisplayMode } from "@/features/resume/types/language";
 import { CustomButton } from "@/components/ui/CustomButton";
 import { OverallProficiencyFields } from "../OverallProficiencyFields";
 import { BreakdownProficiencyFields } from "../BreakdownProficiencyFields";
