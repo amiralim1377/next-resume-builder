@@ -8,11 +8,11 @@ function SkillsStep() {
   const { lng } = useLang();
   const { t } = useTranslation(lng, "form");
   return (
-    <div>
+    <>
       <LanguageSection t={t} lng={lng} />
       <CoreSkillsSection t={t} lng={lng} />
       <CoursesCertificationsSection t={t} lng={lng} />
-    </div>
+    </>
   );
 }
 
