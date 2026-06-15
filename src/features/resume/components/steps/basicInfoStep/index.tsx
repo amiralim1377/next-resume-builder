@@ -14,7 +14,7 @@ function BasicInfoStep() {
       <ProfilePhotoUploader t={t} />
       <BasicInfoSection lng={lng} t={t} />
       <ContactInformation t={t} />
-      <ResumeSummary />
+      <ResumeSummary lng={lng} t={t} />
     </div>
   );
 }
