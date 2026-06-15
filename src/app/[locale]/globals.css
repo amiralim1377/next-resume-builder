@@ -235,5 +235,5 @@ body {
 
 [dir="rtl"] ul,
 [dir="rtl"] ol {
-  padding-inline-start: 1.5rem; /* or use Tailwind logical properties */
+  padding-inline-start: 1.5rem;
 }
