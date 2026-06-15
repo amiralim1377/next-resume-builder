@@ -1,7 +1,7 @@
 type LinkdinSvgProps = {
   color?: string;
   size?: number;
-  onClick: () => void;
+  onClick?: () => void;
 };
 
 function LinkdinSvg({ color = "#0a66c2", size, onClick }: LinkdinSvgProps) {
