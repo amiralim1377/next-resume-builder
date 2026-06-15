@@ -1,10 +1,10 @@
-function LinkdinSvg({
-  color = "#0a66c2",
-  size,
-}: {
+type LinkdinSvgProps = {
   color?: string;
   size?: number;
-}) {
+  onClick: () => void;
+};
+
+function LinkdinSvg({ color = "#0a66c2", size, onClick }: LinkdinSvgProps) {
   return (
     <>
       <svg
@@ -15,6 +15,7 @@ function LinkdinSvg({
         width={size}
         height={size}
         fill={color || "#0a66c2"}
+        onClick={onClick}
       >
         <path
           fill="#fff"
