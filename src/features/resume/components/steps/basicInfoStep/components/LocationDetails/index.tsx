@@ -12,8 +12,16 @@ type LocationDetailsProps = {
 const LocationDetails = ({ t }: LocationDetailsProps) => {
   const { lng } = useLang();
 
-  const countryWatch = useWatch({ name: "basicInfo.country", exact: true });
-  const provinceId = useWatch({ name: "basicInfo.province", exact: true });
+  const countryWatch = useWatch({
+    name: "basicInfo.country",
+    exact: true,
+  });
+
+  const provinceId = useWatch({
+    name: "basicInfo.province",
+    exact: true,
+  });
+
   const isIranSelected = countryWatch === "Iran";
 
   const { countryOptions, provinceOptions, cityOptions } =
@@ -24,46 +32,50 @@ const LocationDetails = ({ t }: LocationDetailsProps) => {
     });
 
   return (
-    <div className="grid grid-cols-6 grid-rows-1 gap-4">
-      <CustomControlledSelect
-        options={countryOptions}
-        label={t("country")}
-        name="basicInfo.country"
-      />
-      {isIranSelected ? (
+    <div className="grid w-full grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-6">
+      <div className="lg:col-span-2">
         <CustomControlledSelect
-          options={provinceOptions}
-          label={t("province")}
-          name="basicInfo.province"
-          disabled={countryWatch === undefined}
+          options={countryOptions}
+          label={t("country")}
+          name="basicInfo.country"
         />
-      ) : (
-        <CustomControlledInput
-          name="basicInfo.province"
-          label={t("province")}
-          disabled={
-            countryWatch === undefined ||
-            countryWatch === "" ||
-            !Boolean(countryWatch)
-          }
-        />
-      )}
+      </div>
 
-      {isIranSelected ? (
-        <CustomControlledSelect
-          name="basicInfo.city"
-          label={t("city")}
-          options={cityOptions}
-          disabled={provinceId === undefined || provinceId === ""}
-        />
-      ) : (
-        <CustomControlledInput
-          name="basicInfo.city"
-          label={t("city")}
-          disabled={countryWatch === undefined || countryWatch === ""}
-        />
-      )}
-      <div className="col-span-3">
+      <div className="lg:col-span-2">
+        {isIranSelected ? (
+          <CustomControlledSelect
+            options={provinceOptions}
+            label={t("province")}
+            name="basicInfo.province"
+            disabled={!countryWatch}
+          />
+        ) : (
+          <CustomControlledInput
+            name="basicInfo.province"
+            label={t("province")}
+            disabled={!countryWatch}
+          />
+        )}
+      </div>
+
+      <div className="lg:col-span-2">
+        {isIranSelected ? (
+          <CustomControlledSelect
+            name="basicInfo.city"
+            label={t("city")}
+            options={cityOptions}
+            disabled={!provinceId}
+          />
+        ) : (
+          <CustomControlledInput
+            name="basicInfo.city"
+            label={t("city")}
+            disabled={!countryWatch}
+          />
+        )}
+      </div>
+
+      <div className="lg:col-span-6">
         <CustomControlledInput name="basicInfo.address" label={t("address")} />
       </div>
     </div>

@@ -7,21 +7,22 @@ type ContactDetailsProps = {
 
 const ContactDetails = ({ t }: ContactDetailsProps) => {
   return (
-    <>
-      <div className="grid grid-cols-4 grid-rows-1 gap-4">
-        <CustomControlledInput name="basicInfo.email" label={t("email")} />
-        <CustomControlledInput
-          name="basicInfo.mobileNumber"
-          label={t("mobileNumber")}
-        />
-        <CustomControlledInput name="basicInfo.phone" label={t("phone")} />
-        <CustomControlledInput
-          placeholder={t("optional")}
-          name="basicInfo.webSite"
-          label={t("webSite")}
-        />
-      </div>
-    </>
+    <div className="grid w-full grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <CustomControlledInput name="basicInfo.email" label={t("email")} />
+
+      <CustomControlledInput
+        name="basicInfo.mobileNumber"
+        label={t("mobileNumber")}
+      />
+
+      <CustomControlledInput name="basicInfo.phone" label={t("phone")} />
+
+      <CustomControlledInput
+        placeholder={t("optional")}
+        name="basicInfo.webSite"
+        label={t("webSite")}
+      />
+    </div>
   );
 };
 

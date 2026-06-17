@@ -4,7 +4,7 @@ import { cn } from "@/utils/cn";
 import Image, { StaticImageData } from "next/image";
 import React, { useState } from "react";
 
-export type AvatarSize = "sm" | "md" | "lg" | "xl";
+export type AvatarSize = "sm" | "md" | "lg" | "xl" | "xxl";
 export type AvatarShape = "circle" | "square";
 export type AvatarStatus = "online" | "offline" | "away" | "busy" | "none";
 
@@ -29,6 +29,7 @@ const sizeClasses: Record<AvatarSize, string> = {
   md: "w-12 h-12 text-sm",
   lg: "w-16 h-16 text-lg",
   xl: "w-24 h-24 text-2xl",
+  xxl: "w-48 h-48 text-2xl",
 };
 
 const statusColors: Record<Exclude<AvatarStatus, "none">, string> = {

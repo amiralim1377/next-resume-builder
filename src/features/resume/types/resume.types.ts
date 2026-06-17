@@ -1,23 +1,27 @@
 import { ComponentType } from "react";
-import {
-  BasicInfoValues,
-  EducationValues,
-  JobValues,
-  ProjectsValues,
-  ResearchValues,
-  SkillsValues,
-} from "../schemas/resume.schema";
+import { ResumeFormValues } from "../schemas/resume.schema";
+// import {
+//   BasicInfoValues,
+//   EducationValues,
+//   JobValues,
+//   ProjectsValues,
+//   ResearchValues,
+//   SkillsValues,
+// } from "../schemas/resume.schema";
 
-export interface Resume {
-  id?: string;
-  basicInfo: BasicInfoValues;
-  education: EducationValues[];
-  job: JobValues[];
-  skills: SkillsValues[];
-  projects: ProjectsValues[];
-  research: ResearchValues[];
-  metadata: { language: "fa" | "en"; lastSaved: Date };
-}
+// export interface Resume {
+//   id?: string;
+//   profileImage?: {
+//     file?: File;
+//   };
+//   basicInfo: BasicInfoValues;
+//   education: EducationValues[];
+//   job: JobValues[];
+//   skills: SkillsValues[];
+//   projects: ProjectsValues[];
+//   research: ResearchValues[];
+//   metadata: { language: "fa" | "en"; lastSaved: Date };
+// }
 
 // ==================== STEPPER TYPES ====================
 export type StepName =
@@ -35,7 +39,7 @@ export interface StepConfig {
   titleKey: string;
   titleEn: string;
   component: ComponentType;
-  fieldNames: (keyof Resume)[];
+  fieldNames: (keyof ResumeFormValues)[];
   isOptional: boolean;
   icon?: string;
 }

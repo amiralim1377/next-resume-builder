@@ -20,29 +20,29 @@ const BasicInformation = ({ t, lng }: BasicInformationProps) => {
   } = useGetBasicInfoStepData({ t, lng });
 
   return (
-    <div className="grid w-3/4 grid-cols-12 gap-4">
-      <div className="col-span-6">
+    <div className="grid w-full grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-12">
+      <div className="col-span-1 lg:col-span-6">
         <CustomControlledInput
           name="basicInfo.firstName"
           label={t("firstName")}
         />
       </div>
 
-      <div className="col-span-6">
+      <div className="col-span-1 lg:col-span-6">
         <CustomControlledInput
           name="basicInfo.lastName"
           label={t("lastName")}
         />
       </div>
 
-      <div className="col-span-6">
+      <div className="col-span-1 lg:col-span-6">
         <CustomControlledInput
           name="basicInfo.jobTitle"
           label={t("jobTitle")}
         />
       </div>
 
-      <div className="col-span-6">
+      <div className="col-span-1 lg:col-span-6">
         <CustomControlledSelect
           options={sexOptions}
           name="basicInfo.sex"
@@ -50,7 +50,7 @@ const BasicInformation = ({ t, lng }: BasicInformationProps) => {
         />
       </div>
 
-      <div className="col-span-6">
+      <div className="col-span-1 lg:col-span-6">
         <CustomControlledSelect
           options={maritalOptions}
           name="basicInfo.maritalStatus"
@@ -58,7 +58,7 @@ const BasicInformation = ({ t, lng }: BasicInformationProps) => {
         />
       </div>
 
-      <div className="col-span-6">
+      <div className="col-span-1 lg:col-span-6">
         <CustomControlledSelect
           options={militaryOptions}
           name="basicInfo.militaryServiceStatus"
@@ -66,28 +66,30 @@ const BasicInformation = ({ t, lng }: BasicInformationProps) => {
         />
       </div>
 
-      <div className="col-span-4">
-        <CustomControlledSelect
-          options={daysInMonthOptions}
-          name="basicInfo.birthday.day"
-          label={t("day")}
-        />
-      </div>
+      <div className="col-span-1 grid grid-cols-1 gap-4 sm:grid-cols-3 lg:col-span-12">
+        <div>
+          <CustomControlledSelect
+            options={daysInMonthOptions}
+            name="basicInfo.birthday.day"
+            label={t("day")}
+          />
+        </div>
 
-      <div className="col-span-4">
-        <CustomControlledSelect
-          options={monthOptions}
-          name="basicInfo.birthday.month"
-          label={t("month")}
-        />
-      </div>
+        <div>
+          <CustomControlledSelect
+            options={monthOptions}
+            name="basicInfo.birthday.month"
+            label={t("month")}
+          />
+        </div>
 
-      <div className="col-span-4">
-        <CustomControlledSelect
-          options={yearOptions}
-          name="basicInfo.birthday.year"
-          label={t("year")}
-        />
+        <div>
+          <CustomControlledSelect
+            options={yearOptions}
+            name="basicInfo.birthday.year"
+            label={t("year")}
+          />
+        </div>
       </div>
     </div>
   );

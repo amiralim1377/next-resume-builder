@@ -107,4 +107,5 @@ export const getDefaultResumeValues = ({
       researchUrl: "",
     },
   ],
+  profileImage: undefined,
 });

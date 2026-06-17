@@ -74,7 +74,7 @@ const CustomButton = ({
         return "bg-transparent text-[var(--color-state-error)] border border-[var(--color-state-error)] hover:bg-[var(--color-state-error)] hover:!text-[var(--color-inverse)]";
 
       case "simple":
-        return "bg-transparent text-[var(--color-text-primary)] hover:bg-[var(--color-accentLight)]";
+        return "bg-transparent text-[var(--color-text-primary)] ";
 
       default:
         return "";
@@ -86,7 +86,7 @@ const CustomButton = ({
       type={type}
       ref={customRef as unknown as RefObject<HTMLButtonElement>}
       className={cn(
-        "relative flex h-9 min-w-25 items-center justify-center rounded-sm border-0 px-4.5 text-[14px] hover:cursor-pointer active:translate-y-0.5 disabled:cursor-default disabled:!bg-[var(--disabledButton)] disabled:text-[var(--disabledText)] disabled:active:translate-y-0",
+        "`disabled:bg-disabledButton! disabled:text-disabledText relative flex h-9 min-w-25 items-center justify-center rounded-sm border-0 px-4.5 text-[14px] hover:cursor-pointer active:translate-y-0.5 disabled:cursor-default disabled:active:translate-y-0",
         size === "lg" ? "text-[20px]" : "",
         getBtnClassName(),
         className,
