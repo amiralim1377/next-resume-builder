@@ -162,5 +162,13 @@
   "addAndRemoveLink": "Add a link to or remove it from the selected text",
   "removeSelectedTextLink": "Are you sure you want to remove the link associated with this text?",
   "removeLinkButtonTooltip": "To remove a link, first select the linked text, then click the remove link button.",
-  "addLinkButtonTooltip": "To add a link, select the text or create a link directly from this menu."
+  "addLinkButtonTooltip": "To add a link, select the text or create a link directly from this menu.",
+  "reset": "Reset",
+  "saveUpload": "save & Upload",
+  "imageMaxSize": "Image size must not exceed {{size}}",
+  "imageFormat": "Image format must be one of {{formats}}",
+  "uploadResumeProfilePhoto": "Upload your resume profile photo",
+  "changePhoto": "change Photo",
+  "photoFormats": "PNG, JPG up to 2MB",
+  "dragAndDrop": "or drag and drop"
 }
