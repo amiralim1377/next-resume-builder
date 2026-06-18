@@ -10,6 +10,7 @@ import { useEffect, useState } from "react";
 import { CustomRadio } from "@/components/ui/CustomRadio";
 import { CustomButton } from "@/components/ui/CustomButton";
 import { CalendarType } from "@/types";
+import { EducationSummary } from "../EducationSummary";
 
 type EducationSectionProps = {
   t: TFunction<string, undefined>;
@@ -225,16 +226,21 @@ const EducationSection = ({
             name={`education.${index}.isStudyingNow`}
             label={t("isStudyingNow")}
           />
-          {index !== 0 && (
-            <CustomButton
-              onClick={() => onDelete(index)}
-              variant="outlined-negative"
-            >
-              {t("deleteThis")}
-            </CustomButton>
-          )}
         </div>
       </div>
+      <div className="col-span-12">
+        <EducationSummary index={index} t={t} />
+      </div>
+
+      {index !== 0 && (
+        <CustomButton
+          onClick={() => onDelete(index)}
+          variant="outlined-negative"
+          className="text-nowrap"
+        >
+          {t("deleteThis")}
+        </CustomButton>
+      )}
     </CustomResumeCardComponents>
   );
 };

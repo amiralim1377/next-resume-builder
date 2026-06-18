@@ -1,14 +1,9 @@
 import { TFunction } from "i18next";
-import { z } from "zod";
+import * as z from "zod/v4";
 import { CefrLevels, createDisplayMode, DescriptiveLevels } from "./language";
 
 const baseLanguageSchema = z.object({
-  language: z
-    .string()
-    .min(1, "Language is required")
-    .optional()
-    .or(z.literal("")),
-  description: z.string().optional().default(""),
+  language: z.string().optional(),
 });
 
 // ==================== OVERALL LEVEL ====================
@@ -77,7 +72,7 @@ export const breakdownCefrSchema = baseLanguageSchema.extend({
 
 export const createLanguageSchema = (t?: TFunction<string, undefined>) => {
   return z
-    .discriminatedUnion("displayMode", [
+    .union([
       overallDescriptiveSchema,
       overallGraphicSchema,
       overallCefrSchema,
@@ -89,8 +84,7 @@ export const createLanguageSchema = (t?: TFunction<string, undefined>) => {
       z.object({
         language: z.string().optional().or(z.literal("")),
         displayMode: z.literal(""),
-        proficiencyData: z.object({}).loose().optional().default({}),
-        description: z.string().optional().default(""),
+        proficiencyData: z.object({}).loose().optional(),
       }),
     );
 };

@@ -16,13 +16,26 @@ type LanguageItemProps = {
 };
 
 const LanguageItem = ({ t, index, lng, onDelete }: LanguageItemProps) => {
-  const { resetField } = useFormContext();
+  const { resetField, setValue } = useFormContext();
   const { languageOptions, displayModeOptions } = useGetSkillsInfoStepData({
     lng,
   });
+
+  const languageWatch = useWatch({
+    name: `languages.${index}.language`,
+    exact: true,
+  });
+
+  useEffect(() => {
+    setValue(`languages.${index}.displayMode`, undefined);
+
+    setValue(`languages.${index}.proficiencyData`, {});
+  }, [languageWatch]);
+
   const displayMode = useWatch({
     name: `languages.${index}.displayMode`,
   }) as string | undefined;
+
   const [langType, profType] = displayMode?.split("-") ?? ["", ""];
 
   useEffect(() => {

@@ -7,6 +7,7 @@ import { CustomRadio } from "@/components/ui/CustomRadio";
 import { CustomButton } from "@/components/ui/CustomButton";
 import { CustomControlledSelect } from "@/components/ui/CustomControlledSelect";
 import { useGetResearchInfoStepData } from "../../hooks/useGetResearchInfoStepData";
+import { ResearchSummary } from "../ResearchSummary";
 
 type ResearchItemProps = {
   t: TFunction<string, undefined>;
@@ -25,42 +26,51 @@ const ResearchItem = ({ index, lng, onDelete, t }: ResearchItemProps) => {
     lng,
   });
   return (
-    <div className="grid grid-cols-2 gap-4">
+    <div className="grid grid-cols-12 gap-4">
       {/* Research Title */}
-      <CustomControlledInput
-        label={t("researchTitle")}
-        name={`research.${index}.researchTitle`}
-      />
+      <div className="col-span-12 md:col-span-6">
+        <CustomControlledInput
+          label={t("researchTitle")}
+          name={`research.${index}.researchTitle`}
+        />
+      </div>
 
       {/* Publisher */}
-      <CustomControlledInput
-        label={t("publisher")}
-        name={`research.${index}.publisher`}
-      />
+      <div className="col-span-12 md:col-span-6">
+        <CustomControlledInput
+          label={t("publisher")}
+          name={`research.${index}.publisher`}
+        />
+      </div>
 
       {/* Related Link */}
-      <CustomControlledInput
-        className="col-span-2"
-        label={t("researchUrl")}
-        name={`research.${index}.researchUrl`}
-        placeholder={t("researchUrl")}
-      />
+      <div className="col-span-12">
+        <CustomControlledInput
+          label={t("researchUrl")}
+          name={`research.${index}.researchUrl`}
+          placeholder={t("researchUrl")}
+        />
+      </div>
 
       {/* Publication Month */}
-      <CustomControlledSelect
-        name={`research.${index}.publicationMonth`}
-        label={t("publicationMonth")}
-        options={monthOptions}
-      />
+      <div className="col-span-12 md:col-span-6">
+        <CustomControlledSelect
+          name={`research.${index}.publicationMonth`}
+          label={t("publicationMonth")}
+          options={monthOptions}
+        />
+      </div>
 
       {/* Publication Year */}
-      <CustomControlledInput
-        name={`research.${index}.publicationYear`}
-        label={t("publicationYear")}
-      />
+      <div className="col-span-12 md:col-span-6">
+        <CustomControlledInput
+          name={`research.${index}.publicationYear`}
+          label={t("publicationYear")}
+        />
+      </div>
 
       {/* Calendar Type */}
-      <div className="col-span-2">
+      <div className="col-span-12">
         <CustomRadio.Group className="flex flex-row gap-4">
           <CustomRadio
             checked={calendarType === "jalali"}
@@ -76,9 +86,14 @@ const ResearchItem = ({ index, lng, onDelete, t }: ResearchItemProps) => {
         </CustomRadio.Group>
       </div>
 
+      {/* Summary */}
+      <div className="col-span-12">
+        <ResearchSummary index={index} t={t} />
+      </div>
+
       {/* Delete Button */}
       {index !== 0 && (
-        <div className="col-span-2 flex justify-end">
+        <div className="col-span-12 flex justify-end">
           <CustomButton
             type="button"
             onClick={() => onDelete(index)}

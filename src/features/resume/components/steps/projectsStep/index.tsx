@@ -20,7 +20,7 @@ function ProjectsStep() {
   const onRowAdd = () => {
     append({
       clientName: "",
-      description: "",
+      summary: "",
       projectMonth: "",
       projectTitle: "",
       projectUrl: "",

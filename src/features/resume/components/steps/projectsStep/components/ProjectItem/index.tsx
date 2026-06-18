@@ -7,6 +7,7 @@ import { useState } from "react";
 import { CustomRadio } from "@/components/ui/CustomRadio";
 import { useGetSkillsInfoStepData } from "../../../SkillsStep/hooks/useGetSkillsInfoStepData";
 import { CustomButton } from "@/components/ui/CustomButton";
+import { ProjectSummary } from "../ProjectSummary";
 
 type ProjectItemProps = {
   index: number;
@@ -23,37 +24,46 @@ const ProjectItem = ({ index, lng, onDelete, t }: ProjectItemProps) => {
   const { monthOptions } = useGetSkillsInfoStepData({ calendarType, lng });
 
   return (
-    <div className="grid grid-cols-2 gap-4">
-      <CustomControlledInput
-        label={t("projectTitle")}
-        name={`projects.${index}.projectTitle`}
-      />
+    <div className="grid grid-cols-12 gap-4">
+      <div className="col-span-12 md:col-span-6">
+        <CustomControlledInput
+          label={t("projectTitle")}
+          name={`projects.${index}.projectTitle`}
+        />
+      </div>
 
-      <CustomControlledInput
-        label={t("clientName")}
-        name={`projects.${index}.clientName`}
-      />
+      <div className="col-span-12 md:col-span-6">
+        <CustomControlledInput
+          label={t("clientName")}
+          name={`projects.${index}.clientName`}
+        />
+      </div>
 
-      <CustomControlledInput
-        className="col-span-2"
-        label={t("projectUrl")}
-        placeholder={t("projectUrl")}
-        name={`projects.${index}.projectUrl`}
-      />
+      <div className="col-span-12">
+        <CustomControlledInput
+          label={t("projectUrl")}
+          placeholder={t("projectUrl")}
+          name={`projects.${index}.projectUrl`}
+        />
+      </div>
 
-      <CustomControlledSelect
-        name={`projects.${index}.projectMonth`}
-        label={t("date")}
-        options={monthOptions}
-      />
+      <div className="col-span-12 md:col-span-6">
+        <CustomControlledSelect
+          name={`projects.${index}.projectMonth`}
+          label={t("date")}
+          options={monthOptions}
+        />
+      </div>
 
-      <CustomControlledInput
-        name={`projects.${index}.projectYear`}
-        label={t("year")}
-        placeholder={t("projectYear")}
-      />
+      <div className="col-span-12 md:col-span-6">
+        <CustomControlledInput
+          name={`projects.${index}.projectYear`}
+          label={t("year")}
+          placeholder={t("projectYear")}
+        />
+      </div>
 
-      <div className="col-span-2">
+      <div className="col-span-12">
         <CustomRadio.Group className="flex flex-row gap-4">
           <CustomRadio
             checked={calendarType === "jalali"}
@@ -69,8 +79,12 @@ const ProjectItem = ({ index, lng, onDelete, t }: ProjectItemProps) => {
         </CustomRadio.Group>
       </div>
 
+      <div className="col-span-12">
+        <ProjectSummary t={t} index={index} />
+      </div>
+
       {index !== 0 && (
-        <div className="col-span-2 flex justify-end">
+        <div className="col-span-12 flex justify-end">
           <CustomButton
             type="button"
             onClick={() => onDelete(index)}

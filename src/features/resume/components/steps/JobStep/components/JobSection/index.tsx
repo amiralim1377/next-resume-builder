@@ -10,6 +10,7 @@ import { CustomControlledSelect } from "@/components/ui/CustomControlledSelect";
 import { CustomControlledCheckBox } from "@/components/ui/CustomControlledCheckBox";
 import { CustomButton } from "@/components/ui/CustomButton";
 import { CustomRadio } from "@/components/ui/CustomRadio";
+import { JobSummary } from "../JobSummary";
 
 type JobSectionType = {
   t: TFunction<string, undefined>;
@@ -180,16 +181,23 @@ const JobSection = ({ lng, t, index, onDelete }: JobSectionType) => {
             name={`job.${index}.isCurrentlyWorkingHere`}
             label={t("CurrentlyWorkingHere")}
           />
-          {index !== 0 && (
-            <CustomButton
-              onClick={() => onDelete(index)}
-              variant="outlined-negative"
-            >
-              {t("deleteThis")}
-            </CustomButton>
-          )}
         </div>
       </div>
+
+      {/* job summary */}
+      <div className="col-span-12">
+        <JobSummary index={index} t={t} />
+      </div>
+
+      {index !== 0 && (
+        <CustomButton
+          onClick={() => onDelete(index)}
+          variant="outlined-negative"
+          className="text-nowrap"
+        >
+          {t("deleteThis")}
+        </CustomButton>
+      )}
     </CustomResumeCardComponents>
   );
 };

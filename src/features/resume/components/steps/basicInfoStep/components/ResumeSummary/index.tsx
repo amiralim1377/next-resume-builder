@@ -8,12 +8,14 @@ type ResumeSummaryProps = {
   lng: Language;
 };
 
-const ResumeSummary = ({}: ResumeSummaryProps) => {
+const ResumeSummary = ({ t }: ResumeSummaryProps) => {
   return (
     <CustomResumeCardComponents>
       <CustomControlledResumeSummary
         label="summary"
         name={`basicInfo.summary`}
+        description={t("resumeSummaryDescription")}
+        descriptionClassName="text-text-secondary mb-2 text-xs"
       />
     </CustomResumeCardComponents>
   );

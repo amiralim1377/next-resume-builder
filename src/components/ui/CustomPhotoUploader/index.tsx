@@ -27,7 +27,6 @@ const CustomPhotoUploader = ({
   value,
   isValid,
 }: CustomPhotoUploaderProps) => {
-  console.log("error:", error);
   const previewUrl = useMemo(
     () => (value ? URL.createObjectURL(value) : undefined),
     [value],
@@ -67,7 +66,7 @@ const CustomPhotoUploader = ({
       {!showEditor && (
         <div
           className={cn(
-            "hover:border-brandPrimary relative flex cursor-pointer flex-col items-center justify-center overflow-hidden rounded-2xl border-2 border-dashed border-gray-300 py-4 transition-colors",
+            "hover:border-brandPrimary relative flex cursor-pointer flex-col items-center justify-center overflow-hidden rounded-2xl border border-gray-300 py-4 transition-colors",
             isDragging ? "border-blue-500 bg-blue-50" : "",
             error && "border-state-error",
             isValid && "border-state-success",
