@@ -5,6 +5,7 @@ import { ImagePlus } from "lucide-react";
 import { CustomModal } from "@/components/ui/CustomModal";
 import { UserProfileEditorModal } from "./components/EditorModal";
 import { useImageEditor } from "./hooks/useImageEditor";
+import { useFormContext } from "react-hook-form";
 
 type ProfilePhotoUploaderProps = {
   t: TFunction<string, undefined>;
@@ -17,6 +18,7 @@ const ProfilePhotoUploader = ({
   className,
   initialImage,
 }: ProfilePhotoUploaderProps) => {
+  const { setValue } = useFormContext();
   const {
     image,
     showEditor,
@@ -29,15 +31,25 @@ const ProfilePhotoUploader = ({
     handleFileSelect,
     editorRef,
     editorState,
-    handleSave,
     resetEditor,
     rotateImage,
     setScale,
     toggleFlipHorizontal,
     toggleFlipVertical,
+    saveImage,
     zoomIn,
     zoomOut,
   } = useImageEditor({ initialImage });
+
+  const handleSaveProfileImage = (file: File) => {
+    console.log(file);
+
+    // مثال RHF:
+    setValue("profileImage", file, {
+      shouldDirty: true,
+      shouldValidate: true,
+    });
+  };
 
   return (
     <div className={`profile-photo-uploader ${className}`}>
@@ -90,11 +102,11 @@ const ProfilePhotoUploader = ({
           <UserProfileEditorModal
             t={t}
             width={250}
+            saveImage={() => saveImage(handleSaveProfileImage)}
             height={250}
             borderRadius={180}
             editorRef={editorRef}
             editorState={editorState}
-            handleSave={handleSave}
             image={image}
             resetEditor={resetEditor}
             rotateImage={rotateImage}
