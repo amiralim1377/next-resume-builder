@@ -1,3 +1,5 @@
+// src/features/resume/utils/formDefaultResumeValues.ts
+
 import { Language } from "@/lib/i18n/settings";
 import { ResumeFormValues } from "../schemas/resume.schema";
 
@@ -8,25 +10,28 @@ type GetDefaultResumeValuesProps = {
 export const getDefaultResumeValues = ({
   lng,
 }: GetDefaultResumeValuesProps): ResumeFormValues => ({
+  profileImage: undefined,
   basicInfo: {
     firstName: "",
     lastName: "",
     jobTitle: "",
+    sex: "",
+    militaryServiceStatus: "",
+    maritalStatus: "",
     email: "",
-    phone: "",
-    mobileNumber: "",
     birthday: {
       day: "",
       month: "",
       year: "",
     },
-    militaryServiceStatus: "",
-    sex: "",
-    maritalStatus: "",
-    address: "",
-    city: "",
+    mobileNumber: "",
+    phone: "",
+
     country: "",
     province: "",
+    city: "",
+    address: "",
+
     webSite: "",
     summary: "",
   },
@@ -34,9 +39,9 @@ export const getDefaultResumeValues = ({
     {
       degreeLevel: "",
       academicMajor: "",
+      concentration: "",
       institutionName: "",
       gradeAverage: "",
-      concentration: "",
       country: "",
       province: "",
       city: "",
@@ -67,18 +72,12 @@ export const getDefaultResumeValues = ({
     {
       language: "",
       displayMode: "",
-      proficiencyData: { level: "" },
-      description: "",
+      proficiencyData: {},
     },
   ],
-  skills: [
-    { skillName: "", skillLevel: "", summary: "" },
-    {
-      skillName: "",
-      skillLevel: "",
-      summary: "",
-    },
-  ],
+
+  skills: [{ skillName: "", skillLevel: "", summary: "" }],
+
   coursesAndCertifications: [
     {
       coursesAndCertificationsName: "",
@@ -91,13 +90,14 @@ export const getDefaultResumeValues = ({
   projects: [
     {
       clientName: "",
-      description: "",
+      summary: "",
       projectMonth: "",
       projectTitle: "",
       projectUrl: "",
       projectYear: "",
     },
   ],
+
   research: [
     {
       publicationMonth: "",
@@ -105,7 +105,7 @@ export const getDefaultResumeValues = ({
       publisher: "",
       researchTitle: "",
       researchUrl: "",
+      summary: "",
     },
   ],
-  profileImage: undefined,
 });
