@@ -1,5 +1,5 @@
 import { TFunction } from "i18next";
-import { z } from "zod";
+import * as z from "zod/v4";
 import { createBasicInfoSchema } from "./BasicInfoSchema";
 import { createEducationSchema } from "./EducationSchema";
 import { createJobSchema } from "./JobSchema";
@@ -13,16 +13,16 @@ import { createProfileImageSchema } from "./ProfileImageSchema";
 export const createResumeSchema = (t: TFunction<string, undefined>) => {
   return z.object({
     profileImage: createProfileImageSchema(t),
+
     basicInfo: createBasicInfoSchema(t),
+
     education: z.array(createEducationSchema(t)),
     job: z.array(createJobSchema(t)),
-    languages: z.array(createLanguageSchema(t)).default([]),
-    skills: z.array(createSkillsSchema(t)).default([]),
-    coursesAndCertifications: z
-      .array(createCoursesAndCertificationsSchema(t))
-      .default([]),
-    projects: z.array(createProjectsSchema(t)).default([]),
-    research: z.array(createResearchSchema(t)).default([]),
+    languages: z.array(createLanguageSchema(t)),
+    skills: z.array(createSkillsSchema(t)),
+    coursesAndCertifications: z.array(createCoursesAndCertificationsSchema(t)),
+    projects: z.array(createProjectsSchema(t)),
+    research: z.array(createResearchSchema(t)),
   });
 };
 
