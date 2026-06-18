@@ -170,5 +170,15 @@
   "uploadResumeProfilePhoto": "Upload your resume profile photo",
   "changePhoto": "change Photo",
   "photoFormats": "PNG, JPG up to 2MB",
-  "dragAndDrop": "or drag and drop"
+  "dragAndDrop": "or drag and drop",
+  "resumeSummaryDescription": "A resume summary is a short section at the beginning of a resume that briefly introduces your skills, experience, and professional goals",
+  "educationDescription": "In this section, write a short summary of your educational background. You can mention your degrees, field of study, university, and key academic achievements.",
+  "jobHistoryDescription": "In this section, write a short summary of your work experience. You can mention your previous job positions, companies, key responsibilities, and major achievements.",
+  "projectSummaryDescription": "In this section, write a short summary of your completed projects. You can mention key projects, your role in each project, the technologies used, and major achievements.",
+  "researchSummaryDescription": "In this section, write a short summary of your research activities. You can mention your research topics, areas of focus, methods used, publications, and key findings or achievements.",
+  "graduationBeforeEntry": "Graduation year cannot be earlier than the entry year.",
+  "summaryTooLong": "The summary exceeds the allowed length.",
+  "invalidYear": "The entered year is invalid.",
+  "invalidYearFormat": "Year must be a 4-digit number.",
+  "invalidGradeAverage": "GPA must be a number between 1 and 100."
 }
