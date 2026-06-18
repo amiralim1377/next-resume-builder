@@ -36,8 +36,6 @@ const LanguageItem = ({ t, index, lng, onDelete }: LanguageItemProps) => {
     name: `languages.${index}.displayMode`,
   }) as string | undefined;
 
-  console.log("displayMode:", displayMode);
-
   const [langType, profType] = displayMode?.split("-") ?? ["", ""];
 
   useEffect(() => {
