@@ -31,11 +31,13 @@ const ResumeFormProvider = ({
     if (!currentStepConfig) return;
 
     // eslint-disable-next-line
-    const isValid = await triggerStep(currentStepConfig.fieldNames as any, {
-      shouldFocus: true,
-    });
+    // const isValid = await triggerStep(currentStepConfig.fieldNames as any, {
+    //   shouldFocus: true,
+    // });
 
-    // const isValid = true;
+    // console.log("isValid:", isValid);
+
+    const isValid = true;
 
     if (isValid) {
       setCompletedSteps((prev) => new Set(prev).add(currentStepConfig.id));
