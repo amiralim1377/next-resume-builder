@@ -21,6 +21,7 @@ export function CustomInput({
   id,
   className = "",
   classNames,
+  value,
   isValid,
   ref,
   ...props
@@ -47,6 +48,7 @@ export function CustomInput({
       <input
         ref={ref}
         id={inputId}
+        value={value ?? ""}
         aria-invalid={!!error}
         className={cn(
           "text-text-secondary placeholder:text-text-secondary/25 h-10 w-full rounded-md border bg-transparent px-3 py-2 text-sm shadow-sm transition-colors placeholder:text-[11px] focus-visible:ring-1 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50",
