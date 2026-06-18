@@ -5,11 +5,15 @@ import {
   CustomResumeEditorClassNamesProps,
 } from "../CustomResumeEditor";
 import type { JSONContent } from "@tiptap/core";
+import { CustomText } from "../CustomText";
+import { cn } from "@/utils/cn";
 
 type CustomControlledResumeSummaryProps = {
   name: FieldPath<ResumeFormValues>;
   label: string;
   classNames?: CustomResumeEditorClassNamesProps;
+  description?: string;
+  descriptionClassName?: string;
 } & Omit<
   React.ComponentProps<typeof CustomResumeEditor>,
   | "name"
@@ -25,6 +29,9 @@ const CustomControlledResumeSummary = ({
   name,
   label,
   classNames,
+  description,
+  descriptionClassName,
+
   ...props
 }: CustomControlledResumeSummaryProps) => {
   const { control } = useFormContext<ResumeFormValues>();
@@ -38,17 +45,27 @@ const CustomControlledResumeSummary = ({
 
         const isValid = !fieldState.invalid && Boolean(field.value);
 
+        console.log(value);
+        console.log("resume:", fieldState.error);
+
         return (
-          <CustomResumeEditor
-            label={label}
-            value={value as JSONContent | null}
-            onChange={(content: JSONContent) => onChange(content)}
-            error={fieldState.error?.message}
-            isValid={isValid}
-            classNames={classNames}
-            {...safeField}
-            {...props}
-          />
+          <>
+            {description && (
+              <CustomText className={cn(descriptionClassName)}>
+                {description}
+              </CustomText>
+            )}
+            <CustomResumeEditor
+              label={label}
+              value={value as JSONContent | null}
+              onChange={(content: JSONContent) => onChange(content)}
+              error={fieldState.error?.message}
+              isValid={isValid}
+              classNames={classNames}
+              {...safeField}
+              {...props}
+            />
+          </>
         );
       }}
     />
