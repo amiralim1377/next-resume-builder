@@ -1,5 +1,5 @@
 import { TFunction } from "i18next";
-import { z } from "zod";
+import * as z from "zod/v4";
 
 export const createProfileImageSchema = (t: TFunction<string, undefined>) => {
   const fileSchema = z.instanceof(File);
