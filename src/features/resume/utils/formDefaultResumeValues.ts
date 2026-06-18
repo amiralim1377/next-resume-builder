@@ -1,5 +1,3 @@
-// src/features/resume/utils/formDefaultResumeValues.ts
-
 import { Language } from "@/lib/i18n/settings";
 import { ResumeFormValues } from "../schemas/resume.schema";
 
