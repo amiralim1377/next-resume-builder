@@ -48,7 +48,6 @@ interface UseImageEditorReturn {
   handleDragOver: (e: React.DragEvent<HTMLDivElement>) => void;
   handleDragEnter: () => void;
   handleDragLeave: () => void;
-  handleSave: (onSave: (file: File) => void) => void;
   saveImage: (onSave: (file: File) => void) => void;
 }
 
@@ -162,13 +161,6 @@ const useImageEditor = (
 
   const handleDragLeave = useCallback(() => setIsDragging(false), []);
 
-  const handleSave = useCallback(
-    (onSave: (file: File) => void) => {
-      saveImage(onSave);
-    },
-    [saveImage],
-  );
-
   return {
     openEditor,
     image,
@@ -192,7 +184,6 @@ const useImageEditor = (
     handleDragOver,
     handleDragEnter,
     handleDragLeave,
-    handleSave,
   };
 };
 
