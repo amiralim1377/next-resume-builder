@@ -68,8 +68,6 @@ const CustomResumeEditor = ({
   const [url, setUrl] = useState("");
   const [text, setText] = useState("");
 
-  console.log(text);
-
   const globalDirection = lng === "fa" ? "rtl" : "ltr";
 
   const editor = useEditor({
