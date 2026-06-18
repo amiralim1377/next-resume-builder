@@ -1,18 +1,41 @@
+// src/features/resume/schemas/ProjectsSchema.ts
 import { TFunction } from "i18next";
-import { z } from "zod";
+import * as z from "zod/v4";
+
+const YEAR_REGEX = /^\d{4}$/;
 
 export const createProjectsSchema = (t: TFunction<string, undefined>) => {
   return z.object({
-    projectTitle: z.string().optional(),
+    projectTitle: z
+      .string()
+      .min(1, { message: t("projectTitleRequired") })
+      .max(150, { message: t("projectTitleTooLong") }),
 
-    clientName: z.string().optional(),
-
-    projectUrl: z.string().url(t("invalidUrl")).optional().or(z.literal("")),
-
-    projectMonth: z.string().optional(),
-
-    projectYear: z.string().optional(),
-
-    description: z.string().optional(),
+    clientName: z
+      .string()
+      .min(1, { message: t("clientNameRequired") })
+      .max(100, { message: t("clientNameTooLong") })
+      .optional(),
+    projectUrl: z
+      .string()
+      .url({ message: t("invalidUrl") })
+      .or(z.literal(""))
+      .transform((val) => (val === "" ? "" : val))
+      .optional(),
+    projectMonth: z
+      .string()
+      .min(1, { message: t("projectMonthRequired") })
+      .optional(),
+    projectYear: z
+      .string()
+      .regex(YEAR_REGEX, { message: t("invalidYearFormat") })
+      .optional(),
+    summary: z
+      .string()
+      .trim()
+      .max(2000, { message: t("summaryTooLong") })
+      .optional(),
   });
 };
+
+export type ProjectValues = z.infer<ReturnType<typeof createProjectsSchema>>;
