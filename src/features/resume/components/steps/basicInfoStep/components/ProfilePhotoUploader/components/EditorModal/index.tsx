@@ -31,7 +31,7 @@ type EditorModalProps = {
   toggleFlipHorizontal: () => void;
   toggleFlipVertical: () => void;
   resetEditor: () => void;
-  handleSave: () => void;
+  saveImage: () => void;
 };
 
 const UserProfileEditorModal = ({
@@ -41,9 +41,9 @@ const UserProfileEditorModal = ({
   height,
   editorRef,
   editorState,
-  handleSave,
   image,
   resetEditor,
+  saveImage,
   rotateImage,
   setScale,
   toggleFlipHorizontal,
@@ -143,7 +143,7 @@ const UserProfileEditorModal = ({
         </CustomButton>
         <CustomButton
           variant="primary"
-          onClick={() => handleSave()}
+          onClick={saveImage}
           className="flex flex-1 items-center justify-center gap-2 text-sm font-semibold transition-colors"
         >
           {t("saveUpload")}
