@@ -1,5 +1,5 @@
 import { TFunction } from "i18next";
-import { z } from "zod";
+import * as z from "zod/v4";
 
 export const SEX_OPTIONS = ["male", "female"] as const;
 export const MARITAL_OPTIONS = ["single", "married"] as const;
@@ -115,6 +115,7 @@ export const createBasicInfoSchema = (t: TFunction<string, undefined>) => {
       .refine((val) => !val.includes("@"), {
         message: t("cannotContainEmail"),
       }),
+
     province: z
       .string()
       .min(1, { message: t("provinceRequired") })
@@ -130,7 +131,7 @@ export const createBasicInfoSchema = (t: TFunction<string, undefined>) => {
     address: z
       .string()
       .min(5, { message: t("addressFiveCharacters") })
-      .max(100, { message: "addressHundredCharacters" })
+      .max(100, { message: t("addressHundredCharacters") })
       .refine((value) => /[a-zA-Zآ-ی]/.test(value), {
         message: t("addressMustContainLetters"),
       })
@@ -140,8 +141,17 @@ export const createBasicInfoSchema = (t: TFunction<string, undefined>) => {
 
     webSite: z
       .string()
-      .trim()
-      .optional()
+      .transform((val) => val.trim())
+      .refine(
+        (val) => {
+          if (!val) return true;
+
+          return !/[\u0600-\u06FF]/.test(val);
+        },
+        {
+          message: t("urlNoPersianCharacters"),
+        },
+      )
       .transform((val) => {
         if (!val) return "";
 
@@ -151,23 +161,32 @@ export const createBasicInfoSchema = (t: TFunction<string, undefined>) => {
 
         return val;
       })
-      // ❌ no Persian
-      .refine((val) => !/[\u0600-\u06FF]/.test(val), {
-        message: t("urlNoPersianCharacters"),
-      })
       .refine(
         (val) => {
           if (!val) return true;
 
-          const domainRegex = /^(https?:\/\/)?([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}$/;
-
-          return domainRegex.test(val);
+          try {
+            new URL(val);
+            return true;
+          } catch {
+            return false;
+          }
         },
         {
           message: t("invalidUrl"),
         },
-      ),
+      )
+      .optional(),
 
-    summary: z.string().optional(),
+    summary: z
+      .union([
+        z.object({
+          type: z.string(),
+          content: z.array(z.any()).optional(),
+        }),
+        z.string(),
+        z.literal(""),
+      ])
+      .optional(),
   });
 };
