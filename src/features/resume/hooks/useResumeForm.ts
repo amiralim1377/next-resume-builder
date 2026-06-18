@@ -1,9 +1,14 @@
+// src/features/resume/hooks/useResumeForm.ts
 import { useEffect, useMemo } from "react";
 import { useForm } from "react-hook-form";
-import { createResumeSchema, ResumeFormValues } from "../schemas/resume.schema";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+import {
+  createResumeSchema,
+  type ResumeFormValues,
+} from "../schemas/resume.schema";
 import { getDefaultResumeValues } from "../utils/formDefaultResumeValues";
 import { useLang } from "@/provider/lngProvider";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslation } from "@/lib/i18n/client";
 
 export const useResumeForm = (
@@ -12,17 +17,18 @@ export const useResumeForm = (
 ) => {
   const { lng } = useLang();
   const { t } = useTranslation(lng, "form");
+
   const schema = useMemo(() => createResumeSchema(t), [t]);
 
   const form = useForm<ResumeFormValues>({
     resolver: zodResolver(schema),
-    defaultValues: initialData || getDefaultResumeValues({ lng }),
+    defaultValues: initialData ?? getDefaultResumeValues({ lng }),
     mode: "onChange",
     shouldUnregister: false,
     criteriaMode: "all",
   });
 
-  const { trigger: triggerStep, reset } = form;
+  const { trigger: triggerStep, reset, ...restForm } = form;
 
   useEffect(() => {
     if (initialData && mode === "edit") {
@@ -30,5 +36,9 @@ export const useResumeForm = (
     }
   }, [initialData, reset, mode]);
 
-  return { form, triggerStep, ...form };
+  return {
+    form,
+    triggerStep,
+    ...restForm,
+  };
 };
