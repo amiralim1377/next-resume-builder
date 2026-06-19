@@ -71,7 +71,7 @@ const BasicInformation = ({ t, lng }: BasicInformationProps) => {
           <CustomControlledSelect
             options={daysInMonthOptions}
             name="basicInfo.birthday.day"
-            label={t("day")}
+            label={t("birthday")}
           />
         </div>
 
