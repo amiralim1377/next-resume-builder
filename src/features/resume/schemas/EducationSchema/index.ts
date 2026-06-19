@@ -74,10 +74,15 @@ export const createEducationSchema = (t: TFunction<string, undefined>) => {
 
     isStudyingNow: z.boolean(),
 
-    summary: z
-      .string()
-      .trim()
-      .max(SUMMARY_MAX_LENGTH, { message: t("summaryTooLong") })
-      .optional(),
+    // summary: z
+    //   .string()
+    //   .trim()
+    //   .max(SUMMARY_MAX_LENGTH, { message: t("summaryTooLong") })
+    //   .optional(),
+
+    summary: z.object({
+      type: z.string(),
+      content: z.array(z.any()),
+    }),
   });
 };
