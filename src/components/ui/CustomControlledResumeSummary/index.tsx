@@ -45,9 +45,6 @@ const CustomControlledResumeSummary = ({
 
         const isValid = !fieldState.invalid && Boolean(field.value);
 
-        console.log(value);
-        console.log("resume:", fieldState.error);
-
         return (
           <>
             {description && (
