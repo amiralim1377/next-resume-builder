@@ -182,5 +182,6 @@
   "summaryTooLong": "خلاصه زیاد تر از مقدار مد نظر است ",
   "invalidYear": "سال وارد شده نامعتبر است",
   "invalidYearFormat": "سال باید چهار رقم داشته باشد",
-  "invalidGradeAverage": "معدل باید عددی بین یک تا صد باشد"
+  "invalidGradeAverage": "معدل باید عددی بین یک تا صد باشد",
+  "saveResume": "ذخیره سازی رزومه"
 }

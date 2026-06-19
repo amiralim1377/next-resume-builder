@@ -180,5 +180,6 @@
   "summaryTooLong": "The summary exceeds the allowed length.",
   "invalidYear": "The entered year is invalid.",
   "invalidYearFormat": "Year must be a 4-digit number.",
-  "invalidGradeAverage": "GPA must be a number between 1 and 100."
+  "invalidGradeAverage": "GPA must be a number between 1 and 100.",
+  "saveResume": "Save resume"
 }
