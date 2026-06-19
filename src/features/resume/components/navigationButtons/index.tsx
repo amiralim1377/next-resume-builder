@@ -13,6 +13,7 @@ interface NavigationButtonsProps {
   isLastStep: boolean;
   isFirstStep: boolean;
   isLoading?: boolean;
+  onSaveDraft?: () => void;
 }
 
 function NavigationButtons({
@@ -21,11 +22,12 @@ function NavigationButtons({
   isLastStep,
   isFirstStep,
   isLoading = false,
+  onSaveDraft,
 }: NavigationButtonsProps) {
   const { lng } = useLang();
   const { t } = useTranslation(lng, "form");
   const {
-    formState: { isSubmitting, isValid },
+    formState: { isSubmitting },
   } = useFormContext<ResumeFormValues>();
 
   return (
@@ -43,6 +45,21 @@ function NavigationButtons({
       )}
 
       <div className="flex items-center gap-3">
+        {/* Save Draft Button */}
+        {onSaveDraft && !isLastStep && (
+          <CustomButton
+            type="button"
+            variant="secondary"
+            onClick={onSaveDraft}
+            disabled={isLoading || isSubmitting}
+            className="flex items-center gap-2"
+          >
+            <div>save logo</div>
+            {t("saveDraft")}
+          </CustomButton>
+        )}
+
+        {/* Next / Submit Button */}
         <CustomButton
           type={isLastStep ? "submit" : "button"}
           onClick={isLastStep ? undefined : onNext}
@@ -54,9 +71,7 @@ function NavigationButtons({
               <LoadingView />
             </>
           ) : isLastStep ? (
-            <>
-              <div>save</div>
-            </>
+            <>{t("saveResume")}</>
           ) : (
             <>{t("next")}</>
           )}

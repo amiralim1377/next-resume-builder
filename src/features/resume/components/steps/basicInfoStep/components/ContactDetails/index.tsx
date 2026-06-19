@@ -15,7 +15,11 @@ const ContactDetails = ({ t }: ContactDetailsProps) => {
         label={t("mobileNumber")}
       />
 
-      <CustomControlledInput name="basicInfo.phone" label={t("phone")} />
+      <CustomControlledInput
+        placeholder={t("optional")}
+        name="basicInfo.phone"
+        label={t("phone")}
+      />
 
       <CustomControlledInput
         placeholder={t("optional")}

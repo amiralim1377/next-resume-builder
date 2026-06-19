@@ -13,12 +13,12 @@ const LocationDetails = ({ t }: LocationDetailsProps) => {
   const { lng } = useLang();
 
   const countryWatch = useWatch({
-    name: "basicInfo.country",
+    name: "basicInfo.location.country",
     exact: true,
   });
 
   const provinceId = useWatch({
-    name: "basicInfo.province",
+    name: "basicInfo.location.province",
     exact: true,
   });
 
@@ -37,7 +37,7 @@ const LocationDetails = ({ t }: LocationDetailsProps) => {
         <CustomControlledSelect
           options={countryOptions}
           label={t("country")}
-          name="basicInfo.country"
+          name="basicInfo.location.country"
         />
       </div>
 
@@ -46,12 +46,12 @@ const LocationDetails = ({ t }: LocationDetailsProps) => {
           <CustomControlledSelect
             options={provinceOptions}
             label={t("province")}
-            name="basicInfo.province"
+            name="basicInfo.location.province"
             disabled={!countryWatch}
           />
         ) : (
           <CustomControlledInput
-            name="basicInfo.province"
+            name="basicInfo.location.province"
             label={t("province")}
             disabled={!countryWatch}
           />
@@ -61,14 +61,14 @@ const LocationDetails = ({ t }: LocationDetailsProps) => {
       <div className="lg:col-span-2">
         {isIranSelected ? (
           <CustomControlledSelect
-            name="basicInfo.city"
+            name="basicInfo.location.city"
             label={t("city")}
             options={cityOptions}
             disabled={!provinceId}
           />
         ) : (
           <CustomControlledInput
-            name="basicInfo.city"
+            name="basicInfo.location.city"
             label={t("city")}
             disabled={!countryWatch}
           />

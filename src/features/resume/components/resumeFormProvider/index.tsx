@@ -12,13 +12,21 @@ import StepWrapper from "../StepWrapper";
 type ResumeFormProviderProps = {
   initialData?: Partial<ResumeFormValues>;
   mode?: "create" | "edit";
+  onSubmit?: (data: ResumeFormValues) => Promise<void>;
 };
 
 const ResumeFormProvider = ({
   initialData,
   mode = "create",
+  onSubmit,
 }: ResumeFormProviderProps) => {
-  const { form, triggerStep } = useResumeForm(initialData, mode);
+  const {
+    form,
+    triggerStep,
+    formState: { errors },
+  } = useResumeForm(initialData, mode);
+
+  console.log("errors:", errors);
 
   const [currentStep, setCurrentStep] = useState(0);
   const [completedSteps, setCompletedSteps] = useState<Set<StepName>>(
@@ -30,20 +38,16 @@ const ResumeFormProvider = ({
   const handleNext = async () => {
     if (!currentStepConfig) return;
 
-    // eslint-disable-next-line
-    // const isValid = await triggerStep(currentStepConfig.fieldNames as any, {
-    //   shouldFocus: true,
-    // });
-
-    // console.log("isValid:", isValid);
-
-    const isValid = true;
+    const isValid = await triggerStep(currentStepConfig.fieldNames as any);
 
     if (isValid) {
       setCompletedSteps((prev) => new Set(prev).add(currentStepConfig.id));
 
       if (currentStep < RESUME_STEPS.length - 1) {
         setCurrentStep((prev) => prev + 1);
+      } else {
+        // Last step → Submit the form
+        await handleFormSubmit();
       }
     }
   };
@@ -62,9 +66,23 @@ const ResumeFormProvider = ({
     // setCurrentStep(index);
   };
 
+  const handleFormSubmit = async () => {
+    const values = form.getValues();
+
+    try {
+      await onSubmit?.(values);
+      console.log("✅ Final Resume Data:", values); // ← Your log here
+    } catch (error) {
+      console.error("❌ Submit failed:", error);
+    }
+  };
+
   return (
     <FormProvider {...form}>
-      <div className="mx-auto px-6">
+      <form
+        onSubmit={form.handleSubmit(handleFormSubmit)}
+        className="mx-auto px-6"
+      >
         <FormStepper
           steps={RESUME_STEPS}
           currentStep={currentStep}
@@ -78,8 +96,13 @@ const ResumeFormProvider = ({
           onPrev={handlePrev}
           isLastStep={currentStep === RESUME_STEPS.length - 1}
           isFirstStep={currentStep === 0}
+          onSaveDraft={async () => {
+            const values = form.getValues();
+            console.log("💾 Draft Saved:", values);
+            // TODO: Save draft API call
+          }}
         />
-      </div>
+      </form>
     </FormProvider>
   );
 };

@@ -6,7 +6,10 @@ const YEAR_REGEX = /^\d{4}$/;
 export const createJobSchema = (t: TFunction<string, undefined>) => {
   return z
     .object({
-      summary: z.string().optional(),
+      summary: z.object({
+        type: z.string(),
+        content: z.array(z.any()),
+      }),
       jobTitle: z.string().min(1, { message: t("jobeRoleRequired") }),
       companyName: z.string().min(1, { message: t("companyNameRequired") }),
       country: z.string().min(1, { message: t("countryRequired") }),

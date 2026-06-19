@@ -121,11 +121,6 @@ const useImageEditor = (
             type: "image/png",
           });
 
-          console.log(
-            "original size:",
-            image instanceof File ? image.size : "N/A",
-          );
-          console.log("edited size:", editedFile.size);
           onChange?.(editedFile);
           closeEditor();
         }

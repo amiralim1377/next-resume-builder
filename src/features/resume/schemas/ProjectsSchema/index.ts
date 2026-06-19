@@ -30,11 +30,15 @@ export const createProjectsSchema = (t: TFunction<string, undefined>) => {
       .string()
       .regex(YEAR_REGEX, { message: t("invalidYearFormat") })
       .optional(),
-    summary: z
-      .string()
-      .trim()
-      .max(2000, { message: t("summaryTooLong") })
-      .optional(),
+    // summary: z
+    //   .string()
+    //   .trim()
+    //   .max(2000, { message: t("summaryTooLong") })
+    //   .optional(),
+    summary: z.object({
+      type: z.string(),
+      content: z.array(z.any()),
+    }),
   });
 };
 

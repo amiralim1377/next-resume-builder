@@ -101,33 +101,46 @@ export const createBasicInfoSchema = (t: TFunction<string, undefined>) => {
 
     phone: z
       .string()
-      .min(8, { message: t("invalidPhone") })
-      .refine((val) => !val.includes("@"), {
+      .optional()
+      .refine((val) => !val || val.length >= 8, {
+        message: t("invalidPhone"),
+      })
+      .refine((val) => !val || !val.includes("@"), {
         message: t("cannotContainEmail"),
       })
-      .refine((val) => !/[\u0600-\u06FF]/.test(val), {
+      .refine((val) => !val || !/[\u0600-\u06FF]/.test(val), {
         message: t("noPersianCharacters"),
       }),
 
-    country: z
-      .string()
-      .min(1, { message: t("countryRequired") })
-      .refine((val) => !val.includes("@"), {
-        message: t("cannotContainEmail"),
-      }),
+    location: z.object({
+      country: z
+        .string({
+          error: t("countryRequired"),
+        })
+        .min(1, { message: t("countryRequired") })
+        .refine((val) => !val.includes("@"), {
+          message: t("cannotContainEmail"),
+        }),
 
-    province: z
-      .string()
-      .min(1, { message: t("provinceRequired") })
-      .refine((val) => !val.includes("@"), {
-        message: t("cannotContainEmail"),
-      }),
-    city: z
-      .string()
-      .min(1, { message: t("cityRequired") })
-      .refine((val) => !val.includes("@"), {
-        message: t("cannotContainEmail"),
-      }),
+      province: z
+        .string({
+          error: t("provinceRequired"),
+        })
+        .min(1, { message: t("provinceRequired") })
+        .refine((val) => !val.includes("@"), {
+          message: t("cannotContainEmail"),
+        }),
+
+      city: z
+        .string({
+          error: t("cityRequired"),
+        })
+        .min(1, { message: t("cityRequired") })
+        .refine((val) => !val.includes("@"), {
+          message: t("cannotContainEmail"),
+        }),
+    }),
+
     address: z
       .string()
       .min(5, { message: t("addressFiveCharacters") })
