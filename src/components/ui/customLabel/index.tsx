@@ -15,7 +15,7 @@ interface CustomLabelProps {
   htmlFor?: string;
 
   /** Size */
-  size?: "sm" | "md" | "lg";
+  size?: "sm" | "md" | "lg" | "xl";
 
   /** Style variant */
   variant?: "default" | "bold" | "muted" | "error";
@@ -52,6 +52,7 @@ export const CustomLabel: React.FC<CustomLabelProps> = ({
     sm: "text-sm",
     md: "text-base",
     lg: "text-lg",
+    xl: "text-xl ",
   };
 
   const variantClasses = {
