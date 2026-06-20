@@ -12,7 +12,9 @@ type BasicInfoSectionProps = {
 
 function BasicInfoSection({ t, lng }: BasicInfoSectionProps) {
   return (
-    <CustomResumeCardComponents calssName={"flex items-start"}>
+    <CustomResumeCardComponents
+      className={"flex flex-col items-start justify-between"}
+    >
       <BasicInformation lng={lng} t={t} />
     </CustomResumeCardComponents>
   );
