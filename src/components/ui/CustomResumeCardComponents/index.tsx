@@ -3,13 +3,13 @@ import { CSSProperties, ReactNode } from "react";
 
 type CustomResumeCardComponentsProps = {
   children: ReactNode;
-  calssName?: string;
+  className?: string;
   style?: CSSProperties;
 };
 
 const CustomResumeCardComponents = ({
   children,
-  calssName,
+  className,
   style,
   ...props
 }: CustomResumeCardComponentsProps) => {
@@ -17,7 +17,7 @@ const CustomResumeCardComponents = ({
     <div
       className={cn(
         "border-ui-border w-full rounded-lg border p-5 shadow-lg",
-        calssName,
+        className,
       )}
       style={style}
       {...props}
