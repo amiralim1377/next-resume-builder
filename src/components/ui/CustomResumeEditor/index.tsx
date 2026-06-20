@@ -104,7 +104,7 @@ const CustomResumeEditor = ({
     editorProps: {
       attributes: {
         class:
-          "prose prose-sm sm:prose lg:prose-lg max-w-none focus:outline-none min-h-[200px] p-4 [&_ul]:list-disc [&_ol]:list-decimal [&_ul]:pl-6 [&_ol]:pl-6  [&_li]:ml-5 [&_li::marker]:text-text-secondary",
+          "prose prose-sm sm:prose lg:prose-lg  focus:outline-none min-h-[200px] p-4 [&_ul]:list-disc [&_ol]:list-decimal [&_ul]:pl-6 [&_ol]:pl-6  [&_li]:ml-5 [&_li::marker]:text-text-secondary",
       },
     },
   });
