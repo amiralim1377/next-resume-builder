@@ -1,5 +1,5 @@
 "use client";
-import { CustomLabel } from "@/components/ui/CustomLabel";
+import { CustomProgressLabel } from "@/components/ui/CustomProgressLabel";
 import { CustomLink } from "@/components/ui/CustomLink";
 import { useTranslation } from "@/lib/i18n/client";
 import { useLang } from "@/provider/lngProvider";
@@ -35,14 +35,14 @@ function QuickLinks() {
   return (
     <div className="flex flex-col items-start md:items-start">
       <div className="w-fit">
-        <CustomLabel
+        <CustomProgressLabel
           classNames={{
             labelClassName: "text-white font-semibold",
             wrapperClassName: "flex flex-col ",
           }}
         >
           {t("quickLinks")}
-        </CustomLabel>
+        </CustomProgressLabel>
       </div>
       <div className="text-text-secondary mt-4 flex flex-col items-start lg:mt-8">
         {quickLinksDataArray.map((item, i) => {
