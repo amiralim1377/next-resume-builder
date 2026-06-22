@@ -19,7 +19,7 @@ function BasicInfoSection({ t, lng }: BasicInfoSectionProps) {
     <CustomResumeCardComponents
       label={
         <CustomLabel
-          size="xl"
+          size="lg"
           variant="bold"
           icon={<FileUser color={colors.brand?.brandPrimary} />}
         >
