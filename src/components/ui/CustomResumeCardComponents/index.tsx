@@ -2,8 +2,8 @@ import { cn } from "@/utils/cn";
 import { CSSProperties, ReactNode } from "react";
 
 type CardClassName = {
-  labelClassName: string;
-  cardClassName: string;
+  labelClassName?: string;
+  cardClassName?: string;
 };
 
 type CustomResumeCardComponentsProps = {
