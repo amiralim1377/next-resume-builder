@@ -1,5 +1,4 @@
 import { CustomControlledSelect } from "@/components/ui/CustomControlledSelect";
-import { CustomResumeCardComponents } from "@/components/ui/CustomResumeCardComponents";
 import { TFunction } from "i18next";
 import { useGetEducationInfoStepData } from "../../hooks/useGetEducationInfoStepData";
 import { CustomControlledInput } from "@/components/ui/CustomControlledInput";
@@ -12,19 +11,14 @@ import { CustomButton } from "@/components/ui/CustomButton";
 import { CalendarType } from "@/types";
 import { EducationSummary } from "../EducationSummary";
 
-type EducationSectionProps = {
+type EducationItemnProps = {
   t: TFunction<string, undefined>;
   lng: Language;
   index: number;
   onDelete: (index: number) => void;
 };
 
-const EducationSection = ({
-  t,
-  lng,
-  index,
-  onDelete,
-}: EducationSectionProps) => {
+const EducationItem = ({ t, lng, index, onDelete }: EducationItemnProps) => {
   const [calendarType, setCalendarType] = useState<CalendarType>(
     lng === "en" ? "gregorian" : "jalali",
   );
@@ -69,7 +63,7 @@ const EducationSection = ({
   });
 
   return (
-    <CustomResumeCardComponents calssName="grid grid-cols-12 gap-3">
+    <div className="grid grid-cols-12 gap-3">
       <div className="col-span-12 md:col-span-6">
         <CustomControlledSelect
           name={`education.${index}.degreeLevel`}
@@ -232,17 +226,15 @@ const EducationSection = ({
         <EducationSummary index={index} t={t} />
       </div>
 
-      {index !== 0 && (
-        <CustomButton
-          onClick={() => onDelete(index)}
-          variant="outlined-negative"
-          className="text-nowrap"
-        >
-          {t("deleteThis")}
-        </CustomButton>
-      )}
-    </CustomResumeCardComponents>
+      <CustomButton
+        onClick={() => onDelete(index)}
+        variant="outlined-negative"
+        className="text-nowrap"
+      >
+        {t("deleteThis")}
+      </CustomButton>
+    </div>
   );
 };
 
-export { EducationSection };
+export { EducationItem };

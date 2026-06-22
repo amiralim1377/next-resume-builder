@@ -36,16 +36,15 @@ const SkillItem = ({ index, lng, onDelete, t }: SkillItemProps) => {
         label={t("level")}
         options={graphicLevelsOptions}
       />
-      {index !== 0 && index !== 1 && (
-        <CustomButton
-          className="w-1/2 capitalize"
-          type="button"
-          variant="outlined-negative"
-          onClick={() => onDelete(index)}
-        >
-          {t("deleteThis")}
-        </CustomButton>
-      )}
+
+      <CustomButton
+        className="w-1/2 capitalize"
+        type="button"
+        variant="outlined-negative"
+        onClick={() => onDelete(index)}
+      >
+        {t("deleteThis")}
+      </CustomButton>
     </div>
   );
 };

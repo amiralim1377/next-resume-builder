@@ -1,30 +1,107 @@
-"use client";
-import { useHover } from "@/hooks/useHover";
 import { cn } from "@/utils/cn";
-import { CSSProperties, ReactNode } from "react";
-import { CustomProgress } from "../CustomProgress";
+import React from "react";
 
-type CustomLabelClassName = {
-  labelClassName: string | CSSProperties;
-  wrapperClassName: string | CSSProperties;
-};
+interface CustomLabelProps {
+  /** Label text or children */
+  children: React.ReactNode;
 
-type CustomLabelProps = {
-  classNames?: Partial<CustomLabelClassName>;
-  children: ReactNode;
-};
+  /** Shows red asterisk (*) */
+  required?: boolean;
 
-function CustomLabel({ classNames, children }: CustomLabelProps) {
-  const { ref, hovered } = useHover();
+  /** Icon before the label */
+  icon?: React.ReactNode;
 
-  return (
-    <div className={cn(classNames?.wrapperClassName)} ref={ref}>
-      <h5 className={cn(classNames?.labelClassName)}>{children}</h5>
-      <div>
-        <CustomProgress height={4} value={hovered ? 100 : 25} />
-      </div>
-    </div>
-  );
+  /** Links label to form input */
+  htmlFor?: string;
+
+  /** Size */
+  size?: "sm" | "md" | "lg" | "xl";
+
+  /** Style variant */
+  variant?: "default" | "bold" | "muted" | "error";
+
+  /** Additional classes for the label */
+  className?: string;
+
+  /** Click handler */
+  onClick?: () => void;
+
+  /** Tooltip */
+  title?: string;
+
+  /** Optional description/helper text shown below the label */
+  description?: string;
 }
 
-export { CustomLabel };
+export const CustomLabel: React.FC<CustomLabelProps> = ({
+  children,
+  required = false,
+  icon,
+  htmlFor,
+  size = "md",
+  variant = "default",
+  className = "",
+  onClick,
+  title,
+  description,
+}) => {
+  const baseClasses =
+    "inline-flex items-center gap-2 font-medium text-text-primary select-none";
+
+  const sizeClasses = {
+    sm: "text-sm",
+    md: "text-base",
+    lg: "text-lg",
+    xl: "text-xl ",
+  };
+
+  const variantClasses = {
+    default: "text-text-primary",
+    bold: "font-semibold text-text-primary",
+    muted: "text-text-muted",
+    error: "text-state-error",
+  };
+
+  return (
+    <div className="flex flex-col">
+      <label
+        htmlFor={htmlFor}
+        className={cn(
+          baseClasses,
+          sizeClasses[size],
+          variantClasses[variant],
+          onClick
+            ? "cursor-pointer transition-opacity hover:opacity-90"
+            : "cursor-default",
+          className,
+        )}
+        onClick={onClick}
+        title={title}
+      >
+        {icon && (
+          <span className="text-text-muted flex items-center">{icon}</span>
+        )}
+
+        <span className="flex items-center gap-0.5">
+          {children}
+          {required && (
+            <span className="text-state-error text-base leading-none font-semibold">
+              *
+            </span>
+          )}
+        </span>
+      </label>
+
+      {description && (
+        <p
+          className={cn(
+            "text-text-muted mt-0.5 text-sm",
+            size === "lg" && "text-base",
+          )}
+        >
+          {description}
+        </p>
+      )}
+    </div>
+  );
+};

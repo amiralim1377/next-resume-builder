@@ -8,27 +8,45 @@ interface CustomProgressProps {
   value?: number;
   className?: string;
   style?: CSSProperties;
-  height: string | number;
+  height?: string | number; // height when horizontal, length when vertical
+  width?: string | number; // thickness when vertical, ignored when horizontal
+  layout?: "row" | "column";
 }
 
 const CustomProgress = ({
   value = 25,
-  height = 2,
+  height = 6,
+  width = 6,
   className,
   style,
+  layout = "column",
 }: CustomProgressProps) => {
   const { colors } = useThemeColors();
   const { lng } = useLang();
-
   const normalizedValue = Math.min(Math.max(value || 0, 0), 100);
+
+  const isVertical = layout === "row";
 
   return (
     <div
       className={cn(
-        "bg-progressContainer relative w-full overflow-hidden rounded-sm",
+        "bg-progressContainer overflow-hidden rounded-sm",
+        isVertical ? "shrink-0" : "w-full",
         className,
       )}
-      style={{ height, ...style }}
+      style={{
+        height: isVertical
+          ? "100%"
+          : typeof height === "number"
+            ? `${height}px`
+            : height,
+        width: isVertical
+          ? typeof width === "number"
+            ? `${width}px`
+            : width
+          : "100%",
+        ...style,
+      }}
       role="progressbar"
       aria-valuenow={normalizedValue}
       aria-valuemin={0}
@@ -36,9 +54,12 @@ const CustomProgress = ({
       dir={lng === "fa" ? "rtl" : "ltr"}
     >
       <div
-        className="h-full transition-[width] duration-300 ease-in-out"
+        className={cn(
+          "transition-all duration-300 ease-in-out",
+          isVertical ? "w-full" : "h-full",
+        )}
         style={{
-          width: `${normalizedValue}%`,
+          [isVertical ? "height" : "width"]: `${normalizedValue}%`,
           backgroundColor: colors.brand?.brandPrimary,
         }}
       />

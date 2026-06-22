@@ -1,6 +1,6 @@
 "use client";
 import { LinkdinSvg } from "@/components/svg/LinkdinSvg";
-import { CustomLabel } from "@/components/ui/CustomLabel";
+import { CustomProgressLabel } from "@/components/ui/CustomProgressLabel";
 import { CustomLink } from "@/components/ui/CustomLink";
 import { socialLinks } from "@/core/constants/socialLinks";
 import { useTranslation } from "@/lib/i18n/client";
@@ -12,14 +12,14 @@ function ConnectWithUs() {
 
   return (
     <div className="flex w-fit flex-col items-start">
-      <CustomLabel
+      <CustomProgressLabel
         classNames={{
           labelClassName: "text-white text-base font-semibold",
           wrapperClassName: "flex flex-col ",
         }}
       >
         {t("connectWithUs")}
-      </CustomLabel>
+      </CustomProgressLabel>
       <div className="mt-4 lg:mt-8">
         <CustomLink href={socialLinks.linkedin}>
           <LinkdinSvg size={25} />

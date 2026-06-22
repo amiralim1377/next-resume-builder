@@ -79,14 +79,9 @@ const LanguageItem = ({ t, index, lng, onDelete }: LanguageItemProps) => {
         />
       )}
 
-      {index !== 0 && (
-        <CustomButton
-          onClick={() => onDelete(index)}
-          variant="outlined-negative"
-        >
-          {t("deleteThis")}
-        </CustomButton>
-      )}
+      <CustomButton onClick={() => onDelete(index)} variant="outlined-negative">
+        {t("deleteThis")}
+      </CustomButton>
     </div>
   );
 };
