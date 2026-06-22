@@ -82,16 +82,15 @@ const CoursesCertificationsItem = ({
       />
 
       {/* Delete button */}
-      {index !== 0 && (
-        <div className="col-span-2 flex justify-end">
-          <CustomButton
-            onClick={() => onDelete(index)}
-            variant="outlined-negative"
-          >
-            {t("deleteThis")}
-          </CustomButton>
-        </div>
-      )}
+
+      <div className="col-span-2 flex justify-end">
+        <CustomButton
+          onClick={() => onDelete(index)}
+          variant="outlined-negative"
+        >
+          {t("deleteThis")}
+        </CustomButton>
+      </div>
     </div>
   );
 };

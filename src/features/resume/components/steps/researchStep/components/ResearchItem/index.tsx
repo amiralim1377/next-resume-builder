@@ -92,17 +92,16 @@ const ResearchItem = ({ index, lng, onDelete, t }: ResearchItemProps) => {
       </div>
 
       {/* Delete Button */}
-      {index !== 0 && (
-        <div className="col-span-12 flex justify-end">
-          <CustomButton
-            type="button"
-            onClick={() => onDelete(index)}
-            variant="outlined-negative"
-          >
-            {t("deleteThis")}
-          </CustomButton>
-        </div>
-      )}
+      <div className="col-span-12 flex justify-end">
+        <CustomButton
+          type="button"
+          onClick={() => onDelete(index)}
+          variant="outlined-negative"
+          className="w-full"
+        >
+          {t("deleteThis")}
+        </CustomButton>
+      </div>
     </div>
   );
 };

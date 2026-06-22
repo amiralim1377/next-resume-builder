@@ -83,17 +83,15 @@ const ProjectItem = ({ index, lng, onDelete, t }: ProjectItemProps) => {
         <ProjectSummary t={t} index={index} />
       </div>
 
-      {index !== 0 && (
-        <div className="col-span-12 flex justify-end">
-          <CustomButton
-            type="button"
-            onClick={() => onDelete(index)}
-            variant="outlined-negative"
-          >
-            {t("deleteThis")}
-          </CustomButton>
-        </div>
-      )}
+      <div className="col-span-12 flex justify-end">
+        <CustomButton
+          type="button"
+          onClick={() => onDelete(index)}
+          variant="outlined-negative"
+        >
+          {t("deleteThis")}
+        </CustomButton>
+      </div>
     </div>
   );
 };

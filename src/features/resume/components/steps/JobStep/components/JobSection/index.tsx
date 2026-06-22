@@ -50,7 +50,9 @@ const JobSection = ({ lng, t, index, onDelete }: JobSectionType) => {
       calendarType,
     });
   return (
-    <CustomResumeCardComponents calssName="grid grid-cols-12 gap-4">
+    <CustomResumeCardComponents
+      classNames={{ cardClassName: "grid grid-cols-12 gap-4" }}
+    >
       {/* Job Title */}
       <div className="col-span-12 md:col-span-6">
         <CustomControlledInput
@@ -189,15 +191,13 @@ const JobSection = ({ lng, t, index, onDelete }: JobSectionType) => {
         <JobSummary index={index} t={t} />
       </div>
 
-      {index !== 0 && (
-        <CustomButton
-          onClick={() => onDelete(index)}
-          variant="outlined-negative"
-          className="text-nowrap"
-        >
-          {t("deleteThis")}
-        </CustomButton>
-      )}
+      <CustomButton
+        onClick={() => onDelete(index)}
+        variant="outlined-negative"
+        className="text-nowrap"
+      >
+        {t("deleteThis")}
+      </CustomButton>
     </CustomResumeCardComponents>
   );
 };
