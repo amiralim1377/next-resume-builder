@@ -24,86 +24,20 @@ export const getDefaultResumeValues = ({
     },
     mobileNumber: "",
     phone: "",
-
-    country: "",
-    province: "",
-    city: "",
+    location: {
+      country: "",
+      province: "",
+      city: "",
+    },
     address: "",
-
     webSite: "",
     summary: "",
   },
-  education: [
-    {
-      degreeLevel: "",
-      academicMajor: "",
-      concentration: "",
-      institutionName: "",
-      gradeAverage: "",
-      country: "",
-      province: "",
-      city: "",
-      entryMonth: "",
-      entryYear: "",
-      graduationMonth: "",
-      graduationYear: "",
-      isStudyingNow: false,
-      summary: "",
-    },
-  ],
-  job: [
-    {
-      summary: "",
-      jobTitle: "",
-      companyName: "",
-      country: "",
-      province: "",
-      city: "",
-      entryMonth: "",
-      entryYear: "",
-      employmentEndMonth: "",
-      employmentEndYear: "",
-      isCurrentlyWorkingHere: false,
-    },
-  ],
-  languages: [
-    {
-      language: "",
-      displayMode: "",
-      proficiencyData: {},
-    },
-  ],
-
-  skills: [{ skillName: "", skillLevel: "", summary: "" }],
-
-  coursesAndCertifications: [
-    {
-      coursesAndCertificationsName: "",
-      instituteName: "",
-      certificateIssueMonth: "",
-      certificateIssueYear: "",
-      certificateUrl: "",
-    },
-  ],
-  projects: [
-    {
-      clientName: "",
-      summary: "",
-      projectMonth: "",
-      projectTitle: "",
-      projectUrl: "",
-      projectYear: "",
-    },
-  ],
-
-  research: [
-    {
-      publicationMonth: "",
-      publicationYear: "",
-      publisher: "",
-      researchTitle: "",
-      researchUrl: "",
-      summary: "",
-    },
-  ],
+  education: [],
+  job: [],
+  languages: [],
+  skills: [],
+  coursesAndCertifications: [],
+  projects: [],
+  research: [],
 });
