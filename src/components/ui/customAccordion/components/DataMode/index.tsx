@@ -77,9 +77,9 @@ export const AccordionDataMode: FC<AccordionDataModeProps> = ({
             )}
           >
             {item?.icon}
-            <p className={cn("font-[inherit] text-sm", classNames?.label)}>
+            <div className={cn("font-[inherit] text-sm", classNames?.label)}>
               {item?.label}
-            </p>
+            </div>
           </div>
 
           <div
