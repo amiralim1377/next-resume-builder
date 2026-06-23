@@ -12,9 +12,10 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/NewCustomAccordion";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { EducationItem } from "./components/EducationItem";
 import { EducationAccordionHeader } from "./components/EducationAccordionHeader";
+import { CustomResumeCardComponents } from "@/components/ui/CustomResumeCardComponents";
 
 function EducationStep() {
   const [activeAccordionId, setActiveAccordionId] = useState<string>("");
@@ -28,8 +29,11 @@ function EducationStep() {
     name: "education",
   });
 
+  const prevLengthRef = useRef(fields.length);
+
   const onRowAdd = () => {
     append({
+      status: "empty",
       degreeLevel: "",
       academicMajor: "",
       concentration: "",
@@ -43,67 +47,71 @@ function EducationStep() {
       graduationMonth: "",
       graduationYear: "",
       isStudyingNow: false,
-      summary: {
-        type: "",
-        content: [],
-      },
+      summary: { type: "doc", content: [] },
     });
   };
 
   useEffect(() => {
-    if (fields.length > 0) {
+    const isRowAdded = fields.length > prevLengthRef.current;
+    if (isRowAdded && fields.length > 0) {
       const lastFieldId = fields[fields.length - 1].id;
-      // eslint-disable-next-line
       setActiveAccordionId(lastFieldId);
     }
-  }, [fields.length]);
+    prevLengthRef.current = fields.length;
+  }, [fields]);
 
   const onDelete = (index: number) => {
     remove(index);
   };
   return (
     <div className="flex w-full flex-col space-y-2.5">
-      <CustomLabel
-        size="lg"
-        variant="bold"
-        icon={<GraduationCap color={colors.brand?.brandPrimary} />}
-      >
-        {t("academicHistory")}
-      </CustomLabel>
-
-      {fields.length === 0 ? (
-        <div className="py-4 text-center text-sm opacity-60">
-          No lng added yet
-        </div>
-      ) : (
-        <Accordion
-          type="single"
-          collapsible
-          className="w-full space-y-2 rounded-lg p-5 shadow-lg"
-          value={activeAccordionId}
-          onValueChange={setActiveAccordionId}
+      <CustomResumeCardComponents>
+        <CustomLabel
+          size="lg"
+          variant="bold"
+          icon={<GraduationCap color={colors.brand?.brandPrimary} />}
         >
-          {fields.map((field, index) => {
-            return (
-              <AccordionItem key={field.id} value={field.id}>
-                <AccordionTrigger>
-                  <EducationAccordionHeader index={index} t={t} />
-                </AccordionTrigger>
-                <AccordionContent className="p-4">
-                  <EducationItem
-                    index={index}
-                    onDelete={onDelete}
-                    t={t}
-                    lng={lng}
-                  />
-                </AccordionContent>
-              </AccordionItem>
-            );
-          })}
-        </Accordion>
-      )}
+          {t("academicHistory")}
+        </CustomLabel>
 
-      <CustomButton className="" onClick={onRowAdd}>
+        {fields.length === 0 ? (
+          <div className="py-4 text-center text-sm opacity-60">
+            {t("noEducationAddedYet", "No education history added yet.")}
+          </div>
+        ) : (
+          <Accordion
+            type="single"
+            collapsible
+            className="w-full space-y-2 rounded-lg p-5 shadow-lg"
+            value={activeAccordionId}
+            onValueChange={setActiveAccordionId}
+          >
+            {fields.map((field, index) => {
+              return (
+                <AccordionItem
+                  className="flex w-full flex-col gap-4"
+                  key={field.id}
+                  value={field.id}
+                >
+                  <AccordionTrigger>
+                    <EducationAccordionHeader index={index} t={t} />
+                  </AccordionTrigger>
+                  <AccordionContent className="p-4">
+                    <EducationItem
+                      index={index}
+                      onDelete={onDelete}
+                      t={t}
+                      lng={lng}
+                    />
+                  </AccordionContent>
+                </AccordionItem>
+              );
+            })}
+          </Accordion>
+        )}
+      </CustomResumeCardComponents>
+
+      <CustomButton type="button" className="" onClick={onRowAdd}>
         ADD
       </CustomButton>
     </div>
