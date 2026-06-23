@@ -38,6 +38,8 @@ body {
   --color-textTertiary: var(--text-tertiary);
   --color-inverse: var(--text-inverse);
   --color-disabledText: var(--disabledText);
+  --color-text-success: var(--text-success);
+  --color-text-warning: var(--text-warning);
 
   /* state */
   --color-state-success: var(--state-success);
@@ -46,6 +48,7 @@ body {
   --color-stateActiveStar: var(--state-activeStar);
   --color-stateInactiveColor: var(--state-inactiveColor);
   --color-state-info: var(--state-info);
+
   /* UI Colors */
   --color-ui-bg: var(--ui-background);
   --color-ui-surface: var(--ui-surface);
@@ -144,6 +147,8 @@ body {
   --brandTextHover: #c9bbea;
   --text-tertiary: #4f46e5;
   --disabledText: #9ca3af;
+  --text-success: #008236;
+  --text-warning: #bb4d00;
 
   /* state */
   --state-success: #059669;
@@ -152,6 +157,7 @@ body {
   --state-info: #2563eb;
   --state-activeStar: #fbbf24;
   --state-inactiveColor: #e5e7eb;
+
   /* ui */
   --ui-background: #f9fafb;
   --ui-surface: #ffffff;
@@ -200,6 +206,8 @@ body {
   --brandText: #d4cbed;
   --brandTextHover: #b6a5e0;
   --disabledText: #6b7280;
+  --text-success: #05df72;
+  --text-warning: #ffba00;
 
   /* dark-state */
   --state-success: #10b981;
@@ -208,6 +216,7 @@ body {
   --state-activeStar: #fbbf24;
   --state-inactiveColor: #e5e7eb;
   --state-info: #3b82f6;
+
   /* dark-ui */
   --ui-background: #111827;
   --ui-surface: #1f2937;
