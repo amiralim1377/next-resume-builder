@@ -47,13 +47,13 @@
   "projects": "پروژه ها",
   "research": "تحقیقات",
   "researchAndPublications": "مقالات و پژوهش‌ها",
-  "firstNamerequired": "نام الزامی است",
+  "firstNameRequired": "نام الزامی است",
   "invalidNameCharacters": "نام وارد شده معتبر نیست",
   "invalidLastNameCharacters": "نام خانوادگی وارد شده معتبر نیست",
   "invalidJobTitleCharacters": "عنوان شغلی مناسب وارد کنید مانند:برنامه نویس وب یا برنامه نویس_بک اند",
   "cannotContainEmail": "شامل ایمیل نمی تواند باشد",
-  "lastNamerequired": "نام خانوداگی الزامی است",
-  "jobTitlerequired": "عنوان شغلی رزومه الزامی است",
+  "lastNameRequired": "نام خانوداگی الزامی است",
+  "jobTitleRequired": "عنوان شغلی رزومه الزامی است",
   "selectGender": "جنسیت راانتخاب کنید",
   "invalidEmail": "ایمیل با فرمت مناسب وارد نمایید",
   "emailNoSpacesAllowed": "فاصله ی اضافی در ایمیل مجاز نمی باشد",
@@ -195,5 +195,9 @@
   "invalidGradeAverage": "معدل باید عددی بین یک تا صد باشد",
   "saveResume": "ذخیره سازی رزومه",
   "academicHistory": "پیشینه تحصیلی",
-  "careerHistory": "سوابق شغلی"
+  "careerHistory": "سوابق شغلی",
+  "typing": "در حال تایپ...",
+  "status.draft": "تکمیل نشده",
+  "status.empty": "شروع نشده",
+  "status.completed": "تکمیل شده"
 }
