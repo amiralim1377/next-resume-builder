@@ -9,7 +9,7 @@ export const createBasicInfoSchema = (t: TFunction<string, undefined>) => {
   return z.object({
     firstName: z
       .string()
-      .min(1, { message: t("firstNamerequired") })
+      .min(1, { message: t("firstNameRequired") })
       .refine((value) => !/^\d+$/.test(value), {
         message: t("numberIsNotAllowed"),
       })
@@ -22,7 +22,7 @@ export const createBasicInfoSchema = (t: TFunction<string, undefined>) => {
 
     lastName: z
       .string()
-      .min(1, { message: t("lastNamerequired") })
+      .min(1, { message: t("lastNameRequired") })
       .refine((value) => !/^\d+$/.test(value), {
         message: t("numberIsNotAllowed"),
       })
@@ -35,7 +35,7 @@ export const createBasicInfoSchema = (t: TFunction<string, undefined>) => {
 
     jobTitle: z
       .string()
-      .min(1, { message: t("jobTitlerequired") })
+      .min(1, { message: t("jobTitleRequired") })
       .refine((value) => !/^\d+$/.test(value), {
         message: t("numberIsNotAllowed"),
       })
@@ -45,6 +45,7 @@ export const createBasicInfoSchema = (t: TFunction<string, undefined>) => {
       .regex(/^[a-zA-Zآ-ی]+([-\s_][a-zA-Zآ-ی]+)*$/, {
         message: t("invalidJobTitleCharacters"),
       }),
+
     sex: z
       .string()
       .refine(
@@ -53,6 +54,7 @@ export const createBasicInfoSchema = (t: TFunction<string, undefined>) => {
           message: t("selectGender"),
         },
       ),
+
     maritalStatus: z
       .string()
       .refine(
