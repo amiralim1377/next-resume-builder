@@ -17,7 +17,6 @@ export type DegreeLevel = (typeof DEGREE_OPTIONS)[number];
 const YEAR_REGEX = /^\d{4}$/;
 const GRADE_MIN = 0;
 const GRADE_MAX = 100;
-const SUMMARY_MAX_LENGTH = 3000;
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
@@ -31,8 +30,37 @@ const isValidGrade = (val: string): boolean => {
   return !isNaN(num) && num >= GRADE_MIN && num <= GRADE_MAX;
 };
 
+// ─── Schema Factory ───────────────────────────────────────────────────────────
+
 export const createEducationSchema = (t: TFunction<string, undefined>) => {
-  return z.object({
+  const summarySchema = z.object({
+    type: z.string(),
+    content: z.array(z.any()),
+  });
+
+  // 1. EMPTY STATE SCHEMA (Flattened status)
+  const emptyEducationSchema = z.object({
+    status: z.literal("empty"), // Lifted to the root object layout
+    degreeLevel: z.string(),
+    academicMajor: z.string(),
+    concentration: z.string(),
+    institutionName: z.string(),
+    gradeAverage: z.string(),
+    country: z.string(),
+    province: z.string(),
+    city: z.string(),
+    entryMonth: z.string(),
+    entryYear: z.string(),
+    graduationMonth: z.string(),
+    graduationYear: z.string(),
+    isStudyingNow: z.boolean(),
+    summary: summarySchema,
+  });
+
+  // 2. STRICT STATE SCHEMA (Flattened status)
+  const strictEducationSchema = z.object({
+    status: z.enum(["draft", "completed"]), // Added and lifted to the root
+
     // Academic
     degreeLevel: z
       .enum(DEGREE_OPTIONS, {
@@ -73,16 +101,13 @@ export const createEducationSchema = (t: TFunction<string, undefined>) => {
       }),
 
     isStudyingNow: z.boolean(),
-
-    // summary: z
-    //   .string()
-    //   .trim()
-    //   .max(SUMMARY_MAX_LENGTH, { message: t("summaryTooLong") })
-    //   .optional(),
-
-    summary: z.object({
-      type: z.string(),
-      content: z.array(z.any()),
-    }),
+    summary: summarySchema,
   });
+
+  // 3. DISCRIMINATED UNION
+  // Provides direct literal key mapping for lightning-fast evaluations
+  return z.discriminatedUnion("status", [
+    emptyEducationSchema,
+    strictEducationSchema,
+  ]);
 };
