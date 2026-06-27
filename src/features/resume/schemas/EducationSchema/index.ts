@@ -62,11 +62,9 @@ export const createEducationSchema = (t: TFunction<string, undefined>) => {
     status: z.enum(["draft", "completed"]), // Added and lifted to the root
 
     // Academic
-    degreeLevel: z
-      .enum(DEGREE_OPTIONS, {
-        message: t("selectEducationalLevel"),
-      })
-      .or(z.literal("")),
+    degreeLevel: z.enum(DEGREE_OPTIONS, {
+      message: t("selectEducationalLevel"),
+    }),
 
     academicMajor: z.string().min(1, { message: t("academicMajorRequired") }),
     concentration: z.string().min(1, { message: t("specializationRequired") }),
