@@ -1,9 +1,10 @@
-import { CustomLabel } from "@/components/ui/CustomLabel";
-import { TFunction } from "i18next";
-import { memo, useEffect, useState } from "react";
-import { useWatch, useFormContext } from "react-hook-form";
-import { ResumeFormValues } from "@/features/resume/schemas/resume.schema";
 import { CustomBadge } from "@/components/ui/CustomBadge";
+import { CustomLabel } from "@/components/ui/CustomLabel";
+import { ResumeFormValues } from "@/features/resume/schemas/resume.schema";
+import { createEducationSchema } from "@/features/resume/schemas/EducationSchema";
+import { TFunction } from "i18next";
+import { memo, useEffect, useState, useMemo } from "react";
+import { useFormContext, useWatch } from "react-hook-form";
 
 type HeaderProps = {
   index: number;
@@ -24,6 +25,7 @@ const EducationAccordionHeaderComponent = ({ index, t }: HeaderProps) => {
   const academicMajor = rowValues?.academicMajor;
   const currentStatus = rowValues?.status;
 
+  // ─── 1. Title Debounce Machine ──────────────────────────────────────
   useEffect(() => {
     // eslint-disable-next-line
     setIsTyping(true);
@@ -43,32 +45,25 @@ const EducationAccordionHeaderComponent = ({ index, t }: HeaderProps) => {
     return () => clearTimeout(timer);
   }, [degreeLevel, academicMajor, t]);
 
-  // =========================================================
-  // STATE VALIDATION MACHINE
-  // =========================================================
-  const rowErrors = errors.education?.[index];
-  const hasNoValidationErrors = !rowErrors;
+  // ─── 2. Zod Validation Machine ──────────────────────────────────────
+  const isCompleted = useMemo(() => {
+    if (!rowValues) return false;
+    if (errors.education?.[index]) return false;
 
-  const hasCoreFieldsFilled =
-    !!rowValues?.degreeLevel &&
-    !!rowValues?.academicMajor &&
-    !!rowValues?.institutionName &&
-    !!rowValues?.country &&
-    !!rowValues?.province &&
-    !!rowValues?.city &&
-    !!rowValues?.entryMonth &&
-    !!rowValues?.entryYear;
+    // Evaluate row against full completed criteria
+    const educationSchema = createEducationSchema(t);
+    const result = educationSchema.safeParse({
+      ...rowValues,
+      status: "completed",
+    });
 
-  const hasValidGraduationDate =
-    !!rowValues?.isStudyingNow ||
-    (!!rowValues?.graduationMonth && !!rowValues?.graduationYear);
+    return result.success;
+  }, [rowValues, errors.education, index, t]);
 
-  const isCompleted =
-    hasCoreFieldsFilled && hasValidGraduationDate && hasNoValidationErrors;
   const isDraft = !isCompleted && currentStatus === "draft";
-
   const badgeType = isCompleted ? "success" : isDraft ? "warning" : "default";
 
+  // ─── 3. State Synchronization Engine ────────────────────────────────
   useEffect(() => {
     if (!rowValues) return;
 
