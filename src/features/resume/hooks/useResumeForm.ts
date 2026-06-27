@@ -27,6 +27,7 @@ export const useResumeForm = (
     reValidateMode: "onChange",
     shouldUnregister: false,
     criteriaMode: "all",
+    shouldFocusError: true,
   });
 
   const { reset } = form;
