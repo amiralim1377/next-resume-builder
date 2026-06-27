@@ -1,9 +1,9 @@
-import { BasicInfoStep } from "../components/Steps/BasicInfoStep";
-import { EducationStep } from "../components/Steps/EducationStep";
+import { BasicInfoStep } from "../components/Steps/basicInfoStep";
+import { EducationStep } from "../components/Steps/educationStep";
 import { JobStep } from "../components/Steps/JobStep";
 import { ProjectsStep } from "../components/Steps/ProjectsStep";
-import { ResearchStep } from "../components/Steps/ResearchStep";
-import { SkillsStep } from "../components/Steps/SkillsStep";
+import { ResearchStep } from "../components/Steps/researchStep";
+import { SkillsStep } from "../components/Steps/skillsStep";
 import { StepConfig } from "../types/resume.types";
 
 export const RESUME_STEPS: StepConfig[] = [
@@ -43,7 +43,6 @@ export const RESUME_STEPS: StepConfig[] = [
     titleKey: "skills",
     titleEn: "Skills",
     component: SkillsStep,
-    // ✨ Fixed: Validates all three sub-domains simultaneously when leaving this view
     fieldNames: ["skills", "languages", "coursesAndCertifications"],
     isOptional: true,
     icon: "⚡",
