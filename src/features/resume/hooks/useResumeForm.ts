@@ -27,19 +27,15 @@ export const useResumeForm = (
     reValidateMode: "onChange",
     shouldUnregister: false,
     criteriaMode: "all",
+    shouldFocusError: true,
   });
 
-  const { trigger: triggerStep, reset, ...restForm } = form;
-
+  const { reset } = form;
   useEffect(() => {
     if (initialData && mode === "edit") {
       reset(initialData, { keepDirtyValues: true });
     }
   }, [initialData, reset, mode]);
 
-  return {
-    form,
-    triggerStep,
-    ...restForm,
-  };
+  return form;
 };

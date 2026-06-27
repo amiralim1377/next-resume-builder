@@ -5,49 +5,46 @@ import { CustomControlledInput } from "@/components/ui/CustomControlledInput";
 import { Language } from "@/lib/i18n/settings";
 import { useFormContext, useWatch } from "react-hook-form";
 import { CustomControlledCheckBox } from "@/components/ui/CustomControlledCheckBox";
-import { useEffect, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import { CustomRadio } from "@/components/ui/CustomRadio";
 import { CustomButton } from "@/components/ui/CustomButton";
 import { CalendarType } from "@/types";
 import { EducationSummary } from "../EducationSummary";
+import { ResumeFormValues } from "@/features/resume/schemas/resume.schema";
+import { RowStatusObserver } from "@/features/resume/components/RowStatusObserver";
 
-type EducationItemnProps = {
+type EducationItemProps = {
   t: TFunction<string, undefined>;
   lng: Language;
   index: number;
   onDelete: (index: number) => void;
 };
 
-const EducationItem = ({ t, lng, index, onDelete }: EducationItemnProps) => {
+const EducationItemComponent = ({
+  t,
+  lng,
+  index,
+  onDelete,
+}: EducationItemProps) => {
   const [calendarType, setCalendarType] = useState<CalendarType>(
     lng === "en" ? "gregorian" : "jalali",
   );
-
-  const { setValue } = useFormContext();
-
+  const { setValue } = useFormContext<ResumeFormValues>();
   const countryWatch = useWatch({
     name: `education.${index}.country`,
-    exact: true,
   });
-  const provinceId = useWatch({
-    name: `education.${index}.province`,
-    exact: true,
-  });
-  const isIranSelected = countryWatch === "Iran";
+  const provinceId = useWatch({ name: `education.${index}.province` });
   const isStudyingNow = useWatch({
     name: `education.${index}.isStudyingNow`,
-    exact: true,
   });
+  const isIranSelected = countryWatch === "Iran";
 
   useEffect(() => {
     if (isStudyingNow) {
-      setValue(`education.${index}.graduationMonth`, t("isStudyingNow"));
-      setValue(`education.${index}.graduationYear`, t("isStudyingNow"));
-    } else {
       setValue(`education.${index}.graduationMonth`, "");
       setValue(`education.${index}.graduationYear`, "");
     }
-  }, [isStudyingNow, setValue, t, index]);
+  }, [isStudyingNow, index, setValue]);
 
   const {
     degreeOptions,
@@ -64,6 +61,10 @@ const EducationItem = ({ t, lng, index, onDelete }: EducationItemnProps) => {
 
   return (
     <div className="grid grid-cols-12 gap-3">
+      {/* Background worker tracking state changes cleanly */}
+      <RowStatusObserver fieldName="education" index={index} />
+
+      {/* Degree Level */}
       <div className="col-span-12 md:col-span-6">
         <CustomControlledSelect
           name={`education.${index}.degreeLevel`}
@@ -72,6 +73,7 @@ const EducationItem = ({ t, lng, index, onDelete }: EducationItemnProps) => {
         />
       </div>
 
+      {/* Academic Major */}
       <div className="col-span-12 md:col-span-6">
         <CustomControlledInput
           name={`education.${index}.academicMajor`}
@@ -84,15 +86,15 @@ const EducationItem = ({ t, lng, index, onDelete }: EducationItemnProps) => {
         <CustomControlledInput
           name={`education.${index}.concentration`}
           label={t("concentration")}
-        />{" "}
+        />
       </div>
 
-      {/* Institution */}
+      {/* Institution Name */}
       <div className="col-span-12 md:col-span-6">
         <CustomControlledInput
           name={`education.${index}.institutionName`}
           label={t("institutionName")}
-        />{" "}
+        />
       </div>
 
       {/* GPA */}
@@ -100,7 +102,7 @@ const EducationItem = ({ t, lng, index, onDelete }: EducationItemnProps) => {
         <CustomControlledInput
           name={`education.${index}.gradeAverage`}
           label={t("gradeAverage")}
-        />{" "}
+        />
       </div>
 
       {/* Country */}
@@ -109,7 +111,7 @@ const EducationItem = ({ t, lng, index, onDelete }: EducationItemnProps) => {
           options={countryOptions}
           label={t("country")}
           name={`education.${index}.country`}
-        />{" "}
+        />
       </div>
 
       {/* Province */}
@@ -169,7 +171,7 @@ const EducationItem = ({ t, lng, index, onDelete }: EducationItemnProps) => {
         />
       </div>
 
-      {/* btn  */}
+      {/* Calendar Switcher */}
       <div className="col-span-12">
         <CustomRadio.Group className="flex flex-row">
           <CustomRadio
@@ -177,7 +179,6 @@ const EducationItem = ({ t, lng, index, onDelete }: EducationItemnProps) => {
             onChange={() => setCalendarType("jalali")}
             label={t("solarHijri")}
           />
-
           <CustomRadio
             checked={calendarType === "gregorian"}
             onChange={() => setCalendarType("gregorian")}
@@ -193,6 +194,7 @@ const EducationItem = ({ t, lng, index, onDelete }: EducationItemnProps) => {
             name={`education.${index}.graduationMonth`}
             label={t("graduationMonth")}
             disabled={isStudyingNow}
+            placeholder={isStudyingNow ? t("isStudyingNow") : undefined}
           />
         ) : (
           <CustomControlledSelect
@@ -210,10 +212,11 @@ const EducationItem = ({ t, lng, index, onDelete }: EducationItemnProps) => {
           name={`education.${index}.graduationYear`}
           label={t("graduationYear")}
           disabled={isStudyingNow}
+          placeholder={isStudyingNow ? t("isStudyingNow") : undefined}
         />
       </div>
 
-      {/* Studying Now */}
+      {/* Studying Now Checkbox */}
       <div className="col-span-12">
         <div className="flex items-center justify-between">
           <CustomControlledCheckBox
@@ -222,19 +225,24 @@ const EducationItem = ({ t, lng, index, onDelete }: EducationItemnProps) => {
           />
         </div>
       </div>
+
+      {/* Summary Field */}
       <div className="col-span-12">
         <EducationSummary index={index} t={t} />
       </div>
 
-      <CustomButton
-        onClick={() => onDelete(index)}
-        variant="outlined-negative"
-        className="text-nowrap"
-      >
-        {t("deleteThis")}
-      </CustomButton>
+      {/* Actions */}
+      <div className="col-span-12 flex justify-end">
+        <CustomButton
+          onClick={() => onDelete(index)}
+          variant="outlined-negative"
+          className="text-nowrap"
+        >
+          {t("deleteThis")}
+        </CustomButton>
+      </div>
     </div>
   );
 };
 
-export { EducationItem };
+export const EducationItem = memo(EducationItemComponent);

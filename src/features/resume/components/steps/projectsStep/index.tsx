@@ -7,7 +7,7 @@ import { ResumeFormValues } from "@/features/resume/schemas/resume.schema";
 import { CustomLabel } from "@/components/ui/CustomLabel";
 import { useThemeColors } from "@/provider/themeProvider/useThemeColors";
 import { FolderKanban } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   Accordion,
   AccordionContent,
@@ -29,6 +29,8 @@ function ProjectsStep() {
     name: "projects",
   });
 
+  const prevLengthRef = useRef(fields.length);
+
   const onRowAdd = () => {
     append({
       clientName: "",
@@ -40,16 +42,22 @@ function ProjectsStep() {
       projectTitle: "",
       projectUrl: "",
       projectYear: "",
+      status: "empty",
     });
   };
 
   useEffect(() => {
-    if (fields.length > 0) {
+    const isRowAdded = fields.length > prevLengthRef.current;
+    if (isRowAdded && fields.length > 0) {
       const lastFieldId = fields[fields.length - 1].id;
-      // eslint-disable-next-line
       setActiveAccordionId(lastFieldId);
     }
-  }, [fields.length]);
+    prevLengthRef.current = fields.length;
+  }, [fields]);
+
+  const onDelete = (index: number) => {
+    remove(index);
+  };
 
   return (
     <div className="flex w-full flex-col space-y-2.5">
@@ -77,14 +85,14 @@ function ProjectsStep() {
             return (
               <AccordionItem key={field.id} value={field.id}>
                 <AccordionTrigger>
-                  <ProjectAccordionHeader index={index} />
+                  <ProjectAccordionHeader t={t} index={index} />
                 </AccordionTrigger>
                 <AccordionContent className="p-4">
                   <ProjectItem
                     lng={lng}
                     t={t}
                     index={index}
-                    onDelete={remove}
+                    onDelete={onDelete}
                   />
                 </AccordionContent>
               </AccordionItem>
