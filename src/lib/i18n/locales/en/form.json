@@ -197,5 +197,11 @@
   "typing": "typing",
   "status.draft": "Incomplete",
   "status.empty": "Not started",
-  "status.completed": "Completed"
+  "status.completed": "Completed",
+  "projectTitleRequired": "Project title is required",
+  "projectTitleTooLong": "Project title is too long",
+  "clientNameRequired": "Client name is required",
+  "clientNameTooLong": "Client name is too long",
+  "projectMonthRequired": "Project month is required",
+  "projectYearRequired": "Project year is required"
 }

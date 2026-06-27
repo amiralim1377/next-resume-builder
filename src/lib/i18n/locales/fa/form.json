@@ -199,5 +199,11 @@
   "typing": "در حال تایپ...",
   "status.draft": "تکمیل نشده",
   "status.empty": "شروع نشده",
-  "status.completed": "تکمیل شده"
+  "status.completed": "تکمیل شده",
+  "projectTitleRequired": "عنوان پروژه الزامی است",
+  "projectTitleTooLong": "عنوان پروژه بیش از حد طولانی است",
+  "clientNameRequired": "نام کارفرما الزامی است",
+  "clientNameTooLong": "نام کارفرما بیش از حد طولانی است",
+  "projectMonthRequired": "ماه پروژه الزامی است",
+  "projectYearRequired": "سال پروژه الزامی است"
 }
