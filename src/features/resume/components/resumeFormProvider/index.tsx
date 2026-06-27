@@ -1,4 +1,3 @@
-// src/features/resume/components/ResumeFormProvider/index.tsx
 "use client";
 import { FormProvider, useWatch } from "react-hook-form";
 import { useCallback, useMemo, useState } from "react";
@@ -32,18 +31,20 @@ const ResumeFormProvider = ({
 
   const stepStatuses = useMemo((): Record<StepName, SectionState> => {
     const statuses = {} as Record<StepName, SectionState>;
-    RESUME_STEPS.forEach((step) => {
+
+    RESUME_STEPS.forEach((step, index) => {
       statuses[step.id] = calculateStepStatus({
         step,
         values: formValues,
         errors,
+        index,
       });
     });
 
     return statuses;
   }, [formValues, errors]);
 
-  console.log("stepStatuses", stepStatuses);
+  // console.log("stepStatuses", stepStatuses);
 
   const currentStepConfig = RESUME_STEPS[currentStep];
 
@@ -64,6 +65,9 @@ const ResumeFormProvider = ({
       currentStepConfig.fieldNames as unknown as Parameters<
         typeof form.trigger
       >[0],
+      {
+        shouldFocus: true,
+      },
     );
 
     if (isValid) {
@@ -100,7 +104,7 @@ const ResumeFormProvider = ({
       <FormProvider {...form}>
         <form
           onSubmit={form.handleSubmit(handleFormSubmit)}
-          className="mx-auto flex w-full flex-col space-y-6"
+          className="mx-auto grid w-fit grid-rows-[auto_1fr_auto] gap-6"
         >
           <FormStepper
             steps={RESUME_STEPS}
