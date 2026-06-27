@@ -16,7 +16,7 @@ export type RichTextNode = {
   [key: string]: unknown; // Captures tracking items like 'attrs' safely
 };
 
-export const hasRichTextContent = (
+const hasResumeEditorContent = (
   node: RichTextNode | null | undefined,
 ): boolean => {
   if (!node) return false;
@@ -26,8 +26,10 @@ export const hasRichTextContent = (
   }
 
   if (Array.isArray(node.content)) {
-    return node.content.some(hasRichTextContent);
+    return node.content.some(hasResumeEditorContent);
   }
 
   return false;
 };
+
+export { hasResumeEditorContent };
