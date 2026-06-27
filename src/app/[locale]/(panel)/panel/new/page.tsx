@@ -25,7 +25,7 @@ const NewResumePage = () => {
   };
 
   return (
-    <div>
+    <div className="flex w-full items-center justify-center p-6">
       <ResumeFormProvider
         initialData={getDefaultResumeValues({ lng })}
         mode="create"
