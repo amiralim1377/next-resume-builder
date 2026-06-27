@@ -6,10 +6,10 @@ import { SectionState, StepName } from "../../types/resume.types";
 import { ResumeFormValues } from "../../schemas/resume.schema";
 import { RESUME_STEPS } from "../../constants/steps";
 import { calculateStepStatus } from "../../utils/stepper.utils";
+import StepWrapper from "../StepWrapper";
+import { FormStepper } from "../FormStepper";
+import { NavigationButtons } from "../NavigationButtons";
 import { ResumeFormContext } from "./ResumeFormContext";
-import { NavigationButtons } from "../navigationButtons";
-import { FormStepper } from "../formStepper";
-import StepWrapper from "../stepWrapper";
 
 type ResumeFormProviderProps = {
   initialData?: Partial<ResumeFormValues>;
