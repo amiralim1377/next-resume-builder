@@ -5,9 +5,9 @@ import { CalendarType } from "@/types";
 import { TFunction } from "i18next";
 import { useState } from "react";
 import { UseFieldArrayRemove } from "react-hook-form";
-import { useGetSkillsInfoStepData } from "../../../../hooks/useGetSkillsInfoStepData";
 import { CustomRadio } from "@/components/ui/CustomRadio";
 import { CustomButton } from "@/components/ui/CustomButton";
+import { useGetSkillsInfoStepData } from "../../../../hooks/useGetSkillsInfoStepData";
 
 type CoursesCertificationsItemProps = {
   lng: Language;
