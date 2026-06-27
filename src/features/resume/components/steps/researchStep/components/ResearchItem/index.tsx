@@ -8,6 +8,7 @@ import { CustomButton } from "@/components/ui/CustomButton";
 import { CustomControlledSelect } from "@/components/ui/CustomControlledSelect";
 import { useGetResearchInfoStepData } from "../../hooks/useGetResearchInfoStepData";
 import { ResearchSummary } from "../ResearchSummary";
+import { RowStatusObserver } from "@/features/resume/components/RowStatusObserver";
 
 type ResearchItemProps = {
   t: TFunction<string, undefined>;
@@ -27,6 +28,9 @@ const ResearchItem = ({ index, lng, onDelete, t }: ResearchItemProps) => {
   });
   return (
     <div className="grid grid-cols-12 gap-4">
+      {/* Background worker tracking state changes cleanly */}
+      <RowStatusObserver index={index} fieldName="research" />
+
       {/* Research Title */}
       <div className="col-span-12 md:col-span-6">
         <CustomControlledInput
