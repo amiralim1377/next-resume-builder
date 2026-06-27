@@ -11,6 +11,7 @@ import { CustomControlledCheckBox } from "@/components/ui/CustomControlledCheckB
 import { CustomButton } from "@/components/ui/CustomButton";
 import { CustomRadio } from "@/components/ui/CustomRadio";
 import { JobSummary } from "../JobSummary";
+import { RowStatusObserver } from "@/features/resume/components/RowStatusObserver";
 
 type JobSectionType = {
   t: TFunction<string, undefined>;
@@ -19,7 +20,7 @@ type JobSectionType = {
   index: number;
 };
 
-const JobSection = ({ lng, t, index, onDelete }: JobSectionType) => {
+const JobItem = ({ lng, t, index, onDelete }: JobSectionType) => {
   const [calendarType, setCalendarType] = useState<CalendarType>(
     lng === "en" ? "gregorian" : "jalali",
   );
@@ -27,21 +28,18 @@ const JobSection = ({ lng, t, index, onDelete }: JobSectionType) => {
 
   const countryWatch = useWatch({ name: `job.${index}.country`, exact: true });
   const provinceId = useWatch({ name: `job.${index}.province`, exact: true });
-  const isIranSelected = countryWatch === "Iran";
   const isCurrentlyWorkingHere = useWatch({
     name: `job.${index}.isCurrentlyWorkingHere`,
     exact: true,
   });
+  const isIranSelected = countryWatch === "Iran";
 
   useEffect(() => {
     if (isCurrentlyWorkingHere) {
-      setValue(`job.${index}.employmentEndMonth`, t("WorkingHere"));
-      setValue(`job.${index}.employmentEndYear`, t("WorkingHere"));
-    } else {
       setValue(`job.${index}.employmentEndMonth`, "");
       setValue(`job.${index}.employmentEndYear`, "");
     }
-  }, [isCurrentlyWorkingHere, setValue, t, index]);
+  }, [isCurrentlyWorkingHere, setValue, index]);
 
   const { countryOptions, provinceOptions, cityOptions, monthOptions } =
     useGetJobInfoStepData({
@@ -53,6 +51,9 @@ const JobSection = ({ lng, t, index, onDelete }: JobSectionType) => {
     <CustomResumeCardComponents
       classNames={{ cardClassName: "grid grid-cols-12 gap-4" }}
     >
+      {/* Background worker tracking state changes cleanly */}
+      <RowStatusObserver fieldName="job" index={index} />
+
       {/* Job Title */}
       <div className="col-span-12 md:col-span-6">
         <CustomControlledInput
@@ -156,6 +157,9 @@ const JobSection = ({ lng, t, index, onDelete }: JobSectionType) => {
             name={`job.${index}.employmentEndMonth`}
             label={t("employmentEndMonth")}
             disabled={isCurrentlyWorkingHere}
+            placeholder={
+              isCurrentlyWorkingHere ? t("CurrentlyWorkingHere") : undefined
+            }
           />
         ) : (
           <CustomControlledSelect
@@ -173,6 +177,9 @@ const JobSection = ({ lng, t, index, onDelete }: JobSectionType) => {
           name={`job.${index}.employmentEndYear`}
           label={t("employmentEndYear")}
           disabled={isCurrentlyWorkingHere}
+          placeholder={
+            isCurrentlyWorkingHere ? t("CurrentlyWorkingHere") : undefined
+          }
         />
       </div>
 
@@ -202,4 +209,4 @@ const JobSection = ({ lng, t, index, onDelete }: JobSectionType) => {
   );
 };
 
-export { JobSection };
+export { JobItem };

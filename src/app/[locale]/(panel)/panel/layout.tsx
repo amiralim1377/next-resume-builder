@@ -7,9 +7,12 @@ type PanelLayoutProps = {
 
 export default function PanelLayout({ children }: PanelLayoutProps) {
   return (
-    <div className="grid h-auto w-full grid-cols-[250px_1fr] gap-9">
-      <PanelSidebar />
-      <main>{children}</main>
+    <div className="grid w-full grid-cols-[200px_1fr]">
+      <div className="sticky top-4 self-start">
+        <PanelSidebar />
+      </div>
+
+      <main className=" ">{children}</main>
     </div>
   );
 }

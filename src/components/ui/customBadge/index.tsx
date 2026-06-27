@@ -1,48 +1,59 @@
-import { CSSProperties, ReactNode } from "react";
+import { ReactNode, CSSProperties, memo } from "react";
 import { cn } from "@/utils/cn";
-import { useLang } from "@/provider/lngProvider";
+
+export type CustomBadgeType = "success" | "warning" | "error" | "default";
 
 interface CustomBadgeProps {
   children?: ReactNode;
-  color?: string;
   icon?: ReactNode;
   className?: string;
-  maxHeight?: number;
+  type?: CustomBadgeType;
+  color?: string;
+  style?: CSSProperties;
 }
 
-const CustomBadge = ({
+const CustomBadgeComponent = ({
   children,
-  color,
   icon,
   className,
-  maxHeight,
+  type = "default",
+  color,
+  style,
 }: CustomBadgeProps) => {
-  const { lng } = useLang();
-  const isRtl = lng === "fa";
+  const getBadgeClass = (badgeType: CustomBadgeType) => {
+    switch (badgeType) {
+      case "success":
+        return "bg-state-success/20 text-text-success";
+      case "warning":
+        return "bg-state-warning/20 text-text-warning";
+      case "error":
+        return "bg-state-error/20 text-text-error";
+      default:
+        return "bg-disabledText text-text-secondary";
+    }
+  };
 
-  const rootStyle: CSSProperties = {
-    backgroundColor: color,
-    ...(maxHeight !== undefined && { maxHeight: `${maxHeight}px` }),
+  const mergedStyle: CSSProperties = {
+    ...(color ? { backgroundColor: color } : {}),
+    ...style,
   };
 
   return (
     <div
       className={cn(
-        "inline-flex items-center justify-between",
-        "px-2.5 py-1 rounded-sm",
-        "font-normal text-inherit leading-none",
-        "whitespace-nowrap no-underline cursor-default select-none box-border",
-        isRtl ? "flex-row-reverse" : "flex-row",
+        "inline-flex items-center gap-1.5",
+        "rounded-full px-3 py-1.5 text-xs font-semibold capitalize",
+        "leading-none text-inherit",
+        "cursor-default whitespace-nowrap select-none",
+        getBadgeClass(type),
         className,
       )}
-      style={rootStyle}
+      style={mergedStyle}
     >
-      {icon && (
-        <span className={"inline-flex items-center ml-0 mr-1.25"}>{icon}</span>
-      )}
+      {icon}
       {children}
     </div>
   );
 };
 
-export { CustomBadge };
+export const CustomBadge = memo(CustomBadgeComponent);
