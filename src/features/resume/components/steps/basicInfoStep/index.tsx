@@ -1,10 +1,11 @@
 "use client";
-import { BasicInfoSection } from "./components/BasicInfoSection";
-import { ContactInformation } from "./components/ContactInformationSection";
-import { ResumeSummary } from "./components/ResumeSummary";
+
 import { useLang } from "@/provider/lngProvider";
 import { useTranslation } from "@/lib/i18n/client";
 import { UserProfileSection } from "./components/UserProfileSection";
+import { BasicInfoSection } from "./components/BasicInfoSection";
+import { ContactInformation } from "./components/ContactInformationSection";
+import { ResumeSummary } from "./components/ResumeSummary";
 
 function BasicInfoStep() {
   const { lng } = useLang();

@@ -1,7 +1,6 @@
 import { Language } from "@/lib/i18n/settings";
 import { TFunction } from "i18next";
 import { useFieldArray } from "react-hook-form";
-import { CoursesCertificationsItem } from "./components/CoursesCertificationsItem";
 import { CustomButton } from "@/components/ui/CustomButton";
 import { ResumeFormValues } from "@/features/resume/schemas/resume.schema";
 import { CustomLabel } from "@/components/ui/CustomLabel";
@@ -15,6 +14,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/NewCustomAccordion";
 import { CoursesCertificationsAccordionHeader } from "./components/CoursesCertificationsAccordionHeader";
+import { CoursesCertificationsItem } from "./components/CoursesCertificationsItem";
 
 type CoursesCertificationsSectionProps = {
   t: TFunction<string, undefined>;

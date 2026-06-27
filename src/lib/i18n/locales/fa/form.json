@@ -54,7 +54,7 @@
   "cannotContainEmail": "شامل ایمیل نمی تواند باشد",
   "lastNameRequired": "نام خانوداگی الزامی است",
   "jobTitleRequired": "عنوان شغلی رزومه الزامی است",
-  "selectGender": "جنسیت راانتخاب کنید",
+  "selectGender": "جنسیت را انتخاب کنید",
   "invalidEmail": "ایمیل با فرمت مناسب وارد نمایید",
   "emailNoSpacesAllowed": "فاصله ی اضافی در ایمیل مجاز نمی باشد",
   "emailNoPersianCharacters": "حروف فارسی در ایمیل مجاز نیست",

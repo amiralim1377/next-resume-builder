@@ -5,10 +5,10 @@ import { useResumeForm } from "../../hooks/useResumeForm";
 import { SectionState, StepName } from "../../types/resume.types";
 import { ResumeFormValues } from "../../schemas/resume.schema";
 import { RESUME_STEPS } from "../../constants/steps";
-import { NavigationButtons } from "../NavigationButtons";
-import { FormStepper } from "../FormStepper";
-import StepWrapper from "../StepWrapper";
 import { calculateStepStatus } from "../../utils/stepper.utils";
+import StepWrapper from "../StepWrapper";
+import { FormStepper } from "../FormStepper";
+import { NavigationButtons } from "../NavigationButtons";
 import { ResumeFormContext } from "./ResumeFormContext";
 
 type ResumeFormProviderProps = {
@@ -104,7 +104,7 @@ const ResumeFormProvider = ({
       <FormProvider {...form}>
         <form
           onSubmit={form.handleSubmit(handleFormSubmit)}
-          className="mx-auto grid w-fit grid-rows-[auto_1fr_auto] gap-6"
+          className="mx-auto grid w-full grid-rows-[auto_1fr_auto] gap-6"
         >
           <FormStepper
             steps={RESUME_STEPS}

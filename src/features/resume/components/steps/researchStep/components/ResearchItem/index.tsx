@@ -6,9 +6,10 @@ import { useState } from "react";
 import { CustomRadio } from "@/components/ui/CustomRadio";
 import { CustomButton } from "@/components/ui/CustomButton";
 import { CustomControlledSelect } from "@/components/ui/CustomControlledSelect";
+
+import { RowStatusObserver } from "@/features/resume/components/RowStatusObserver";
 import { useGetResearchInfoStepData } from "../../hooks/useGetResearchInfoStepData";
 import { ResearchSummary } from "../ResearchSummary";
-import { RowStatusObserver } from "@/features/resume/components/RowStatusObserver";
 
 type ResearchItemProps = {
   t: TFunction<string, undefined>;

@@ -1,6 +1,5 @@
 import { CustomControlledSelect } from "@/components/ui/CustomControlledSelect";
 import { TFunction } from "i18next";
-import { useGetEducationInfoStepData } from "../../hooks/useGetEducationInfoStepData";
 import { CustomControlledInput } from "@/components/ui/CustomControlledInput";
 import { Language } from "@/lib/i18n/settings";
 import { useFormContext, useWatch } from "react-hook-form";
@@ -9,9 +8,10 @@ import { memo, useEffect, useState } from "react";
 import { CustomRadio } from "@/components/ui/CustomRadio";
 import { CustomButton } from "@/components/ui/CustomButton";
 import { CalendarType } from "@/types";
-import { EducationSummary } from "../EducationSummary";
 import { ResumeFormValues } from "@/features/resume/schemas/resume.schema";
 import { RowStatusObserver } from "@/features/resume/components/RowStatusObserver";
+import { useGetEducationInfoStepData } from "../../hooks/useGetEducationInfoStepData";
+import { EducationSummary } from "../EducationSummary";
 
 type EducationItemProps = {
   t: TFunction<string, undefined>;

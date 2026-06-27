@@ -3,8 +3,8 @@ import { CustomControlledSelect } from "@/components/ui/CustomControlledSelect";
 import { Language } from "@/lib/i18n/settings";
 import { TFunction } from "i18next";
 import { UseFieldArrayRemove } from "react-hook-form";
-import { useGetSkillsInfoStepData } from "../../../../hooks/useGetSkillsInfoStepData";
 import { CustomButton } from "@/components/ui/CustomButton";
+import { useGetSkillsInfoStepData } from "../../../../hooks/useGetSkillsInfoStepData";
 
 type SkillItemProps = {
   lng: Language;

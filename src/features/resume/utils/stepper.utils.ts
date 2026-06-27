@@ -1,13 +1,13 @@
 import { hasResumeEditorContent, RichTextNode } from "@/utils/richText";
 import { ResumeFormValues } from "../schemas/resume.schema";
 import { StepConfig, SectionState } from "../types/resume.types";
-import { FieldErrors } from "react-hook-form";
+import { DeepPartial, FieldErrors } from "react-hook-form";
 
 type calculateStepStatusProps = {
   step: StepConfig;
-  values: Partial<ResumeFormValues>;
+  values: DeepPartial<ResumeFormValues>;
   errors: FieldErrors<ResumeFormValues>;
-  index: number;
+  index?: number;
 };
 
 const hasActualContent = (value: unknown): boolean => {
@@ -32,36 +32,27 @@ const calculateStepStatus = ({
   errors,
   step,
   values,
-  index,
 }: calculateStepStatusProps): SectionState => {
-  const hasErrors = step.fieldNames.some((field) => !!errors[field]);
+  const safeErrors = errors as Record<string, unknown>;
+  const hasErrors = step.fieldNames.some((field) => !!safeErrors[field]);
   if (hasErrors) return "invalid";
 
-  console.log(`hasErrors ${index + 1}:`, hasErrors);
+  const safeValues = values as Record<string, unknown>;
 
   const hasData = step.fieldNames.some((field) => {
-    const value = values[field];
+    const value = safeValues[field];
     return hasActualContent(value);
   });
 
   if (!hasData) return "empty";
 
-  console.log(`hasData ${index + 1}:`, hasData);
-
-  if (!hasData) return "empty";
-
   for (const field of step.fieldNames) {
-    console.log(`field ${index + 1}:`, field);
-
-    const value = values[field];
-    console.log(`value ${index + 1}:`, value);
+    const value = safeValues[field];
 
     if (Array.isArray(value)) {
       const allRowsCompleted = value.every(
         (item) => item?.status === "completed",
       );
-
-      console.log(`allRowsCompleted ${index + 1}:`, allRowsCompleted);
 
       if (!allRowsCompleted) return "draft";
     }

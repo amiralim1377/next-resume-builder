@@ -43,7 +43,6 @@ export const RESUME_STEPS: StepConfig[] = [
     titleKey: "skills",
     titleEn: "Skills",
     component: SkillsStep,
-    // ✨ Fixed: Validates all three sub-domains simultaneously when leaving this view
     fieldNames: ["skills", "languages", "coursesAndCertifications"],
     isOptional: true,
     icon: "⚡",

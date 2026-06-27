@@ -13,9 +13,10 @@ import {
   AccordionTrigger,
 } from "@/components/ui/NewCustomAccordion";
 import { useEffect, useRef, useState } from "react";
-import { EducationItem } from "./components/EducationItem";
-import { EducationAccordionHeader } from "./components/EducationAccordionHeader";
+
 import { CustomResumeCardComponents } from "@/components/ui/CustomResumeCardComponents";
+import { EducationAccordionHeader } from "./components/EducationAccordionHeader";
+import { EducationItem } from "./components/EducationItem";
 
 function EducationStep() {
   const [activeAccordionId, setActiveAccordionId] = useState<string>("");
