@@ -1,7 +1,6 @@
 import { Language } from "@/lib/i18n/settings";
 import { TFunction } from "i18next";
 import { useFieldArray } from "react-hook-form";
-import { SkillItem } from "./components/SkillItem";
 import { CustomButton } from "@/components/ui/CustomButton";
 import { ResumeFormValues } from "@/features/resume/schemas/resume.schema";
 import { CustomLabel } from "@/components/ui/CustomLabel";
@@ -15,6 +14,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/NewCustomAccordion";
 import { CoreSkillAccordionHeader } from "./components/CoreSkillAccordionHeader";
+import { SkillItem } from "./components/SkillItem";
 
 type CoreSkillsSectionSectionProps = {
   t: TFunction<string, undefined>;
