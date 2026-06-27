@@ -1,5 +1,5 @@
 import { ResumeFormValues } from "@/features/resume/schemas/resume.schema";
-import { hasRichTextContent, RichTextNode } from "@/utils/richText";
+import { hasResumeEditorContent, RichTextNode } from "@/utils/richText";
 import { useEffect } from "react";
 import { useFormContext, useWatch } from "react-hook-form";
 
@@ -14,7 +14,8 @@ const RowStatusObserver = ({ index }: { index: number }) => {
 
     const hasUserInteracted = Object.entries(rowValues).some(([key, value]) => {
       if (key === "status") return false;
-      if (key === "summary") return hasRichTextContent(value as RichTextNode);
+      if (key === "summary")
+        return hasResumeEditorContent(value as RichTextNode);
       if (key === "isStudyingNow") return value === true;
       return value !== "" && value !== undefined && value !== null;
     });
