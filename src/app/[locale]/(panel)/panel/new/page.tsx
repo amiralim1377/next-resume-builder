@@ -1,5 +1,5 @@
 "use client";
-import { ResumeFormProvider } from "@/features/resume/components/ResumeFormProvider";
+import { ResumeFormProvider } from "@/features/resume/components/resumeFormProvider";
 import { ResumeFormValues } from "@/features/resume/schemas/resume.schema";
 import { getDefaultResumeValues } from "@/features/resume/utils/formDefaultResumeValues";
 import { useLang } from "@/provider/lngProvider";
