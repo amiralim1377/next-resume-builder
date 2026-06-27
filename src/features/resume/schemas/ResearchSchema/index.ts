@@ -7,50 +7,25 @@ const YEAR_REGEX = /^\d{4}$/;
 
 // ─── Schema Factory ───────────────────────────────────────────────────────────
 export const createResearchSchema = (t: TFunction<string, undefined>) => {
-  // ─── Shared Rich Text Fallback Core ─────────────────────────────────────────
-  // Preprocesses uninitialized or empty rich-text blocks to prevent structure crashes
-  const summarySchema = z.preprocess(
-    (val) => {
-      if (!val || typeof val !== "object" || Object.keys(val).length === 0) {
-        return { type: "doc", content: [] };
-      }
-      return val;
-    },
-    z.object({
-      type: z.string().default("doc"),
-      content: z.array(z.unknown()).default([]),
-    }),
-  );
+  // ─── Shared Rich Text Core ──────────────────────────────────────────────────
+  // Strict object definition to satisfy React Hook Form Resolver types
+  const summarySchema = z.object({
+    type: z.string(),
+    content: z.array(z.unknown()),
+  });
 
   // ─── 1. EMPTY STATE SCHEMA ──────────────────────────────────────────────────
-  // Highly permissive baseline mapping to absorb un-interacted form state values cleanly
   const emptyResearchSchema = z.object({
     status: z.literal("empty"),
-    researchTitle: z
-      .string()
-      .nullish()
-      .transform((v) => v ?? ""),
-    publisher: z
-      .string()
-      .nullish()
-      .transform((v) => v ?? ""),
-    researchUrl: z
-      .string()
-      .nullish()
-      .transform((v) => v ?? ""),
-    publicationMonth: z
-      .string()
-      .nullish()
-      .transform((v) => v ?? ""),
-    publicationYear: z
-      .string()
-      .nullish()
-      .transform((v) => v ?? ""),
+    researchTitle: z.string(),
+    publisher: z.string(),
+    researchUrl: z.string(),
+    publicationMonth: z.string(),
+    publicationYear: z.string(),
     summary: summarySchema,
   });
 
   // ─── 2. STRICT STATE SCHEMA ─────────────────────────────────────────────────
-  // Evaluated the split-second a user interacts with a row or tries to submit
   const strictResearchSchema = z.object({
     status: z.enum(["draft", "completed"]),
 
@@ -66,32 +41,29 @@ export const createResearchSchema = (t: TFunction<string, undefined>) => {
       .min(1, { message: t("publisherRequired") })
       .max(150, { message: t("publisherTooLong") }),
 
-    // Optional URL field: handles raw empty string transitions gracefully without tripping URL regex
+    // Handles empty string as valid for optional URLs
     researchUrl: z
       .string()
       .trim()
       .url({ message: t("invalidUrl") })
-      .or(z.literal(""))
-      .nullish()
-      .transform((v) => v ?? ""),
+      .or(z.literal("")),
 
     publicationMonth: z
       .string()
       .trim()
-      .min(1, { message: t("publicationMonthRequired") }),
+      .min(1, { message: t("publicationMonthRequired") })
+      .or(z.literal("")),
 
-    // Assuming year is required based on typical resume constraints.
-    // If it's optional, you can append `.or(z.literal(""))` like the URL field.
     publicationYear: z
       .string()
       .trim()
-      .min(1, { message: t("invalidYearFormat") }) // Prevents empty string bypass before regex
-      .regex(YEAR_REGEX, { message: t("invalidYearFormat") }),
+      .regex(YEAR_REGEX, { message: t("invalidYearFormat") })
+      .or(z.literal("")),
 
     summary: summarySchema,
   });
 
-  // ─── 3. DISCRIMINATED UNION RUNTIME ROUTER ──────────────────────────────────
+  // ─── 3. DISCRIMINATED UNION ─────────────────────────────────────────────────
   return z.discriminatedUnion("status", [
     emptyResearchSchema,
     strictResearchSchema,
