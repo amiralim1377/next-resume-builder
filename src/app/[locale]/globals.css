@@ -250,3 +250,43 @@ body {
 [dir="rtl"] ol {
   padding-inline-start: 1.5rem;
 }
+
+@layer base {
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus,
+  input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 1000px var(--ui-background) inset !important;
+    -webkit-text-fill-color: var(--text-primary) !important;
+    caret-color: var(--text-primary);
+    transition: background-color 9999s ease-in-out 0s;
+  }
+}
+
+@layer base {
+  select:-webkit-autofill,
+  select:-webkit-autofill:hover,
+  select:-webkit-autofill:focus {
+    -webkit-box-shadow: 0 0 0 1000px var(--ui-background) inset !important;
+    -webkit-text-fill-color: var(--text-primary) !important;
+  }
+}
+
+@layer base {
+  select {
+    background-color: transparent;
+    color: var(--text-primary);
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+  }
+
+  select:focus {
+    outline: none;
+  }
+
+  select option {
+    background-color: var(--ui-surface);
+    color: var(--text-primary);
+  }
+}
