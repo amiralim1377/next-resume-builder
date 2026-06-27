@@ -7,7 +7,7 @@ import { ResearchItem } from "./components/ResearchItem";
 import { CustomLabel } from "@/components/ui/CustomLabel";
 import { useThemeColors } from "@/provider/themeProvider/useThemeColors";
 import { PenLine } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   Accordion,
   AccordionContent,
@@ -27,9 +27,11 @@ function ResearchStep() {
   >({
     name: "research",
   });
+  const prevLengthRef = useRef(fields.length);
 
   const onRowAdd = () => {
     append({
+      status: "empty",
       publicationMonth: "",
       publicationYear: "",
       publisher: "",
@@ -42,17 +44,18 @@ function ResearchStep() {
     });
   };
 
+  useEffect(() => {
+    const isRowAdded = fields.length > prevLengthRef.current;
+    if (isRowAdded && fields.length > 0) {
+      const lastFieldId = fields[fields.length - 1].id;
+      setActiveAccordionId(lastFieldId);
+    }
+    prevLengthRef.current = fields.length;
+  }, [fields]);
+
   const onDelete = (index: number) => {
     remove(index);
   };
-
-  useEffect(() => {
-    if (fields.length > 0) {
-      const lastFieldId = fields[fields.length - 1].id;
-      // eslint-disable-next-line
-      setActiveAccordionId(lastFieldId);
-    }
-  }, [fields.length]);
 
   return (
     <div className="flex w-full flex-col space-y-2.5">
@@ -79,7 +82,7 @@ function ResearchStep() {
             return (
               <AccordionItem key={field.id} value={field.id}>
                 <AccordionTrigger>
-                  <ResearchAccordionHeader index={index} />
+                  <ResearchAccordionHeader t={t} index={index} />
                 </AccordionTrigger>
                 <AccordionContent className="p-4">
                   <ResearchItem
