@@ -8,6 +8,7 @@ import { CustomRadio } from "@/components/ui/CustomRadio";
 import { useGetSkillsInfoStepData } from "../../../SkillsStep/hooks/useGetSkillsInfoStepData";
 import { CustomButton } from "@/components/ui/CustomButton";
 import { ProjectSummary } from "../ProjectSummary";
+import { RowStatusObserver } from "@/features/resume/components/RowStatusObserver";
 
 type ProjectItemProps = {
   index: number;
@@ -25,6 +26,8 @@ const ProjectItem = ({ index, lng, onDelete, t }: ProjectItemProps) => {
 
   return (
     <div className="grid grid-cols-12 gap-4">
+      {/* Background worker tracking state changes cleanly */}
+      <RowStatusObserver fieldName="projects" index={index} />
       <div className="col-span-12 md:col-span-6">
         <CustomControlledInput
           label={t("projectTitle")}
