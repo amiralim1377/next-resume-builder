@@ -1,4 +1,4 @@
-"use colors";
+"use client";
 import { CSSProperties } from "react";
 import { cn } from "@/utils/cn";
 import { useThemeColors } from "@/provider/themeProvider/useThemeColors";
