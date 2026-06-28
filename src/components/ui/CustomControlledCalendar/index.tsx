@@ -51,7 +51,9 @@ export const CustomControlledCalendar = ({
 
         return (
           <div ref={containerRef} className="relative w-full">
-            <CustomLabel size="sm">{label}</CustomLabel>
+            <CustomLabel size="sm" className="pb-2">
+              {label}
+            </CustomLabel>
             <CustomInput
               type="text"
               readOnly
