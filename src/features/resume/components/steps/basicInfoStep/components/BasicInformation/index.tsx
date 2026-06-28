@@ -11,14 +11,8 @@ type BasicInformationProps = {
 };
 
 const BasicInformation = ({ t, lng }: BasicInformationProps) => {
-  const {
-    daysInMonthOptions,
-    maritalOptions,
-    militaryOptions,
-    sexOptions,
-    monthOptions,
-    yearOptions,
-  } = useGetBasicInfoStepData({ t, lng });
+  const { maritalOptions, militaryOptions, sexOptions } =
+    useGetBasicInfoStepData({ t, lng });
 
   return (
     <div className="grid w-full grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-12">
