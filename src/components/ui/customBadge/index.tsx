@@ -27,7 +27,7 @@ const CustomBadgeComponent = ({
       case "warning":
         return "bg-state-warning/20 text-text-warning";
       case "error":
-        return "bg-state-error/20 text-text-error";
+        return "bg-state-error/20 text-state-error";
       default:
         return "bg-disabledText text-text-secondary";
     }
