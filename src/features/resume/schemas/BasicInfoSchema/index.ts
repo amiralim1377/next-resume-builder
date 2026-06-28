@@ -82,12 +82,6 @@ export const createBasicInfoSchema = (t: TFunction<string, undefined>) => {
         message: t("emailNoPersianCharacters"),
       }),
 
-    birthday: z.object({
-      day: z.string().min(1, t("birthdayDayRequired")),
-      month: z.string().min(1, t("birthdayMonthRequired")),
-      year: z.string().min(1, t("birthdayYearRequired")),
-    }),
-
     birthDate: z
       .string()
       .min(1, { message: t("birthDateRequired") })
@@ -99,7 +93,6 @@ export const createBasicInfoSchema = (t: TFunction<string, undefined>) => {
         },
         { message: t("invalidDate") },
       )
-      // Check for future dates
       .refine((val) => new Date(val) <= new Date(), {
         message: t("birthDateFuture"),
       })

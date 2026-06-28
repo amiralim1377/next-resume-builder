@@ -18,11 +18,6 @@ export const getDefaultResumeValues = ({
     maritalStatus: "",
     email: "",
     birthDate: "",
-    birthday: {
-      day: "",
-      month: "",
-      year: "",
-    },
     mobileNumber: "",
     phone: "",
     location: {

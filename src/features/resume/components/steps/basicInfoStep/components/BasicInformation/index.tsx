@@ -67,32 +67,6 @@ const BasicInformation = ({ t, lng }: BasicInformationProps) => {
         />
       </div>
 
-      <div className="col-span-1 grid grid-cols-1 gap-4 sm:grid-cols-3 lg:col-span-12">
-        <div>
-          <CustomControlledSelect
-            options={daysInMonthOptions}
-            name="basicInfo.birthday.day"
-            label={t("birthday")}
-          />
-        </div>
-
-        <div>
-          <CustomControlledSelect
-            options={monthOptions}
-            name="basicInfo.birthday.month"
-            label={t("month")}
-          />
-        </div>
-
-        <div>
-          <CustomControlledSelect
-            options={yearOptions}
-            name="basicInfo.birthday.year"
-            label={t("year")}
-          />
-        </div>
-      </div>
-
       <div className="col-span-1 lg:col-span-6">
         <CustomControlledCalendar
           name="basicInfo.birthDate"
