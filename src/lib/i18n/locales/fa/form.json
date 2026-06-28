@@ -205,5 +205,9 @@
   "clientNameRequired": "نام کارفرما الزامی است",
   "clientNameTooLong": "نام کارفرما بیش از حد طولانی است",
   "projectMonthRequired": "ماه پروژه الزامی است",
-  "projectYearRequired": "سال پروژه الزامی است"
+  "projectYearRequired": "سال پروژه الزامی است",
+  "noEducationAddedYet": "هنوز سابقه تحصیلی اضافه نشده است",
+  "addEducationDescription": "سوابق تحصیلی خود را اضافه کنید تا رزومه شما کامل‌تر شود.",
+  "addEducation": "افزودن تحصیلات",
+  "educationEmptyDescription": "مدارک تحصیلی خود را اضافه کنید تا مسیر آموزشی‌تان برجسته شود."
 }

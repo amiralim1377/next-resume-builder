@@ -203,5 +203,9 @@
   "clientNameRequired": "Client name is required",
   "clientNameTooLong": "Client name is too long",
   "projectMonthRequired": "Project month is required",
-  "projectYearRequired": "Project year is required"
+  "projectYearRequired": "Project year is required",
+  "noEducationAddedYet": "No education history added yet",
+  "addEducationDescription": "Add your education background to make your resume stronger.",
+  "addEducation": "Add education",
+  "educationEmptyDescription": "Add your degrees to highlight your academic journey."
 }
