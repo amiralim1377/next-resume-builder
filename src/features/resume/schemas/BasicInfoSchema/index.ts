@@ -91,7 +91,6 @@ export const createBasicInfoSchema = (t: TFunction<string, undefined>) => {
     birthDate: z
       .string()
       .min(1, { message: t("birthDateRequired") })
-      // Ensure the string matches YYYY-MM-DD format
       .regex(/^\d{4}-\d{2}-\d{2}$/, { message: t("invalidDateFormat") })
       .refine(
         (val) => {
@@ -104,7 +103,6 @@ export const createBasicInfoSchema = (t: TFunction<string, undefined>) => {
       .refine((val) => new Date(val) <= new Date(), {
         message: t("birthDateFuture"),
       })
-      // Check for 120-year limit
       .refine(
         (val) => {
           const date = new Date(val);
