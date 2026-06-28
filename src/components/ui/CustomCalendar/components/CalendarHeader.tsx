@@ -8,21 +8,19 @@ function CalendarHeader({
   className,
   ...props
 }: React.HTMLAttributes<HTMLDivElement>) {
-  const { 
-    currentMonth, 
-    goToNextMonth, 
-    goToPrevMonth, 
+  const {
+    currentMonth,
+    goToNextMonth,
+    goToPrevMonth,
     goToNextYear,
     goToPrevYear,
     goToNextYearRange,
     goToPrevYearRange,
-    isRtl, 
-    locale, 
-    view, 
-    setView 
+    isRtl,
+    locale,
+    view,
+    setView,
   } = useCalendarContext();
-
-  console.log(isRtl);
 
   const title = useMemo(() => {
     if (view === "year") {
@@ -30,7 +28,7 @@ function CalendarHeader({
       const endYear = startYear + 11;
       return `${startYear} - ${endYear}`;
     }
-    
+
     const formatter = new Intl.DateTimeFormat(locale, {
       month: view === "day" ? "long" : undefined,
       year: "numeric",
@@ -71,36 +69,62 @@ function CalendarHeader({
       className={cn("mb-4 flex items-center justify-between", className)}
       {...props}
     >
-      <button
-        type="button"
-        onClick={handleNext}
-        className="hover:bg-brandHover rounded-full p-2 transition-colors focus:outline-none"
-        aria-label="Previous"
-      >
-        <span className="text-text-secondary">
-          <ArrowRight size={16} />
-        </span>
-      </button>
+      {!isRtl ? (
+        <button
+          type="button"
+          onClick={handlePrev}
+          className="hover:bg-brandHover rounded-full p-2 transition-colors focus:outline-none"
+          aria-label="Next"
+        >
+          <span className="text-text-secondary">
+            <ArrowLeft size={16} />
+          </span>
+        </button>
+      ) : (
+        <button
+          type="button"
+          onClick={handleNext}
+          className="hover:bg-brandHover rounded-full p-2 transition-colors focus:outline-none"
+          aria-label="Previous"
+        >
+          <span className="text-text-secondary">
+            <ArrowRight size={16} />
+          </span>
+        </button>
+      )}
 
       <button
         type="button"
         onClick={handleTitleClick}
-        className="text-text-primary text-sm font-semibold hover:bg-brandHover rounded px-3 py-1 transition-colors focus:outline-none"
+        className="text-text-primary hover:bg-brandHover rounded px-3 py-1 text-sm font-semibold transition-colors focus:outline-none"
         aria-live="polite"
       >
         {title}
       </button>
 
-      <button
-        type="button"
-        onClick={handlePrev}
-        className="hover:bg-brandHover rounded-full p-2 transition-colors focus:outline-none"
-        aria-label="Next"
-      >
-        <span className="text-text-secondary">
-          <ArrowLeft size={16} />
-        </span>
-      </button>
+      {!isRtl ? (
+        <button
+          type="button"
+          onClick={handleNext}
+          className="hover:bg-brandHover rounded-full p-2 transition-colors focus:outline-none"
+          aria-label="Previous"
+        >
+          <span className="text-text-secondary">
+            <ArrowRight size={16} />
+          </span>
+        </button>
+      ) : (
+        <button
+          type="button"
+          onClick={handlePrev}
+          className="hover:bg-brandHover rounded-full p-2 transition-colors focus:outline-none"
+          aria-label="Next"
+        >
+          <span className="text-text-secondary">
+            <ArrowLeft size={16} />
+          </span>
+        </button>
+      )}
     </div>
   );
 }
