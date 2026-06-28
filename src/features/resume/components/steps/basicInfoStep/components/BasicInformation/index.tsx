@@ -3,6 +3,7 @@ import { TFunction } from "i18next";
 import { useGetBasicInfoStepData } from "../../hooks/useGetBasicInfoStepData";
 import { CustomControlledInput } from "@/components/ui/CustomControlledInput";
 import { CustomControlledSelect } from "@/components/ui/CustomControlledSelect";
+import { CustomControlledCalendar } from "@/components/ui/CustomControlledCalendar";
 
 type BasicInformationProps = {
   t: TFunction<string, undefined>;
@@ -90,6 +91,15 @@ const BasicInformation = ({ t, lng }: BasicInformationProps) => {
             label={t("year")}
           />
         </div>
+      </div>
+
+      <div className="col-span-1 lg:col-span-6">
+        <CustomControlledCalendar
+          name="basicInfo.birthDate"
+          label={t("birthday")}
+          className="my-4"
+          placeholder={t("dateOfBirthPlaceholder")}
+        />
       </div>
     </div>
   );

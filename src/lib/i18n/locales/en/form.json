@@ -207,5 +207,6 @@
   "noEducationAddedYet": "No education history added yet",
   "addEducationDescription": "Add your education background to make your resume stronger.",
   "addEducation": "Add education",
-  "educationEmptyDescription": "Add your degrees to highlight your academic journey."
+  "educationEmptyDescription": "Add your degrees to highlight your academic journey.",
+  "dateOfBirthPlaceholder": "Select your birth date"
 }

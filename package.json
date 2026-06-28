@@ -21,6 +21,7 @@
   },
   "dependencies": {
     "@hookform/resolvers": "^5.4.0",
+    "@internationalized/date": "^3.12.2",
     "@tiptap/extension-character-count": "^3.26.0",
     "@tiptap/extension-history": "^3.26.0",
     "@tiptap/extension-link": "^3.26.0",
