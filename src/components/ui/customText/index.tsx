@@ -23,7 +23,7 @@ const CustomText = ({
 }: CustomTextProps) => {
   return (
     <p
-      className={cn("font-medium,", className)}
+      className={cn("font-medium", className)}
       dir={isNumber ? "ltr" : undefined}
       onClick={onClick}
       style={{
