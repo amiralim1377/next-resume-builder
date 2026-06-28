@@ -49,6 +49,8 @@ export const CustomControlledCalendar = ({
             ).format(dateValue.toDate(getLocalTimeZone()))
           : "";
 
+        const isValid = !fieldState.invalid && Boolean(field.value);
+
         return (
           <div ref={containerRef} className="relative w-full">
             <CustomLabel size="sm" className="pb-2">
@@ -57,6 +59,8 @@ export const CustomControlledCalendar = ({
             <CustomInput
               type="text"
               readOnly
+              isValid={isValid}
+              error={fieldState.error?.message}
               value={displayValue}
               placeholder={placeholder}
               onClick={() => setIsOpen(!isOpen)}
@@ -77,12 +81,6 @@ export const CustomControlledCalendar = ({
                   <Calendar.Content />
                 </Calendar>
               </div>
-            )}
-
-            {fieldState.error && (
-              <span className="text-state-error text-sm font-medium">
-                {fieldState.error.message}
-              </span>
             )}
           </div>
         );

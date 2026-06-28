@@ -17,6 +17,7 @@ export const getDefaultResumeValues = ({
     militaryServiceStatus: "",
     maritalStatus: "",
     email: "",
+    birthDate: "",
     birthday: {
       day: "",
       month: "",
