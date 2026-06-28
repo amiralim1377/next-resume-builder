@@ -24,7 +24,6 @@ export const CustomControlledCalendar = ({
   placeholder,
 }: CustomControlledCalendarProps) => {
   const { control } = useFormContext<ResumeFormValues>();
-  const { i18n } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const { lng } = useLang();
@@ -41,18 +40,19 @@ export const CustomControlledCalendar = ({
         const dateValue = field.value ? parseDate(field.value as string) : null;
 
         const displayValue = dateValue
-          ? new Intl.DateTimeFormat(
-              i18n.language === "fa" ? "fa-IR" : "en-US",
-              {
-                dateStyle: "long",
-              },
-            ).format(dateValue.toDate(getLocalTimeZone()))
+          ? new Intl.DateTimeFormat(lng === "fa" ? "fa-IR" : "en-US", {
+              dateStyle: "long",
+            }).format(dateValue.toDate(getLocalTimeZone()))
           : "";
 
         const isValid = !fieldState.invalid && Boolean(field.value);
 
+        console.log(dateValue);
+
+        console.log(fieldState.error?.message);
+
         return (
-          <div ref={containerRef} className="relative w-full">
+          <div className="relative w-full">
             <CustomLabel size="sm" className="pb-2">
               {label}
             </CustomLabel>
@@ -70,6 +70,7 @@ export const CustomControlledCalendar = ({
             {isOpen && (
               <div className="absolute z-50 w-full">
                 <Calendar
+                  ref={containerRef}
                   value={dateValue}
                   calendarSystem={calendarSystem}
                   onChange={(date) => {
