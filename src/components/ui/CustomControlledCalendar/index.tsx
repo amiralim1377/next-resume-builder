@@ -1,12 +1,10 @@
 import { Controller, FieldPath, useFormContext } from "react-hook-form";
 import { parseDate, getLocalTimeZone } from "@internationalized/date";
-import { useTranslation } from "react-i18next";
 import { ResumeFormValues } from "@/features/resume/schemas/resume.schema";
 import { Calendar } from "../CustomCalendar/Calendar";
 import { useRef, useState } from "react";
 import { useOnClickOutside } from "./hooks/useOnClickOutside";
 import { CustomInput } from "../CustomInput";
-import { CustomLabel } from "../CustomLabel";
 import { useLang } from "@/provider/lngProvider";
 
 type CustomControlledCalendarProps = {
@@ -15,13 +13,14 @@ type CustomControlledCalendarProps = {
   placeholder?: string;
 } & Omit<
   React.ComponentProps<typeof Calendar>,
-  "value" | "onChange" | "children"
+  "name" | "label" | "error" | "value" | "onChange" | "onBlur" | "ref"
 >;
 
 export const CustomControlledCalendar = ({
   name,
   label,
   placeholder,
+  ...props
 }: CustomControlledCalendarProps) => {
   const { control } = useFormContext<ResumeFormValues>();
   const [isOpen, setIsOpen] = useState(false);
@@ -37,7 +36,9 @@ export const CustomControlledCalendar = ({
       control={control}
       name={name}
       render={({ field, fieldState }) => {
-        const dateValue = field.value ? parseDate(field.value as string) : null;
+        const { value, onChange, onBlur, ref, ...safeField } = field;
+
+        const dateValue = value ? parseDate(value as string) : null;
 
         const displayValue = dateValue
           ? new Intl.DateTimeFormat(lng === "fa" ? "fa-IR" : "en-US", {
@@ -47,24 +48,26 @@ export const CustomControlledCalendar = ({
 
         const isValid = !fieldState.invalid && Boolean(field.value);
 
-        console.log(dateValue);
-
-        console.log(fieldState.error?.message);
-
         return (
           <div className="relative w-full">
-            <CustomLabel size="sm" className="pb-2">
-              {label}
-            </CustomLabel>
             <CustomInput
               type="text"
               readOnly
+              label={label}
               isValid={isValid}
               error={fieldState.error?.message}
               value={displayValue}
               placeholder={placeholder}
+              onChange={(date) => {
+                field.onChange(date.toString());
+                setIsOpen(false);
+              }}
               onClick={() => setIsOpen(!isOpen)}
+              onBlur={onBlur}
               className="w-full cursor-pointer rounded-md"
+              ref={ref}
+              {...safeField}
+              {...props}
             />
 
             {isOpen && (
