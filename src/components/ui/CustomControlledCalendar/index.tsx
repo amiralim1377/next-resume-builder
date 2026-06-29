@@ -6,11 +6,13 @@ import { useRef, useState } from "react";
 import { useOnClickOutside } from "./hooks/useOnClickOutside";
 import { CustomInput } from "../CustomInput";
 import { useLang } from "@/provider/lngProvider";
+import { boolean } from "zod";
 
 type CustomControlledCalendarProps = {
   name: FieldPath<ResumeFormValues>;
   label: string;
   placeholder?: string;
+  disabled?: boolean;
 } & Omit<
   React.ComponentProps<typeof Calendar>,
   | "name"
@@ -27,16 +29,14 @@ export const CustomControlledCalendar = ({
   name,
   label,
   placeholder,
+  disabled,
   ...props
 }: CustomControlledCalendarProps) => {
   const { control } = useFormContext<ResumeFormValues>();
   const [isOpen, setIsOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
-  const { lng } = useLang();
 
   useOnClickOutside(containerRef, () => setIsOpen(false));
-
-  // const calendarSystem = lng === "fa" ? "persian" : "gregorian";
 
   return (
     <Controller
@@ -47,23 +47,25 @@ export const CustomControlledCalendar = ({
 
         const dateValue = value ? parseDate(value as string) : null;
 
-        // Format display value based on calendarSystem prop
-        const displayLocale = props.calendarSystem === "persian" ? "fa-IR" : "en-US";
-        
+        const displayLocale =
+          props.calendarSystem === "persian" ? "fa-IR" : "en-US";
+
         const displayValue = dateValue
           ? new Intl.DateTimeFormat(displayLocale, {
               dateStyle: "long",
-              calendar: props.calendarSystem === "persian" ? "persian" : "gregory",
+              calendar:
+                props.calendarSystem === "persian" ? "persian" : "gregory",
             }).format(dateValue.toDate(getLocalTimeZone()))
           : "";
 
-        const isValid = !fieldState.invalid && Boolean(value);
+        const isValid = disabled || (!fieldState.invalid && Boolean(value));
 
         return (
           <div className="relative w-full">
             <CustomInput
               type="text"
               readOnly
+              disabled={disabled}
               label={label}
               isValid={isValid}
               error={fieldState.error?.message}
