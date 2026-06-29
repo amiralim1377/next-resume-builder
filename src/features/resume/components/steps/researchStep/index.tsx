@@ -32,8 +32,7 @@ function ResearchStep() {
   const onRowAdd = () => {
     append({
       status: "empty",
-      publicationMonth: "",
-      publicationYear: "",
+      publicationDate: "",
       publisher: "",
       researchTitle: "",
       researchUrl: "",
