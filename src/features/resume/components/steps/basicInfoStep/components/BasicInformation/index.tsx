@@ -4,6 +4,7 @@ import { useGetBasicInfoStepData } from "../../hooks/useGetBasicInfoStepData";
 import { CustomControlledInput } from "@/components/ui/CustomControlledInput";
 import { CustomControlledSelect } from "@/components/ui/CustomControlledSelect";
 import { CustomControlledCalendar } from "@/components/ui/CustomControlledCalendar";
+import { CalendarType } from "@/types";
 
 type BasicInformationProps = {
   t: TFunction<string, undefined>;
@@ -13,6 +14,8 @@ type BasicInformationProps = {
 const BasicInformation = ({ t, lng }: BasicInformationProps) => {
   const { maritalOptions, militaryOptions, sexOptions } =
     useGetBasicInfoStepData({ t, lng });
+
+  const calendarType: CalendarType = lng === "fa" ? "persian" : "gregorian";
 
   return (
     <div className="grid w-full grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-12">
@@ -38,6 +41,7 @@ const BasicInformation = ({ t, lng }: BasicInformationProps) => {
           label={t("birthday")}
           className=""
           placeholder={t("dateOfBirthPlaceholder")}
+          calendarSystem={calendarType}
         />
       </div>
 
