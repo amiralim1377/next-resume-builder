@@ -36,7 +36,7 @@ const BasicInformation = ({ t, lng }: BasicInformationProps) => {
         <CustomControlledCalendar
           name="basicInfo.birthDate"
           label={t("birthday")}
-          className="my-4"
+          className=""
           placeholder={t("dateOfBirthPlaceholder")}
         />
       </div>
