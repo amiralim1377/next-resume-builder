@@ -25,8 +25,7 @@ const DEFAULT_COURSE_CERTIFICATION: ResumeFormValues["coursesAndCertifications"]
   {
     coursesAndCertificationsName: "",
     instituteName: "",
-    certificateIssueMonth: "",
-    certificateIssueYear: "",
+    certificateIssueDate: "",
     certificateUrl: "",
   };
 

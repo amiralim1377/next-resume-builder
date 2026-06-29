@@ -42,20 +42,20 @@ const ResearchItem = ({ index, lng, onDelete, t }: ResearchItemProps) => {
         />
       </div>
 
-      {/* Related Link */}
-      <div className="col-span-6">
-        <CustomControlledInput
-          label={t("researchUrl")}
-          name={`research.${index}.researchUrl`}
-        />
-      </div>
-
       {/*publicationDate*/}
       <div className="col-span-12 md:col-span-6">
         <CustomControlledCalendar
           name={`research.${index}.publicationDate`}
           label={t("publicationDate")}
           calendarSystem={calendarType}
+        />
+      </div>
+
+      {/* Related Link */}
+      <div className="col-span-6">
+        <CustomControlledInput
+          label={t("researchUrl")}
+          name={`research.${index}.researchUrl`}
         />
       </div>
 

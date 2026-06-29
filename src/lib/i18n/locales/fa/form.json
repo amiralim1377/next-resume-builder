@@ -223,5 +223,6 @@
   "addEducationDescription": "سوابق تحصیلی خود را اضافه کنید تا رزومه شما کامل‌تر شود.",
   "addEducation": "افزودن تحصیلات",
   "educationEmptyDescription": "مدارک تحصیلی خود را اضافه کنید تا مسیر آموزشی‌تان برجسته شود.",
-  "dateOfBirthPlaceholder": "تاریخ تولد خود را انتخاب کنید"
+  "dateOfBirthPlaceholder": "تاریخ تولد خود را انتخاب کنید",
+  "certificateIssueDate": "تاریخ دریافت گواهی"
 }
