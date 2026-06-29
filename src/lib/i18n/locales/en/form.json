@@ -102,6 +102,8 @@
   "entryYearRequired": "Entry year is required",
   "educationEntryDate": "Start Date",
   "educationEntryDatePlaceholder": "Select education start date",
+  "graduationDate": "Graduation Date",
+  "graduationDatePlaceholder": "Select graduation date",
   "graduationMonth": "Graduation Month",
   "graduationMonthRequired": "Graduation month is required",
   "graduationYear": "Graduation Year",

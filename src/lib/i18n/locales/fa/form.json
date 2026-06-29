@@ -102,6 +102,8 @@
   "entryYear": "سال ورود",
   "entryYearRequired": "سال ورود الزامی است",
   "educationEntryDatePlaceholder": "تاریخ شروع تحصیل را انتخاب کنید",
+  "graduationDate": "تاریخ فارغ‌التحصیلی",
+  "graduationDatePlaceholder": "تاریخ فارغ‌التحصیلی را انتخاب کنید",
   "educationEntryDate": "تاریخ شروع تحصیل",
   "graduationMonth": "ماه فراغت از تحصیل",
   "graduationMonthRequired": "ماه فراغت از تحصیل الزامی است",
