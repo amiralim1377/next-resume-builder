@@ -18,8 +18,12 @@ export function useCalendarState(
   system: CalendarType = "persian",
 ): CalendarState & CalendarActions {
   const { lng } = useLang();
+  
+  // Use locale based on calendar system, not language
   const locale =
-    lng === "fa" ? CALENDAR_LOCALES.PERSIAN : CALENDAR_LOCALES.GREGORIAN;
+    system === "persian" ? CALENDAR_LOCALES.PERSIAN : CALENDAR_LOCALES.GREGORIAN;
+  
+  // RTL should still be based on language for UI direction
   const isRtl = lng === "fa";
 
   const activeCalendar = createCalendar(system as CalendarIdentifier);

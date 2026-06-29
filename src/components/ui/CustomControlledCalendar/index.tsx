@@ -47,9 +47,13 @@ export const CustomControlledCalendar = ({
 
         const dateValue = value ? parseDate(value as string) : null;
 
+        // Format display value based on calendarSystem prop
+        const displayLocale = props.calendarSystem === "persian" ? "fa-IR" : "en-US";
+        
         const displayValue = dateValue
-          ? new Intl.DateTimeFormat(lng === "fa" ? "fa-IR" : "en-US", {
+          ? new Intl.DateTimeFormat(displayLocale, {
               dateStyle: "long",
+              calendar: props.calendarSystem === "persian" ? "persian" : "gregory",
             }).format(dateValue.toDate(getLocalTimeZone()))
           : "";
 
