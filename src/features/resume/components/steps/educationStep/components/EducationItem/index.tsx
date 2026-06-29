@@ -12,6 +12,7 @@ import { ResumeFormValues } from "@/features/resume/schemas/resume.schema";
 import { RowStatusObserver } from "@/features/resume/components/RowStatusObserver";
 import { useGetEducationInfoStepData } from "../../hooks/useGetEducationInfoStepData";
 import { EducationSummary } from "../EducationSummary";
+import { CustomControlledCalendar } from "@/components/ui/CustomControlledCalendar";
 
 type EducationItemProps = {
   t: TFunction<string, undefined>;
@@ -27,8 +28,11 @@ const EducationItemComponent = ({
   onDelete,
 }: EducationItemProps) => {
   const [calendarType, setCalendarType] = useState<CalendarType>(
-    lng === "en" ? "gregorian" : "jalali",
+    lng === "en" ? "gregorian" : "persian",
   );
+
+  console.log(calendarType);
+
   const { setValue } = useFormContext<ResumeFormValues>();
   const countryWatch = useWatch({
     name: `education.${index}.country`,
@@ -154,20 +158,14 @@ const EducationItemComponent = ({
         )}
       </div>
 
-      {/* Entry Month */}
       <div className="col-span-12 md:col-span-6">
-        <CustomControlledSelect
-          name={`education.${index}.entryMonth`}
-          label={t("entryMonth")}
-          options={monthOptions}
-        />
-      </div>
-
-      {/* Entry Year */}
-      <div className="col-span-12 md:col-span-6">
-        <CustomControlledInput
-          name={`education.${index}.entryYear`}
-          label={t("entryYear")}
+        <CustomControlledCalendar
+          name={`education.${index}.entryDate`}
+          label={t("educationEntryDate")}
+          className=""
+          placeholder={t("educationEntryDatePlaceholder")}
+          calendarSystem={calendarType}
+          // calendarSystem="gregorian"
         />
       </div>
 
@@ -175,8 +173,8 @@ const EducationItemComponent = ({
       <div className="col-span-12">
         <CustomRadio.Group className="flex flex-row">
           <CustomRadio
-            checked={calendarType === "jalali"}
-            onChange={() => setCalendarType("jalali")}
+            checked={calendarType === "persian"}
+            onChange={() => setCalendarType("persian")}
             label={t("solarHijri")}
           />
           <CustomRadio
