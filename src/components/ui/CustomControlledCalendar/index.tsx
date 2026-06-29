@@ -13,7 +13,14 @@ type CustomControlledCalendarProps = {
   placeholder?: string;
 } & Omit<
   React.ComponentProps<typeof Calendar>,
-  "name" | "label" | "error" | "value" | "onChange" | "onBlur" | "ref"
+  | "name"
+  | "label"
+  | "error"
+  | "value"
+  | "onChange"
+  | "onBlur"
+  | "ref"
+  | "children"
 >;
 
 export const CustomControlledCalendar = ({
@@ -29,14 +36,14 @@ export const CustomControlledCalendar = ({
 
   useOnClickOutside(containerRef, () => setIsOpen(false));
 
-  const calendarSystem = lng === "fa" ? "persian" : "gregorian";
+  // const calendarSystem = lng === "fa" ? "persian" : "gregorian";
 
   return (
     <Controller
       control={control}
       name={name}
       render={({ field, fieldState }) => {
-        const { value, onChange, onBlur, ref, ...safeField } = field;
+        const { value, onChange, onBlur, ref } = field;
 
         const dateValue = value ? parseDate(value as string) : null;
 
@@ -46,7 +53,7 @@ export const CustomControlledCalendar = ({
             }).format(dateValue.toDate(getLocalTimeZone()))
           : "";
 
-        const isValid = !fieldState.invalid && Boolean(field.value);
+        const isValid = !fieldState.invalid && Boolean(value);
 
         return (
           <div className="relative w-full">
@@ -58,28 +65,22 @@ export const CustomControlledCalendar = ({
               error={fieldState.error?.message}
               value={displayValue}
               placeholder={placeholder}
-              onChange={(date) => {
-                field.onChange(date.toString());
-                setIsOpen(false);
-              }}
               onClick={() => setIsOpen(!isOpen)}
               onBlur={onBlur}
               className="w-full cursor-pointer rounded-md"
               ref={ref}
-              {...safeField}
-              {...props}
             />
 
             {isOpen && (
-              <div className="absolute z-50 w-full">
+              <div className="absolute z-50 mt-1 w-full">
                 <Calendar
                   ref={containerRef}
                   value={dateValue}
-                  calendarSystem={calendarSystem}
                   onChange={(date) => {
-                    field.onChange(date.toString());
+                    onChange(date.toString());
                     setIsOpen(false);
                   }}
+                  {...props}
                 >
                   <Calendar.Header />
                   <Calendar.Content />
