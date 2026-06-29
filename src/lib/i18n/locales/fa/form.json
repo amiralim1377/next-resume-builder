@@ -61,6 +61,8 @@
   "birthdayDayRequired": "روز تولد الزامی است",
   "birthdayMonthRequired": "ماه تولد الزامی است",
   "birthdayYearRequired": "سال تولد الزامی است",
+  "birthDateFuture": "تاریخ تولد نمی‌تواند در آینده باشد",
+  "birthDateRequired": "تاریخ تولد الزامی است",
   "militaryServiceStatusMessage": "وضعیت سربازی خود را انتخاب نمایید",
   "maritalStatusMessage": "وضعیت تاهل خود را انتخاب نمایید",
   "invalidMobile": "شماره تلفن همراه معتبر نیست",

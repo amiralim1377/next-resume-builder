@@ -61,6 +61,8 @@
   "birthdayDayRequired": "Please enter your birth day",
   "birthdayMonthRequired": "Please enter your birth month",
   "birthdayYearRequired": "Please enter your birth year",
+  "birthDateRequired": "Birth date is required",
+  "birthDateFuture": "Birth date cannot be in the future",
   "militaryServiceStatusMessage": "Please select your military service status",
   "maritalStatusMessage": "Please select your marital status",
   "invalidMobile": "the mobile phone number is not valid",
