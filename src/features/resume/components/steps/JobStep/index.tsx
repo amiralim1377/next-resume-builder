@@ -35,10 +35,8 @@ function JobStep() {
       country: "",
       province: "",
       city: "",
-      entryMonth: "",
-      entryYear: "",
-      employmentEndMonth: "",
-      employmentEndYear: "",
+      entryDate: "",
+      employmentEndYearDate: "",
       isCurrentlyWorkingHere: false,
       summary: {
         type: "",
