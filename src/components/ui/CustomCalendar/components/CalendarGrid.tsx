@@ -11,7 +11,7 @@ import { CalendarCell } from "./CalendarCell";
 export function CalendarGrid({
   className,
 }: React.HTMLAttributes<HTMLDivElement>) {
-  const { currentMonth, selectedDate, setSelectedDate, locale } =
+  const { currentMonth, selectedDate, setSelectedDate, locale, calendarSystem } =
     useCalendarContext();
 
   const days = useMemo(
@@ -51,6 +51,7 @@ export function CalendarGrid({
             isSelected={selectedDate ? isSameDay(date, selectedDate) : false}
             isOutsideMonth={!isSameMonth(date, currentMonth)}
             locale={locale}
+            calendarSystem={calendarSystem}
             onSelect={setSelectedDate}
           />
         ))}

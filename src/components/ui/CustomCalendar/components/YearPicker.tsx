@@ -3,7 +3,7 @@ import { useCalendarContext } from "../context/CalendarContext";
 import { cn } from "@/utils/cn";
 
 export function YearPicker() {
-  const { currentMonth, setCurrentMonth, setView, selectedDate } =
+  const { currentMonth, setCurrentMonth, setView, selectedDate, calendarSystem } =
     useCalendarContext();
 
   const years = useMemo(() => {
@@ -18,6 +18,14 @@ export function YearPicker() {
 
   const currentYear = currentMonth.year;
   const selectedYear = selectedDate?.year;
+
+  // Use English numerals for Gregorian calendar
+  const formatYear = (year: number) => {
+    if (calendarSystem === "gregorian") {
+      return year.toLocaleString("en-US", { useGrouping: false });
+    }
+    return year.toString();
+  };
 
   return (
     <div className="grid grid-cols-3 gap-2 p-2">
@@ -38,7 +46,7 @@ export function YearPicker() {
               !isSelected && !isCurrent && "text-text-secondary",
             )}
           >
-            {year}
+            {formatYear(year)}
           </button>
         );
       })}

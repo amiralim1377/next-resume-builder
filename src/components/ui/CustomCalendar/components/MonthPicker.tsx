@@ -4,7 +4,7 @@ import { useCalendarContext } from "../context/CalendarContext";
 import { cn } from "@/utils/cn";
 
 export function MonthPicker() {
-  const { currentMonth, setCurrentMonth, setView, locale, selectedDate } =
+  const { currentMonth, setCurrentMonth, setView, locale, calendarSystem, selectedDate } =
     useCalendarContext();
 
   const months = useMemo(() => {

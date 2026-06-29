@@ -20,21 +20,28 @@ function CalendarHeader({
     locale,
     view,
     setView,
+    calendarSystem,
   } = useCalendarContext();
 
   const title = useMemo(() => {
     if (view === "year") {
       const startYear = Math.floor(currentMonth.year / 12) * 12;
       const endYear = startYear + 11;
+      
+      // Use English numerals for Gregorian calendar
+      if (calendarSystem === "gregorian") {
+        return `${startYear.toLocaleString("en-US", { useGrouping: false })} - ${endYear.toLocaleString("en-US", { useGrouping: false })}`;
+      }
       return `${startYear} - ${endYear}`;
     }
 
     const formatter = new Intl.DateTimeFormat(locale, {
       month: view === "day" ? "long" : undefined,
       year: "numeric",
+      numberingSystem: calendarSystem === "gregorian" ? "latn" : undefined,
     });
     return formatter.format(currentMonth.toDate(getLocalTimeZone()));
-  }, [currentMonth, locale, view]);
+  }, [currentMonth, locale, view, calendarSystem]);
 
   const handleTitleClick = () => {
     if (view === "day") {

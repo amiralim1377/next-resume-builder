@@ -8,15 +8,29 @@ The CustomCalendar component now supports three view modes:
 
 ## Key Features
 
-### Calendar System Support
+### 1. Calendar System Support with Proper Numeral Formatting
 The calendar respects the `calendarSystem` prop to determine:
 - **Calendar type**: Persian (Jalali) or Gregorian
 - **Locale formatting**: Persian dates (fa-IR) or Gregorian dates (en-US)
+- **Numeral system**: English numerals (1,2,3) for Gregorian, locale numerals for Persian
 - **Month/year calculations**: Based on the selected calendar system
 
-**Important**: The UI direction (RTL/LTR) is still determined by the language setting, while the calendar system determines the actual date calculations and formatting.
+**Important**: 
+- The UI direction (RTL/LTR) is determined by the language setting
+- The numeral system is determined by the calendar system
+- Gregorian calendar always shows English numerals (1, 2, 3...)
+- Persian calendar shows Persian numerals (۱، ۲، ۳...)
 
-### 1. Clickable Header
+#### Numeral Display Examples:
+
+| Language | calendarSystem | Day Numbers | Year | Example Display |
+|----------|---------------|-------------|------|-----------------|
+| Persian (fa) | "persian" | ۱، ۲، ۳ | ۱۴۰۳ | فروردین ۱۴۰۳ |
+| Persian (fa) | "gregorian" | 1, 2, 3 | 2024 | January 2024 |
+| English (en) | "persian" | ۱، ۲، ۳ | ۱۴۰۳ | Farvardin 1403 |
+| English (en) | "gregorian" | 1, 2, 3 | 2024 | January 2024 |
+
+### 2. Clickable Header
 Click on the calendar header title to navigate between views:
 - Click on "Month Year" (e.g., "January 2024") → Shows Month View
 - Click on "Year" (e.g., "2024") → Shows Year View
@@ -80,6 +94,7 @@ function MyComponent() {
 - Uses Persian/Jalali calendar calculations
 - Month names: فروردین, اردیبهشت, خرداد, etc.
 - Year format: 1403, 1404, etc.
+- **Numerals**: Persian numerals (۱۲۳۴۵۶۷۸۹۰)
 - Locale: fa-IR
 - RTL direction: Based on language setting
 
@@ -87,6 +102,7 @@ function MyComponent() {
 - Uses Gregorian calendar calculations
 - Month names: January, February, March, etc.
 - Year format: 2024, 2025, etc.
+- **Numerals**: English numerals (1234567890) - Always, regardless of language
 - Locale: en-US
 - RTL direction: Based on language setting
 

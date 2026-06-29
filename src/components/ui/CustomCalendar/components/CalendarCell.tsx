@@ -6,12 +6,14 @@ import {
   getLocalTimeZone,
 } from "@internationalized/date";
 import { cn } from "@/utils/cn";
+import { CalendarType } from "@/types";
 
 interface CalendarCellProps {
   date: CalendarDate;
   isSelected: boolean;
   isOutsideMonth: boolean;
   locale: string;
+  calendarSystem: CalendarType;
   onSelect: (date: CalendarDate) => void;
 }
 
@@ -20,12 +22,18 @@ export const CalendarCell = memo(function CalendarCell({
   isSelected,
   isOutsideMonth,
   locale,
+  calendarSystem,
   onSelect,
 }: CalendarCellProps) {
   const isToday = isSameDay(date, today(getLocalTimeZone()));
-  const dayNumber = new Intl.DateTimeFormat(locale, { day: "numeric" }).format(
-    date.toDate(getLocalTimeZone()),
-  );
+
+  // Use English numerals for Gregorian calendar, locale numerals for Persian
+  const numberLocale = calendarSystem === "gregorian" ? "en-US" : locale;
+
+  const dayNumber = new Intl.DateTimeFormat(numberLocale, {
+    day: "numeric",
+    numberingSystem: calendarSystem === "gregorian" ? "latn" : undefined,
+  }).format(date.toDate(getLocalTimeZone()));
 
   return (
     <button
