@@ -81,8 +81,8 @@ export const createEducationSchema = (t: TFunction<string, undefined>) => {
     city: z.string().min(1, { message: t("cityRequired") }),
 
     // Timeline
-    entryDate: z.date({
-      message: t("entryDateRequired"),
+    entryDate: z.string().min(1, {
+      message: t("graduationDateRequired"),
     }),
 
     graduationDate: z.string().min(1, {
