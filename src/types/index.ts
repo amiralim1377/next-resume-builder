@@ -1,1 +1,1 @@
-export type CalendarType = "jalali" | "gregorian";
+export type CalendarType = "persian" | "gregorian";
