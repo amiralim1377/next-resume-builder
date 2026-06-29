@@ -1,14 +1,13 @@
 import { CustomControlledInput } from "@/components/ui/CustomControlledInput";
-import { CustomControlledSelect } from "@/components/ui/CustomControlledSelect";
 import { Language } from "@/lib/i18n/settings";
 import { CalendarType } from "@/types";
 import { TFunction } from "i18next";
 import { useState } from "react";
 import { CustomRadio } from "@/components/ui/CustomRadio";
-import { useGetSkillsInfoStepData } from "../../../SkillsStep/hooks/useGetSkillsInfoStepData";
 import { CustomButton } from "@/components/ui/CustomButton";
 import { ProjectSummary } from "../ProjectSummary";
 import { RowStatusObserver } from "@/features/resume/components/RowStatusObserver";
+import { CustomControlledCalendar } from "@/components/ui/CustomControlledCalendar";
 
 type ProjectItemProps = {
   index: number;
@@ -21,8 +20,6 @@ const ProjectItem = ({ index, lng, onDelete, t }: ProjectItemProps) => {
   const [calendarType, setCalendarType] = useState<CalendarType>(
     lng === "en" ? "gregorian" : "persian",
   );
-
-  const { monthOptions } = useGetSkillsInfoStepData({ calendarType, lng });
 
   return (
     <div className="grid grid-cols-12 gap-4">
@@ -42,27 +39,18 @@ const ProjectItem = ({ index, lng, onDelete, t }: ProjectItemProps) => {
         />
       </div>
 
-      <div className="col-span-12">
+      <div className="col-span-12 md:col-span-6">
+        <CustomControlledCalendar
+          name={`projects.${index}.projectDate`}
+          label={t("projectDate")}
+          calendarSystem={calendarType}
+        />
+      </div>
+
+      <div className="col-span-6">
         <CustomControlledInput
           label={t("projectUrl")}
-          placeholder={t("projectUrl")}
           name={`projects.${index}.projectUrl`}
-        />
-      </div>
-
-      <div className="col-span-12 md:col-span-6">
-        <CustomControlledSelect
-          name={`projects.${index}.projectMonth`}
-          label={t("date")}
-          options={monthOptions}
-        />
-      </div>
-
-      <div className="col-span-12 md:col-span-6">
-        <CustomControlledInput
-          name={`projects.${index}.projectYear`}
-          label={t("year")}
-          placeholder={t("projectYear")}
         />
       </div>
 

@@ -33,16 +33,15 @@ function ProjectsStep() {
 
   const onRowAdd = () => {
     append({
+      projectTitle: "",
       clientName: "",
+      projectDate: "",
+      projectUrl: "",
+      status: "empty",
       summary: {
         type: "",
         content: [],
       },
-      projectMonth: "",
-      projectTitle: "",
-      projectUrl: "",
-      projectYear: "",
-      status: "empty",
     });
   };
 

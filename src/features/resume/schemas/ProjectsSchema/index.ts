@@ -20,8 +20,7 @@ export const createProjectsSchema = (t: TFunction<string, undefined>) => {
     projectTitle: z.string(),
     clientName: z.string(),
     projectUrl: z.string(),
-    projectMonth: z.string(),
-    projectYear: z.string(),
+    projectDate: z.string(),
     summary: summarySchema,
   });
 
@@ -48,17 +47,10 @@ export const createProjectsSchema = (t: TFunction<string, undefined>) => {
       .url({ message: t("invalidUrl") })
       .or(z.literal("")),
 
-    projectMonth: z
+    projectDate: z
       .string()
       .trim()
-      .min(1, { message: t("projectMonthRequired") })
-      .or(z.literal("")),
-
-    projectYear: z
-      .string()
-      .trim()
-      .regex(YEAR_REGEX, { message: t("invalidYearFormat") })
-      .or(z.literal("")),
+      .min(1, { message: t("projectDateRequired") }),
 
     summary: summarySchema,
   });
