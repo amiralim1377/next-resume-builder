@@ -26,7 +26,7 @@ export function Calendar({
   ref,
   value,
   onChange,
-  calendarSystem = "gregorian",
+  calendarSystem = "persian",
   className,
   children,
   ...props
