@@ -6,7 +6,15 @@ The CustomCalendar component now supports three view modes:
 - **Month View**: Grid of 12 months for quick month selection
 - **Year View**: Grid of 12 years for quick year selection
 
-## Features
+## Key Features
+
+### Calendar System Support
+The calendar respects the `calendarSystem` prop to determine:
+- **Calendar type**: Persian (Jalali) or Gregorian
+- **Locale formatting**: Persian dates (fa-IR) or Gregorian dates (en-US)
+- **Month/year calculations**: Based on the selected calendar system
+
+**Important**: The UI direction (RTL/LTR) is still determined by the language setting, while the calendar system determines the actual date calculations and formatting.
 
 ### 1. Clickable Header
 Click on the calendar header title to navigate between views:
@@ -39,7 +47,7 @@ function MyComponent() {
     <Calendar 
       value={selectedDate}
       onChange={handleDateChange}
-      calendarSystem="gregorian"
+      calendarSystem="gregorian" // or "persian"
     >
       <Calendar.Header />
       <Calendar.Content />
@@ -47,6 +55,40 @@ function MyComponent() {
   );
 }
 ```
+
+### With CustomControlledCalendar
+
+```tsx
+<CustomControlledCalendar
+  name="educationDate"
+  label="Entry Date"
+  placeholder="Select date"
+  calendarSystem="persian" // Calendar will use Persian/Jalali system
+/>
+
+<CustomControlledCalendar
+  name="graduationDate"
+  label="Graduation Date"
+  placeholder="Select date"
+  calendarSystem="gregorian" // Calendar will use Gregorian system
+/>
+```
+
+## Calendar System Behavior
+
+### Persian Calendar System (`calendarSystem="persian"`)
+- Uses Persian/Jalali calendar calculations
+- Month names: فروردین, اردیبهشت, خرداد, etc.
+- Year format: 1403, 1404, etc.
+- Locale: fa-IR
+- RTL direction: Based on language setting
+
+### Gregorian Calendar System (`calendarSystem="gregorian"`)
+- Uses Gregorian calendar calculations
+- Month names: January, February, March, etc.
+- Year format: 2024, 2025, etc.
+- Locale: en-US
+- RTL direction: Based on language setting
 
 ## Components
 
