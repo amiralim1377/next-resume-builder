@@ -34,7 +34,7 @@ export const AccordionContent = ({
           animate={{ height: "auto", opacity: 1 }}
           exit={{ height: 0, opacity: 0 }}
           transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-          className="overflow-hidden text-sm"
+          className="relative overflow-visible text-sm"
           {...props}
         >
           <div className={cn("pt-0 pb-4", className)}>{children}</div>
