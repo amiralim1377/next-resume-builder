@@ -84,16 +84,10 @@ export const createEducationSchema = (t: TFunction<string, undefined>) => {
     entryDate: z.date({
       message: t("entryDateRequired"),
     }),
-    graduationMonth: z
-      .string()
-      .min(1, { message: t("graduationMonthRequired") }),
 
-    graduationYear: z
-      .string()
-      .min(1, { message: t("graduationYearRequired") })
-      .regex(YEAR_REGEX, {
-        message: t("invalidYearFormat"),
-      }),
+    graduationDate: z.string().min(1, {
+      message: t("graduationDateRequired"),
+    }),
 
     isStudyingNow: z.boolean(),
     summary: summarySchema,
