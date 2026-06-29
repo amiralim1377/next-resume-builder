@@ -28,6 +28,13 @@ export const CustomFormStepper = ({ items, onItemClick, className }: Props) => {
           onClick={() => onItemClick?.(index)}
           role="button"
           tabIndex={0}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" || e.key === " ") {
+              e.preventDefault();
+              onItemClick?.(index);
+            }
+          }}
+          aria-label={`Step ${item.stepNumber}: ${item.title}`}
         >
           {index !== items.length - 1 && (
             <ConnectorLine isCompleted={item.isCompleted} />
@@ -36,10 +43,12 @@ export const CustomFormStepper = ({ items, onItemClick, className }: Props) => {
           <div
             className={cn(
               "z-10 flex h-8 w-8 items-center justify-center rounded-full border-2 transition-colors",
-              item.isCompleted && "border-teal-600 bg-teal-600 text-white",
+              item.isCompleted &&
+                "border-state-success bg-state-success text-inverse",
               item.isActive &&
-                "border-blue-600 bg-white text-blue-600 ring-4 ring-blue-50",
-              item.isPending && "border-gray-200 bg-gray-100 text-gray-400",
+                "border-brandPrimary bg-ui-surface text-brandPrimary ring-4 ring-accentLight",
+              item.isPending &&
+                "border-ui-border bg-ui-bg text-text-muted",
             )}
           >
             {item.isCompleted ? (
@@ -50,14 +59,14 @@ export const CustomFormStepper = ({ items, onItemClick, className }: Props) => {
           </div>
 
           <div className="mt-2 text-center">
-            <p className="text-[10px] font-semibold tracking-wider text-gray-400 uppercase">
+            <p className="text-text-muted text-[10px] font-semibold tracking-wider uppercase">
               Step {item.stepNumber}
             </p>
 
             <p
               className={cn(
                 "text-sm font-semibold",
-                item.isActive ? "text-gray-900" : "text-gray-600",
+                item.isActive ? "text-text-primary" : "text-text-secondary",
               )}
             >
               {item.title}
@@ -67,10 +76,10 @@ export const CustomFormStepper = ({ items, onItemClick, className }: Props) => {
               className={cn(
                 "mt-1 text-xs",
                 item.isCompleted
-                  ? "text-teal-600"
+                  ? "text-state-success"
                   : item.isActive
-                    ? "text-blue-600"
-                    : "text-gray-400",
+                    ? "text-brandPrimary"
+                    : "text-text-muted",
               )}
             >
               {item.statusText}

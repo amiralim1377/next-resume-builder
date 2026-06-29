@@ -91,14 +91,16 @@ const CustomCheckBox = ({
             onBlur={onBlur}
             disabled={disabled}
             className={cn(
+              "peer appearance-none rounded-sm border transition-colors",
               sizeClass,
-              error && "border-state-error focus-visible:ring-state-error",
+              error && "border-state-error focus-visible:ring-1 focus-visible:ring-state-error",
               !error &&
                 isValid &&
-                "border-state-success focus-visible:ring-state-success focus-visible:border-state-success",
+                "border-state-success focus-visible:ring-1 focus-visible:ring-state-success focus-visible:border-state-success",
               !error &&
                 !isValid &&
-                "border-ui-border focus-visible:border-brandLight focus-visible:ring-brandPrimary",
+                "border-ui-border focus-visible:border-brandLight focus-visible:ring-1 focus-visible:ring-brandPrimary",
+              "checked:border-brandPrimary checked:bg-brandPrimary",
               customClassNames?.input,
             )}
             id={id}
@@ -112,7 +114,7 @@ const CustomCheckBox = ({
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
             className={cn(
-              "text-text-primary pointer-events-none absolute top-1/2 left-1/2 h-[60%] w-[60%] -translate-1/2 opacity-0 transition-opacity duration-200 ease-in-out",
+              "text-inverse pointer-events-none absolute top-1/2 left-1/2 h-[60%] w-[60%] -translate-x-1/2 -translate-y-1/2 opacity-0 transition-opacity duration-200 ease-in-out peer-checked:opacity-100",
               customClassNames?.icon,
             )}
           >

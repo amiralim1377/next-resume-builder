@@ -1,8 +1,5 @@
 import { TFunction } from "i18next";
-import * as z from "zod/v4";
-
-// ─── Constants ────────────────────────────────────────────────────────────────
-const YEAR_REGEX = /^\d{4}$/;
+import * as z from "zod";
 
 // ─── Schema Factory ───────────────────────────────────────────────────────────
 export const createJobSchema = (t: TFunction<string, undefined>) => {
@@ -11,7 +8,7 @@ export const createJobSchema = (t: TFunction<string, undefined>) => {
     content: z.array(z.any()),
   });
 
-  // 1. EMPTY STATE SCHEMA (Flattened status)
+  // 1. EMPTY STATE SCHEMA
   const emptyJobSchema = z.object({
     status: z.literal("empty"),
     jobTitle: z.string(),
@@ -19,15 +16,13 @@ export const createJobSchema = (t: TFunction<string, undefined>) => {
     country: z.string(),
     province: z.string(),
     city: z.string(),
-    entryMonth: z.string(),
-    entryYear: z.string(),
-    employmentEndMonth: z.string(),
-    employmentEndYear: z.string(),
+    entryDate: z.string(),
+    employmentEndYearDate: z.string(),
     isCurrentlyWorkingHere: z.boolean(),
     summary: summarySchema,
   });
 
-  // 2. STRICT STATE SCHEMA (Flattened status)
+  // 2. STRICT STATE SCHEMA
   const strictJobSchema = z.object({
     status: z.enum(["draft", "completed"]),
 
@@ -39,22 +34,17 @@ export const createJobSchema = (t: TFunction<string, undefined>) => {
     province: z.string().min(1, { message: t("provinceRequired") }),
     city: z.string().min(1, { message: t("cityRequired") }),
 
-    // Timeline
-    entryMonth: z.string().min(1, { message: t("entryMonthRequired") }),
-    entryYear: z
-      .string()
-      .regex(YEAR_REGEX, { message: t("invalidYearFormat") }),
+    entryDate: z.string().min(1, {
+      message: t("startDateRequired"),
+    }),
 
-    // Date ranges handled safely in downstream refinement
-    employmentEndMonth: z.string(),
-    employmentEndYear: z.string(),
+    employmentEndYearDate: z.string(),
 
     isCurrentlyWorkingHere: z.boolean(),
     summary: summarySchema,
   });
 
   // 3. DISCRIMINATED UNION WITH CONDITIONALS
-  // We apply the cross-field dates logic at the root level if the row isn't empty.
   return z
     .discriminatedUnion("status", [emptyJobSchema, strictJobSchema])
     .superRefine((data, ctx) => {
@@ -63,40 +53,38 @@ export const createJobSchema = (t: TFunction<string, undefined>) => {
 
       const isCurrentlyWorking = data.isCurrentlyWorkingHere;
 
-      // If NOT currently working, require end date
+      // If NOT currently working, require end date and validate it
       if (!isCurrentlyWorking) {
-        if (!data.employmentEndMonth?.trim()) {
-          ctx.addIssue({
-            code: z.ZodIssueCode.custom,
-            path: ["employmentEndMonth"],
-            message: t("employmentEndMonthRequired"),
-          });
-        }
-
-        if (!data.employmentEndYear?.trim()) {
-          ctx.addIssue({
-            code: z.ZodIssueCode.custom,
-            path: ["employmentEndYear"],
-            message: t("employmentEndYearRequired"),
-          });
-        }
-
-        // Check that end date is after start date
-        const startYear = Number(data.entryYear);
-        const endYear = Number(data.employmentEndYear);
-
+        // 1. Check if the end date is missing
         if (
-          data.entryYear &&
-          data.employmentEndYear &&
-          !Number.isNaN(startYear) &&
-          !Number.isNaN(endYear) &&
-          endYear < startYear
+          !data.employmentEndYearDate ||
+          data.employmentEndYearDate.trim() === ""
         ) {
           ctx.addIssue({
             code: z.ZodIssueCode.custom,
-            path: ["employmentEndYear"],
-            message: t("endDateBeforeStartDate"),
+            path: ["employmentEndYearDate"],
+            message: t("endDateRequired"),
           });
+          return; // Stop here to prevent invalid date math below
+        }
+
+        // 2. Check that end date is after start date
+        if (data.entryDate && data.employmentEndYearDate) {
+          // Convert the Calendar ISO strings to timestamps for easy comparison
+          const startDate = new Date(data.entryDate).getTime();
+          const endDate = new Date(data.employmentEndYearDate).getTime();
+
+          if (
+            !Number.isNaN(startDate) &&
+            !Number.isNaN(endDate) &&
+            endDate < startDate
+          ) {
+            ctx.addIssue({
+              code: z.ZodIssueCode.custom,
+              path: ["employmentEndYearDate"], // Attach the error to the End Date field
+              message: t("endDateBeforeStartDate"),
+            });
+          }
         }
       }
     });

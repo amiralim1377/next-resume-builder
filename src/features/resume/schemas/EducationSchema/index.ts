@@ -49,8 +49,8 @@ export const createEducationSchema = (t: TFunction<string, undefined>) => {
     country: z.string(),
     province: z.string(),
     city: z.string(),
-    entryMonth: z.string(),
-    entryYear: z.string(),
+    entryDate: z.string(),
+
     graduationMonth: z.string(),
     graduationYear: z.string(),
     isStudyingNow: z.boolean(),
@@ -81,22 +81,13 @@ export const createEducationSchema = (t: TFunction<string, undefined>) => {
     city: z.string().min(1, { message: t("cityRequired") }),
 
     // Timeline
-    entryMonth: z.string().min(1, { message: t("entryMonthRequired") }),
-
-    entryYear: z.string().regex(YEAR_REGEX, {
-      message: t("invalidYearFormat"),
+    entryDate: z.string().min(1, {
+      message: t("graduationDateRequired"),
     }),
 
-    graduationMonth: z
-      .string()
-      .min(1, { message: t("graduationMonthRequired") }),
-
-    graduationYear: z
-      .string()
-      .min(1, { message: t("graduationYearRequired") })
-      .regex(YEAR_REGEX, {
-        message: t("invalidYearFormat"),
-      }),
+    graduationDate: z.string().min(1, {
+      message: t("graduationDateRequired"),
+    }),
 
     isStudyingNow: z.boolean(),
     summary: summarySchema,

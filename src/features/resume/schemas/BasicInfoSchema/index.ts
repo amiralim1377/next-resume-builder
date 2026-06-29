@@ -82,11 +82,30 @@ export const createBasicInfoSchema = (t: TFunction<string, undefined>) => {
         message: t("emailNoPersianCharacters"),
       }),
 
-    birthday: z.object({
-      day: z.string().min(1, t("birthdayDayRequired")),
-      month: z.string().min(1, t("birthdayMonthRequired")),
-      year: z.string().min(1, t("birthdayYearRequired")),
-    }),
+    birthDate: z
+      .string()
+      .min(1, { message: t("birthDateRequired") })
+      .regex(/^\d{4}-\d{2}-\d{2}$/, { message: t("invalidDateFormat") })
+      .refine(
+        (val) => {
+          const date = new Date(val);
+          return !isNaN(date.getTime());
+        },
+        { message: t("invalidDate") },
+      )
+      .refine((val) => new Date(val) <= new Date(), {
+        message: t("birthDateFuture"),
+      })
+      .refine(
+        (val) => {
+          const date = new Date(val);
+          const age = new Date().getFullYear() - date.getFullYear();
+          return age <= 120;
+        },
+        {
+          message: t("invalidBirthDate"),
+        },
+      ),
 
     mobileNumber: z
       .string()

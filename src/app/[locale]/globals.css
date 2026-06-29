@@ -28,6 +28,10 @@ body {
   --color-brandActive: var(--brand-active);
   --color-brandFooter: var(--brand-footer);
   --color-header: var(--brand-header);
+
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+
   /* accent-color */
   --color-accentLight: var(--brand-accent-light);
   --color-accent: var(--brand-accent);
@@ -135,7 +139,9 @@ body {
   --brand-hover: #483291;
   --brand-active: #3d2a7a;
   --brand-footer: #0d1117;
-  --brand-header: #111827; /*header-color */
+  --brand-header: #111827;
+  --card: #ffffff;
+  --card-foreground: #15162a;
 
   /* Brand Accents */
   --brand-accent-light: #f4f2fa; /* Extremely light */
@@ -194,7 +200,10 @@ body {
   --brand-hover: #9378d1; /* Lighter hover for dark backgrounds */
   --brand-active: #5a3eb5; /* Darker active state */
   --brand-footer: #0d1117;
-  --brand-header: #111827; /*header-color */
+  --brand-header: #111827;
+
+  --card: #16152a;
+  --card-foreground: #f5f4fc;
 
   /* Brand Accents - Dark Mode (Deep dark purples) */
   --brand-accent-light: #332561; /* Lighter dark accent */
@@ -249,4 +258,44 @@ body {
 [dir="rtl"] ul,
 [dir="rtl"] ol {
   padding-inline-start: 1.5rem;
+}
+
+@layer base {
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus,
+  input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 1000px var(--ui-background) inset !important;
+    -webkit-text-fill-color: var(--text-primary) !important;
+    caret-color: var(--text-primary);
+    transition: background-color 9999s ease-in-out 0s;
+  }
+}
+
+@layer base {
+  select:-webkit-autofill,
+  select:-webkit-autofill:hover,
+  select:-webkit-autofill:focus {
+    -webkit-box-shadow: 0 0 0 1000px var(--ui-background) inset !important;
+    -webkit-text-fill-color: var(--text-primary) !important;
+  }
+}
+
+@layer base {
+  select {
+    background-color: transparent;
+    color: var(--text-primary);
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+  }
+
+  select:focus {
+    outline: none;
+  }
+
+  select option {
+    background-color: var(--ui-surface);
+    color: var(--text-primary);
+  }
 }

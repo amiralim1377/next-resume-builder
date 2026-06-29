@@ -20,8 +20,7 @@ export const createResearchSchema = (t: TFunction<string, undefined>) => {
     researchTitle: z.string(),
     publisher: z.string(),
     researchUrl: z.string(),
-    publicationMonth: z.string(),
-    publicationYear: z.string(),
+    publicationDate: z.string(),
     summary: summarySchema,
   });
 
@@ -48,16 +47,10 @@ export const createResearchSchema = (t: TFunction<string, undefined>) => {
       .url({ message: t("invalidUrl") })
       .or(z.literal("")),
 
-    publicationMonth: z
+    publicationDate: z
       .string()
       .trim()
-      .min(1, { message: t("publicationMonthRequired") })
-      .or(z.literal("")),
-
-    publicationYear: z
-      .string()
-      .trim()
-      .regex(YEAR_REGEX, { message: t("invalidYearFormat") })
+      .min(1, { message: t("publicationDateRequired") })
       .or(z.literal("")),
 
     summary: summarySchema,

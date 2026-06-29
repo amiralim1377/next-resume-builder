@@ -17,6 +17,7 @@ import { useEffect, useRef, useState } from "react";
 import { CustomResumeCardComponents } from "@/components/ui/CustomResumeCardComponents";
 import { EducationAccordionHeader } from "./components/EducationAccordionHeader";
 import { EducationItem } from "./components/EducationItem";
+import { EmptyStep } from "../EmptyStep";
 
 function EducationStep() {
   const [activeAccordionId, setActiveAccordionId] = useState<string>("");
@@ -43,8 +44,7 @@ function EducationStep() {
       country: "",
       province: "",
       city: "",
-      entryMonth: "",
-      entryYear: "",
+      entryDate: "",
       graduationMonth: "",
       graduationYear: "",
       isStudyingNow: false,
@@ -66,19 +66,29 @@ function EducationStep() {
   };
   return (
     <div className="flex w-full flex-col space-y-2.5">
-      <CustomResumeCardComponents>
+      <CustomResumeCardComponents className="flex w-full flex-col space-y-2.5">
         <CustomLabel
           size="lg"
           variant="bold"
+          description={t("educationEmptyDescription")}
+          descriptionSize="md"
           icon={<GraduationCap color={colors.brand?.brandPrimary} />}
+          divider
+          dividerClassName={"pb-3"}
         >
           {t("academicHistory")}
         </CustomLabel>
 
         {fields.length === 0 ? (
-          <div className="py-4 text-center text-sm opacity-60">
-            {t("noEducationAddedYet", "No education history added yet.")}
-          </div>
+          <EmptyStep
+            iconSize={32}
+            iconColor="text-brandLight"
+            icon={GraduationCap}
+            title={t("noEducationAddedYet")}
+            description={t("addEducationDescription")}
+            buttonLabel={t("addEducation")}
+            onClick={onRowAdd}
+          />
         ) : (
           <Accordion
             type="single"
@@ -111,10 +121,11 @@ function EducationStep() {
           </Accordion>
         )}
       </CustomResumeCardComponents>
-
-      <CustomButton type="button" className="" onClick={onRowAdd}>
-        ADD
-      </CustomButton>
+      {fields.length !== 0 && (
+        <CustomButton type="button" className="" onClick={onRowAdd}>
+          ADD
+        </CustomButton>
+      )}
     </div>
   );
 }

@@ -53,7 +53,7 @@ const CustomAvatar: React.FC<AvatarProps> = ({
 
   const roundedClass = shape === "circle" ? "rounded-full" : "rounded-xl";
   const baseClasses = cn(
-    "relative inline-flex items-center justify-center shrink-0 bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 font-medium ",
+    "relative inline-flex items-center justify-center shrink-0 bg-accentLight text-text-secondary font-medium",
     sizeClasses[size],
     roundedClass,
     className,
@@ -82,7 +82,7 @@ const CustomAvatar: React.FC<AvatarProps> = ({
       {status !== "none" && (
         <span
           className={cn(
-            "absolute right-0 bottom-0 block border-2 border-white dark:border-gray-900",
+            "absolute right-0 bottom-0 block border-2 border-ui-surface",
             roundedClass,
             statusColors[status],
             size === "sm"

@@ -12,6 +12,7 @@ import { ResumeFormValues } from "@/features/resume/schemas/resume.schema";
 import { RowStatusObserver } from "@/features/resume/components/RowStatusObserver";
 import { useGetEducationInfoStepData } from "../../hooks/useGetEducationInfoStepData";
 import { EducationSummary } from "../EducationSummary";
+import { CustomControlledCalendar } from "@/components/ui/CustomControlledCalendar";
 
 type EducationItemProps = {
   t: TFunction<string, undefined>;
@@ -27,8 +28,9 @@ const EducationItemComponent = ({
   onDelete,
 }: EducationItemProps) => {
   const [calendarType, setCalendarType] = useState<CalendarType>(
-    lng === "en" ? "gregorian" : "jalali",
+    lng === "en" ? "gregorian" : "persian",
   );
+
   const { setValue } = useFormContext<ResumeFormValues>();
   const countryWatch = useWatch({
     name: `education.${index}.country`,
@@ -41,23 +43,18 @@ const EducationItemComponent = ({
 
   useEffect(() => {
     if (isStudyingNow) {
-      setValue(`education.${index}.graduationMonth`, "");
-      setValue(`education.${index}.graduationYear`, "");
+      setValue(`education.${index}.entryDate`, "");
+      setValue(`education.${index}.graduationDate`, "");
     }
   }, [isStudyingNow, index, setValue]);
 
-  const {
-    degreeOptions,
-    countryOptions,
-    provinceOptions,
-    cityOptions,
-    monthOptions,
-  } = useGetEducationInfoStepData({
-    t,
-    lng,
-    provinceId,
-    calendarType,
-  });
+  const { degreeOptions, countryOptions, provinceOptions, cityOptions } =
+    useGetEducationInfoStepData({
+      t,
+      lng,
+      provinceId,
+      calendarType,
+    });
 
   return (
     <div className="grid grid-cols-12 gap-3">
@@ -154,20 +151,29 @@ const EducationItemComponent = ({
         )}
       </div>
 
-      {/* Entry Month */}
       <div className="col-span-12 md:col-span-6">
-        <CustomControlledSelect
-          name={`education.${index}.entryMonth`}
-          label={t("entryMonth")}
-          options={monthOptions}
+        <CustomControlledCalendar
+          name={`education.${index}.entryDate`}
+          label={t("educationEntryDate")}
+          className=""
+          calendarSystem={calendarType}
+          placeholder={
+            isStudyingNow
+              ? t("isStudyingNow")
+              : t("educationEntryDatePlaceholder")
+          }
+          disabled={isStudyingNow}
         />
       </div>
-
-      {/* Entry Year */}
       <div className="col-span-12 md:col-span-6">
-        <CustomControlledInput
-          name={`education.${index}.entryYear`}
-          label={t("entryYear")}
+        <CustomControlledCalendar
+          name={`education.${index}.graduationDate`}
+          label={t("graduationDate")}
+          placeholder={
+            isStudyingNow ? t("isStudyingNow") : t("graduationDatePlaceholder")
+          }
+          disabled={isStudyingNow}
+          calendarSystem={calendarType}
         />
       </div>
 
@@ -175,8 +181,8 @@ const EducationItemComponent = ({
       <div className="col-span-12">
         <CustomRadio.Group className="flex flex-row">
           <CustomRadio
-            checked={calendarType === "jalali"}
-            onChange={() => setCalendarType("jalali")}
+            checked={calendarType === "persian"}
+            onChange={() => setCalendarType("persian")}
             label={t("solarHijri")}
           />
           <CustomRadio
@@ -185,35 +191,6 @@ const EducationItemComponent = ({
             label={t("gregorian")}
           />
         </CustomRadio.Group>
-      </div>
-
-      {/* Graduation Month */}
-      <div className="col-span-12 md:col-span-6">
-        {isStudyingNow ? (
-          <CustomControlledInput
-            name={`education.${index}.graduationMonth`}
-            label={t("graduationMonth")}
-            disabled={isStudyingNow}
-            placeholder={isStudyingNow ? t("isStudyingNow") : undefined}
-          />
-        ) : (
-          <CustomControlledSelect
-            name={`education.${index}.graduationMonth`}
-            label={t("graduationMonth")}
-            options={monthOptions}
-            disabled={isStudyingNow}
-          />
-        )}
-      </div>
-
-      {/* Graduation Year */}
-      <div className="col-span-12 md:col-span-6">
-        <CustomControlledInput
-          name={`education.${index}.graduationYear`}
-          label={t("graduationYear")}
-          disabled={isStudyingNow}
-          placeholder={isStudyingNow ? t("isStudyingNow") : undefined}
-        />
       </div>
 
       {/* Studying Now Checkbox */}

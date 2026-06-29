@@ -112,7 +112,7 @@ const CustomModal = ({
       >
         <div
           className={cn(
-            "bg-ui-bg relative flex w-full translate-y-5 scale-95 flex-col rounded-2xl p-4 opacity-0 transition-all duration-200 ease-out",
+            "bg-ui-surface relative flex w-full translate-y-5 scale-95 flex-col rounded-2xl p-4 opacity-0 transition-all duration-200 ease-out",
             isVisible && "translate-y-0 scale-100 opacity-100",
             noBorder && "border-0! border-none",
             classNames?.content,
@@ -134,7 +134,7 @@ const CustomModal = ({
               {title && (
                 <div
                   className={cn(
-                    "text-textTertiary flex-1 text-2xl font-semibold",
+                    "text-text-primary flex-1 text-2xl font-semibold",
                     classNames?.title,
                   )}
                 >

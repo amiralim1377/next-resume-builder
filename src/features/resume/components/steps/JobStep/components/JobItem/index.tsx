@@ -12,6 +12,7 @@ import { CustomButton } from "@/components/ui/CustomButton";
 import { CustomRadio } from "@/components/ui/CustomRadio";
 import { JobSummary } from "../JobSummary";
 import { RowStatusObserver } from "@/features/resume/components/RowStatusObserver";
+import { CustomControlledCalendar } from "@/components/ui/CustomControlledCalendar";
 
 type JobSectionType = {
   t: TFunction<string, undefined>;
@@ -22,7 +23,7 @@ type JobSectionType = {
 
 const JobItem = ({ lng, t, index, onDelete }: JobSectionType) => {
   const [calendarType, setCalendarType] = useState<CalendarType>(
-    lng === "en" ? "gregorian" : "jalali",
+    lng === "en" ? "gregorian" : "persian",
   );
   const { setValue } = useFormContext();
 
@@ -36,12 +37,12 @@ const JobItem = ({ lng, t, index, onDelete }: JobSectionType) => {
 
   useEffect(() => {
     if (isCurrentlyWorkingHere) {
-      setValue(`job.${index}.employmentEndMonth`, "");
-      setValue(`job.${index}.employmentEndYear`, "");
+      setValue(`job.${index}.entryDate`, "");
+      setValue(`job.${index}.employmentEndYearDate`, "");
     }
   }, [isCurrentlyWorkingHere, setValue, index]);
 
-  const { countryOptions, provinceOptions, cityOptions, monthOptions } =
+  const { countryOptions, provinceOptions, cityOptions } =
     useGetJobInfoStepData({
       lng,
       provinceId,
@@ -116,20 +117,29 @@ const JobItem = ({ lng, t, index, onDelete }: JobSectionType) => {
         )}
       </div>
 
-      {/* Entry Month */}
       <div className="col-span-12 md:col-span-6">
-        <CustomControlledSelect
-          name={`job.${index}.entryMonth`}
-          label={t("entryMonth")}
-          options={monthOptions}
+        <CustomControlledCalendar
+          name={`job.${index}.entryDate`}
+          label={t("jobStartDate")}
+          className=""
+          calendarSystem={calendarType}
+          placeholder={
+            isCurrentlyWorkingHere ? t("CurrentlyWorkingHere") : undefined
+          }
+          disabled={isCurrentlyWorkingHere}
         />
       </div>
 
-      {/* Entry Year */}
       <div className="col-span-12 md:col-span-6">
-        <CustomControlledInput
-          name={`job.${index}.entryYear`}
-          label={t("entryYear")}
+        <CustomControlledCalendar
+          name={`job.${index}.employmentEndYearDate`}
+          label={t("jobEndDate")}
+          className=""
+          calendarSystem={calendarType}
+          placeholder={
+            isCurrentlyWorkingHere ? t("CurrentlyWorkingHere") : undefined
+          }
+          disabled={isCurrentlyWorkingHere}
         />
       </div>
 
@@ -137,8 +147,8 @@ const JobItem = ({ lng, t, index, onDelete }: JobSectionType) => {
       <div className="col-span-12">
         <CustomRadio.Group className="flex flex-row">
           <CustomRadio
-            checked={calendarType === "jalali"}
-            onChange={() => setCalendarType("jalali")}
+            checked={calendarType === "persian"}
+            onChange={() => setCalendarType("persian")}
             label={t("solarHijri")}
           />
 
@@ -148,39 +158,6 @@ const JobItem = ({ lng, t, index, onDelete }: JobSectionType) => {
             label={t("gregorian")}
           />
         </CustomRadio.Group>
-      </div>
-
-      {/* employmentEndMonth */}
-      <div className="col-span-12 md:col-span-6">
-        {isCurrentlyWorkingHere ? (
-          <CustomControlledInput
-            name={`job.${index}.employmentEndMonth`}
-            label={t("employmentEndMonth")}
-            disabled={isCurrentlyWorkingHere}
-            placeholder={
-              isCurrentlyWorkingHere ? t("CurrentlyWorkingHere") : undefined
-            }
-          />
-        ) : (
-          <CustomControlledSelect
-            name={`job.${index}.employmentEndMonth`}
-            label={t("employmentEndMonth")}
-            options={monthOptions}
-            disabled={isCurrentlyWorkingHere}
-          />
-        )}
-      </div>
-
-      {/* employmentEndYear*/}
-      <div className="col-span-12 md:col-span-6">
-        <CustomControlledInput
-          name={`job.${index}.employmentEndYear`}
-          label={t("employmentEndYear")}
-          disabled={isCurrentlyWorkingHere}
-          placeholder={
-            isCurrentlyWorkingHere ? t("CurrentlyWorkingHere") : undefined
-          }
-        />
       </div>
 
       {/* Current Working */}

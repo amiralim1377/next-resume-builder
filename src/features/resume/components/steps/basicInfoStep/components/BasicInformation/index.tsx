@@ -3,6 +3,7 @@ import { TFunction } from "i18next";
 import { useGetBasicInfoStepData } from "../../hooks/useGetBasicInfoStepData";
 import { CustomControlledInput } from "@/components/ui/CustomControlledInput";
 import { CustomControlledSelect } from "@/components/ui/CustomControlledSelect";
+import { CustomControlledCalendar } from "@/components/ui/CustomControlledCalendar";
 
 type BasicInformationProps = {
   t: TFunction<string, undefined>;
@@ -10,17 +11,12 @@ type BasicInformationProps = {
 };
 
 const BasicInformation = ({ t, lng }: BasicInformationProps) => {
-  const {
-    daysInMonthOptions,
-    maritalOptions,
-    militaryOptions,
-    sexOptions,
-    monthOptions,
-    yearOptions,
-  } = useGetBasicInfoStepData({ t, lng });
+  const { maritalOptions, militaryOptions, sexOptions } =
+    useGetBasicInfoStepData({ t, lng });
 
   return (
     <div className="grid w-full grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-12">
+      {/* Personal Information */}
       <div className="col-span-1 lg:col-span-6">
         <CustomControlledInput
           name="basicInfo.firstName"
@@ -35,6 +31,16 @@ const BasicInformation = ({ t, lng }: BasicInformationProps) => {
         />
       </div>
 
+      {/* Birth Information */}
+      <div className="col-span-1 lg:col-span-6">
+        <CustomControlledCalendar
+          name="basicInfo.birthDate"
+          label={t("birthday")}
+          className=""
+          placeholder={t("dateOfBirthPlaceholder")}
+        />
+      </div>
+
       <div className="col-span-1 lg:col-span-6">
         <CustomControlledInput
           name="basicInfo.jobTitle"
@@ -42,7 +48,8 @@ const BasicInformation = ({ t, lng }: BasicInformationProps) => {
         />
       </div>
 
-      <div className="col-span-1 lg:col-span-6">
+      {/* Personal Status */}
+      <div className="col-span-1 lg:col-span-4">
         <CustomControlledSelect
           options={sexOptions}
           name="basicInfo.sex"
@@ -50,7 +57,7 @@ const BasicInformation = ({ t, lng }: BasicInformationProps) => {
         />
       </div>
 
-      <div className="col-span-1 lg:col-span-6">
+      <div className="col-span-1 lg:col-span-4">
         <CustomControlledSelect
           options={maritalOptions}
           name="basicInfo.maritalStatus"
@@ -58,38 +65,12 @@ const BasicInformation = ({ t, lng }: BasicInformationProps) => {
         />
       </div>
 
-      <div className="col-span-1 lg:col-span-6">
+      <div className="col-span-1 lg:col-span-4">
         <CustomControlledSelect
           options={militaryOptions}
           name="basicInfo.militaryServiceStatus"
           label={t("militaryServiceStatus")}
         />
-      </div>
-
-      <div className="col-span-1 grid grid-cols-1 gap-4 sm:grid-cols-3 lg:col-span-12">
-        <div>
-          <CustomControlledSelect
-            options={daysInMonthOptions}
-            name="basicInfo.birthday.day"
-            label={t("birthday")}
-          />
-        </div>
-
-        <div>
-          <CustomControlledSelect
-            options={monthOptions}
-            name="basicInfo.birthday.month"
-            label={t("month")}
-          />
-        </div>
-
-        <div>
-          <CustomControlledSelect
-            options={yearOptions}
-            name="basicInfo.birthday.year"
-            label={t("year")}
-          />
-        </div>
       </div>
     </div>
   );

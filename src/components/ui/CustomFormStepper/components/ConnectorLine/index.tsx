@@ -9,7 +9,7 @@ function ConnectorLine({ isCompleted }: ConnectorLineProps) {
     <div
       className={cn(
         "absolute top-4 left-[-45%] h-0.5 w-[calc(100%-2rem)] transition-colors",
-        isCompleted ? "bg-state-success" : "bg-gray-200",
+        isCompleted ? "bg-state-success" : "bg-ui-border",
       )}
     />
   );

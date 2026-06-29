@@ -14,8 +14,11 @@ interface CustomLabelProps {
   /** Links label to form input */
   htmlFor?: string;
 
-  /** Size */
+  /** Label size */
   size?: "sm" | "md" | "lg" | "xl";
+
+  /** Description/helper text size */
+  descriptionSize?: "sm" | "md" | "lg" | "xl";
 
   /** Style variant */
   variant?: "default" | "bold" | "muted" | "error";
@@ -31,6 +34,12 @@ interface CustomLabelProps {
 
   /** Optional description/helper text shown below the label */
   description?: string;
+
+  /** Shows divider below label */
+  divider?: boolean;
+
+  /** Divider style */
+  dividerClassName?: string;
 }
 
 export const CustomLabel: React.FC<CustomLabelProps> = ({
@@ -39,11 +48,14 @@ export const CustomLabel: React.FC<CustomLabelProps> = ({
   icon,
   htmlFor,
   size = "md",
+  descriptionSize = "sm",
   variant = "default",
   className = "",
   onClick,
   title,
   description,
+  divider = false,
+  dividerClassName,
 }) => {
   const baseClasses =
     "inline-flex items-center gap-2 font-medium text-text-primary select-none";
@@ -52,7 +64,7 @@ export const CustomLabel: React.FC<CustomLabelProps> = ({
     sm: "text-sm",
     md: "text-base",
     lg: "text-lg",
-    xl: "text-xl ",
+    xl: "text-xl",
   };
 
   const variantClasses = {
@@ -84,6 +96,7 @@ export const CustomLabel: React.FC<CustomLabelProps> = ({
 
         <span className="flex items-center gap-0.5">
           {children}
+
           {required && (
             <span className="text-state-error text-base leading-none font-semibold">
               *
@@ -94,13 +107,19 @@ export const CustomLabel: React.FC<CustomLabelProps> = ({
 
       {description && (
         <p
-          className={cn(
-            "text-text-muted mt-0.5 text-sm",
-            size === "lg" && "text-base",
-          )}
+          className={cn("text-text-muted mt-0.5", sizeClasses[descriptionSize])}
         >
           {description}
         </p>
+      )}
+
+      {divider && (
+        <div
+          className={cn(
+            "border-ui-border mt-3 w-full border-t",
+            dividerClassName,
+          )}
+        />
       )}
     </div>
   );

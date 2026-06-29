@@ -6,7 +6,7 @@ import { useLang } from "@/provider/lngProvider";
 import { ReactNode } from "react";
 
 type quickLinksDataArrayType = {
-  labe: string;
+  label: string;
   icon: ReactNode;
   href: string;
 };
@@ -17,17 +17,17 @@ function QuickLinks() {
 
   const quickLinksDataArray: quickLinksDataArrayType[] = [
     {
-      labe: t("home"),
+      label: t("home"),
       icon: "ss",
       href: "#",
     },
     {
-      labe: t("dashbord"),
+      label: t("dashbord"),
       icon: "ss",
       href: "#",
     },
     {
-      labe: t("editProfile"),
+      label: t("editProfile"),
       icon: "ss",
       href: "#",
     },
@@ -52,7 +52,7 @@ function QuickLinks() {
               key={i}
               href={item.href}
             >
-              {item.labe}
+              {item.label}
             </CustomLink>
           );
         })}
