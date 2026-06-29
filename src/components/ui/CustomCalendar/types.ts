@@ -1,14 +1,13 @@
+import { CalendarType } from "@/types";
 import type { CalendarDate } from "@internationalized/date";
 import type { ReactNode } from "react";
-
-export type CalendarSystem = "persian" | "gregorian";
 
 export type CalendarView = "day" | "month" | "year";
 
 export interface CalendarState {
   currentMonth: CalendarDate;
   selectedDate: CalendarDate | null;
-  calendarSystem: CalendarSystem;
+  calendarSystem: CalendarType;
   locale: string;
   isRtl: boolean;
   view: CalendarView;
@@ -35,6 +34,6 @@ export interface CalendarProps extends Omit<
   ref?: React.Ref<HTMLDivElement>;
   value?: CalendarDate | null;
   onChange?: (date: CalendarDate) => void;
-  calendarSystem?: CalendarSystem;
+  calendarSystem?: CalendarType;
   children: ReactNode;
 }
