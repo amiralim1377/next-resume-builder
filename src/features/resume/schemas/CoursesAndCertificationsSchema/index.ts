@@ -7,8 +7,7 @@ export const createCoursesAndCertificationsSchema = (
   return z.object({
     coursesAndCertificationsName: z.string().optional(),
     instituteName: z.string().optional(),
-    certificateIssueMonth: z.string().optional(),
-    certificateIssueYear: z.string().optional(),
+    certificateIssueDate: z.string().optional(),
     certificateUrl: z
       .string()
       .url(t("invalidUrl"))
