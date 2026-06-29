@@ -7,21 +7,20 @@ import {
   toCalendar,
   CalendarIdentifier,
 } from "@internationalized/date";
-import type { CalendarSystem, CalendarState, CalendarActions, CalendarView } from "../types";
+import type { CalendarState, CalendarActions, CalendarView } from "../types";
 import { CALENDAR_LOCALES } from "../constants";
-import { useTranslation } from "react-i18next";
+import { CalendarType } from "@/types";
+import { useLang } from "@/provider/lngProvider";
 
 export function useCalendarState(
   value?: CalendarDate | null,
   onChange?: (date: CalendarDate) => void,
-  system: CalendarSystem = "gregorian",
+  system: CalendarType = "persian",
 ): CalendarState & CalendarActions {
-  const { i18n } = useTranslation();
+  const { lng } = useLang();
   const locale =
-    i18n.language === "fa"
-      ? CALENDAR_LOCALES.PERSIAN
-      : CALENDAR_LOCALES.GREGORIAN;
-  const isRtl = i18n.language === "fa";
+    lng === "fa" ? CALENDAR_LOCALES.PERSIAN : CALENDAR_LOCALES.GREGORIAN;
+  const isRtl = lng === "fa";
 
   const activeCalendar = createCalendar(system as CalendarIdentifier);
 
