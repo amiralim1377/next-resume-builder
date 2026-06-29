@@ -23,7 +23,7 @@ const CoursesCertificationsItem = ({
   t,
 }: CoursesCertificationsItemProps) => {
   const [calendarType, setCalendarType] = useState<CalendarType>(
-    lng === "en" ? "gregorian" : "jalali",
+    lng === "en" ? "gregorian" : "persian",
   );
 
   const { monthOptions } = useGetSkillsInfoStepData({ calendarType, lng });
@@ -60,8 +60,8 @@ const CoursesCertificationsItem = ({
       <div className="col-span-2">
         <CustomRadio.Group className="flex flex-row gap-4">
           <CustomRadio
-            checked={calendarType === "jalali"}
-            onChange={() => setCalendarType("jalali")}
+            checked={calendarType === "persian"}
+            onChange={() => setCalendarType("persian")}
             label={t("solarHijri")}
           />
 

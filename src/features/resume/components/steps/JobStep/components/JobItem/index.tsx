@@ -22,7 +22,7 @@ type JobSectionType = {
 
 const JobItem = ({ lng, t, index, onDelete }: JobSectionType) => {
   const [calendarType, setCalendarType] = useState<CalendarType>(
-    lng === "en" ? "gregorian" : "jalali",
+    lng === "en" ? "gregorian" : "persian",
   );
   const { setValue } = useFormContext();
 
@@ -137,8 +137,8 @@ const JobItem = ({ lng, t, index, onDelete }: JobSectionType) => {
       <div className="col-span-12">
         <CustomRadio.Group className="flex flex-row">
           <CustomRadio
-            checked={calendarType === "jalali"}
-            onChange={() => setCalendarType("jalali")}
+            checked={calendarType === "persian"}
+            onChange={() => setCalendarType("persian")}
             label={t("solarHijri")}
           />
 

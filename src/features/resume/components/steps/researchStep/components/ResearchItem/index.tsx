@@ -20,7 +20,7 @@ type ResearchItemProps = {
 
 const ResearchItem = ({ index, lng, onDelete, t }: ResearchItemProps) => {
   const [calendarType, setCalendarType] = useState<CalendarType>(
-    lng === "en" ? "gregorian" : "jalali",
+    lng === "en" ? "gregorian" : "persian",
   );
 
   const { monthOptions } = useGetResearchInfoStepData({
@@ -78,8 +78,8 @@ const ResearchItem = ({ index, lng, onDelete, t }: ResearchItemProps) => {
       <div className="col-span-12">
         <CustomRadio.Group className="flex flex-row gap-4">
           <CustomRadio
-            checked={calendarType === "jalali"}
-            onChange={() => setCalendarType("jalali")}
+            checked={calendarType === "persian"}
+            onChange={() => setCalendarType("persian")}
             label={t("solarHijri")}
           />
 

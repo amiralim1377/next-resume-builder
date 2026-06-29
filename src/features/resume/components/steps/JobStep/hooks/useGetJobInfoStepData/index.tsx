@@ -51,7 +51,7 @@ const useGetJobInfoStepData = ({
   );
 
   const monthOptions = addEmptyOption(
-    calendarType === "jalali"
+    calendarType === "persian"
       ? monthsData.jalali.map((month) => ({
           value: month.month_shamsi,
           text: month.month_shamsi,
