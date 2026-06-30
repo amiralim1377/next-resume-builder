@@ -45,8 +45,7 @@ function EducationStep() {
       province: "",
       city: "",
       entryDate: "",
-      graduationMonth: "",
-      graduationYear: "",
+      graduationDate: "",
       isStudyingNow: false,
       summary: { type: "doc", content: [] },
     });
@@ -70,7 +69,7 @@ function EducationStep() {
         <CustomLabel
           size="lg"
           variant="bold"
-          description={t("educationEmptyDescription")}
+          description={t("addEducationDescription")}
           descriptionSize="md"
           icon={<GraduationCap color={colors.brand?.brandPrimary} />}
           divider

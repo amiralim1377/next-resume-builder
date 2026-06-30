@@ -27,7 +27,6 @@ export const CalendarCell = memo(function CalendarCell({
 }: CalendarCellProps) {
   const isToday = isSameDay(date, today(getLocalTimeZone()));
 
-  // Use English numerals for Gregorian calendar, locale numerals for Persian
   const numberLocale = calendarSystem === "gregorian" ? "en-US" : locale;
 
   const dayNumber = new Intl.DateTimeFormat(numberLocale, {
@@ -45,9 +44,10 @@ export const CalendarCell = memo(function CalendarCell({
       className={cn(
         "flex h-8 w-8 items-center justify-center rounded-lg text-sm transition-all",
         "focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500",
+
         isSelected
           ? "bg-blue-600 font-semibold text-white shadow-md"
-          : "text-text-primary hover:bg-accentLight",
+          : "text-text-primary hover:bg-brandHover hover:text-accentLight",
         isOutsideMonth && "cursor-not-allowed opacity-30",
         isToday && !isSelected && "border border-blue-500 text-blue-600",
       )}
