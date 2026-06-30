@@ -47,7 +47,10 @@ function EducationStep() {
       entryDate: "",
       graduationDate: "",
       isStudyingNow: false,
-      summary: { type: "doc", content: [] },
+      summary: {
+        type: "",
+        content: [],
+      },
     });
   };
 
