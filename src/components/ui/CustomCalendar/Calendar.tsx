@@ -39,7 +39,7 @@ export function Calendar({
         ref={ref}
         dir={state.isRtl ? "rtl" : "ltr"}
         className={cn(
-          "bg-card w-full max-w-sm rounded-xl p-4 select-none",
+          "bg-accentLight w-full max-w-sm rounded-xl p-4 select-none",
           "border-ui-border border shadow-sm",
           className,
         )}
