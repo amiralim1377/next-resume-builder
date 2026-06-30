@@ -126,6 +126,7 @@
   "CurrentlyWorkingHere": "مشغول فعالیت در این شرکت هستم",
   "jobStartDate": "تاریخ شروع همکاری",
   "jobEndDate": "تاریخ اتمام همکاری",
+  "jobEndDateRequired": "تاریخ اتمام همکاری الزامی است",
   "WorkingHere": "مشغول فعالیت",
   "languages": "زبان‌ها",
   "language": "زبان",
@@ -226,5 +227,6 @@
   "addEducation": "افزودن تحصیلات",
   "educationEmptyDescription": "مدارک تحصیلی خود را اضافه کنید تا مسیر آموزشی‌تان برجسته شود.",
   "dateOfBirthPlaceholder": "تاریخ تولد خود را انتخاب کنید",
-  "certificateIssueDate": "تاریخ دریافت گواهی"
+  "certificateIssueDate": "تاریخ دریافت گواهی",
+  "endDateBeforeStartDate": "تاریخ پایان نمی‌تواند قبل از تاریخ شروع باشد"
 }

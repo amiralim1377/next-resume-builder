@@ -124,6 +124,7 @@
   "startDateRequired": "Start date is required",
   "jobStartDate": "Start Date of Employment",
   "jobEndDate": "End Date of Employment",
+  "jobEndDateRequired": "End date is required",
   "CurrentlyWorkingHere": "CurrentlyWorkingHere",
   "WorkingHere": "Working Here",
   "languages": "Languages",
@@ -224,5 +225,6 @@
   "addEducation": "Add education",
   "educationEmptyDescription": "Add your degrees to highlight your academic journey.",
   "dateOfBirthPlaceholder": "Select your birth date",
-  "certificateIssueDate": "Award Date"
+  "certificateIssueDate": "Award Date",
+  "endDateBeforeStartDate": "End date cannot be earlier than start date"
 }
