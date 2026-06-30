@@ -5,7 +5,7 @@ import { CalendarType } from "@/types";
 import { TFunction } from "i18next";
 import { useEffect, useState } from "react";
 import { useGetJobInfoStepData } from "../../hooks/useGetJobInfoStepData";
-import { useFormContext, useWatch } from "react-hook-form";
+import { useFormContext, useWatch, Watch } from "react-hook-form";
 import { CustomControlledSelect } from "@/components/ui/CustomControlledSelect";
 import { CustomControlledCheckBox } from "@/components/ui/CustomControlledCheckBox";
 import { CustomButton } from "@/components/ui/CustomButton";
@@ -25,7 +25,7 @@ const JobItem = ({ lng, t, index, onDelete }: JobSectionType) => {
   const [calendarType, setCalendarType] = useState<CalendarType>(
     lng === "en" ? "gregorian" : "persian",
   );
-  const { setValue } = useFormContext();
+  const { setValue, clearErrors, trigger } = useFormContext();
 
   const countryWatch = useWatch({ name: `job.${index}.country`, exact: true });
   const provinceId = useWatch({ name: `job.${index}.province`, exact: true });
@@ -35,12 +35,24 @@ const JobItem = ({ lng, t, index, onDelete }: JobSectionType) => {
   });
   const isIranSelected = countryWatch === "Iran";
 
+  // const status = useWatch(`job.${index}.status`);
+
+  // console.log("status:", status);
+
   useEffect(() => {
+    const field = `job.${index}.employmentEndYearDate` as const;
+
     if (isCurrentlyWorkingHere) {
-      setValue(`job.${index}.entryDate`, "");
-      setValue(`job.${index}.employmentEndYearDate`, "");
+      setValue(field, "", {
+        shouldDirty: true,
+        shouldTouch: true,
+        shouldValidate: true,
+      });
+      clearErrors(field);
+    } else {
+      trigger(`job.${index}`);
     }
-  }, [isCurrentlyWorkingHere, setValue, index]);
+  }, [isCurrentlyWorkingHere, index, setValue, trigger, clearErrors]);
 
   const { countryOptions, provinceOptions, cityOptions } =
     useGetJobInfoStepData({
@@ -123,10 +135,6 @@ const JobItem = ({ lng, t, index, onDelete }: JobSectionType) => {
           label={t("jobStartDate")}
           className=""
           calendarSystem={calendarType}
-          placeholder={
-            isCurrentlyWorkingHere ? t("CurrentlyWorkingHere") : undefined
-          }
-          disabled={isCurrentlyWorkingHere}
         />
       </div>
 
