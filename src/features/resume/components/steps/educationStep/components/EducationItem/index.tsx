@@ -31,7 +31,7 @@ const EducationItemComponent = ({
     lng === "en" ? "gregorian" : "persian",
   );
 
-  const { setValue } = useFormContext<ResumeFormValues>();
+  const { setValue, clearErrors, trigger } = useFormContext<ResumeFormValues>();
   const countryWatch = useWatch({
     name: `education.${index}.country`,
   });
@@ -39,14 +39,24 @@ const EducationItemComponent = ({
   const isStudyingNow = useWatch({
     name: `education.${index}.isStudyingNow`,
   });
+
   const isIranSelected = countryWatch === "Iran";
 
   useEffect(() => {
+    const field = `education.${index}.graduationDate` as const;
+
     if (isStudyingNow) {
-      setValue(`education.${index}.entryDate`, "");
-      setValue(`education.${index}.graduationDate`, "");
+      setValue(field, "", {
+        shouldDirty: true,
+        shouldTouch: true,
+        shouldValidate: true,
+      });
+
+      clearErrors(field);
+    } else {
+      trigger(`education.${index}`);
     }
-  }, [isStudyingNow, index, setValue]);
+  }, [isStudyingNow, index, setValue, trigger, clearErrors]);
 
   const { degreeOptions, countryOptions, provinceOptions, cityOptions } =
     useGetEducationInfoStepData({
@@ -157,12 +167,7 @@ const EducationItemComponent = ({
           label={t("educationEntryDate")}
           className=""
           calendarSystem={calendarType}
-          placeholder={
-            isStudyingNow
-              ? t("isStudyingNow")
-              : t("educationEntryDatePlaceholder")
-          }
-          disabled={isStudyingNow}
+          placeholder={t("educationEntryDatePlaceholder")}
         />
       </div>
       <div className="col-span-12 md:col-span-6">
