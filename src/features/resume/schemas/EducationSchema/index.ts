@@ -50,48 +50,64 @@ export const createEducationSchema = (t: TFunction<string, undefined>) => {
     province: z.string(),
     city: z.string(),
     entryDate: z.string(),
+    graduationDate: z.string(),
 
-    graduationMonth: z.string(),
-    graduationYear: z.string(),
     isStudyingNow: z.boolean(),
     summary: summarySchema,
   });
 
   // 2. STRICT STATE SCHEMA (Flattened status)
-  const strictEducationSchema = z.object({
-    status: z.enum(["draft", "completed"]), // Added and lifted to the root
+  const strictEducationSchema = z
+    .object({
+      status: z.enum(["draft", "completed"]), // Added and lifted to the root
 
-    // Academic
-    degreeLevel: z.enum(DEGREE_OPTIONS, {
-      message: t("selectEducationalLevel"),
-    }),
+      // Academic
+      degreeLevel: z.enum(DEGREE_OPTIONS, {
+        message: t("selectEducationalLevel"),
+      }),
 
-    academicMajor: z.string().min(1, { message: t("academicMajorRequired") }),
-    concentration: z.string().min(1, { message: t("specializationRequired") }),
-    institutionName: z.string().min(1, { message: t("institutionName") }),
+      academicMajor: z.string().min(1, { message: t("academicMajorRequired") }),
+      concentration: z
+        .string()
+        .min(1, { message: t("specializationRequired") }),
+      institutionName: z.string().min(1, { message: t("institutionName") }),
 
-    gradeAverage: z
-      .string()
-      .min(1, { message: t("gradeAverageRequired") })
-      .refine(isValidGrade, { message: t("invalidGradeAverage") }),
+      gradeAverage: z
+        .string()
+        .min(1, { message: t("gradeAverageRequired") })
+        .refine(isValidGrade, { message: t("invalidGradeAverage") }),
 
-    // Location
-    country: z.string().min(1, { message: t("countryRequired") }),
-    province: z.string().min(1, { message: t("provinceRequired") }),
-    city: z.string().min(1, { message: t("cityRequired") }),
+      // Location
+      country: z.string().min(1, { message: t("countryRequired") }),
+      province: z.string().min(1, { message: t("provinceRequired") }),
+      city: z.string().min(1, { message: t("cityRequired") }),
 
-    // Timeline
-    entryDate: z.string().min(1, {
-      message: t("graduationDateRequired"),
-    }),
+      // Timeline
+      entryDate: z.string().min(1, {
+        message: t("educationStartDateRequired"),
+      }),
 
-    graduationDate: z.string().min(1, {
-      message: t("graduationDateRequired"),
-    }),
-
-    isStudyingNow: z.boolean(),
-    summary: summarySchema,
-  });
+      graduationDate: z.string().optional().or(z.literal("")),
+      isStudyingNow: z.boolean(),
+      summary: summarySchema,
+    })
+    .superRefine((data, ctx) => {
+      console.log(
+        "superRefine - isStudyingNow:",
+        data.isStudyingNow,
+        "gradDate:",
+        data.graduationDate,
+        "status:",
+        data.status,
+      );
+      if (!data.isStudyingNow && !data.graduationDate?.trim()) {
+        ctx.addIssue({
+          code: "custom",
+          path: ["graduationDate"],
+          message: t("educationGraduationDateRequired"),
+        });
+      }
+    });
 
   // 3. DISCRIMINATED UNION
   // Provides direct literal key mapping for lightning-fast evaluations
