@@ -92,14 +92,6 @@ export const createEducationSchema = (t: TFunction<string, undefined>) => {
       summary: summarySchema,
     })
     .superRefine((data, ctx) => {
-      console.log(
-        "superRefine - isStudyingNow:",
-        data.isStudyingNow,
-        "gradDate:",
-        data.graduationDate,
-        "status:",
-        data.status,
-      );
       if (!data.isStudyingNow && !data.graduationDate?.trim()) {
         ctx.addIssue({
           code: "custom",
