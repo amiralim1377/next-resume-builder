@@ -54,7 +54,7 @@ const EducationItemComponent = ({
 
       clearErrors(field);
     } else {
-      trigger(`education.${index}`);
+      trigger(`education.${index}.graduationDate`);
     }
   }, [isStudyingNow, index, setValue, trigger, clearErrors]);
 
@@ -150,7 +150,11 @@ const EducationItemComponent = ({
             name={`education.${index}.city`}
             label={t("city")}
             options={cityOptions}
-            disabled={provinceId === undefined}
+            disabled={
+              provinceId === undefined ||
+              provinceId === "" ||
+              countryWatch === ""
+            }
           />
         ) : (
           <CustomControlledInput
