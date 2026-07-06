@@ -226,5 +226,20 @@
   "educationEmptyDescription": "Add your degrees to highlight your academic journey.",
   "dateOfBirthPlaceholder": "Select your birth date",
   "certificateIssueDate": "Award Date",
-  "endDateBeforeStartDate": "End date cannot be earlier than start date"
+  "endDateBeforeStartDate": "End date cannot be earlier than start date",
+  "add": "add",
+  "noJobAddedYet": "No work experience added yet",
+  "addJobDescription": "Add your work experience in reverse chronological order, starting with your most recent position.",
+  "addJob": "Add Work Experience",
+  "emptyStepJobDescription": "Add the roles that have shaped your career and showcase the experience you've gained along the way.",
+  "emptyStepEducationDescription": "Every qualification is part of your learning journey. Start by adding your education.",
+  "addProjectsDescription": "Add the projects you have worked on in reverse chronological order, and showcase your practical experience.",
+  "noProjectAddedYet": "No projects added yet",
+  "emptyStepProjectDescription": "The projects you’ve worked on are part of your experience journey. Start here.",
+  "addProject": "Add Project",
+  "addResearchDescription": "Add your publications, papers, and research activities in reverse chronological order.",
+  "noResearchAddedYet": "No research added yet",
+  "emptyStepResearchDescription": "Add your publications and research activities to showcase your expertise journey. Start here.",
+  "addResearch": "Add Research",
+  "researchTitleRequired": "Research title is required"
 }
