@@ -1,31 +1,45 @@
 "use client";
 import { FormStepperItem } from "@/components/ui/CustomFormStepperItem";
-import { SectionState, StepConfig, StepName } from "../../types/resume.types";
+import { SectionState, StepName } from "../../types/resume.types";
+import { useFormContext, useWatch } from "react-hook-form";
+import { useMemo } from "react";
+import { RESUME_STEPS } from "../../constants/steps";
+import { calculateStepStatus } from "../../utils/stepper.utils";
+import { useResumeFormContext } from "../ResumeFormProvider/ResumeFormContext";
 
-type FormStepperProps = {
-  currentStep: number;
-  stepStatuses: Record<StepName, SectionState>;
-  onStepClick: (index: number) => void;
-  steps: StepConfig[];
-};
+const FormStepper = () => {
+  const { handleStepClick, currentStep } = useResumeFormContext();
+  const {
+    control,
+    formState: { errors },
+  } = useFormContext();
+  const formValues = useWatch({ control });
 
-const FormStepper = ({
-  currentStep,
-  stepStatuses,
-  onStepClick,
-  steps,
-}: FormStepperProps) => {
+  const stepStatuses = useMemo((): Record<StepName, SectionState> => {
+    const statuses = {} as Record<StepName, SectionState>;
+
+    RESUME_STEPS.forEach((step, index) => {
+      statuses[step.id] = calculateStepStatus({
+        step,
+        values: formValues,
+        errors,
+        index,
+      });
+    });
+
+    return statuses;
+  }, [formValues, errors]);
+
+  console.log("stepStatuses:", stepStatuses);
+
   return (
     <div className="flex w-full justify-between">
-      {steps.map((step, index) => {
-        // 1. Grab the real-time status evaluated by our utility engine
+      {RESUME_STEPS.map((step, index) => {
         const status = stepStatuses[step.id];
 
-        // 2. Map the engineering statuses cleanly onto your visual flags
         const isActive = index === currentStep;
         const isCompleted = status === "completed";
 
-        // A step is pending if it's not active, hasn't been touched yet, or is a draft
         const isPending =
           !isActive && (status === "empty" || status === "draft");
 
@@ -33,17 +47,12 @@ const FormStepper = ({
           <FormStepperItem
             key={step.id}
             stepNumber={index + 1}
-            title={step.titleKey} // Pass titleKey or step.title depending on your i18n setup
+            title={step.titleKey}
             isActive={isActive}
             isCompleted={isCompleted}
             isPending={isPending}
-            isLast={index === steps.length - 1}
-            onClick={() => onStepClick(index)}
-
-            // 💡 Production Tip: If your CustomFormStepperItem component supports
-            // error indicators or draft indicators, you can pass them down like this:
-            // isInvalid={status === "invalid"}
-            // isDraft={status === "draft"}
+            isLast={index === RESUME_STEPS.length - 1}
+            onClick={() => handleStepClick(index)}
           />
         );
       })}

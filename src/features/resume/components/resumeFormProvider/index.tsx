@@ -1,11 +1,9 @@
 "use client";
-import { FormProvider, useWatch } from "react-hook-form";
-import { useCallback, useMemo, useState } from "react";
+import { FormProvider } from "react-hook-form";
+import { useCallback, useMemo, useRef, useState } from "react";
 import { useResumeForm } from "../../hooks/useResumeForm";
-import { SectionState, StepName } from "../../types/resume.types";
 import { ResumeFormValues } from "../../schemas/resume.schema";
 import { RESUME_STEPS } from "../../constants/steps";
-import { calculateStepStatus } from "../../utils/stepper.utils";
 import StepWrapper from "../StepWrapper";
 import { FormStepper } from "../FormStepper";
 import { NavigationButtons } from "../NavigationButtons";
@@ -23,28 +21,7 @@ const ResumeFormProvider = ({
   onSubmit,
 }: ResumeFormProviderProps) => {
   const form = useResumeForm(initialData, mode);
-  const { errors } = form.formState;
-
   const [currentStep, setCurrentStep] = useState(0);
-
-  const formValues = useWatch({ control: form.control });
-
-  const stepStatuses = useMemo((): Record<StepName, SectionState> => {
-    const statuses = {} as Record<StepName, SectionState>;
-
-    RESUME_STEPS.forEach((step, index) => {
-      statuses[step.id] = calculateStepStatus({
-        step,
-        values: formValues,
-        errors,
-        index,
-      });
-    });
-
-    return statuses;
-  }, [formValues, errors]);
-
-  console.log("stepStatuses", stepStatuses);
 
   const currentStepConfig = RESUME_STEPS[currentStep];
 
@@ -91,12 +68,11 @@ const ResumeFormProvider = ({
     () => ({
       currentStep,
       setCurrentStep,
-      stepStatuses,
       handleNext,
       handlePrev,
       handleStepClick,
     }),
-    [currentStep, stepStatuses, handleNext, handlePrev, handleStepClick],
+    [currentStep, handleNext, handlePrev, handleStepClick],
   );
 
   return (
@@ -106,12 +82,7 @@ const ResumeFormProvider = ({
           onSubmit={form.handleSubmit(handleFormSubmit)}
           className="mx-auto grid w-full grid-rows-[auto_1fr_auto] gap-6"
         >
-          <FormStepper
-            steps={RESUME_STEPS}
-            currentStep={currentStep}
-            stepStatuses={stepStatuses}
-            onStepClick={handleStepClick}
-          />
+          <FormStepper />
           <StepWrapper currentStep={currentStep} />
           <NavigationButtons
             onNext={handleNext}
