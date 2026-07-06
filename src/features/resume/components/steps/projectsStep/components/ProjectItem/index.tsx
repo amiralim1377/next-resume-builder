@@ -25,6 +25,7 @@ const ProjectItem = ({ index, lng, onDelete, t }: ProjectItemProps) => {
     <div className="grid grid-cols-12 gap-4">
       {/* Background worker tracking state changes cleanly */}
       <RowStatusObserver fieldName="projects" index={index} />
+
       <div className="col-span-12 md:col-span-6">
         <CustomControlledInput
           label={t("projectTitle")}
@@ -36,6 +37,7 @@ const ProjectItem = ({ index, lng, onDelete, t }: ProjectItemProps) => {
         <CustomControlledInput
           label={t("clientName")}
           name={`projects.${index}.clientName`}
+          placeholder={t("optional")}
         />
       </div>
 
@@ -44,6 +46,7 @@ const ProjectItem = ({ index, lng, onDelete, t }: ProjectItemProps) => {
           name={`projects.${index}.projectDate`}
           label={t("projectDate")}
           calendarSystem={calendarType}
+          placeholder={t("optional")}
         />
       </div>
 
@@ -51,6 +54,7 @@ const ProjectItem = ({ index, lng, onDelete, t }: ProjectItemProps) => {
         <CustomControlledInput
           label={t("projectUrl")}
           name={`projects.${index}.projectUrl`}
+          placeholder={t("optional")}
         />
       </div>
 

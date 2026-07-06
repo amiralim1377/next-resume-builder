@@ -50,7 +50,7 @@ const ResearchAccordionHeader = ({ index, t }: HeaderProps) => {
   const isCompleted = useMemo(() => {
     if (!rowValues) return false;
 
-    if (errors.job?.[index]) return false;
+    if (errors.research?.[index]) return false;
     const researchSchema = createResearchSchema(t);
     const result = researchSchema.safeParse({
       ...rowValues,
@@ -58,7 +58,7 @@ const ResearchAccordionHeader = ({ index, t }: HeaderProps) => {
     });
 
     return result.success;
-  }, [rowValues, errors.job, index, t]);
+  }, [rowValues, errors.research, index, t]);
 
   // ─── 3. State Synchronization Engine ────────────────────────────────
   useEffect(() => {

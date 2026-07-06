@@ -92,10 +92,10 @@ export const createEducationSchema = (t: TFunction<string, undefined>) => {
   return z
     .discriminatedUnion("status", [emptyEducationSchema, strictEducationSchema])
     .superRefine((data, ctx) => {
-      console.log("EDUCATION VALIDATE", data.status);
+      // console.log("EDUCATION VALIDATE", data.status);
 
       if (data.status === "empty") return;
-      console.log("SUPER REFINE RUN");
+      // console.log("SUPER REFINE RUN");
       const isStudyingNow = data.isStudyingNow;
 
       if (!isStudyingNow) {

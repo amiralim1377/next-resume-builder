@@ -32,6 +32,7 @@ const calculateStepStatus = ({
   errors,
   step,
   values,
+  index,
 }: calculateStepStatusProps): SectionState => {
   const safeErrors = errors as Record<string, unknown>;
   const hasErrors = step.fieldNames.some((field) => !!safeErrors[field]);
@@ -41,8 +42,33 @@ const calculateStepStatus = ({
 
   const hasData = step.fieldNames.some((field) => {
     const value = safeValues[field];
+    if (Array.isArray(value)) {
+      return value.some((row) => {
+        if (!row) return false;
+
+        if (row.status === "completed" || row.status === "draft") {
+          return true;
+        }
+
+        if (row.status === "empty") {
+          return Object.entries(row).some(([key, v]) => {
+            if (key === "status") return false;
+
+            if (key === "summary") {
+              return hasResumeEditorContent(v as RichTextNode);
+            }
+
+            return v !== "" && v !== null && v !== undefined && v !== false;
+          });
+        }
+
+        return false;
+      });
+    }
     return hasActualContent(value);
   });
+
+  // console.log(`hasData for ${index + 1}:`, hasData);
 
   if (!hasData) return "empty";
 
