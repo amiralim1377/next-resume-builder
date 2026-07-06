@@ -7,7 +7,7 @@ interface EmptyStepProps {
   title: string;
   description: string;
   buttonLabel: string;
-  onClick: () => void;
+  onClick?: () => void;
   className?: string;
   iconSize?: number;
   iconColor?: string;
