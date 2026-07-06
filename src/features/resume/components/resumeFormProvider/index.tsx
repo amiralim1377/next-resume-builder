@@ -1,6 +1,6 @@
 "use client";
 import { FormProvider } from "react-hook-form";
-import { useCallback, useMemo, useRef, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { useResumeForm } from "../../hooks/useResumeForm";
 import { ResumeFormValues } from "../../schemas/resume.schema";
 import { RESUME_STEPS } from "../../constants/steps";
