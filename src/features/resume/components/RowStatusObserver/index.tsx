@@ -25,6 +25,8 @@ const RowStatusObserver = ({ fieldName, index }: RowStatusObserverProps) => {
   const rowValues = useWatch({ name: `${fieldName}.${index}` as any });
   const currentStatus = rowValues?.status;
 
+  // console.log("currentStatus :", currentStatus);
+
   useEffect(() => {
     if (!rowValues || currentStatus !== "empty") return;
 

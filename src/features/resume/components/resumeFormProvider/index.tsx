@@ -44,7 +44,7 @@ const ResumeFormProvider = ({
     return statuses;
   }, [formValues, errors]);
 
-  // console.log("stepStatuses", stepStatuses);
+  console.log("stepStatuses", stepStatuses);
 
   const currentStepConfig = RESUME_STEPS[currentStep];
 
