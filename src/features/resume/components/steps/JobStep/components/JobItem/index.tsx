@@ -35,10 +35,6 @@ const JobItem = ({ lng, t, index, onDelete }: JobSectionType) => {
   });
   const isIranSelected = countryWatch === "Iran";
 
-  // const status = useWatch(`job.${index}.status`);
-
-  // console.log("status:", status);
-
   useEffect(() => {
     const field = `job.${index}.employmentEndYearDate` as const;
 

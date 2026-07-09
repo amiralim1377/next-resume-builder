@@ -1,0 +1,186 @@
+import { CustomBadge } from "@/components/ui/CustomBadge";
+import { CustomLabel } from "@/components/ui/CustomLabel";
+import { TFunction } from "i18next";
+import { memo, useEffect, useMemo, useState } from "react";
+import { useFormContext, useWatch } from "react-hook-form";
+
+import { RowStatus } from "@/features/resume/types/resume.types";
+import { useItemStatus } from "@/features/resume/hooks/useItemStatus";
+
+type StatusEngine<T> = {
+  getRowStatus: (data: T, hasError: boolean) => RowStatus;
+};
+
+// --------------------------------------------------
+// 1. Status Badge
+// --------------------------------------------------
+
+type BadgeProps<T> = {
+  name: string;
+  index: number;
+  engine: StatusEngine<T>;
+  t: TFunction<string, undefined>;
+};
+
+const StatusBadgeComponent = function StatusBadge<T>({
+  name,
+  index,
+  engine,
+  t,
+}: BadgeProps<T>) {
+  const {
+    formState: { errors },
+  } = useFormContext();
+
+  const rowValues = useWatch({
+    name: `${name}.${index}`,
+  }) as T;
+
+  const formErrors = errors as Record<string, unknown>;
+
+  const sectionErrors = formErrors[name] as unknown[];
+  const rowError = Boolean(
+    Array.isArray(sectionErrors) && sectionErrors[index],
+  );
+
+  const status = useItemStatus(rowValues, rowError, engine);
+
+  const { badgeType, badgeLabel } = useMemo(() => {
+    const badgeMap: Record<
+      RowStatus,
+      {
+        badgeType: "default" | "warning" | "error" | "success";
+        badgeLabel: string;
+      }
+    > = {
+      empty: {
+        badgeType: "default",
+        badgeLabel: "empty",
+      },
+
+      draft: {
+        badgeType: "warning",
+        badgeLabel: "draft",
+      },
+
+      invalid: {
+        badgeType: "error",
+        badgeLabel: "invalid",
+      },
+
+      completed: {
+        badgeType: "success",
+        badgeLabel: "completed",
+      },
+    };
+
+    return badgeMap[status];
+  }, [status]);
+
+  return (
+    <CustomBadge type={badgeType}>{t(`status.${badgeLabel}`)}</CustomBadge>
+  );
+};
+
+const StatusBadge = memo(StatusBadgeComponent) as typeof StatusBadgeComponent;
+
+// --------------------------------------------------
+// 2. Header Title
+// --------------------------------------------------
+
+type TitleProps = {
+  name: string;
+  index: number;
+
+  titleDependencies: string[];
+
+  formatTitle: (values: unknown[], t: TFunction<string, undefined>) => string;
+
+  t: TFunction<string, undefined>;
+};
+
+const HeaderTitle = memo(function HeaderTitle({
+  name,
+  index,
+  titleDependencies,
+  formatTitle,
+  t,
+}: TitleProps) {
+  const watchNames = useMemo(() => {
+    return titleDependencies.map((dep) => `${name}.${index}.${dep}`);
+  }, [name, index, titleDependencies]);
+
+  const watchedValues = useWatch({ name: watchNames });
+
+  const currentTargetLabel = useMemo(
+    () => formatTitle(watchedValues, t),
+    [watchedValues, formatTitle, t],
+  );
+
+  const [displayedLabel, setDisplayedLabel] = useState("...");
+
+  const isTyping = currentTargetLabel !== displayedLabel;
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDisplayedLabel(currentTargetLabel);
+    }, 500);
+
+    return () => clearTimeout(timer);
+  }, [currentTargetLabel]);
+
+  return (
+    <div className="flex items-center gap-2">
+      <CustomLabel size="lg">{displayedLabel}</CustomLabel>
+
+      {isTyping && (
+        <span className="text-muted-foreground animate-pulse text-xs font-normal italic transition-all">
+          ({t("typing")})
+        </span>
+      )}
+    </div>
+  );
+});
+
+// --------------------------------------------------
+// 3. Generic Accordion Header
+// --------------------------------------------------
+
+export type GenericAccordionHeaderProps<T> = {
+  name: string;
+  index: number;
+
+  engine: StatusEngine<T>;
+
+  titleDependencies: Array<keyof T & string>;
+  formatTitle: (values: unknown[], t: TFunction<string, undefined>) => string;
+
+  t: TFunction<string, undefined>;
+};
+
+function GenericAccordionHeader<T>({
+  name,
+  index,
+  engine,
+  titleDependencies,
+  formatTitle,
+  t,
+}: GenericAccordionHeaderProps<T>) {
+  return (
+    <div className="flex w-full items-center justify-between pr-4">
+      <HeaderTitle
+        name={name}
+        index={index}
+        titleDependencies={titleDependencies}
+        formatTitle={formatTitle}
+        t={t}
+      />
+
+      <StatusBadge<T> name={name} index={index} engine={engine} t={t} />
+    </div>
+  );
+}
+
+export const MemoizedGenericAccordionHeader = memo(
+  GenericAccordionHeader,
+) as typeof GenericAccordionHeader;
