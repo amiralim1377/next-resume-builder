@@ -2,11 +2,8 @@
 import { ResumeFormProvider } from "@/features/resume/components/ResumeFormProvider";
 import { ResumeFormValues } from "@/features/resume/schemas/resume.schema";
 import { getDefaultResumeValues } from "@/features/resume/utils/formDefaultResumeValues";
-import { useLang } from "@/provider/lngProvider";
 
 const NewResumePage = () => {
-  const { lng } = useLang();
-
   const handleFinalSubmit = async (data: ResumeFormValues) => {
     console.log("✅ Full Resume Data Submitted:", data);
 
@@ -27,7 +24,7 @@ const NewResumePage = () => {
   return (
     <div className="flex w-full items-center justify-center p-6">
       <ResumeFormProvider
-        initialData={getDefaultResumeValues({ lng })}
+        initialData={getDefaultResumeValues()}
         mode="create"
         onSubmit={handleFinalSubmit}
       />
