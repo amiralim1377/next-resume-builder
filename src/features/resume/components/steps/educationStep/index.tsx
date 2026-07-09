@@ -16,7 +16,6 @@ function EducationStep() {
   const { colors } = useThemeColors();
 
   const defaultObj: ResumeFormValues["education"][number] = {
-    status: "empty",
     degreeLevel: "",
     academicMajor: "",
     concentration: "",
