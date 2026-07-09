@@ -27,13 +27,15 @@ export const createArrayStepEngine = <T>(rules: ArrayStepRules<T>) => {
 
     const rowStatuses = rows.map((row) => getRowStatus(row, false));
 
-    if (rowStatuses.includes("draft")) return "invalid";
-
     if (rowStatuses.every((status) => status === "empty")) return "empty";
 
-    if (rowStatuses.includes("completed")) return "completed";
+    if (rowStatuses.includes("draft") || rowStatuses.includes("empty"))
+      return "draft";
 
-    return "empty";
+    if (rowStatuses.every((status) => status === "completed"))
+      return "completed";
+
+    return "draft";
   };
 
   return { getRowStatus, getStepStatus };
@@ -48,7 +50,7 @@ export const createObjectStepEngine = <T>(rules: ObjectStepRules<T>) => {
     if (!data || rules.isEmpty(data)) return "empty";
     if (rules.isComplete(data)) return "completed";
 
-    return "invalid";
+    return "draft";
   };
 
   return { getStepStatus };
