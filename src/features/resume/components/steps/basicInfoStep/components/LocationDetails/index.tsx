@@ -76,7 +76,11 @@ const LocationDetails = ({ t }: LocationDetailsProps) => {
       </div>
 
       <div className="lg:col-span-6">
-        <CustomControlledInput name="basicInfo.address" label={t("address")} />
+        <CustomControlledInput
+          name="basicInfo.address"
+          label={t("address")}
+          placeholder={t("optional")}
+        />
       </div>
     </div>
   );
