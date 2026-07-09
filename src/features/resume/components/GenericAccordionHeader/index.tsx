@@ -106,15 +106,11 @@ const HeaderTitle = memo(function HeaderTitle({
   formatTitle,
   t,
 }: TitleProps) {
-  const watchNames = useMemo(
-    () =>
-      titleDependencies.map((dependency) => `${name}.${index}.${dependency}`),
-    [name, index, titleDependencies],
-  );
+  const watchNames = useMemo(() => {
+    return titleDependencies.map((dep) => `${name}.${index}.${dep}`);
+  }, [name, index, titleDependencies]);
 
-  const watchedValues = useWatch({
-    name: watchNames,
-  }) as unknown[];
+  const watchedValues = useWatch({ name: watchNames });
 
   const currentTargetLabel = useMemo(
     () => formatTitle(watchedValues, t),
@@ -156,8 +152,7 @@ export type GenericAccordionHeaderProps<T> = {
 
   engine: StatusEngine<T>;
 
-  titleDependencies: string[];
-
+  titleDependencies: Array<keyof T & string>;
   formatTitle: (values: unknown[], t: TFunction<string, undefined>) => string;
 
   t: TFunction<string, undefined>;

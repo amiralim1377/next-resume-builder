@@ -9,7 +9,10 @@ type HeaderProps = {
   t: TFunction<string, undefined>;
 };
 
-const titleDependencies = ["degreeLevel", "academicMajor"];
+const titleDependencies: Array<keyof EducationRowValues & string> = [
+  "degreeLevel",
+  "academicMajor",
+];
 
 const formatTitle = (values: unknown[], t: TFunction<string, undefined>) => {
   const [degreeLevel, academicMajor] = values as [
