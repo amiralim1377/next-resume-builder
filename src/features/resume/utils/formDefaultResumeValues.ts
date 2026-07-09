@@ -1,13 +1,6 @@
-import { Language } from "@/lib/i18n/settings";
 import { ResumeFormValues } from "../schemas/resume.schema";
 
-type GetDefaultResumeValuesProps = {
-  lng: Language;
-};
-
-export const getDefaultResumeValues = ({
-  lng,
-}: GetDefaultResumeValuesProps): ResumeFormValues => ({
+export const getDefaultResumeValues = (): ResumeFormValues => ({
   profileImage: undefined,
   basicInfo: {
     firstName: "",
@@ -27,7 +20,10 @@ export const getDefaultResumeValues = ({
     },
     address: "",
     webSite: "",
-    summary: "",
+    summary: {
+      type: "doc",
+      content: [],
+    },
   },
   education: [],
   job: [],
