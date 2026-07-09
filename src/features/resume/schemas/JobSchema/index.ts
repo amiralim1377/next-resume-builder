@@ -16,9 +16,11 @@ export const createJobSchema = (t: TFunction<string, undefined>) => {
     country: z.string(),
     province: z.string(),
     city: z.string(),
+
     entryDate: z.string(),
     employmentEndYearDate: z.string(),
     isCurrentlyWorkingHere: z.boolean(),
+
     summary: summarySchema,
   });
 
@@ -63,7 +65,7 @@ export const createJobSchema = (t: TFunction<string, undefined>) => {
           ctx.addIssue({
             code: z.ZodIssueCode.custom,
             path: ["employmentEndYearDate"],
-            message: t("endDateRequired"),
+            message: t("jobEndDateRequired"),
           });
           return; // Stop here to prevent invalid date math below
         }

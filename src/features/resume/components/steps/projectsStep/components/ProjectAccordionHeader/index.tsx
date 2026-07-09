@@ -50,7 +50,7 @@ const ProjectAccordionHeader = ({ index, t }: HeaderProps) => {
   const isCompleted = useMemo(() => {
     if (!rowValues) return false;
 
-    if (errors.job?.[index]) return false;
+    if (errors.projects?.[index]) return false;
     const projectSchema = createProjectsSchema(t);
     const result = projectSchema.safeParse({
       ...rowValues,
@@ -58,7 +58,7 @@ const ProjectAccordionHeader = ({ index, t }: HeaderProps) => {
     });
 
     return result.success;
-  }, [rowValues, errors.job, index, t]);
+  }, [rowValues, errors.projects, index, t]);
 
   // ─── 3. State Synchronization Engine ────────────────────────────────
   useEffect(() => {

@@ -9,7 +9,6 @@ import { CustomRadio } from "@/components/ui/CustomRadio";
 import { CustomButton } from "@/components/ui/CustomButton";
 import { CalendarType } from "@/types";
 import { ResumeFormValues } from "@/features/resume/schemas/resume.schema";
-import { RowStatusObserver } from "@/features/resume/components/RowStatusObserver";
 import { useGetEducationInfoStepData } from "../../hooks/useGetEducationInfoStepData";
 import { EducationSummary } from "../EducationSummary";
 import { CustomControlledCalendar } from "@/components/ui/CustomControlledCalendar";
@@ -54,7 +53,7 @@ const EducationItemComponent = ({
 
       clearErrors(field);
     } else {
-      trigger(`education.${index}`);
+      trigger(`education.${index}.graduationDate`);
     }
   }, [isStudyingNow, index, setValue, trigger, clearErrors]);
 
@@ -68,9 +67,6 @@ const EducationItemComponent = ({
 
   return (
     <div className="grid grid-cols-12 gap-3">
-      {/* Background worker tracking state changes cleanly */}
-      <RowStatusObserver fieldName="education" index={index} />
-
       {/* Degree Level */}
       <div className="col-span-12 md:col-span-6">
         <CustomControlledSelect
@@ -150,7 +146,11 @@ const EducationItemComponent = ({
             name={`education.${index}.city`}
             label={t("city")}
             options={cityOptions}
-            disabled={provinceId === undefined}
+            disabled={
+              provinceId === undefined ||
+              provinceId === "" ||
+              countryWatch === ""
+            }
           />
         ) : (
           <CustomControlledInput

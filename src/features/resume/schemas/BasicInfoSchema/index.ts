@@ -1,11 +1,19 @@
 import { TFunction } from "i18next";
 import * as z from "zod/v4";
+import { isGenericRowEmpty } from "../../rules/generic.rules";
 
 export const SEX_OPTIONS = ["male", "female"] as const;
 export const MARITAL_OPTIONS = ["single", "married"] as const;
 export const MILITARY_OPTIONS = ["completed", "exempt", "inProgress"] as const;
 
-export const createBasicInfoSchema = (t: TFunction<string, undefined>) => {
+const identityT = ((key: string) => key) as TFunction;
+// ─── Schema Factory ───────────────────────────────────────────────────────────
+export const getStrictBasicInfoSchema = (t: TFunction = identityT) => {
+  const summarySchema = z.object({
+    type: z.string(),
+    content: z.array(z.any()).optional(),
+  });
+
   return z.object({
     firstName: z
       .string()
@@ -164,12 +172,17 @@ export const createBasicInfoSchema = (t: TFunction<string, undefined>) => {
 
     address: z
       .string()
-      .min(5, { message: t("addressFiveCharacters") })
-      .max(100, { message: t("addressHundredCharacters") })
-      .refine((value) => /[a-zA-Zآ-ی]/.test(value), {
+      .optional()
+      .refine((val) => !val || val.length >= 5, {
+        message: t("addressFiveCharacters"),
+      })
+      .refine((val) => !val || val.length <= 100, {
+        message: t("addressHundredCharacters"),
+      })
+      .refine((val) => !val || /[a-zA-Zآ-ی]/.test(val), {
         message: t("addressMustContainLetters"),
       })
-      .refine((val) => !val.includes("@"), {
+      .refine((val) => !val || !val.includes("@"), {
         message: t("cannotContainEmail"),
       }),
 
@@ -212,15 +225,23 @@ export const createBasicInfoSchema = (t: TFunction<string, undefined>) => {
       )
       .optional(),
 
-    summary: z
-      .union([
-        z.object({
-          type: z.string(),
-          content: z.array(z.any()).optional(),
-        }),
-        z.string(),
-        z.literal(""),
-      ])
-      .optional(),
+    summary: summarySchema.optional(),
+  });
+};
+
+export type BasicInfoRowValues = z.infer<
+  ReturnType<typeof getStrictBasicInfoSchema>
+>;
+
+export const createBasicInfoSchema = (t: TFunction<string, undefined>) => {
+  return z.any().superRefine((data, ctx) => {
+    if (isGenericRowEmpty(data)) return;
+
+    const result = getStrictBasicInfoSchema(t).safeParse(data);
+    if (!result.success) {
+      result.error.issues.forEach((issue) => {
+        ctx.addIssue(issue as z.core.$ZodSuperRefineIssue);
+      });
+    }
   });
 };

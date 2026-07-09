@@ -50,7 +50,8 @@ export const createProjectsSchema = (t: TFunction<string, undefined>) => {
     projectDate: z
       .string()
       .trim()
-      .min(1, { message: t("projectDateRequired") }),
+      .min(1, { message: t("projectDateRequired") })
+      .or(z.literal("")),
 
     summary: summarySchema,
   });

@@ -12,6 +12,9 @@ export type StepName =
 
 export type SectionState = "empty" | "draft" | "completed" | "invalid";
 
+export type StepStatus = "empty" | "completed" | "invalid" | "draft";
+export type RowStatus = "empty" | "draft" | "invalid" | "completed";
+
 export interface StepConfig {
   id: StepName;
   title: string;

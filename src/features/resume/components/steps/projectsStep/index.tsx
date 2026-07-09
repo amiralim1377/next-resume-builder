@@ -1,107 +1,75 @@
 import { useTranslation } from "@/lib/i18n/client";
 import { useLang } from "@/provider/lngProvider";
-import { useFieldArray } from "react-hook-form";
 import { ProjectItem } from "./components/ProjectItem";
-import { CustomButton } from "@/components/ui/CustomButton";
 import { ResumeFormValues } from "@/features/resume/schemas/resume.schema";
 import { CustomLabel } from "@/components/ui/CustomLabel";
 import { useThemeColors } from "@/provider/themeProvider/useThemeColors";
 import { FolderKanban } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/NewCustomAccordion";
 import { ProjectAccordionHeader } from "./components/ProjectAccordionHeader";
+import { ArrayFieldStep } from "../../ArrayFieldStep";
+import { CustomResumeCardComponents } from "@/components/ui/CustomResumeCardComponents";
+import { EmptyStep } from "../EmptyStep";
 
 function ProjectsStep() {
-  const [activeAccordionId, setActiveAccordionId] = useState<string>("");
   const { lng } = useLang();
   const { t } = useTranslation(lng, "form");
   const { colors } = useThemeColors();
 
-  const { fields, append, remove } = useFieldArray<
-    ResumeFormValues,
-    "projects"
-  >({
-    name: "projects",
-  });
-
-  const prevLengthRef = useRef(fields.length);
-
-  const onRowAdd = () => {
-    append({
-      projectTitle: "",
-      clientName: "",
-      projectDate: "",
-      projectUrl: "",
-      status: "empty",
-      summary: {
-        type: "",
-        content: [],
-      },
-    });
-  };
-
-  useEffect(() => {
-    const isRowAdded = fields.length > prevLengthRef.current;
-    if (isRowAdded && fields.length > 0) {
-      const lastFieldId = fields[fields.length - 1].id;
-      setActiveAccordionId(lastFieldId);
-    }
-    prevLengthRef.current = fields.length;
-  }, [fields]);
-
-  const onDelete = (index: number) => {
-    remove(index);
+  const defaultObj: ResumeFormValues["projects"][number] = {
+    projectTitle: "",
+    clientName: "",
+    projectDate: "",
+    projectUrl: "",
+    status: "empty",
+    summary: {
+      type: "",
+      content: [],
+    },
   };
 
   return (
     <div className="flex w-full flex-col space-y-2.5">
-      <CustomLabel
-        size="lg"
-        variant="bold"
-        icon={<FolderKanban color={colors.brand?.brandPrimary} />}
-      >
-        {t("projects")}
-      </CustomLabel>
-
-      {fields.length === 0 ? (
-        <div className="py-4 text-center text-sm opacity-60">
-          No lng added yet
-        </div>
-      ) : (
-        <Accordion
-          type="single"
-          collapsible
-          className="w-full space-y-2 rounded-lg p-5 shadow-lg"
-          value={activeAccordionId}
-          onValueChange={setActiveAccordionId}
+      <CustomResumeCardComponents className="flex w-full flex-col space-y-2.5">
+        <CustomLabel
+          size="lg"
+          variant="bold"
+          icon={<FolderKanban color={colors.brand?.brandPrimary} />}
+          description={t("addProjectsDescription")}
+          descriptionSize="md"
+          divider
+          dividerClassName={"pb-3"}
         >
-          {fields.map((field, index) => {
-            return (
-              <AccordionItem key={field.id} value={field.id}>
-                <AccordionTrigger>
-                  <ProjectAccordionHeader t={t} index={index} />
-                </AccordionTrigger>
-                <AccordionContent className="p-4">
-                  <ProjectItem
-                    lng={lng}
-                    t={t}
-                    index={index}
-                    onDelete={onDelete}
-                  />
-                </AccordionContent>
-              </AccordionItem>
-            );
-          })}
-        </Accordion>
-      )}
-      <CustomButton className="w-full" onClick={onRowAdd}>
-        ADD
-      </CustomButton>
+          {t("projects")}
+        </CustomLabel>
+
+        <ArrayFieldStep<ResumeFormValues>
+          fieldName="projects"
+          addButtonLabel={t("add")}
+          emptyRowValues={defaultObj}
+          renderEmptyState={(append) => (
+            <EmptyStep
+              iconSize={32}
+              iconColor="text-brandLight"
+              icon={FolderKanban}
+              title={t("noProjectAddedYet")}
+              description={t("emptyStepProjectDescription")}
+              buttonLabel={t("addProject")}
+              onClick={append}
+            />
+          )}
+          renderHeader={(index) => (
+            <ProjectAccordionHeader index={index} t={t} />
+          )}
+          renderItem={(index, remove) => (
+            <ProjectItem
+              index={index}
+              lng={lng}
+              t={t}
+              onDelete={() => remove(index)}
+            />
+          )}
+        />
+      </CustomResumeCardComponents>
     </div>
   );
 }

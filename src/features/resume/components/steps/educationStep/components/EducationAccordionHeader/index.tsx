@@ -1,10 +1,11 @@
 import { CustomBadge } from "@/components/ui/CustomBadge";
 import { CustomLabel } from "@/components/ui/CustomLabel";
 import { ResumeFormValues } from "@/features/resume/schemas/resume.schema";
-import { createEducationSchema } from "@/features/resume/schemas/EducationSchema";
 import { TFunction } from "i18next";
 import { memo, useEffect, useState, useMemo } from "react";
 import { useFormContext, useWatch } from "react-hook-form";
+import { RowStatus } from "@/features/resume/types/resume.types";
+import { educationStatusEngine } from "@/features/resume/rules/education.rules";
 
 type HeaderProps = {
   index: number;
@@ -14,67 +15,55 @@ type HeaderProps = {
 const EducationAccordionHeaderComponent = ({ index, t }: HeaderProps) => {
   const {
     formState: { errors },
-    setValue,
   } = useFormContext<ResumeFormValues>();
-
   const rowValues = useWatch({ name: `education.${index}` });
+
   const [displayedLabel, setDisplayedLabel] = useState("...");
-  const [isTyping, setIsTyping] = useState(false);
 
   const degreeLevel = rowValues?.degreeLevel;
   const academicMajor = rowValues?.academicMajor;
-  const currentStatus = rowValues?.status;
+  const rowError = errors.education?.[index];
 
-  // ─── 1. Title Debounce Machine ──────────────────────────────────────
-  useEffect(() => {
-    // eslint-disable-next-line
-    setIsTyping(true);
-
+  const currentTargetLabel = useMemo(() => {
     const degreeTranslated = degreeLevel ? t(`degree.${degreeLevel}`) : "";
     const majorText = academicMajor ?? "";
-    const targetLabel =
-      degreeTranslated || majorText
-        ? `${degreeTranslated} ${majorText}`.trim()
-        : "...";
+    return degreeTranslated || majorText
+      ? `${degreeTranslated} ${majorText}`.trim()
+      : "...";
+  }, [degreeLevel, academicMajor, t]);
 
+  const isTyping = currentTargetLabel !== displayedLabel;
+
+  // ─── 2. Title Debounce Machine ──────────────────────────────────────
+  useEffect(() => {
     const timer = setTimeout(() => {
-      setDisplayedLabel(targetLabel);
-      setIsTyping(false);
+      setDisplayedLabel(currentTargetLabel);
     }, 500);
 
     return () => clearTimeout(timer);
-  }, [degreeLevel, academicMajor, t]);
+  }, [currentTargetLabel]);
 
-  // ─── 2. Zod Validation Machine ──────────────────────────────────────
-  const isCompleted = useMemo(() => {
-    if (!rowValues) return false;
-    if (errors.education?.[index]) return false;
+  // ─── 3. Status Calculation Engine ───────────────────────────────────
+  const { badgeType, badgeLabel } = useMemo(() => {
+    const hasErrors = !!rowError;
 
-    // Evaluate row against full completed criteria
-    const educationSchema = createEducationSchema(t);
-    const result = educationSchema.safeParse({
-      ...rowValues,
-      status: "completed",
-    });
+    const status = educationStatusEngine.getRowStatus(rowValues, hasErrors);
 
-    return result.success;
-  }, [rowValues, errors.education, index, t]);
+    const badgeMap: Record<
+      RowStatus,
+      {
+        badgeType: "default" | "warning" | "error" | "success";
+        badgeLabel: string;
+      }
+    > = {
+      empty: { badgeType: "default", badgeLabel: "empty" },
+      draft: { badgeType: "warning", badgeLabel: "draft" },
+      invalid: { badgeType: "error", badgeLabel: "invalid" },
+      completed: { badgeType: "success", badgeLabel: "completed" },
+    };
 
-  const isDraft = !isCompleted && currentStatus === "draft";
-  const badgeType = isCompleted ? "success" : isDraft ? "warning" : "default";
-
-  // ─── 3. State Synchronization Engine ────────────────────────────────
-  useEffect(() => {
-    if (!rowValues) return;
-
-    if (isCompleted && currentStatus !== "completed") {
-      setValue(`education.${index}.status`, "completed", {
-        shouldDirty: false,
-      });
-    } else if (!isCompleted && currentStatus === "completed") {
-      setValue(`education.${index}.status`, "draft", { shouldDirty: false });
-    }
-  }, [isCompleted, currentStatus, index, setValue, rowValues]);
+    return badgeMap[status];
+  }, [rowValues, rowError]);
 
   return (
     <div className="flex w-full items-center justify-between pr-4">
@@ -88,11 +77,7 @@ const EducationAccordionHeaderComponent = ({ index, t }: HeaderProps) => {
         )}
       </div>
 
-      <CustomBadge type={badgeType}>
-        {isCompleted
-          ? t("status.completed")
-          : t(`status.${currentStatus ?? "empty"}`)}
-      </CustomBadge>
+      <CustomBadge type={badgeType}>{t(`status.${badgeLabel}`)}</CustomBadge>
     </div>
   );
 };

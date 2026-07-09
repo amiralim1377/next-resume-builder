@@ -38,7 +38,8 @@ export const createResearchSchema = (t: TFunction<string, undefined>) => {
       .string()
       .trim()
       .min(1, { message: t("publisherRequired") })
-      .max(150, { message: t("publisherTooLong") }),
+      .max(150, { message: t("publisherTooLong") })
+      .or(z.literal("")),
 
     // Handles empty string as valid for optional URLs
     researchUrl: z

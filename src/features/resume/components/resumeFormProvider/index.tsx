@@ -1,11 +1,9 @@
 "use client";
-import { FormProvider, useWatch } from "react-hook-form";
+import { FormProvider, Path } from "react-hook-form";
 import { useCallback, useMemo, useState } from "react";
 import { useResumeForm } from "../../hooks/useResumeForm";
-import { SectionState, StepName } from "../../types/resume.types";
 import { ResumeFormValues } from "../../schemas/resume.schema";
 import { RESUME_STEPS } from "../../constants/steps";
-import { calculateStepStatus } from "../../utils/stepper.utils";
 import StepWrapper from "../StepWrapper";
 import { FormStepper } from "../FormStepper";
 import { NavigationButtons } from "../NavigationButtons";
@@ -23,58 +21,37 @@ const ResumeFormProvider = ({
   onSubmit,
 }: ResumeFormProviderProps) => {
   const form = useResumeForm(initialData, mode);
-  const { errors } = form.formState;
-
   const [currentStep, setCurrentStep] = useState(0);
-
-  const formValues = useWatch({ control: form.control });
-
-  const stepStatuses = useMemo((): Record<StepName, SectionState> => {
-    const statuses = {} as Record<StepName, SectionState>;
-
-    RESUME_STEPS.forEach((step, index) => {
-      statuses[step.id] = calculateStepStatus({
-        step,
-        values: formValues,
-        errors,
-        index,
-      });
-    });
-
-    return statuses;
-  }, [formValues, errors]);
-
-  // console.log("stepStatuses", stepStatuses);
 
   const currentStepConfig = RESUME_STEPS[currentStep];
 
-  const handleFormSubmit = useCallback(async () => {
-    const values = form.getValues();
-    try {
-      await onSubmit?.(values);
-      console.log("✅ Final Resume Data:", values);
-    } catch (error) {
-      console.error("❌ Submit failed:", error);
-    }
-  }, [form, onSubmit]);
+  const handleFormSubmit = useCallback(
+    async (values: ResumeFormValues) => {
+      try {
+        await onSubmit?.(values);
+        console.log("✅ Final Resume Data Submitted Successfully:", values);
+      } catch (error) {
+        console.error("❌ Submit failed:", error);
+      }
+    },
+    [onSubmit],
+  );
 
   const handleNext = useCallback(async () => {
     if (!currentStepConfig) return;
 
-    const isValid = await form.trigger(
-      currentStepConfig.fieldNames as unknown as Parameters<
-        typeof form.trigger
-      >[0],
-      {
-        shouldFocus: true,
-      },
-    );
+    const fieldsToValidate =
+      currentStepConfig.fieldNames as Path<ResumeFormValues>[];
+
+    const isValid = await form.trigger(fieldsToValidate, {
+      shouldFocus: true,
+    });
 
     if (isValid) {
       if (currentStep < RESUME_STEPS.length - 1) {
         setCurrentStep((prev) => prev + 1);
       } else {
-        await handleFormSubmit();
+        form.handleSubmit(handleFormSubmit)();
       }
     }
   }, [currentStep, currentStepConfig, form, handleFormSubmit]);
@@ -83,20 +60,37 @@ const ResumeFormProvider = ({
     setCurrentStep((prev) => (prev > 0 ? prev - 1 : prev));
   }, []);
 
-  const handleStepClick = useCallback((index: number) => {
-    setCurrentStep(index);
-  }, []);
+  // 🚀 اصلاح باگ UX: بررسی اعتبارسنجی استپ فعلی قبل از اجازه حرکت به استپ‌های جلوتر
+  const handleStepClick = useCallback(
+    async (targetIndex: number) => {
+      if (targetIndex < currentStep) {
+        setCurrentStep(targetIndex);
+      } else if (targetIndex > currentStep) {
+        if (!currentStepConfig) return;
+
+        const fieldsToValidate =
+          currentStepConfig.fieldNames as Path<ResumeFormValues>[];
+        const isValid = await form.trigger(fieldsToValidate, {
+          shouldFocus: true,
+        });
+
+        if (isValid) {
+          setCurrentStep(targetIndex);
+        }
+      }
+    },
+    [currentStep, currentStepConfig, form],
+  );
 
   const providerValue = useMemo(
     () => ({
       currentStep,
       setCurrentStep,
-      stepStatuses,
       handleNext,
       handlePrev,
       handleStepClick,
     }),
-    [currentStep, stepStatuses, handleNext, handlePrev, handleStepClick],
+    [currentStep, handleNext, handlePrev, handleStepClick],
   );
 
   return (
@@ -106,12 +100,7 @@ const ResumeFormProvider = ({
           onSubmit={form.handleSubmit(handleFormSubmit)}
           className="mx-auto grid w-full grid-rows-[auto_1fr_auto] gap-6"
         >
-          <FormStepper
-            steps={RESUME_STEPS}
-            currentStep={currentStep}
-            stepStatuses={stepStatuses}
-            onStepClick={handleStepClick}
-          />
+          <FormStepper />
           <StepWrapper currentStep={currentStep} />
           <NavigationButtons
             onNext={handleNext}

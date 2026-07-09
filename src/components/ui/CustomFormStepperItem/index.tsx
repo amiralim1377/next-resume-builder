@@ -1,4 +1,5 @@
 "use client";
+
 import { cn } from "@/utils/cn";
 import { CheckCircle } from "@/components/svg/CheckCircle";
 import { ConnectorLine } from "./components/ConnectorLine";
@@ -11,7 +12,9 @@ type Props = {
   title: string;
   isActive: boolean;
   isCompleted: boolean;
-  isPending: boolean;
+  isDraft: boolean;
+  isEmpty: boolean;
+  isInvalid: boolean;
   isLast: boolean;
   onClick: () => void;
 };
@@ -21,28 +24,42 @@ export const FormStepperItem = ({
   title,
   isActive,
   isCompleted,
-  isPending,
+  isDraft,
+  isEmpty,
+  isInvalid,
   isLast,
   onClick,
 }: Props) => {
   const { lng } = useLang();
   const { t } = useTranslation(lng, "form");
   const { colors } = useThemeColors();
+
   return (
     <div
       className="relative flex flex-1 cursor-pointer flex-col items-center gap-2"
       onClick={onClick}
     >
-      {/* Logic for line is here, but data is passed in as isLast */}
       {!isLast && <ConnectorLine isCompleted={isCompleted} />}
 
       <div
         className={cn(
-          "z-10 flex h-8 w-8 items-center justify-center rounded-full border-2 transition-colors",
-          isCompleted && "border-teal-600 text-white",
+          "z-10 flex h-8 w-8 items-center justify-center rounded-full border-2 transition-all duration-300",
+
+          isEmpty && !isActive && "border-gray-200 bg-gray-100 text-gray-400",
+
+          isDraft &&
+            !isActive &&
+            !isInvalid &&
+            "border-state-warning text-state-warning bg-white",
+
+          isCompleted && !isActive && "border-teal-600 text-white",
+
+          isInvalid &&
+            !isActive &&
+            "border-state-error text-state-error bg-state-error/10",
+
           isActive &&
             "border-blue-600 bg-white text-blue-600 ring-4 ring-blue-50",
-          isPending && "border-gray-200 bg-gray-100 text-gray-400",
         )}
       >
         {isCompleted ? (
@@ -56,29 +73,43 @@ export const FormStepperItem = ({
         <p className="text-[10px] font-semibold tracking-wider text-gray-400 uppercase">
           Step {stepNumber}
         </p>
+
         <p
           className={cn(
             "text-sm font-semibold",
-            isActive ? "text-gray-900" : "text-gray-600",
+            isInvalid
+              ? "text-state-error"
+              : isActive
+                ? "text-gray-900"
+                : "text-gray-600",
           )}
         >
-          {t(`${title}`)}
+          {t(title)}
         </p>
+
         <p
           className={cn(
-            "mt-1 text-xs",
+            "mt-1 inline-block rounded px-2 py-0.5 text-xs",
             isCompleted
               ? "text-teal-600"
-              : isActive
-                ? "text-blue-600"
-                : "text-gray-400",
+              : isInvalid
+                ? "text-state-error"
+                : isDraft
+                  ? "text-text-warning"
+                  : isActive
+                    ? "text-blue-600"
+                    : "text-gray-400",
           )}
         >
           {isCompleted
-            ? t("completed")
-            : isActive
-              ? t("inProgress")
-              : t("pending")}
+            ? t("status.completed")
+            : isInvalid
+              ? t("status.invalid")
+              : isActive
+                ? t("inProgress")
+                : isDraft
+                  ? t("status.draft")
+                  : t("status.empty")}
         </p>
       </div>
     </div>
