@@ -21,7 +21,7 @@ export const useResumeForm = (
 
   const form = useForm<ResumeFormValues>({
     resolver: zodResolver(schema),
-    defaultValues: initialData ?? getDefaultResumeValues({ lng }),
+    defaultValues: initialData ?? getDefaultResumeValues(),
     mode: "onChange",
     reValidateMode: "onChange",
     shouldUnregister: false,
