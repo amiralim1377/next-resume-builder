@@ -15,7 +15,6 @@ function JobStep() {
   const { t } = useTranslation(lng, "form");
   const { colors } = useThemeColors();
 
-  // Bulletproof typing to prevent status string widening
   const defaultObj: ResumeFormValues["job"][number] = {
     status: "empty",
     jobTitle: "",
