@@ -6,6 +6,7 @@ import { memo, useEffect, useState, useMemo } from "react";
 import { useFormContext, useWatch } from "react-hook-form";
 import { RowStatus } from "@/features/resume/types/resume.types";
 import { educationStatusEngine } from "@/features/resume/rules/education.rules";
+import { useItemStatus } from "@/features/resume/hooks/useItemStatus";
 
 type HeaderProps = {
   index: number;
@@ -22,7 +23,9 @@ const EducationAccordionHeaderComponent = ({ index, t }: HeaderProps) => {
 
   const degreeLevel = rowValues?.degreeLevel;
   const academicMajor = rowValues?.academicMajor;
-  const rowError = errors.education?.[index];
+  const rowError = !!errors.education?.[index];
+
+  const status = useItemStatus(rowValues, rowError, educationStatusEngine);
 
   const currentTargetLabel = useMemo(() => {
     const degreeTranslated = degreeLevel ? t(`degree.${degreeLevel}`) : "";
@@ -45,10 +48,6 @@ const EducationAccordionHeaderComponent = ({ index, t }: HeaderProps) => {
 
   // ─── 3. Status Calculation Engine ───────────────────────────────────
   const { badgeType, badgeLabel } = useMemo(() => {
-    const hasErrors = !!rowError;
-
-    const status = educationStatusEngine.getRowStatus(rowValues, hasErrors);
-
     const badgeMap: Record<
       RowStatus,
       {
@@ -63,7 +62,7 @@ const EducationAccordionHeaderComponent = ({ index, t }: HeaderProps) => {
     };
 
     return badgeMap[status];
-  }, [rowValues, rowError]);
+  }, [status]);
 
   return (
     <div className="flex w-full items-center justify-between pr-4">
