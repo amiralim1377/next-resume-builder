@@ -214,6 +214,7 @@
   "status.draft": "Incomplete",
   "status.empty": "Not started",
   "status.completed": "Completed",
+  "status.invalid": "invalid",
   "projectTitleRequired": "Project title is required",
   "projectTitleTooLong": "Project title is too long",
   "clientNameRequired": "Client name is required",
