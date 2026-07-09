@@ -38,8 +38,9 @@ const StatusBadgeComponent = function StatusBadge<T>({
 
   const formErrors = errors as Record<string, unknown>;
 
+  const sectionErrors = formErrors[name] as unknown[];
   const rowError = Boolean(
-    Array.isArray(formErrors[name]) && formErrors[name]?.[index],
+    Array.isArray(sectionErrors) && sectionErrors[index],
   );
 
   const status = useItemStatus(rowValues, rowError, engine);
