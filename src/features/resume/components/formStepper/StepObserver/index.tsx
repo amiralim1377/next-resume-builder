@@ -3,11 +3,11 @@
 import { useMemo } from "react";
 import { useFormContext, useWatch } from "react-hook-form";
 import { FormStepperItem } from "@/components/ui/CustomFormStepperItem";
-import { SectionState } from "../../types/resume.types";
-import { RESUME_STEPS } from "../../constants/steps";
-import { ResumeFormValues } from "../../schemas/resume.schema";
-import { educationStatusEngine } from "../../rules/education.rules";
-import { basicInfoStatusEngine } from "../../rules/basicInfoStep.rules";
+import { basicInfoStatusEngine } from "@/features/resume/rules/basicInfoStep.rules";
+import { educationStatusEngine } from "@/features/resume/rules/education.rules";
+import { ResumeFormValues } from "@/features/resume/schemas/resume.schema";
+import { RESUME_STEPS } from "@/features/resume/constants/steps";
+import { SectionState } from "@/features/resume/types/resume.types";
 
 type StatusEngineWrapper = {
   getStepStatus: (rows: unknown, hasErrors: boolean) => SectionState;
