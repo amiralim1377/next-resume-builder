@@ -248,5 +248,7 @@
   "delete": "حذف",
   "moveUp": "انتقال به بالا",
   "moveDown": "انتقال به پایین",
-  "duplicate": "کپی"
+  "duplicate": "کپی",
+  "deleteRowTitle": "تایید حذف ردیف",
+  "deleteRowDescription": "آیا مطمئن هستید که می‌خواهید این ردیف را حذف کنید؟"
 }
