@@ -1,11 +1,12 @@
 "use client";
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import {
   useFieldArray,
   useFormContext,
   FieldArrayPath,
   FieldValues,
   FieldArray,
+  Path,
 } from "react-hook-form";
 
 import { CustomButton } from "@/components/ui/CustomButton";
@@ -38,7 +39,14 @@ interface ArrayFieldStepProps<TFieldValues extends FieldValues> {
   addButtonLabel: string;
   emptyStateLabel?: string;
   renderEmptyState?: (append: () => void) => React.ReactNode;
-  renderHeader: (index: number) => React.ReactNode;
+  renderHeader: (
+    index: number,
+    remove: (index: number) => void,
+    copy: (index: number) => void,
+    move: (from: number, to: number) => void,
+    isFirst: boolean,
+    isLast: boolean,
+  ) => React.ReactNode;
   renderItem: (
     index: number,
     remove: (index: number) => void,
@@ -54,10 +62,10 @@ function ArrayFieldStep<TFieldValues extends FieldValues>({
   renderHeader,
   renderItem,
 }: ArrayFieldStepProps<TFieldValues>) {
-  const { control } = useFormContext<TFieldValues>();
+  const { control, getValues } = useFormContext<TFieldValues>();
   const [activeAccordionId, setActiveAccordionId] = useState<string>("");
 
-  const { fields, append, remove, move } = useFieldArray({
+  const { fields, append, remove, move, insert } = useFieldArray({
     control,
     name: fieldName,
   });
@@ -85,6 +93,26 @@ function ArrayFieldStep<TFieldValues extends FieldValues>({
     append(emptyRowValues);
   };
 
+  const duplicateRow = useCallback(
+    (index: number) => {
+      const allValues = getValues(
+        fieldName as unknown as Path<TFieldValues>,
+      ) as unknown as Record<string, unknown>[];
+
+      const currentValues = allValues[index];
+
+      if (currentValues) {
+        const itemToCopy = structuredClone(currentValues);
+
+        delete itemToCopy.id;
+        insert(
+          index + 1,
+          itemToCopy as FieldArray<TFieldValues, FieldArrayPath<TFieldValues>>,
+        );
+      }
+    },
+    [getValues, fieldName, insert],
+  );
   useEffect(() => {
     if (fields.length > prevLengthRef.current && fields.length > 0) {
       const lastFieldId = fields[fields.length - 1].id;
@@ -129,14 +157,21 @@ function ArrayFieldStep<TFieldValues extends FieldValues>({
                         {...dragListeners}
                         className="text-muted-foreground hover:text-foreground cursor-grab p-1.5 transition-colors active:cursor-grabbing md:p-2"
                       >
-                        <GripVertical className="text-text-secondary hover:text-brandHover hover:ring-brandHover h-7 w-7 rounded-md p-1 transition-all hover:ring-2 hover:ring-offset-2" />{" "}
+                        <GripVertical className="text-text-secondary hover:text-brandHover hover:ring-brandHover h-7 w-7 rounded-md p-1 transition-all hover:ring-2 hover:ring-offset-2" />
                       </div>
                       <AccordionItem
                         value={field.id}
                         className="bg-card flex-1 overflow-hidden rounded-lg border shadow-sm transition-all"
                       >
                         <AccordionTrigger className="data-[state=open]:border-b-borde border-b-0 px-4 py-3 hover:no-underline">
-                          {renderHeader(index)}
+                          {renderHeader(
+                            index,
+                            remove,
+                            duplicateRow,
+                            move,
+                            index === 0,
+                            index === fields.length - 1,
+                          )}
                         </AccordionTrigger>
                         <AccordionContent className="bg-muted/10 px-5 pt-4 pb-5">
                           {renderItem(index, remove)}

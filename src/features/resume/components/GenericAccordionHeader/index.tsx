@@ -149,12 +149,10 @@ const HeaderTitle = memo(function HeaderTitle({
 export type GenericAccordionHeaderProps<T> = {
   name: string;
   index: number;
-
   engine: StatusEngine<T>;
-
   titleDependencies: Array<keyof T & string>;
   formatTitle: (values: unknown[], t: TFunction<string, undefined>) => string;
-
+  actionsSlot?: React.ReactNode;
   t: TFunction<string, undefined>;
 };
 
@@ -164,19 +162,28 @@ function GenericAccordionHeader<T>({
   engine,
   titleDependencies,
   formatTitle,
+  actionsSlot,
   t,
 }: GenericAccordionHeaderProps<T>) {
   return (
     <div className="flex w-full items-center justify-between pr-4">
-      <HeaderTitle
-        name={name}
-        index={index}
-        titleDependencies={titleDependencies}
-        formatTitle={formatTitle}
-        t={t}
-      />
-
-      <StatusBadge<T> name={name} index={index} engine={engine} t={t} />
+      <div className="flex min-w-0 flex-1 items-center">
+        <HeaderTitle
+          name={name}
+          index={index}
+          titleDependencies={titleDependencies}
+          formatTitle={formatTitle}
+          t={t}
+        />
+      </div>
+      <div className="flex shrink-0 items-center gap-2">
+        {actionsSlot && (
+          <div className="flex items-center gap-1">{actionsSlot}</div>
+        )}
+        <div className="shrink-0">
+          <StatusBadge<T> name={name} index={index} engine={engine} t={t} />
+        </div>
+      </div>
     </div>
   );
 }

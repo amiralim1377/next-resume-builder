@@ -244,5 +244,9 @@
   "noResearchAddedYet": "هنوز فعالیت پژوهشی اضافه نشده است",
   "emptyStepResearchDescription": "نشریات و فعالیت‌های پژوهشی خود را اضافه کنید و مسیر تخصصی‌تان را به نمایش بگذارید. از اینجا شروع کنید.",
   "addResearch": "افزودن فعالیت پژوهشی",
-  "researchTitleRequired": "عنوان فعالیت پژوهشی الزامی است"
+  "researchTitleRequired": "عنوان فعالیت پژوهشی الزامی است",
+  "delete": "حذف",
+  "moveUp": "انتقال به بالا",
+  "moveDown": "انتقال به پایین",
+  "duplicate": "کپی"
 }

@@ -2,7 +2,6 @@ import { TFunction } from "i18next";
 import * as z from "zod";
 import { isGenericRowEmpty } from "../../rules/generic.rules";
 
-// ─── Constants ────────────────────────────────────────────────────────────────
 export const DEGREE_OPTIONS = [
   "belowDiploma",
   "diploma",
@@ -17,7 +16,6 @@ export type DegreeLevel = (typeof DEGREE_OPTIONS)[number];
 const GRADE_MIN = 0;
 const GRADE_MAX = 100;
 
-// ─── Helpers ──────────────────────────────────────────────────────────────────
 const parseGrade = (val: string): number => {
   const normalized = val.trim().replace(",", ".");
   return parseFloat(normalized);
@@ -29,7 +27,7 @@ const isValidGrade = (val: string): boolean => {
 };
 
 const identityT = ((key: string) => key) as TFunction;
-// ─── Schema Factory ───────────────────────────────────────────────────────────
+
 export const getStrictEducationSchema = (t: TFunction = identityT) => {
   const summarySchema = z.object({
     type: z.string(),
@@ -87,7 +85,11 @@ export const getStrictEducationSchema = (t: TFunction = identityT) => {
     })
     .superRefine((data, ctx) => {
       if (!data.isStudyingNow) {
-        if (!data.graduationDate || data.graduationDate.trim() === "") {
+        const hasEntryDate = data.entryDate && data.entryDate.trim() !== "";
+        const hasGraduationDate =
+          data.graduationDate && data.graduationDate.trim() !== "";
+
+        if (hasEntryDate && !hasGraduationDate) {
           ctx.addIssue({
             code: "custom",
             path: ["graduationDate"],
@@ -96,7 +98,7 @@ export const getStrictEducationSchema = (t: TFunction = identityT) => {
           return;
         }
 
-        if (data.entryDate && data.graduationDate) {
+        if (hasEntryDate && hasGraduationDate) {
           const startDate = new Date(data.entryDate).getTime();
           const endDate = new Date(data.graduationDate).getTime();
 
