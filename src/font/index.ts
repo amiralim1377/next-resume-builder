@@ -34,6 +34,7 @@ export const yekanbakh = localFont({
     },
   ],
   variable: "--yekanbakh",
+  adjustFontFallback: false,
 });
 
 export const inter = localFont({
@@ -70,4 +71,5 @@ export const inter = localFont({
     },
   ],
   variable: "--inter",
+  adjustFontFallback: false,
 });
