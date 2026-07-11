@@ -1,5 +1,7 @@
+"use client";
 import { CSSProperties, ReactNode, useEffect, useState } from "react";
 import { createPortal } from "react-dom";
+import { motion, AnimatePresence } from "framer-motion";
 import { CloseSvg } from "@/components/svg/CloseSvg";
 import { cn } from "@/utils/cn";
 import { useThemeColors } from "@/provider/themeProvider/useThemeColors";
@@ -28,7 +30,6 @@ export interface CustomModalProps {
   title?: ReactNode;
   withCloseButton?: boolean;
 }
-const ANIMATION_DURATION = 200;
 
 const CustomModal = ({
   children,
@@ -43,23 +44,16 @@ const CustomModal = ({
   title,
   withCloseButton = true,
 }: CustomModalProps) => {
-  const [isVisible, setIsVisible] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
   const { colors } = useThemeColors();
 
   useEffect(() => {
-    if (isOpen) {
-      // eslint-disable-next-line
-      setIsVisible(true);
-    } else {
-      const timer = setTimeout(() => {
-        setIsVisible(false);
-      }, ANIMATION_DURATION);
+    const frameId = requestAnimationFrame(() => {
+      setIsMounted(true);
+    });
+    return () => cancelAnimationFrame(frameId);
+  }, []);
 
-      return () => clearTimeout(timer);
-    }
-  }, [isOpen]);
-
-  // // Prevent body scroll
   useEffect(() => {
     if (isOpen) {
       const scrollBarWidth =
@@ -76,14 +70,7 @@ const CustomModal = ({
     };
   }, [isOpen]);
 
-  // SSR / Hydration safety + don't render when closed and animation finished
-  if (!isVisible) return null;
-
-  const handleOverlayClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (e.target instanceof HTMLElement && e.target === e.currentTarget) {
-      onClose();
-    }
-  };
+  if (!isMounted) return null;
 
   const getModalWidth = (): string => {
     if (typeof size === "number") return `${size}px`;
@@ -92,82 +79,91 @@ const CustomModal = ({
   };
 
   return createPortal(
-    <div
-      className={cn(
-        "fixed inset-0 z-9998 flex max-h-dvh items-center justify-center bg-transparent backdrop-blur-none transition-all duration-200 ease-out",
-        isVisible && "bg-black/50 backdrop-blur-[3px]",
-        classNames?.overlay,
-        classNames?.root,
-      )}
-      onClick={handleOverlayClick}
-      role="dialog"
-      aria-modal="true"
-    >
-      <div
-        className={cn(
-          "flex max-h-screen w-full items-center justify-center p-4",
-          classNames?.inner,
-        )}
-        onClick={(e) => e.stopPropagation()}
-      >
-        <div
-          className={cn(
-            "bg-ui-surface relative flex w-full translate-y-5 scale-95 flex-col rounded-2xl p-4 opacity-0 transition-all duration-200 ease-out",
-            isVisible && "translate-y-0 scale-100 opacity-100",
-            noBorder && "border-0! border-none",
-            classNames?.content,
-            className,
-          )}
-          style={{
-            ...style,
-            maxWidth: getModalWidth(),
-          }}
-          onClick={(e) => e.stopPropagation()}
-        >
-          {hasHeader && (title || withCloseButton) && (
-            <div
-              className={cn(
-                "relative flex items-center justify-between bg-transparent p-2",
-                classNames?.header,
-              )}
-            >
-              {title && (
-                <div
-                  className={cn(
-                    "text-text-primary flex-1 text-2xl font-semibold",
-                    classNames?.title,
-                  )}
-                >
-                  {title}
-                </div>
-              )}
-              {withCloseButton && (
-                <button
-                  onClick={onClose}
-                  className={cn(
-                    "text-accent absolute inset-e-2 top-2 flex cursor-pointer items-center justify-center border-0 bg-transparent",
-                    classNames?.close,
-                  )}
-                  aria-label="Close modal"
-                  type="button"
-                >
-                  <CloseSvg color={colors.text?.secondary} size={20} />
-                </button>
-              )}
-            </div>
-          )}
+    <AnimatePresence>
+      {isOpen && (
+        <>
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className={cn(
+              "fixed inset-0 z-9998 bg-black/50 backdrop-blur-[3px]",
+              classNames?.overlay,
+              classNames?.root,
+            )}
+            onClick={onClose}
+            aria-hidden="true"
+          />
 
           <div
             className={cn(
-              "flex-1 overflow-y-auto bg-transparent p-2",
-              classNames?.body,
+              "pointer-events-none fixed inset-0 z-9999 flex max-h-dvh items-center justify-center p-4",
+              classNames?.inner,
             )}
           >
-            {children}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 20 }}
+              transition={{ duration: 0.2, ease: "easeOut" }}
+              className={cn(
+                "bg-ui-surface pointer-events-auto relative flex w-full flex-col rounded-2xl p-4",
+                noBorder && "border-0! border-none",
+                classNames?.content,
+                className,
+              )}
+              style={{
+                ...style,
+                maxWidth: getModalWidth(),
+              }}
+            >
+              {hasHeader && (title || withCloseButton) && (
+                <div
+                  className={cn(
+                    "relative flex items-center justify-between bg-transparent p-2",
+                    classNames?.header,
+                  )}
+                >
+                  {title && (
+                    <div
+                      className={cn(
+                        "text-text-primary flex-1 text-2xl font-semibold",
+                        classNames?.title,
+                      )}
+                    >
+                      {title}
+                    </div>
+                  )}
+                  {withCloseButton && (
+                    <button
+                      onClick={onClose}
+                      className={cn(
+                        "text-accent absolute inset-e-2 top-2 flex cursor-pointer items-center justify-center border-0 bg-transparent",
+                        classNames?.close,
+                      )}
+                      aria-label="Close modal"
+                      type="button"
+                    >
+                      <CloseSvg color={colors.text?.secondary} size={20} />
+                    </button>
+                  )}
+                </div>
+              )}
+
+              <div
+                className={cn(
+                  "flex-1 overflow-y-auto bg-transparent p-2",
+                  classNames?.body,
+                )}
+              >
+                {children}
+              </div>
+            </motion.div>
           </div>
-        </div>
-      </div>
-    </div>,
+        </>
+      )}
+    </AnimatePresence>,
     document.body,
   );
 };
