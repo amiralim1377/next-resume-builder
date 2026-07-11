@@ -242,5 +242,9 @@
   "noResearchAddedYet": "No research added yet",
   "emptyStepResearchDescription": "Add your publications and research activities to showcase your expertise journey. Start here.",
   "addResearch": "Add Research",
-  "researchTitleRequired": "Research title is required"
+  "researchTitleRequired": "Research title is required",
+  "delete": "delete",
+  "moveUp": "Move up",
+  "moveDown": "Move down",
+  "duplicate": "Duplicate"
 }
