@@ -60,8 +60,8 @@ function ArrayFieldStep<TFieldValues extends FieldValues>({
 
   const {
     fields,
-    activeAccordionId,
-    setActiveAccordionId,
+    activeAccordionIds,
+    setActiveAccordionIds,
     sensors,
     handleDragEnd,
     handleAddRow,
@@ -96,10 +96,9 @@ function ArrayFieldStep<TFieldValues extends FieldValues>({
             strategy={verticalListSortingStrategy}
           >
             <Accordion
-              type="single"
-              collapsible
-              value={activeAccordionId}
-              onValueChange={setActiveAccordionId}
+              type="multiple"
+              value={activeAccordionIds}
+              onValueChange={setActiveAccordionIds}
               className="w-full space-y-3"
             >
               {fields.map((field, index) => (
