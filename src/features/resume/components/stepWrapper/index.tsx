@@ -1,19 +1,9 @@
 "use client";
 
-import { useFormContext } from "react-hook-form";
 import { motion, AnimatePresence } from "framer-motion";
-import { ResumeFormValues } from "../../schemas/resume.schema";
 import { RESUME_STEPS } from "../../constants/steps";
-import { useLang } from "@/provider/lngProvider";
-import { useTranslation } from "@/lib/i18n/client";
 
 const StepWrapper = ({ currentStep }: { currentStep: number }) => {
-  const { lng } = useLang();
-  const { t } = useTranslation(lng, "form");
-  const {
-    formState: { errors },
-  } = useFormContext<ResumeFormValues>();
-
   const stepConfig = RESUME_STEPS[currentStep];
 
   if (!stepConfig) {
