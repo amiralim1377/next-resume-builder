@@ -1,13 +1,6 @@
 "use client";
-import React, { useState, useEffect, useRef, useCallback } from "react";
-import {
-  useFieldArray,
-  useFormContext,
-  FieldArrayPath,
-  FieldValues,
-  FieldArray,
-  Path,
-} from "react-hook-form";
+import React from "react";
+import { FieldArrayPath, FieldValues, FieldArray } from "react-hook-form";
 
 import { CustomButton } from "@/components/ui/CustomButton";
 import {
@@ -16,22 +9,22 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/NewCustomAccordion";
-import { GripVertical } from "lucide-react";
+import { GripVertical, Trash2 } from "lucide-react";
 
-import {
-  DndContext,
-  closestCenter,
-  DragEndEvent,
-  PointerSensor,
-  useSensor,
-  useSensors,
-} from "@dnd-kit/core";
+import { DndContext, pointerWithin } from "@dnd-kit/core";
 import {
   SortableContext,
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
-import { restrictToVerticalAxis } from "@dnd-kit/modifiers";
+import {
+  restrictToVerticalAxis,
+  restrictToParentElement,
+} from "@dnd-kit/modifiers";
 import { SortableItem } from "../SortableItem";
+import { useLang } from "@/provider/lngProvider";
+import { useTranslation } from "@/lib/i18n/client";
+import { CustomConfirmModal } from "@/components/ui/CustomConfirmModal";
+import { useArrayFieldStep } from "./hooks/useArrayFieldStep";
 
 interface ArrayFieldStepProps<TFieldValues extends FieldValues> {
   fieldName: FieldArrayPath<TFieldValues>;
@@ -41,7 +34,7 @@ interface ArrayFieldStepProps<TFieldValues extends FieldValues> {
   renderEmptyState?: (append: () => void) => React.ReactNode;
   renderHeader: (
     index: number,
-    remove: (index: number) => void,
+    openDeleteModal: (index: number) => void,
     copy: (index: number) => void,
     move: (from: number, to: number) => void,
     isFirst: boolean,
@@ -62,64 +55,24 @@ function ArrayFieldStep<TFieldValues extends FieldValues>({
   renderHeader,
   renderItem,
 }: ArrayFieldStepProps<TFieldValues>) {
-  const { control, getValues } = useFormContext<TFieldValues>();
-  const [activeAccordionId, setActiveAccordionId] = useState<string>("");
+  const { lng } = useLang();
+  const { t } = useTranslation(lng, "form");
 
-  const { fields, append, remove, move, insert } = useFieldArray({
-    control,
-    name: fieldName,
-  });
-
-  const sensors = useSensors(
-    useSensor(PointerSensor, {
-      activationConstraint: { distance: 5 },
-    }),
-  );
-
-  const handleDragEnd = (event: DragEndEvent) => {
-    const { active, over } = event;
-
-    if (over && active.id !== over.id) {
-      const oldIndex = fields.findIndex((field) => field.id === active.id);
-      const newIndex = fields.findIndex((field) => field.id === over.id);
-
-      move(oldIndex, newIndex);
-    }
-  };
-
-  const prevLengthRef = useRef(fields.length);
-
-  const handleAddRow = () => {
-    append(emptyRowValues);
-  };
-
-  const duplicateRow = useCallback(
-    (index: number) => {
-      const allValues = getValues(
-        fieldName as unknown as Path<TFieldValues>,
-      ) as unknown as Record<string, unknown>[];
-
-      const currentValues = allValues[index];
-
-      if (currentValues) {
-        const itemToCopy = structuredClone(currentValues);
-
-        delete itemToCopy.id;
-        insert(
-          index + 1,
-          itemToCopy as FieldArray<TFieldValues, FieldArrayPath<TFieldValues>>,
-        );
-      }
-    },
-    [getValues, fieldName, insert],
-  );
-  useEffect(() => {
-    if (fields.length > prevLengthRef.current && fields.length > 0) {
-      const lastFieldId = fields[fields.length - 1].id;
-      setActiveAccordionId(lastFieldId);
-    }
-    prevLengthRef.current = fields.length;
-  }, [fields]);
+  const {
+    fields,
+    activeAccordionId,
+    setActiveAccordionId,
+    sensors,
+    handleDragEnd,
+    handleAddRow,
+    duplicateRow,
+    deleteTargetIndex,
+    handleOpenDeleteModal,
+    handleCloseDeleteModal,
+    handleConfirmDelete,
+    remove,
+    move,
+  } = useArrayFieldStep({ fieldName, emptyRowValues });
 
   return (
     <div className="space-y-4">
@@ -134,9 +87,9 @@ function ArrayFieldStep<TFieldValues extends FieldValues>({
       ) : (
         <DndContext
           sensors={sensors}
-          collisionDetection={closestCenter}
+          collisionDetection={pointerWithin}
           onDragEnd={handleDragEnd}
-          modifiers={[restrictToVerticalAxis]}
+          modifiers={[restrictToVerticalAxis, restrictToParentElement]}
         >
           <SortableContext
             items={fields.map((f) => f.id)}
@@ -166,7 +119,7 @@ function ArrayFieldStep<TFieldValues extends FieldValues>({
                         <AccordionTrigger className="data-[state=open]:border-b-borde border-b-0 px-4 py-3 hover:no-underline">
                           {renderHeader(
                             index,
-                            remove,
+                            handleOpenDeleteModal,
                             duplicateRow,
                             move,
                             index === 0,
@@ -196,6 +149,29 @@ function ArrayFieldStep<TFieldValues extends FieldValues>({
           + {addButtonLabel}
         </CustomButton>
       )}
+
+      <CustomConfirmModal
+        isOpen={deleteTargetIndex !== null}
+        onClose={handleCloseDeleteModal}
+        cancelButtonProps={{
+          children: t("cancel"),
+          variant: "primary",
+          onClick: handleCloseDeleteModal,
+        }}
+        title={t("deleteRowTitle")}
+        confirmButtonProps={{
+          children: t("delete"),
+          className: "bg-state-error hover:bg-state-error/90 text-white",
+          onClick: handleConfirmDelete,
+        }}
+        icon={
+          <div className="bg-state-error/10 text-state-error mt-4 flex h-12 w-12 items-center justify-center rounded-full">
+            <Trash2 className="h-5 w-5" />
+          </div>
+        }
+      >
+        {t("deleteRowDescription")}
+      </CustomConfirmModal>
     </div>
   );
 }

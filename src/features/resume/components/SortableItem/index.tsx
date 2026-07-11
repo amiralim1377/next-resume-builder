@@ -17,23 +17,36 @@ const SortableItemComponent = ({ id, children }: SortableItemProps) => {
     transform,
     transition,
     isDragging,
-  } = useSortable({ id });
+  } = useSortable({
+    id,
+    transition: {
+      duration: 200,
+      easing: "cubic-bezier(0.2, 0, 0, 1)",
+    },
+  });
 
   const style = {
-    transform: CSS.Translate.toString(transform),
+    transform: transform ? CSS.Translate.toString(transform) : undefined,
     transition,
-    opacity: isDragging ? 0.6 : 1,
-    zIndex: isDragging ? 50 : "auto",
+    opacity: isDragging ? 0.4 : 1,
+    zIndex: isDragging ? 50 : 1,
+    position: "relative" as const,
     touchAction: "none",
   };
 
   const childContext = useMemo(
-    () => ({ dragListeners: listeners }),
-    [listeners],
+    () => ({
+      dragListeners: listeners ? { ...attributes, ...listeners } : undefined,
+    }),
+    [attributes, listeners],
   );
 
   return (
-    <div ref={setNodeRef} style={style} {...attributes} className="w-full">
+    <div
+      ref={setNodeRef}
+      style={style}
+      className="w-full will-change-transform"
+    >
       {children(childContext)}
     </div>
   );

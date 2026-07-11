@@ -246,5 +246,7 @@
   "delete": "delete",
   "moveUp": "Move up",
   "moveDown": "Move down",
-  "duplicate": "Duplicate"
+  "duplicate": "Duplicate",
+  "deleteRowTitle": "Confirm Deletion",
+  "deleteRowDescription": "Are you sure you want to delete this row? This action cannot be undone?"
 }

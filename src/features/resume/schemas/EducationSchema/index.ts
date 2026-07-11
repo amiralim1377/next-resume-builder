@@ -49,7 +49,7 @@ export const getStrictEducationSchema = (t: TFunction = identityT) => {
       }),
 
       institutionName: z.string().min(1, {
-        message: t("institutionName"),
+        message: t("institutionNameRequired"),
       }),
 
       gradeAverage: z
