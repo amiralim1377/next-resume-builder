@@ -1,13 +1,6 @@
 "use client";
-import React, { useState, useEffect, useRef, useCallback } from "react";
-import {
-  useFieldArray,
-  useFormContext,
-  FieldArrayPath,
-  FieldValues,
-  FieldArray,
-  Path,
-} from "react-hook-form";
+import React from "react";
+import { FieldArrayPath, FieldValues, FieldArray } from "react-hook-form";
 
 import { CustomButton } from "@/components/ui/CustomButton";
 import {
@@ -18,14 +11,7 @@ import {
 } from "@/components/ui/NewCustomAccordion";
 import { GripVertical, Trash2 } from "lucide-react";
 
-import {
-  DndContext,
-  closestCenter,
-  DragEndEvent,
-  PointerSensor,
-  useSensor,
-  useSensors,
-} from "@dnd-kit/core";
+import { DndContext, closestCenter } from "@dnd-kit/core";
 import {
   SortableContext,
   verticalListSortingStrategy,
@@ -35,6 +21,7 @@ import { SortableItem } from "../SortableItem";
 import { useLang } from "@/provider/lngProvider";
 import { useTranslation } from "@/lib/i18n/client";
 import { CustomConfirmModal } from "@/components/ui/CustomConfirmModal";
+import { useArrayFieldStep } from "./hooks/useArrayFieldStep";
 
 interface ArrayFieldStepProps<TFieldValues extends FieldValues> {
   fieldName: FieldArrayPath<TFieldValues>;
@@ -65,84 +52,24 @@ function ArrayFieldStep<TFieldValues extends FieldValues>({
   renderHeader,
   renderItem,
 }: ArrayFieldStepProps<TFieldValues>) {
-  const { control, getValues } = useFormContext<TFieldValues>();
-  const [activeAccordionId, setActiveAccordionId] = useState<string>("");
-  const [deleteTargetIndex, setDeleteTargetIndex] = useState<number | null>(
-    null,
-  );
   const { lng } = useLang();
   const { t } = useTranslation(lng, "form");
 
-  const { fields, append, remove, move, insert } = useFieldArray({
-    control,
-    name: fieldName,
-  });
-
-  const sensors = useSensors(
-    useSensor(PointerSensor, {
-      activationConstraint: { distance: 5 },
-    }),
-  );
-
-  const handleDragEnd = (event: DragEndEvent) => {
-    const { active, over } = event;
-
-    if (over && active.id !== over.id) {
-      const oldIndex = fields.findIndex((field) => field.id === active.id);
-      const newIndex = fields.findIndex((field) => field.id === over.id);
-
-      move(oldIndex, newIndex);
-    }
-  };
-
-  const prevLengthRef = useRef(fields.length);
-
-  const handleAddRow = () => {
-    append(emptyRowValues);
-  };
-
-  const handleOpenDeleteModal = useCallback((index: number) => {
-    setDeleteTargetIndex(index);
-  }, []);
-
-  const handleCloseDeleteModal = useCallback(() => {
-    setDeleteTargetIndex(null);
-  }, []);
-
-  const handleConfirmDelete = useCallback(() => {
-    if (deleteTargetIndex !== null) {
-      remove(deleteTargetIndex);
-      handleCloseDeleteModal();
-    }
-  }, [deleteTargetIndex, remove, handleCloseDeleteModal]);
-
-  const duplicateRow = useCallback(
-    (index: number) => {
-      const allValues = getValues(
-        fieldName as unknown as Path<TFieldValues>,
-      ) as unknown as Record<string, unknown>[];
-
-      const currentValues = allValues[index];
-
-      if (currentValues) {
-        const itemToCopy = structuredClone(currentValues);
-
-        delete itemToCopy.id;
-        insert(
-          index + 1,
-          itemToCopy as FieldArray<TFieldValues, FieldArrayPath<TFieldValues>>,
-        );
-      }
-    },
-    [getValues, fieldName, insert],
-  );
-  useEffect(() => {
-    if (fields.length > prevLengthRef.current && fields.length > 0) {
-      const lastFieldId = fields[fields.length - 1].id;
-      setActiveAccordionId(lastFieldId);
-    }
-    prevLengthRef.current = fields.length;
-  }, [fields]);
+  const {
+    fields,
+    activeAccordionId,
+    setActiveAccordionId,
+    sensors,
+    handleDragEnd,
+    handleAddRow,
+    duplicateRow,
+    deleteTargetIndex,
+    handleOpenDeleteModal,
+    handleCloseDeleteModal,
+    handleConfirmDelete,
+    remove,
+    move,
+  } = useArrayFieldStep({ fieldName, emptyRowValues });
 
   return (
     <div className="space-y-4">
