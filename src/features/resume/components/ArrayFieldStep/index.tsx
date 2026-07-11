@@ -11,12 +11,15 @@ import {
 } from "@/components/ui/NewCustomAccordion";
 import { GripVertical, Trash2 } from "lucide-react";
 
-import { DndContext, closestCenter } from "@dnd-kit/core";
+import { DndContext, pointerWithin } from "@dnd-kit/core";
 import {
   SortableContext,
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
-import { restrictToVerticalAxis } from "@dnd-kit/modifiers";
+import {
+  restrictToVerticalAxis,
+  restrictToParentElement,
+} from "@dnd-kit/modifiers";
 import { SortableItem } from "../SortableItem";
 import { useLang } from "@/provider/lngProvider";
 import { useTranslation } from "@/lib/i18n/client";
@@ -84,9 +87,9 @@ function ArrayFieldStep<TFieldValues extends FieldValues>({
       ) : (
         <DndContext
           sensors={sensors}
-          collisionDetection={closestCenter}
+          collisionDetection={pointerWithin}
           onDragEnd={handleDragEnd}
-          modifiers={[restrictToVerticalAxis]}
+          modifiers={[restrictToVerticalAxis, restrictToParentElement]}
         >
           <SortableContext
             items={fields.map((f) => f.id)}
