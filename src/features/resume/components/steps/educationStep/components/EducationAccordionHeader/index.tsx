@@ -7,6 +7,7 @@ import { memo } from "react";
 type HeaderProps = {
   index: number;
   t: TFunction<string, undefined>;
+  actionsSlot?: React.ReactNode;
 };
 
 const titleDependencies: Array<keyof EducationRowValues & string> = [
@@ -26,7 +27,11 @@ const formatTitle = (values: unknown[], t: TFunction<string, undefined>) => {
     : "...";
 };
 
-const EducationAccordionHeaderComponent = ({ index, t }: HeaderProps) => {
+const EducationAccordionHeaderComponent = ({
+  index,
+  t,
+  actionsSlot,
+}: HeaderProps) => {
   return (
     <MemoizedGenericAccordionHeader<EducationRowValues>
       name="education"
@@ -35,6 +40,7 @@ const EducationAccordionHeaderComponent = ({ index, t }: HeaderProps) => {
       titleDependencies={titleDependencies}
       formatTitle={formatTitle}
       t={t}
+      actionsSlot={actionsSlot}
     />
   );
 };
