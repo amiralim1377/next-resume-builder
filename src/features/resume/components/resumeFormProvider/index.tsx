@@ -1,6 +1,6 @@
 "use client";
 import { FormProvider, FieldErrors } from "react-hook-form";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useResumeForm } from "../../hooks/useResumeForm";
 import { ResumeFormValues } from "../../schemas/resume.schema";
 import { RESUME_STEPS } from "../../constants/steps";
@@ -8,6 +8,13 @@ import StepWrapper from "../StepWrapper";
 import { FormStepper } from "../FormStepper";
 import { NavigationButtons } from "../NavigationButtons";
 import { StepperContext } from "./StepperContext";
+import { useAutoSave } from "../../hooks/useAutoSave";
+import { get } from "idb-keyval";
+
+const AutoSaveManager = () => {
+  useAutoSave("current_resume_draft");
+  return null;
+};
 
 type ResumeFormProviderProps = {
   initialData?: Partial<ResumeFormValues>;
@@ -25,6 +32,26 @@ const ResumeFormProvider = ({
 
   const isLastStep = currentStep === RESUME_STEPS.length - 1;
   const isFirstStep = currentStep === 0;
+
+  const { reset } = form;
+
+  useEffect(() => {
+    const restoreDraftData = async () => {
+      try {
+        if (mode === "create") {
+          const savedDraft = await get("current_resume_draft");
+          if (savedDraft) {
+            reset(savedDraft);
+            console.log("🔄 Draft successfully restored from IndexedDB");
+          }
+        }
+      } catch (error) {
+        console.error("❌ Failed to restore draft from IndexedDB", error);
+      }
+    };
+
+    restoreDraftData();
+  }, [reset, mode]);
 
   const handleFormSubmit = useCallback(
     async (values: ResumeFormValues) => {
@@ -54,15 +81,16 @@ const ResumeFormProvider = ({
     [currentStep],
   );
 
-  const executeSubmit = form.handleSubmit(handleFormSubmit, onInvalidSubmit);
-
-  const handleNext = useCallback(() => {
-    if (isLastStep) {
-      executeSubmit();
-    } else {
-      setCurrentStep((prev) => prev + 1);
-    }
-  }, [isLastStep, executeSubmit]);
+  const handleNext = useCallback(
+    (e?: React.BaseSyntheticEvent) => {
+      if (isLastStep) {
+        form.handleSubmit(handleFormSubmit, onInvalidSubmit)(e);
+      } else {
+        setCurrentStep((prev) => prev + 1);
+      }
+    },
+    [isLastStep, form, handleFormSubmit, onInvalidSubmit],
+  );
 
   const handlePrev = useCallback(() => {
     setCurrentStep((prev) => (prev > 0 ? prev - 1 : prev));
@@ -91,9 +119,12 @@ const ResumeFormProvider = ({
     ],
   );
 
+  const executeSubmit = form.handleSubmit(handleFormSubmit, onInvalidSubmit);
+
   return (
     <FormProvider {...form}>
       <StepperContext.Provider value={stepperValue}>
+        <AutoSaveManager />
         <form
           onSubmit={executeSubmit}
           className="mx-auto grid w-full grid-rows-[auto_1fr_auto] gap-6"
