@@ -1,6 +1,5 @@
 "use client";
-
-import React, { useState, useCallback, useRef } from "react";
+import React, { useState, useCallback, useMemo } from "react";
 import { cn } from "@/utils/cn";
 import {
   AccordionContext,
@@ -40,7 +39,6 @@ export const Accordion = ({
   const handleValueChange = useCallback(
     (newValue: string | string[]) => {
       if (!isControlled) setUncontrolledValue(newValue);
-
       if (!onValueChange) return;
 
       if (type === "single" && typeof newValue === "string") {
@@ -57,7 +55,7 @@ export const Accordion = ({
       if (type === "single") {
         handleValueChange(itemValue);
       } else {
-        const currentArray = (resolvedValue as string[]) || [];
+        const currentArray = Array.isArray(resolvedValue) ? resolvedValue : [];
         if (!currentArray.includes(itemValue)) {
           handleValueChange([...currentArray, itemValue]);
         }
@@ -73,23 +71,21 @@ export const Accordion = ({
           handleValueChange("");
         }
       } else {
-        const currentArray = (resolvedValue as string[]) || [];
+        const currentArray = Array.isArray(resolvedValue) ? resolvedValue : [];
         handleValueChange(currentArray.filter((v) => v !== itemValue));
       }
     },
     [type, resolvedValue, handleValueChange, collapsible],
   );
 
-  const containerRef = useRef<HTMLDivElement>(null);
-  React.useImperativeHandle(ref, () => containerRef.current as HTMLDivElement);
-
   const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
     if (!["ArrowDown", "ArrowUp", "Home", "End"].includes(e.key)) return;
 
+    const container = e.currentTarget;
     const triggers = Array.from(
-      containerRef.current?.querySelectorAll<HTMLButtonElement>(
+      container.querySelectorAll<HTMLButtonElement>(
         "[data-accordion-trigger]:not([disabled])",
-      ) || [],
+      ),
     );
 
     if (!triggers.length) return;
@@ -97,8 +93,8 @@ export const Accordion = ({
     const activeIndex = triggers.findIndex(
       (el) => el === document.activeElement,
     );
-    if (activeIndex === -1 && e.key !== "Home" && e.key !== "End") return;
 
+    if (activeIndex === -1 && e.key !== "Home" && e.key !== "End") return;
     e.preventDefault();
 
     let nextIndex = activeIndex;
@@ -115,18 +111,21 @@ export const Accordion = ({
     triggers[nextIndex]?.focus();
   };
 
-  const contextValue: AccordionContextValue = {
-    value: resolvedValue,
-    onItemOpen,
-    onItemClose,
-    type,
-    collapsible: type === "single" ? collapsible : true,
-  };
+  const contextValue: AccordionContextValue = useMemo(
+    () => ({
+      value: resolvedValue,
+      onItemOpen,
+      onItemClose,
+      type,
+      collapsible: type === "single" ? collapsible : true,
+    }),
+    [resolvedValue, onItemOpen, onItemClose, type, collapsible],
+  );
 
   return (
     <AccordionContext.Provider value={contextValue}>
       <div
-        ref={containerRef}
+        ref={ref}
         onKeyDown={handleKeyDown}
         className={cn("w-full", className)}
         data-accordion-root=""

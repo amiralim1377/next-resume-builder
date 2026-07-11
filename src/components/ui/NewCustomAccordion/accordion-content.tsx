@@ -1,5 +1,4 @@
 "use client";
-
 import React from "react";
 import { motion, AnimatePresence, HTMLMotionProps } from "framer-motion";
 import { cn } from "@/utils/cn";
@@ -26,15 +25,37 @@ export const AccordionContent = ({
       {isOpen && (
         <motion.div
           ref={ref}
+          key="content"
           id={`accordion-content-${id}`}
           role="region"
           aria-labelledby={`accordion-trigger-${id}`}
           data-state={isOpen ? "open" : "closed"}
-          initial={{ height: 0, opacity: 0 }}
-          animate={{ height: "auto", opacity: 1 }}
-          exit={{ height: 0, opacity: 0 }}
-          transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-          className="relative overflow-visible text-sm"
+          initial={{ height: 0, opacity: 0, overflow: "hidden" }}
+          animate={{
+            height: "auto",
+            opacity: 1,
+            transitionEnd: { overflow: "visible" },
+          }}
+          exit={{ height: 0, opacity: 0, overflow: "hidden" }}
+          transition={{
+            height: {
+              type: "spring",
+              stiffness: 80,
+              damping: 20,
+              mass: 1,
+            },
+            opacity: {
+              duration: 0.3,
+              ease: "easeInOut",
+            },
+          }}
+          style={{
+            willChange: "height, opacity",
+            transform: "translateZ(0)",
+            backfaceVisibility: "hidden",
+            perspective: 1000,
+          }}
+          className="relative text-sm"
           {...props}
         >
           <div className={cn("pt-0 pb-4", className)}>{children}</div>
