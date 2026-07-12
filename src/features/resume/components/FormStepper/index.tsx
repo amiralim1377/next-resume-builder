@@ -2,7 +2,7 @@
 
 import { RESUME_STEPS } from "../../constants/steps";
 import { StepObserver } from "./StepObserver";
-import { useStepper } from "../ResumeFormProvider/StepperContext";
+import { useStepper } from "../ResumeFormWrapper/StepperContext";
 
 const FormStepper = () => {
   const { handleStepClick, currentStep } = useStepper();
