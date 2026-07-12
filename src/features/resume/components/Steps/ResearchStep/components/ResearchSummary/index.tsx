@@ -11,7 +11,7 @@ const ResearchSummary = ({ index, t }: ResearchSummaryProps) => {
     <CustomControlledResumeSummary
       label="summary"
       name={`research.${index}.summary`}
-      description={t("researchSummaryDescription")}
+      description={t("researchItemDescription")}
       descriptionClassName="text-text-secondary my-2 text-xs"
     />
   );
