@@ -79,50 +79,52 @@ function EducationStep() {
               onClick={append}
             />
           )}
-          renderHeader={(index, remove, copy, move, isFirst, isLast) => (
-            <EducationAccordionHeader
-              index={index}
-              t={t}
-              actionsSlot={
-                <>
-                  {!isFirst && (
+          renderHeader={(index, remove, copy, move, isFirst, isLast) => {
+            return (
+              <EducationAccordionHeader
+                index={index}
+                t={t}
+                actionsSlot={
+                  <>
+                    {!isFirst && (
+                      <AccordionRowAction
+                        icon={
+                          <ArrowUp className="text-text-secondary hover:text-brandHover hover:ring-brandHover h-7 w-7 rounded-md p-1 transition-all hover:ring-2 hover:ring-offset-2" />
+                        }
+                        onClick={() => move(index, index - 1)}
+                        title={t("moveUp")}
+                      />
+                    )}
+                    {!isLast && (
+                      <AccordionRowAction
+                        icon={
+                          <ArrowDown className="text-text-secondary hover:text-brandHover hover:ring-brandHover h-7 w-7 rounded-md p-1 transition-all hover:ring-2 hover:ring-offset-2" />
+                        }
+                        onClick={() => move(index, index + 1)}
+                        title={t("moveDown")}
+                      />
+                    )}
                     <AccordionRowAction
                       icon={
-                        <ArrowUp className="text-text-secondary hover:text-brandHover hover:ring-brandHover h-7 w-7 rounded-md p-1 transition-all hover:ring-2 hover:ring-offset-2" />
+                        <CopyIcon className="text-text-secondary hover:text-brandHover hover:ring-brandHover h-7 w-7 rounded-md p-1 transition-all hover:ring-2 hover:ring-offset-2" />
                       }
-                      onClick={() => move(index, index - 1)}
-                      title={t("moveUp")}
+                      onClick={() => copy(index)}
+                      variant="default"
+                      title={t("duplicate")}
                     />
-                  )}
-                  {!isLast && (
                     <AccordionRowAction
                       icon={
-                        <ArrowDown className="text-text-secondary hover:text-brandHover hover:ring-brandHover h-7 w-7 rounded-md p-1 transition-all hover:ring-2 hover:ring-offset-2" />
+                        <Trash2Icon className="text-text-secondary hover:text-state-error hover:ring-state-error h-7 w-7 rounded-md p-1 transition-all hover:ring-2 hover:ring-offset-2" />
                       }
-                      onClick={() => move(index, index + 1)}
-                      title={t("moveDown")}
+                      onClick={() => remove(index)}
+                      variant="danger"
+                      title={t("delete")}
                     />
-                  )}
-                  <AccordionRowAction
-                    icon={
-                      <CopyIcon className="text-text-secondary hover:text-brandHover hover:ring-brandHover h-7 w-7 rounded-md p-1 transition-all hover:ring-2 hover:ring-offset-2" />
-                    }
-                    onClick={() => copy(index)}
-                    variant="default"
-                    title={t("duplicate")}
-                  />
-                  <AccordionRowAction
-                    icon={
-                      <Trash2Icon className="text-text-secondary hover:text-state-error hover:ring-state-error h-7 w-7 rounded-md p-1 transition-all hover:ring-2 hover:ring-offset-2" />
-                    }
-                    onClick={() => remove(index)}
-                    variant="danger"
-                    title={t("delete")}
-                  />
-                </>
-              }
-            />
-          )}
+                  </>
+                }
+              />
+            );
+          }}
           renderItem={(index) => (
             <EducationItem index={index} t={t} lng={lng} />
           )}
