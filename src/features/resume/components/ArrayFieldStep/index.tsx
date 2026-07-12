@@ -42,7 +42,7 @@ interface ArrayFieldStepProps<TFieldValues extends FieldValues> {
   ) => React.ReactNode;
   renderItem: (
     index: number,
-    remove: (index: number) => void,
+    remove?: (index: number) => void,
   ) => React.ReactNode;
 }
 
