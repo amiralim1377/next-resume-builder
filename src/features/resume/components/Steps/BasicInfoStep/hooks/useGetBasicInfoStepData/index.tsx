@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import { cities } from "@/core/data/cities";
 import { countriesData } from "@/core/data/countries";
 import { monthsData } from "@/core/data/monthsData";
@@ -72,71 +73,77 @@ const useGetBasicInfoStepData = ({
   lng,
   provinceId,
 }: UseGetBasicInfoStepDataProps) => {
-  const sexOptions = createTranslatedOptions(SEX_OPTIONS, "sex", t);
+  return useMemo(() => {
+    const sexOptions = createTranslatedOptions(SEX_OPTIONS, "sex", t);
 
-  const maritalOptions = createTranslatedOptions(MARITAL_OPTIONS, "marital", t);
+    const maritalOptions = createTranslatedOptions(
+      MARITAL_OPTIONS,
+      "marital",
+      t,
+    );
 
-  const militaryOptions = createTranslatedOptions(
-    MILITARY_OPTIONS,
-    "military",
-    t,
-  );
+    const militaryOptions = createTranslatedOptions(
+      MILITARY_OPTIONS,
+      "military",
+      t,
+    );
 
-  const daysInMonthOptions = addEmptyOption(
-    Array.from({ length: 31 }, (_, index) => ({
-      value: String(index + 1),
-      text: String(index + 1),
-    })),
-  );
+    const daysInMonthOptions = addEmptyOption(
+      Array.from({ length: 31 }, (_, index) => ({
+        value: String(index + 1),
+        text: String(index + 1),
+      })),
+    );
 
-  const monthOptions = addEmptyOption(
-    lng === "fa"
-      ? monthsData.jalali.map((month) => ({
-          value: month.month_shamsi,
-          text: month.month_shamsi,
-        }))
-      : monthsData.gregorian.map((month) => ({
-          value: month.month_en,
-          text: month.month_en,
-        })),
-  );
+    const monthOptions = addEmptyOption(
+      lng === "fa"
+        ? monthsData.jalali.map((month) => ({
+            value: month.month_shamsi,
+            text: month.month_shamsi,
+          }))
+        : monthsData.gregorian.map((month) => ({
+            value: month.month_en,
+            text: month.month_en,
+          })),
+    );
 
-  const countryOptions = addEmptyOption(
-    countriesData.map((country) => ({
-      value: country.Name_EN,
-      text: lng === "fa" ? country.Name_FA : country.Name_EN,
-    })),
-  );
+    const countryOptions = addEmptyOption(
+      countriesData.map((country) => ({
+        value: country.Name_EN,
+        text: lng === "fa" ? country.Name_FA : country.Name_EN,
+      })),
+    );
 
-  const provinceOptions = addEmptyOption(
-    provincesData.map((province) => ({
-      value: province.id,
-      text: province.name,
-    })),
-  );
+    const provinceOptions = addEmptyOption(
+      provincesData.map((province) => ({
+        value: province.id,
+        text: province.name,
+      })),
+    );
 
-  const filteredCities = cities.filter(
-    (city) => city.province_id === Number(provinceId),
-  );
+    const filteredCities = cities.filter(
+      (city) => city.province_id === Number(provinceId),
+    );
 
-  const cityOptions = addEmptyOption(
-    filteredCities.map((city) => ({
-      value: city.name,
-      text: city.name,
-    })),
-  );
+    const cityOptions = addEmptyOption(
+      filteredCities.map((city) => ({
+        value: city.name,
+        text: city.name,
+      })),
+    );
 
-  return {
-    sexOptions,
-    maritalOptions,
-    militaryOptions,
-    daysInMonthOptions,
-    monthOptions,
-    yearOptions: generateYearOptions(lng),
-    countryOptions,
-    provinceOptions,
-    cityOptions,
-  };
+    return {
+      sexOptions,
+      maritalOptions,
+      militaryOptions,
+      daysInMonthOptions,
+      monthOptions,
+      yearOptions: generateYearOptions(lng),
+      countryOptions,
+      provinceOptions,
+      cityOptions,
+    };
+  }, [t, lng, provinceId]);
 };
 
 export { useGetBasicInfoStepData };
