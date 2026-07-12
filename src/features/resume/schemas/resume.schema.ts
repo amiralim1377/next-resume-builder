@@ -6,9 +6,9 @@ import { createJobSchema } from "./JobSchema";
 import { createLanguageSchema } from "./LanguageSchema";
 import { createSkillsSchema } from "./SkillsSchema";
 import { createCoursesAndCertificationsSchema } from "./CoursesAndCertificationsSchema";
-import { createProjectsSchema } from "./ProjectsSchema";
 import { createResearchSchema } from "./ResearchSchema";
 import { createProfileImageSchema } from "./ProfileImageSchema";
+import { createProjectSchema } from "./ProjectsSchema";
 
 export const createResumeSchema = (t: TFunction<string, undefined>) => {
   return z.object({
@@ -20,7 +20,7 @@ export const createResumeSchema = (t: TFunction<string, undefined>) => {
     skills: z.array(createSkillsSchema(t)),
     coursesAndCertifications: z.array(createCoursesAndCertificationsSchema(t)),
 
-    projects: z.array(createProjectsSchema(t)),
+    projects: z.array(createProjectSchema(t)),
 
     research: z.array(createResearchSchema(t)),
   });
