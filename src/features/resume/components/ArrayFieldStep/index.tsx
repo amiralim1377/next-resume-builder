@@ -74,6 +74,8 @@ function ArrayFieldStep<TFieldValues extends FieldValues>({
     move,
   } = useArrayFieldStep({ fieldName, emptyRowValues });
 
+  const accordionKey = fields.map((field) => field.id).join("-");
+
   return (
     <div className="space-y-4">
       {fields.length === 0 ? (
@@ -97,6 +99,7 @@ function ArrayFieldStep<TFieldValues extends FieldValues>({
           >
             <Accordion
               type="multiple"
+              key={accordionKey}
               value={activeAccordionIds}
               onValueChange={setActiveAccordionIds}
               className="w-full space-y-3"
