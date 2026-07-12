@@ -115,12 +115,7 @@ function EducationStep() {
             />
           )}
           renderItem={(index, remove) => (
-            <EducationItem
-              index={index}
-              onDelete={() => remove(index)}
-              t={t}
-              lng={lng}
-            />
+            <EducationItem index={index} onDelete={remove} t={t} lng={lng} />
           )}
         />
       </CustomResumeCardComponents>

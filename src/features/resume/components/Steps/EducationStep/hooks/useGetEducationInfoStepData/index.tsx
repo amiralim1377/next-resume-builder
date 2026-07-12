@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import { cities } from "@/core/data/cities";
 import { countriesData } from "@/core/data/countries";
 import { monthsData } from "@/core/data/monthsData";
@@ -19,9 +20,11 @@ type UseGetBasicInfoStepDataProps = {
   calendarType: CalendarType;
 };
 
+const EMPTY_OPTION: Option<string> = { value: "", text: "" };
+
 const addEmptyOption = <T extends Option>(
   options: T[],
-): Option<T["value"]>[] => [{ value: "", text: "" }, ...options];
+): Option<T["value"]>[] => [EMPTY_OPTION as Option<T["value"]>, ...options];
 
 const createTranslatedOptions = <T extends readonly string[]>(
   options: T,
@@ -41,44 +44,67 @@ const useGetEducationInfoStepData = ({
   provinceId,
   calendarType,
 }: UseGetBasicInfoStepDataProps) => {
-  const degreeOptions = createTranslatedOptions(DEGREE_OPTIONS, "degree", t);
-
-  const countryOptions = addEmptyOption(
-    countriesData.map((country) => ({
-      value: country.Name_EN,
-      text: lng === "fa" ? country.Name_FA : country.Name_EN,
-    })),
+  const degreeOptions = useMemo(
+    () => createTranslatedOptions(DEGREE_OPTIONS, "degree", t),
+    [t],
   );
 
-  const provinceOptions = addEmptyOption(
-    provincesData.map((province) => ({
-      value: province.id,
-      text: province.name,
-    })),
+  const countryOptions = useMemo(
+    () =>
+      addEmptyOption(
+        countriesData.map((country) => ({
+          value: country.Name_EN,
+          text: lng === "fa" ? country.Name_FA : country.Name_EN,
+        })),
+      ),
+    [lng],
   );
 
-  const filteredCities = cities.filter(
-    (city) => city.province_id === Number(provinceId),
+  const provinceOptions = useMemo(
+    () =>
+      addEmptyOption(
+        provincesData.map((province) => ({
+          value: province.id,
+          text: province.name,
+        })),
+      ),
+    [],
   );
 
-  const cityOptions = addEmptyOption(
-    filteredCities.map((city) => ({
-      value: city.name,
-      text: city.name,
-    })),
-  );
+  const cityOptions = useMemo(() => {
+    const numericProvinceId = Number(provinceId);
 
-  const monthOptions = addEmptyOption(
-    calendarType === "persian"
-      ? monthsData.jalali.map((month) => ({
+    if (!numericProvinceId) return [EMPTY_OPTION];
+
+    const filteredCities = cities.filter(
+      (city) => city.province_id === numericProvinceId,
+    );
+
+    return addEmptyOption(
+      filteredCities.map((city) => ({
+        value: city.name,
+        text: city.name,
+      })),
+    );
+  }, [provinceId]);
+
+  const monthOptions = useMemo(() => {
+    if (calendarType === "persian") {
+      return addEmptyOption(
+        monthsData.jalali.map((month) => ({
           value: month.month_shamsi,
           text: month.month_shamsi,
-        }))
-      : monthsData.gregorian.map((month) => ({
-          value: month.month_en,
-          text: lng === "fa" ? month.month_en : month.month_en,
         })),
-  );
+      );
+    }
+
+    return addEmptyOption(
+      monthsData.gregorian.map((month) => ({
+        value: month.month_en,
+        text: month.month_en,
+      })),
+    );
+  }, [calendarType]);
 
   return {
     degreeOptions,
