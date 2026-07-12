@@ -1,9 +1,8 @@
 import { CustomBadge } from "@/components/ui/CustomBadge";
 import { CustomLabel } from "@/components/ui/CustomLabel";
 import { TFunction } from "i18next";
-import { memo, useEffect, useMemo, useState } from "react";
+import { memo, useMemo } from "react";
 import { useFormContext, useWatch } from "react-hook-form";
-
 import { RowStatus } from "@/features/resume/types/resume.types";
 import { useItemStatus } from "@/features/resume/hooks/useItemStatus";
 
@@ -14,7 +13,6 @@ type StatusEngine<T> = {
 // --------------------------------------------------
 // 1. Status Badge
 // --------------------------------------------------
-
 type BadgeProps<T> = {
   name: string;
   index: number;
@@ -37,7 +35,6 @@ const StatusBadgeComponent = function StatusBadge<T>({
   }) as T;
 
   const formErrors = errors as Record<string, unknown>;
-
   const sectionErrors = formErrors[name] as unknown[];
   const rowError = Boolean(
     Array.isArray(sectionErrors) && sectionErrors[index],
@@ -53,27 +50,11 @@ const StatusBadgeComponent = function StatusBadge<T>({
         badgeLabel: string;
       }
     > = {
-      empty: {
-        badgeType: "default",
-        badgeLabel: "empty",
-      },
-
-      draft: {
-        badgeType: "warning",
-        badgeLabel: "draft",
-      },
-
-      invalid: {
-        badgeType: "error",
-        badgeLabel: "invalid",
-      },
-
-      completed: {
-        badgeType: "success",
-        badgeLabel: "completed",
-      },
+      empty: { badgeType: "default", badgeLabel: "empty" },
+      draft: { badgeType: "warning", badgeLabel: "draft" },
+      invalid: { badgeType: "error", badgeLabel: "invalid" },
+      completed: { badgeType: "success", badgeLabel: "completed" },
     };
-
     return badgeMap[status];
   }, [status]);
 
@@ -82,70 +63,53 @@ const StatusBadgeComponent = function StatusBadge<T>({
   );
 };
 
-const StatusBadge = memo(StatusBadgeComponent) as typeof StatusBadgeComponent;
+const StatusBadge = memo(
+  StatusBadgeComponent,
+  (prev, next) => prev.index === next.index && prev.name === next.name,
+) as typeof StatusBadgeComponent;
 
 // --------------------------------------------------
 // 2. Header Title
 // --------------------------------------------------
-
 type TitleProps = {
   name: string;
   index: number;
-
   titleDependencies: string[];
-
   formatTitle: (values: unknown[], t: TFunction<string, undefined>) => string;
-
   t: TFunction<string, undefined>;
 };
 
-const HeaderTitle = memo(function HeaderTitle({
-  name,
-  index,
-  titleDependencies,
-  formatTitle,
-  t,
-}: TitleProps) {
-  const watchNames = useMemo(() => {
-    return titleDependencies.map((dep) => `${name}.${index}.${dep}`);
-  }, [name, index, titleDependencies]);
+const HeaderTitle = memo(
+  function HeaderTitle({
+    name,
+    index,
+    titleDependencies,
+    formatTitle,
+    t,
+  }: TitleProps) {
+    const watchNames = useMemo(() => {
+      return titleDependencies.map((dep) => `${name}.${index}.${dep}`);
+    }, [name, index, titleDependencies]);
 
-  const watchedValues = useWatch({ name: watchNames });
+    const watchedValues = useWatch({ name: watchNames });
 
-  const currentTargetLabel = useMemo(
-    () => formatTitle(watchedValues, t),
-    [watchedValues, formatTitle, t],
-  );
+    const currentTargetLabel = useMemo(
+      () => formatTitle(watchedValues, t),
+      [watchedValues, formatTitle, t],
+    );
 
-  const [displayedLabel, setDisplayedLabel] = useState("...");
-
-  const isTyping = currentTargetLabel !== displayedLabel;
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setDisplayedLabel(currentTargetLabel);
-    }, 500);
-
-    return () => clearTimeout(timer);
-  }, [currentTargetLabel]);
-
-  return (
-    <div className="flex items-center gap-2">
-      <CustomLabel size="lg">{displayedLabel}</CustomLabel>
-
-      {isTyping && (
-        <span className="text-muted-foreground animate-pulse text-xs font-normal italic transition-all">
-          ({t("typing")})
-        </span>
-      )}
-    </div>
-  );
-});
+    return (
+      <div className="flex items-center gap-2">
+        <CustomLabel size="lg">{currentTargetLabel}</CustomLabel>
+      </div>
+    );
+  },
+  (prev, next) => prev.index === next.index && prev.name === next.name,
+);
 
 // --------------------------------------------------
 // 3. Generic Accordion Header
 // --------------------------------------------------
-
 export type GenericAccordionHeaderProps<T> = {
   name: string;
   index: number;
@@ -190,4 +154,5 @@ function GenericAccordionHeader<T>({
 
 export const MemoizedGenericAccordionHeader = memo(
   GenericAccordionHeader,
+  (prev, next) => prev.index === next.index && prev.name === next.name,
 ) as typeof GenericAccordionHeader;
