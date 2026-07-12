@@ -1,58 +1,37 @@
 import { TFunction } from "i18next";
 import * as z from "zod";
+import { isGenericRowEmpty } from "../../utils/isGenericRowEmpty";
 
 // ─── Schema Factory ───────────────────────────────────────────────────────────
-export const createJobSchema = (t: TFunction<string, undefined>) => {
+
+const identityT = ((key: string) => key) as TFunction;
+
+export const getStrictJobSchema = (t: TFunction = identityT) => {
   const summarySchema = z.object({
     type: z.string(),
     content: z.array(z.any()),
   });
 
-  // 1. EMPTY STATE SCHEMA
-  const emptyJobSchema = z.object({
-    status: z.literal("empty"),
-    jobTitle: z.string(),
-    companyName: z.string(),
-    country: z.string(),
-    province: z.string(),
-    city: z.string(),
-
-    entryDate: z.string(),
-    employmentEndYearDate: z.string(),
-    isCurrentlyWorkingHere: z.boolean(),
-
-    summary: summarySchema,
-  });
-
-  // 2. STRICT STATE SCHEMA
-  const strictJobSchema = z.object({
-    status: z.enum(["draft", "completed"]),
-
-    jobTitle: z.string().min(1, { message: t("jobeRoleRequired") }),
-    companyName: z.string().min(1, { message: t("companyNameRequired") }),
-
-    // Location
-    country: z.string().min(1, { message: t("countryRequired") }),
-    province: z.string().min(1, { message: t("provinceRequired") }),
-    city: z.string().min(1, { message: t("cityRequired") }),
-
-    entryDate: z.string().min(1, {
-      message: t("startDateRequired"),
-    }),
-
-    employmentEndYearDate: z.string(),
-
-    isCurrentlyWorkingHere: z.boolean(),
-    summary: summarySchema,
-  });
-
-  // 3. DISCRIMINATED UNION WITH CONDITIONALS
   return z
-    .discriminatedUnion("status", [emptyJobSchema, strictJobSchema])
-    .superRefine((data, ctx) => {
-      // Fast-exit if the user hasn't started typing into this row yet
-      if (data.status === "empty") return;
+    .object({
+      jobTitle: z.string().min(1, { message: t("jobeRoleRequired") }),
+      companyName: z.string().min(1, { message: t("companyNameRequired") }),
 
+      // Location
+      country: z.string().min(1, { message: t("countryRequired") }),
+      province: z.string().min(1, { message: t("provinceRequired") }),
+      city: z.string().min(1, { message: t("cityRequired") }),
+
+      entryDate: z.string().min(1, {
+        message: t("startDateRequired"),
+      }),
+
+      employmentEndYearDate: z.string(),
+
+      isCurrentlyWorkingHere: z.boolean(),
+      summary: summarySchema,
+    })
+    .superRefine((data, ctx) => {
       const isCurrentlyWorking = data.isCurrentlyWorkingHere;
 
       // If NOT currently working, require end date and validate it
@@ -63,11 +42,11 @@ export const createJobSchema = (t: TFunction<string, undefined>) => {
           data.employmentEndYearDate.trim() === ""
         ) {
           ctx.addIssue({
-            code: z.ZodIssueCode.custom,
+            code: "custom",
             path: ["employmentEndYearDate"],
             message: t("jobEndDateRequired"),
           });
-          return; // Stop here to prevent invalid date math below
+          return;
         }
 
         // 2. Check that end date is after start date
@@ -82,7 +61,7 @@ export const createJobSchema = (t: TFunction<string, undefined>) => {
             endDate < startDate
           ) {
             ctx.addIssue({
-              code: z.ZodIssueCode.custom,
+              code: "custom",
               path: ["employmentEndYearDate"], // Attach the error to the End Date field
               message: t("endDateBeforeStartDate"),
             });
@@ -90,4 +69,19 @@ export const createJobSchema = (t: TFunction<string, undefined>) => {
         }
       }
     });
+};
+
+export type JobRowValues = z.infer<ReturnType<typeof getStrictJobSchema>>;
+
+export const createJobSchema = (t: TFunction<string, undefined>) => {
+  return z.any().superRefine((data, ctx) => {
+    if (isGenericRowEmpty(data)) return;
+
+    const result = getStrictJobSchema(t).safeParse(data);
+    if (!result.success) {
+      result.error.issues.forEach((issue) => {
+        ctx.addIssue(issue as z.core.$ZodSuperRefineIssue);
+      });
+    }
+  });
 };
