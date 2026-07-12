@@ -6,7 +6,6 @@ import { useFormContext, useWatch } from "react-hook-form";
 import { CustomControlledCheckBox } from "@/components/ui/CustomControlledCheckBox";
 import { memo, useEffect, useState, useCallback } from "react";
 import { CustomRadio } from "@/components/ui/CustomRadio";
-import { CustomButton } from "@/components/ui/CustomButton";
 import { CalendarType } from "@/types";
 import { ResumeFormValues } from "@/features/resume/schemas/resume.schema";
 import { useGetEducationInfoStepData } from "../../hooks/useGetEducationInfoStepData";
@@ -17,15 +16,9 @@ type EducationItemProps = {
   t: TFunction<string, undefined>;
   lng: Language;
   index: number;
-  onDelete: (index: number) => void;
 };
 
-const EducationItemComponent = ({
-  t,
-  lng,
-  index,
-  onDelete,
-}: EducationItemProps) => {
+const EducationItemComponent = ({ t, lng, index }: EducationItemProps) => {
   const [calendarType, setCalendarType] = useState<CalendarType>(
     lng === "en" ? "gregorian" : "persian",
   );
@@ -65,10 +58,6 @@ const EducationItemComponent = ({
       provinceId,
       calendarType,
     });
-
-  const handleDelete = useCallback(() => {
-    onDelete(index);
-  }, [onDelete, index]);
 
   const handleSetPersian = useCallback(() => {
     setCalendarType("persian");
@@ -205,16 +194,6 @@ const EducationItemComponent = ({
 
       <div className="col-span-12">
         <EducationSummary index={index} t={t} />
-      </div>
-
-      <div className="col-span-12 flex justify-end">
-        <CustomButton
-          onClick={handleDelete}
-          variant="outlined-negative"
-          className="text-nowrap"
-        >
-          {t("deleteThis")}
-        </CustomButton>
       </div>
     </div>
   );

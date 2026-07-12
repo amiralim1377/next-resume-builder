@@ -1,5 +1,5 @@
 import { MemoizedGenericAccordionHeader } from "@/features/resume/components/GenericAccordionHeader";
-import { educationStatusEngine } from "@/features/resume/rules/education.rules";
+import { educationStatusEngine } from "@/features/resume/engines/education.engine";
 import { EducationRowValues } from "@/features/resume/schemas/EducationSchema";
 import { TFunction } from "i18next";
 import { memo } from "react";

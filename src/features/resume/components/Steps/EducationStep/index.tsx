@@ -16,13 +16,21 @@ import { EducationItem } from "./components/EducationItem";
 import { EmptyStep } from "../EmptyStep";
 import { ArrayFieldStep } from "../../ArrayFieldStep";
 import { AccordionRowAction } from "../../AccordionRowAction";
+import {
+  DegreeLevel,
+  EducationRowValues,
+} from "@/features/resume/schemas/EducationSchema";
+
+type EducationDraftValues = Omit<EducationRowValues, "degreeLevel"> & {
+  degreeLevel: DegreeLevel | "";
+};
 
 function EducationStep() {
   const { lng } = useLang();
   const { t } = useTranslation(lng, "form");
   const { colors } = useThemeColors();
 
-  const defaultObj: ResumeFormValues["education"][number] = {
+  const defaultObj: EducationDraftValues = {
     degreeLevel: "",
     academicMajor: "",
     concentration: "",
@@ -42,19 +50,20 @@ function EducationStep() {
 
   return (
     <div className="flex w-full flex-col space-y-2.5">
-      <CustomResumeCardComponents className="flex w-full flex-col space-y-2.5">
-        <CustomLabel
-          size="lg"
-          variant="bold"
-          description={t("addEducationDescription")}
-          descriptionSize="md"
-          icon={<GraduationCap color={colors.brand?.brandPrimary} />}
-          divider
-          dividerClassName={"pb-3"}
-        >
-          {t("academicHistory")}
-        </CustomLabel>
-
+      <CustomResumeCardComponents
+        className="flex w-full flex-col space-y-2.5"
+        label={
+          <CustomLabel
+            size="lg"
+            variant="bold"
+            description={t("addEducationDescription")}
+            descriptionSize="md"
+            icon={<GraduationCap color={colors.brand?.brandPrimary} />}
+          >
+            {t("academicHistory")}
+          </CustomLabel>
+        }
+      >
         <ArrayFieldStep<ResumeFormValues>
           fieldName="education"
           addButtonLabel={t("add")}
@@ -114,8 +123,8 @@ function EducationStep() {
               }
             />
           )}
-          renderItem={(index, remove) => (
-            <EducationItem index={index} onDelete={remove} t={t} lng={lng} />
+          renderItem={(index) => (
+            <EducationItem index={index} t={t} lng={lng} />
           )}
         />
       </CustomResumeCardComponents>

@@ -1,6 +1,6 @@
 import { TFunction } from "i18next";
 import * as z from "zod";
-import { isGenericRowEmpty } from "../../rules/generic.rules";
+import { isGenericRowEmpty } from "../../utils/isGenericRowEmpty";
 
 export const DEGREE_OPTIONS = [
   "belowDiploma",
