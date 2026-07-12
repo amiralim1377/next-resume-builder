@@ -27,17 +27,21 @@ const CustomResumeCardComponents = ({
   return (
     <div
       className={cn(
-        "flex flex-col items-start justify-between gap-3",
+        "border-ui-border flex flex-col items-start justify-between gap-3 rounded-lg border p-5 shadow-lg",
         className,
       )}
     >
-      <div className={cn(classNames?.labelClassName)}>{label}</div>
-
       <div
         className={cn(
-          "border-ui-border w-full rounded-lg border p-5 shadow-lg",
-          classNames?.cardClassName,
+          "border-ui-border w-full border-b py-3",
+          classNames?.labelClassName,
         )}
+      >
+        {label}
+      </div>
+
+      <div
+        className={cn("w-full", classNames?.cardClassName)}
         style={style}
         {...props}
       >
