@@ -1,18 +1,15 @@
 import { CustomControlledResumeSummary } from "@/components/ui/CustomControlledResumeSummary";
 import { CustomLabel } from "@/components/ui/CustomLabel";
 import { CustomResumeCardComponents } from "@/components/ui/CustomResumeCardComponents";
-import { Language } from "@/lib/i18n/settings";
+import { useTranslation } from "@/lib/i18n/client";
+import { useLang } from "@/provider/lngProvider";
 import { useThemeColors } from "@/provider/themeProvider/useThemeColors";
-import { TFunction } from "i18next";
 import { FileText } from "lucide-react";
 
-type ResumeSummaryProps = {
-  t: TFunction<string, undefined>;
-  lng: Language;
-};
-
-const ResumeSummary = ({ t }: ResumeSummaryProps) => {
+const ResumeSummary = () => {
   const { colors } = useThemeColors();
+  const { lng } = useLang();
+  const { t } = useTranslation(lng, "form");
 
   return (
     <CustomResumeCardComponents

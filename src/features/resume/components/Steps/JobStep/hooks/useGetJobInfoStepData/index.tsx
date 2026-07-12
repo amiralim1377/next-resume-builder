@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import { cities } from "@/core/data/cities";
 import { countriesData } from "@/core/data/countries";
 import { monthsData } from "@/core/data/monthsData";
@@ -21,53 +22,55 @@ const addEmptyOption = <T extends Option>(
 ): Option<T["value"]>[] => [{ value: "", text: "" }, ...options];
 
 const useGetJobInfoStepData = ({
-  lng,
+  lng = "en",
   provinceId,
   calendarType,
 }: UseGetJobInfoStepDataProps) => {
-  const countryOptions = addEmptyOption(
-    countriesData.map((country) => ({
-      value: country.Name_EN,
-      text: lng === "fa" ? country.Name_FA : country.Name_EN,
-    })),
-  );
+  return useMemo(() => {
+    const countryOptions = addEmptyOption(
+      countriesData.map((country) => ({
+        value: country.Name_EN,
+        text: lng === "fa" ? country.Name_FA : country.Name_EN,
+      })),
+    );
 
-  const provinceOptions = addEmptyOption(
-    provincesData.map((province) => ({
-      value: province.id,
-      text: province.name,
-    })),
-  );
+    const provinceOptions = addEmptyOption(
+      provincesData.map((province) => ({
+        value: province.id,
+        text: province.name,
+      })),
+    );
 
-  const filteredCities = cities.filter(
-    (city) => city.province_id === Number(provinceId),
-  );
+    const filteredCities = cities.filter(
+      (city) => city.province_id === Number(provinceId),
+    );
 
-  const cityOptions = addEmptyOption(
-    filteredCities.map((city) => ({
-      value: city.name,
-      text: city.name,
-    })),
-  );
+    const cityOptions = addEmptyOption(
+      filteredCities.map((city) => ({
+        value: city.name,
+        text: city.name,
+      })),
+    );
 
-  const monthOptions = addEmptyOption(
-    calendarType === "persian"
-      ? monthsData.jalali.map((month) => ({
-          value: month.month_shamsi,
-          text: month.month_shamsi,
-        }))
-      : monthsData.gregorian.map((month) => ({
-          value: month.month_en,
-          text: lng === "fa" ? month.month_en : month.month_en,
-        })),
-  );
+    const monthOptions = addEmptyOption(
+      calendarType === "persian"
+        ? monthsData.jalali.map((month) => ({
+            value: month.month_shamsi,
+            text: month.month_shamsi,
+          }))
+        : monthsData.gregorian.map((month) => ({
+            value: month.month_en,
+            text: month.month_en,
+          })),
+    );
 
-  return {
-    countryOptions,
-    provinceOptions,
-    cityOptions,
-    monthOptions,
-  };
+    return {
+      countryOptions,
+      provinceOptions,
+      cityOptions,
+      monthOptions,
+    };
+  }, [lng, provinceId, calendarType]);
 };
 
 export { useGetJobInfoStepData };

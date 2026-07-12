@@ -1,18 +1,16 @@
 import { CustomResumeCardComponents } from "@/components/ui/CustomResumeCardComponents";
-
-import { TFunction } from "i18next";
 import { CustomLabel } from "@/components/ui/CustomLabel";
 import { Contact } from "lucide-react";
 import { useThemeColors } from "@/provider/themeProvider/useThemeColors";
 import { ContactDetails } from "../ContactDetails";
 import { LocationDetails } from "../LocationDetails";
+import { useLang } from "@/provider/lngProvider";
+import { useTranslation } from "@/lib/i18n/client";
 
-type ContactInformationProps = {
-  t: TFunction<string, undefined>;
-};
-
-const ContactInformation = ({ t }: ContactInformationProps) => {
+const ContactInformation = () => {
   const { colors } = useThemeColors();
+  const { lng } = useLang();
+  const { t } = useTranslation(lng, "form");
 
   return (
     <CustomResumeCardComponents

@@ -1,9 +1,9 @@
 import { createObjectStepEngine } from "../utils/formStatusEngine";
-import { isGenericRowEmpty } from "./generic.rules";
 import {
   BasicInfoRowValues,
   getStrictBasicInfoSchema,
 } from "../schemas/BasicInfoSchema";
+import { isGenericRowEmpty } from "../utils/isGenericRowEmpty";
 
 const basicInfoStatusEngine = createObjectStepEngine<BasicInfoRowValues>({
   isEmpty: isGenericRowEmpty,

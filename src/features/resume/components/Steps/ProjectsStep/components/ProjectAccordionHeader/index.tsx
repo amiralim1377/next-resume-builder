@@ -1,104 +1,43 @@
-import { CustomBadge } from "@/components/ui/CustomBadge";
-import { CustomLabel } from "@/components/ui/CustomLabel";
-import { createProjectsSchema } from "@/features/resume/schemas/ProjectsSchema";
-import { ResumeFormValues } from "@/features/resume/schemas/resume.schema";
+import { MemoizedGenericAccordionHeader } from "@/features/resume/components/GenericAccordionHeader";
+import { ProjectStatusEngine } from "@/features/resume/engines/project.engine";
+import { ProjectRowValues } from "@/features/resume/schemas/ProjectsSchema";
 import { Language } from "@/lib/i18n/settings";
 import { TFunction } from "i18next";
-import { useEffect, useMemo, useState } from "react";
-import { useFormContext, useWatch } from "react-hook-form";
 
 type HeaderProps = {
   index: number;
   t: TFunction<string, undefined>;
   lng?: Language;
+  actionsSlot?: React.ReactNode;
 };
 
-const ProjectAccordionHeader = ({ index, t }: HeaderProps) => {
-  const {
-    formState: { errors },
-    setValue,
-  } = useFormContext<ResumeFormValues>();
+const titleDependencies: Array<keyof ProjectRowValues & string> = [
+  "projectTitle",
+  "clientName",
+];
 
-  const [displayedLabel, setDisplayedLabel] = useState("...");
-  const [isTyping, setIsTyping] = useState(false);
+const formatTitle = (values: unknown[]) => {
+  const [projectTitle, clientName] = values as [
+    string | undefined,
+    string | undefined,
+  ];
 
-  const rowValues = useWatch({ name: `projects.${index}` });
-  const projectTitle = rowValues?.projectTitle;
-  const clientName = rowValues?.clientName;
-  const currentStatus = rowValues?.status;
+  const title = [projectTitle, clientName].filter(Boolean).join(" ");
 
-  useEffect(() => {
-    // eslint-disable-next-line
-    setIsTyping(true);
+  return title || "...";
+};
 
-    const targetLabel =
-      projectTitle || clientName
-        ? `${projectTitle ?? ""}  ${clientName ?? ""}`.trim()
-        : "...";
-
-    const timer = setTimeout(() => {
-      setDisplayedLabel(targetLabel);
-      setIsTyping(false);
-    }, 500);
-
-    return () => clearTimeout(timer);
-  }, [projectTitle, clientName]);
-
-  // =========================================================
-  // STATE VALIDATION MACHINE (Refactored to use Zod)
-  // =========================================================
-  const isCompleted = useMemo(() => {
-    if (!rowValues) return false;
-
-    if (errors.projects?.[index]) return false;
-    const projectSchema = createProjectsSchema(t);
-    const result = projectSchema.safeParse({
-      ...rowValues,
-      status: "completed",
-    });
-
-    return result.success;
-  }, [rowValues, errors.projects, index, t]);
-
-  // ─── 3. State Synchronization Engine ────────────────────────────────
-  useEffect(() => {
-    if (!rowValues) return;
-
-    if (isCompleted && currentStatus !== "completed") {
-      setValue(`projects.${index}.status`, "completed", {
-        shouldDirty: true,
-        shouldValidate: true,
-      });
-    } else if (!isCompleted && currentStatus === "completed") {
-      // If the user deletes a required field, revert the status back to draft
-      setValue(`projects.${index}.status`, "draft", {
-        shouldDirty: true,
-        shouldValidate: true,
-      });
-    }
-  }, [isCompleted, currentStatus, index, setValue, rowValues]);
-
-  const isDraft = !isCompleted && currentStatus === "draft";
-  const badgeType = isCompleted ? "success" : isDraft ? "warning" : "default";
-
+const ProjectAccordionHeader = ({ index, t, actionsSlot }: HeaderProps) => {
   return (
-    <div className="flex w-full items-center justify-between pr-4">
-      <div className="flex items-center gap-2">
-        <CustomLabel size="lg">{displayedLabel}</CustomLabel>
-
-        {isTyping && (
-          <span className="text-muted-foreground animate-pulse text-xs font-normal italic transition-all">
-            ({t("typing")})
-          </span>
-        )}
-      </div>
-
-      <CustomBadge type={badgeType}>
-        {isCompleted
-          ? t("status.completed")
-          : t(`status.${currentStatus ?? "empty"}`)}
-      </CustomBadge>
-    </div>
+    <MemoizedGenericAccordionHeader<ProjectRowValues>
+      name="projects"
+      index={index}
+      engine={ProjectStatusEngine}
+      titleDependencies={titleDependencies}
+      formatTitle={formatTitle}
+      t={t}
+      actionsSlot={actionsSlot}
+    />
   );
 };
 

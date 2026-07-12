@@ -1,6 +1,6 @@
 import { TFunction } from "i18next";
 import * as z from "zod/v4";
-import { isGenericRowEmpty } from "../../rules/generic.rules";
+import { isGenericRowEmpty } from "../../utils/isGenericRowEmpty";
 
 export const SEX_OPTIONS = ["male", "female"] as const;
 export const MARITAL_OPTIONS = ["single", "married"] as const;

@@ -25,6 +25,7 @@ import { useLang } from "@/provider/lngProvider";
 import { useTranslation } from "@/lib/i18n/client";
 import { CustomConfirmModal } from "@/components/ui/CustomConfirmModal";
 import { useArrayFieldStep } from "./hooks/useArrayFieldStep";
+import { AnimatePresence, motion } from "framer-motion";
 
 interface ArrayFieldStepProps<TFieldValues extends FieldValues> {
   fieldName: FieldArrayPath<TFieldValues>;
@@ -42,7 +43,7 @@ interface ArrayFieldStepProps<TFieldValues extends FieldValues> {
   ) => React.ReactNode;
   renderItem: (
     index: number,
-    remove: (index: number) => void,
+    remove?: (index: number) => void,
   ) => React.ReactNode;
 }
 
@@ -60,8 +61,8 @@ function ArrayFieldStep<TFieldValues extends FieldValues>({
 
   const {
     fields,
-    activeAccordionId,
-    setActiveAccordionId,
+    activeAccordionIds,
+    setActiveAccordionIds,
     sensors,
     handleDragEnd,
     handleAddRow,
@@ -74,70 +75,100 @@ function ArrayFieldStep<TFieldValues extends FieldValues>({
     move,
   } = useArrayFieldStep({ fieldName, emptyRowValues });
 
+  const accordionKey = fields.map((field) => field.id).join("-");
+
   return (
     <div className="space-y-4">
-      {fields.length === 0 ? (
-        renderEmptyState ? (
-          renderEmptyState(handleAddRow)
-        ) : (
-          <div className="bg-muted/20 rounded-xl border-2 border-dashed py-10 text-center">
-            <p className="text-muted-foreground text-sm">{emptyStateLabel}</p>
-          </div>
-        )
-      ) : (
-        <DndContext
-          sensors={sensors}
-          collisionDetection={pointerWithin}
-          onDragEnd={handleDragEnd}
-          modifiers={[restrictToVerticalAxis, restrictToParentElement]}
-        >
-          <SortableContext
-            items={fields.map((f) => f.id)}
-            strategy={verticalListSortingStrategy}
+      <AnimatePresence mode="wait">
+        {fields.length === 0 ? (
+          <motion.div
+            key="empty-state"
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={{
+              duration: 0.2,
+              ease: "easeOut",
+            }}
           >
-            <Accordion
-              type="single"
-              collapsible
-              value={activeAccordionId}
-              onValueChange={setActiveAccordionId}
-              className="w-full space-y-3"
+            {renderEmptyState ? (
+              renderEmptyState(handleAddRow)
+            ) : (
+              <div className="bg-muted/20 rounded-xl border-2 border-dashed py-10 text-center">
+                <p className="text-muted-foreground text-sm">
+                  {emptyStateLabel}
+                </p>
+              </div>
+            )}
+          </motion.div>
+        ) : (
+          <motion.div
+            key="accordion-content"
+            layout
+            transition={{
+              layout: {
+                duration: 0.25,
+                ease: "easeOut",
+              },
+            }}
+          >
+            <DndContext
+              sensors={sensors}
+              collisionDetection={pointerWithin}
+              onDragEnd={handleDragEnd}
+              modifiers={[restrictToVerticalAxis, restrictToParentElement]}
             >
-              {fields.map((field, index) => (
-                <SortableItem key={field.id} id={field.id}>
-                  {({ dragListeners }) => (
-                    <div className="group relative flex w-full items-center gap-2">
-                      <div
-                        {...dragListeners}
-                        className="text-muted-foreground hover:text-foreground cursor-grab p-1.5 transition-colors active:cursor-grabbing md:p-2"
-                      >
-                        <GripVertical className="text-text-secondary hover:text-brandHover hover:ring-brandHover h-7 w-7 rounded-md p-1 transition-all hover:ring-2 hover:ring-offset-2" />
-                      </div>
-                      <AccordionItem
-                        value={field.id}
-                        className="bg-card flex-1 overflow-hidden rounded-lg border shadow-sm transition-all"
-                      >
-                        <AccordionTrigger className="data-[state=open]:border-b-borde border-b-0 px-4 py-3 hover:no-underline">
-                          {renderHeader(
-                            index,
-                            handleOpenDeleteModal,
-                            duplicateRow,
-                            move,
-                            index === 0,
-                            index === fields.length - 1,
-                          )}
-                        </AccordionTrigger>
-                        <AccordionContent className="bg-muted/10 px-5 pt-4 pb-5">
-                          {renderItem(index, remove)}
-                        </AccordionContent>
-                      </AccordionItem>
-                    </div>
-                  )}
-                </SortableItem>
-              ))}
-            </Accordion>
-          </SortableContext>
-        </DndContext>
-      )}
+              <SortableContext
+                items={fields.map((f) => f.id)}
+                strategy={verticalListSortingStrategy}
+              >
+                <Accordion
+                  type="multiple"
+                  key={accordionKey}
+                  value={activeAccordionIds}
+                  onValueChange={setActiveAccordionIds}
+                  className="w-full space-y-3"
+                >
+                  {fields.map((field, index) => (
+                    <SortableItem key={field.id} id={field.id}>
+                      {({ dragListeners }) => (
+                        <div className="group relative flex w-full items-center gap-2">
+                          <div
+                            {...dragListeners}
+                            className="text-muted-foreground hover:text-foreground cursor-grab p-1.5 transition-colors active:cursor-grabbing md:p-2"
+                          >
+                            <GripVertical className="text-text-secondary hover:text-brandHover hover:ring-brandHover h-7 w-7 rounded-md p-1 transition-all hover:ring-2 hover:ring-offset-2" />
+                          </div>
+
+                          <AccordionItem
+                            value={field.id}
+                            className="bg-card flex-1 overflow-hidden rounded-lg border shadow-sm transition-all"
+                          >
+                            <AccordionTrigger className="data-[state=open]:border-b-borde border-b-0 px-4 py-3 hover:no-underline">
+                              {renderHeader(
+                                index,
+                                handleOpenDeleteModal,
+                                duplicateRow,
+                                move,
+                                index === 0,
+                                index === fields.length - 1,
+                              )}
+                            </AccordionTrigger>
+
+                            <AccordionContent className="bg-muted/10 px-5 pt-4 pb-5">
+                              {renderItem(index, remove)}
+                            </AccordionContent>
+                          </AccordionItem>
+                        </div>
+                      )}
+                    </SortableItem>
+                  ))}
+                </Accordion>
+              </SortableContext>
+            </DndContext>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {fields.length !== 0 && (
         <CustomButton
@@ -165,7 +196,7 @@ function ArrayFieldStep<TFieldValues extends FieldValues>({
           onClick: handleConfirmDelete,
         }}
         icon={
-          <div className="bg-state-error/10 text-state-error mt-4 flex h-12 w-12 items-center justify-center rounded-full">
+          <div className="bg-state-error/10 text-state-error و12 mt-4 flex h-12 w-12 items-center justify-center rounded-full">
             <Trash2 className="h-5 w-5" />
           </div>
         }

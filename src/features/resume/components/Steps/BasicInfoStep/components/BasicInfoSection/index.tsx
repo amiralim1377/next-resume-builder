@@ -1,20 +1,17 @@
 "use client";
 
 import { CustomResumeCardComponents } from "@/components/ui/CustomResumeCardComponents";
-import { TFunction } from "i18next";
-import { Language } from "@/lib/i18n/settings";
 import { CustomLabel } from "@/components/ui/CustomLabel";
 import { FileUser } from "lucide-react";
 import { useThemeColors } from "@/provider/themeProvider/useThemeColors";
 import { BasicInformation } from "../BasicInformation";
+import { useLang } from "@/provider/lngProvider";
+import { useTranslation } from "@/lib/i18n/client";
 
-type BasicInfoSectionProps = {
-  t: TFunction<string, undefined>;
-  lng: Language;
-};
-
-function BasicInfoSection({ t, lng }: BasicInfoSectionProps) {
+function BasicInfoSection() {
   const { colors } = useThemeColors();
+  const { lng } = useLang();
+  const { t } = useTranslation(lng, "form");
   return (
     <CustomResumeCardComponents
       label={
@@ -27,7 +24,7 @@ function BasicInfoSection({ t, lng }: BasicInfoSectionProps) {
         </CustomLabel>
       }
     >
-      <BasicInformation lng={lng} t={t} />
+      <BasicInformation />
     </CustomResumeCardComponents>
   );
 }

@@ -3,6 +3,7 @@ import { FormStepperItem } from "@/components/ui/CustomFormStepperItem";
 import { ResumeFormValues } from "@/features/resume/schemas/resume.schema";
 import { RESUME_STEPS } from "@/features/resume/constants/steps";
 import { useSectionStatus } from "@/features/resume/hooks/useSectionStatus";
+import { useMemo } from "react";
 
 interface StepObserverProps {
   step: (typeof RESUME_STEPS)[0];
@@ -28,17 +29,30 @@ export const StepObserver = ({
   const isEmpty = status === "empty";
   const isInvalid = status === "invalid";
 
-  return (
-    <FormStepperItem
-      stepNumber={index + 1}
-      title={step.titleKey}
-      isActive={isActive}
-      isCompleted={isCompleted}
-      isDraft={isDraft}
-      isEmpty={isEmpty}
-      isInvalid={isInvalid}
-      isLast={isLast}
-      onClick={onClick}
-    />
+  return useMemo(
+    () => (
+      <FormStepperItem
+        stepNumber={index + 1}
+        title={step.titleKey}
+        isActive={isActive}
+        isCompleted={isCompleted}
+        isDraft={isDraft}
+        isEmpty={isEmpty}
+        isInvalid={isInvalid}
+        isLast={isLast}
+        onClick={onClick}
+      />
+    ),
+    [
+      index,
+      step.titleKey,
+      isActive,
+      isCompleted,
+      isDraft,
+      isEmpty,
+      isInvalid,
+      isLast,
+      onClick,
+    ],
   );
 };

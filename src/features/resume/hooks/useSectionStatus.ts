@@ -1,10 +1,12 @@
 "use client";
 import { useMemo } from "react";
 import { useFormContext, useWatch } from "react-hook-form";
-import { basicInfoStatusEngine } from "@/features/resume/rules/basicInfoStep.rules";
-import { educationStatusEngine } from "@/features/resume/rules/education.rules";
+import { basicInfoStatusEngine } from "@/features/resume/engines/basicInfoStep.engine";
+import { educationStatusEngine } from "@/features/resume/engines/education.engine";
 import { ResumeFormValues } from "@/features/resume/schemas/resume.schema";
 import { SectionState } from "@/features/resume/types/resume.types";
+import { jobStatusEngine } from "../engines/job.engine";
+import { ProjectStatusEngine } from "../engines/project.engine";
 
 type StatusEngineWrapper = {
   getStepStatus: (rows: unknown, hasErrors: boolean) => SectionState;
@@ -13,6 +15,8 @@ type StatusEngineWrapper = {
 const STEP_STATUS_ENGINES: Record<string, StatusEngineWrapper> = {
   basic: basicInfoStatusEngine as unknown as StatusEngineWrapper,
   education: educationStatusEngine as unknown as StatusEngineWrapper,
+  job: jobStatusEngine as unknown as StatusEngineWrapper,
+  projects: ProjectStatusEngine as unknown as StatusEngineWrapper,
 };
 
 export const useSectionStatus = (

@@ -11,7 +11,7 @@ const JobSummary = ({ index, t }: JobSummaryProps) => {
     <CustomControlledResumeSummary
       label="summary"
       name={`job.${index}.summary`}
-      description={t("jobHistoryDescription")}
+      description={t("jobDescriptionHint")}
       descriptionClassName="text-text-secondary my-2 text-xs"
     />
   );

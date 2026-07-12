@@ -2,30 +2,32 @@ import { CustomControlledInput } from "@/components/ui/CustomControlledInput";
 import { Language } from "@/lib/i18n/settings";
 import { CalendarType } from "@/types";
 import { TFunction } from "i18next";
-import { useState } from "react";
+import { memo, useCallback, useState } from "react";
 import { CustomRadio } from "@/components/ui/CustomRadio";
-import { CustomButton } from "@/components/ui/CustomButton";
 import { ProjectSummary } from "../ProjectSummary";
-import { RowStatusObserver } from "@/features/resume/components/RowStatusObserver";
 import { CustomControlledCalendar } from "@/components/ui/CustomControlledCalendar";
 
 type ProjectItemProps = {
   index: number;
-  onDelete: (index: number) => void;
   t: TFunction<string, undefined>;
   lng: Language;
 };
 
-const ProjectItem = ({ index, lng, onDelete, t }: ProjectItemProps) => {
+const ProjectItemComponent = ({ index, lng, t }: ProjectItemProps) => {
   const [calendarType, setCalendarType] = useState<CalendarType>(
     lng === "en" ? "gregorian" : "persian",
   );
 
+  const handleSetPersian = useCallback(() => {
+    setCalendarType("persian");
+  }, []);
+
+  const handleSetGregorian = useCallback(() => {
+    setCalendarType("gregorian");
+  }, []);
+
   return (
     <div className="grid grid-cols-12 gap-4">
-      {/* Background worker tracking state changes cleanly */}
-      <RowStatusObserver fieldName="projects" index={index} />
-
       <div className="col-span-12 md:col-span-6">
         <CustomControlledInput
           label={t("projectTitle")}
@@ -62,13 +64,13 @@ const ProjectItem = ({ index, lng, onDelete, t }: ProjectItemProps) => {
         <CustomRadio.Group className="flex flex-row gap-4">
           <CustomRadio
             checked={calendarType === "persian"}
-            onChange={() => setCalendarType("persian")}
+            onChange={handleSetPersian}
             label={t("solarHijri")}
           />
 
           <CustomRadio
             checked={calendarType === "gregorian"}
-            onChange={() => setCalendarType("gregorian")}
+            onChange={handleSetGregorian}
             label={t("gregorian")}
           />
         </CustomRadio.Group>
@@ -77,18 +79,8 @@ const ProjectItem = ({ index, lng, onDelete, t }: ProjectItemProps) => {
       <div className="col-span-12">
         <ProjectSummary t={t} index={index} />
       </div>
-
-      <div className="col-span-12 flex justify-end">
-        <CustomButton
-          type="button"
-          onClick={() => onDelete(index)}
-          variant="outlined-negative"
-        >
-          {t("deleteThis")}
-        </CustomButton>
-      </div>
     </div>
   );
 };
 
-export { ProjectItem };
+export const ProjectItem = memo(ProjectItemComponent);

@@ -7,9 +7,9 @@ import { RESUME_STEPS } from "../../constants/steps";
 import StepWrapper from "../StepWrapper";
 import { FormStepper } from "../FormStepper";
 import { NavigationButtons } from "../NavigationButtons";
-import { StepperContext } from "./StepperContext";
 import { useAutoSave } from "../../hooks/useAutoSave";
 import { get } from "idb-keyval";
+import { StepperContext } from "./StepperContext";
 
 const AutoSaveManager = () => {
   useAutoSave("current_resume_draft");
@@ -22,7 +22,7 @@ type ResumeFormProviderProps = {
   onSubmit?: (data: ResumeFormValues) => Promise<void>;
 };
 
-const ResumeFormProvider = ({
+const ResumeFormWrapper = ({
   initialData,
   mode = "create",
   onSubmit,
@@ -147,4 +147,4 @@ const ResumeFormProvider = ({
   );
 };
 
-export { ResumeFormProvider };
+export { ResumeFormWrapper };

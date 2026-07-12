@@ -4,9 +4,8 @@ import { CustomControlledInput } from "@/components/ui/CustomControlledInput";
 import { Language } from "@/lib/i18n/settings";
 import { useFormContext, useWatch } from "react-hook-form";
 import { CustomControlledCheckBox } from "@/components/ui/CustomControlledCheckBox";
-import { memo, useEffect, useState } from "react";
+import { memo, useEffect, useState, useCallback } from "react";
 import { CustomRadio } from "@/components/ui/CustomRadio";
-import { CustomButton } from "@/components/ui/CustomButton";
 import { CalendarType } from "@/types";
 import { ResumeFormValues } from "@/features/resume/schemas/resume.schema";
 import { useGetEducationInfoStepData } from "../../hooks/useGetEducationInfoStepData";
@@ -17,20 +16,15 @@ type EducationItemProps = {
   t: TFunction<string, undefined>;
   lng: Language;
   index: number;
-  onDelete: (index: number) => void;
 };
 
-const EducationItemComponent = ({
-  t,
-  lng,
-  index,
-  onDelete,
-}: EducationItemProps) => {
+const EducationItemComponent = ({ t, lng, index }: EducationItemProps) => {
   const [calendarType, setCalendarType] = useState<CalendarType>(
     lng === "en" ? "gregorian" : "persian",
   );
 
   const { setValue, clearErrors, trigger } = useFormContext<ResumeFormValues>();
+
   const countryWatch = useWatch({
     name: `education.${index}.country`,
   });
@@ -53,7 +47,7 @@ const EducationItemComponent = ({
 
       clearErrors(field);
     } else {
-      trigger(`education.${index}.graduationDate`);
+      trigger(field);
     }
   }, [isStudyingNow, index, setValue, trigger, clearErrors]);
 
@@ -65,9 +59,16 @@ const EducationItemComponent = ({
       calendarType,
     });
 
+  const handleSetPersian = useCallback(() => {
+    setCalendarType("persian");
+  }, []);
+
+  const handleSetGregorian = useCallback(() => {
+    setCalendarType("gregorian");
+  }, []);
+
   return (
     <div className="grid grid-cols-12 gap-3">
-      {/* Degree Level */}
       <div className="col-span-12 md:col-span-6">
         <CustomControlledSelect
           name={`education.${index}.degreeLevel`}
@@ -76,7 +77,6 @@ const EducationItemComponent = ({
         />
       </div>
 
-      {/* Academic Major */}
       <div className="col-span-12 md:col-span-6">
         <CustomControlledInput
           name={`education.${index}.academicMajor`}
@@ -84,7 +84,6 @@ const EducationItemComponent = ({
         />
       </div>
 
-      {/* Concentration */}
       <div className="col-span-12 md:col-span-6">
         <CustomControlledInput
           name={`education.${index}.concentration`}
@@ -92,7 +91,6 @@ const EducationItemComponent = ({
         />
       </div>
 
-      {/* Institution Name */}
       <div className="col-span-12 md:col-span-6">
         <CustomControlledInput
           name={`education.${index}.institutionName`}
@@ -100,7 +98,6 @@ const EducationItemComponent = ({
         />
       </div>
 
-      {/* GPA */}
       <div className="col-span-12 md:col-span-3">
         <CustomControlledInput
           name={`education.${index}.gradeAverage`}
@@ -108,7 +105,6 @@ const EducationItemComponent = ({
         />
       </div>
 
-      {/* Country */}
       <div className="col-span-12 md:col-span-3">
         <CustomControlledSelect
           options={countryOptions}
@@ -117,46 +113,36 @@ const EducationItemComponent = ({
         />
       </div>
 
-      {/* Province */}
       <div className="col-span-12 md:col-span-3">
         {isIranSelected ? (
           <CustomControlledSelect
             options={provinceOptions}
             label={t("province")}
             name={`education.${index}.province`}
-            disabled={countryWatch === undefined}
+            disabled={!countryWatch}
           />
         ) : (
           <CustomControlledInput
             name={`education.${index}.province`}
             label={t("province")}
-            disabled={
-              countryWatch === undefined ||
-              countryWatch === "" ||
-              !Boolean(countryWatch)
-            }
+            disabled={!countryWatch}
           />
         )}
       </div>
 
-      {/* City */}
       <div className="col-span-12 md:col-span-3">
         {isIranSelected ? (
           <CustomControlledSelect
             name={`education.${index}.city`}
             label={t("city")}
             options={cityOptions}
-            disabled={
-              provinceId === undefined ||
-              provinceId === "" ||
-              countryWatch === ""
-            }
+            disabled={!provinceId || !countryWatch}
           />
         ) : (
           <CustomControlledInput
             name={`education.${index}.city`}
             label={t("city")}
-            disabled={countryWatch === undefined || countryWatch === ""}
+            disabled={!countryWatch}
           />
         )}
       </div>
@@ -182,23 +168,21 @@ const EducationItemComponent = ({
         />
       </div>
 
-      {/* Calendar Switcher */}
       <div className="col-span-12">
         <CustomRadio.Group className="flex flex-row">
           <CustomRadio
             checked={calendarType === "persian"}
-            onChange={() => setCalendarType("persian")}
+            onChange={handleSetPersian}
             label={t("solarHijri")}
           />
           <CustomRadio
             checked={calendarType === "gregorian"}
-            onChange={() => setCalendarType("gregorian")}
+            onChange={handleSetGregorian}
             label={t("gregorian")}
           />
         </CustomRadio.Group>
       </div>
 
-      {/* Studying Now Checkbox */}
       <div className="col-span-12">
         <div className="flex items-center justify-between">
           <CustomControlledCheckBox
@@ -208,20 +192,8 @@ const EducationItemComponent = ({
         </div>
       </div>
 
-      {/* Summary Field */}
       <div className="col-span-12">
         <EducationSummary index={index} t={t} />
-      </div>
-
-      {/* Actions */}
-      <div className="col-span-12 flex justify-end">
-        <CustomButton
-          onClick={() => onDelete(index)}
-          variant="outlined-negative"
-          className="text-nowrap"
-        >
-          {t("deleteThis")}
-        </CustomButton>
       </div>
     </div>
   );

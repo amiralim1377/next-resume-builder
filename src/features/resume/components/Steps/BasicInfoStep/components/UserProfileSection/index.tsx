@@ -1,16 +1,15 @@
-import { TFunction } from "i18next";
 import { CustomResumeCardComponents } from "@/components/ui/CustomResumeCardComponents";
 import { CustomControlledPhotoUploader } from "@/components/ui/CustomControlledPhotoUploader";
 import { CustomLabel } from "@/components/ui/CustomLabel";
 import { ImageUp } from "lucide-react";
 import { useThemeColors } from "@/provider/themeProvider/useThemeColors";
+import { useLang } from "@/provider/lngProvider";
+import { useTranslation } from "@/lib/i18n/client";
 
-type UserProfileSectionProps = {
-  t: TFunction<string, undefined>;
-};
-
-const UserProfileSection = ({ t }: UserProfileSectionProps) => {
+const UserProfileSection = () => {
   const { colors } = useThemeColors();
+  const { lng } = useLang();
+  const { t } = useTranslation(lng, "form");
 
   return (
     <CustomResumeCardComponents

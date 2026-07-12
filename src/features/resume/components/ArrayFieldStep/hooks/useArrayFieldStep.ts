@@ -24,7 +24,7 @@ export const useArrayFieldStep = <TFieldValues extends FieldValues>({
   emptyRowValues,
 }: UseArrayFieldStepProps<TFieldValues>) => {
   const { control, getValues, trigger } = useFormContext<TFieldValues>();
-  const [activeAccordionId, setActiveAccordionId] = useState<string>("");
+  const [activeAccordionIds, setActiveAccordionIds] = useState<string[]>([]);
   const [deleteTargetIndex, setDeleteTargetIndex] = useState<number | null>(
     null,
   );
@@ -95,15 +95,17 @@ export const useArrayFieldStep = <TFieldValues extends FieldValues>({
   useEffect(() => {
     if (fields.length > prevLengthRef.current && fields.length > 0) {
       const lastFieldId = fields[fields.length - 1].id;
-      setActiveAccordionId(lastFieldId);
+      setActiveAccordionIds((prev) =>
+        prev.includes(lastFieldId) ? prev : [...prev, lastFieldId],
+      );
     }
     prevLengthRef.current = fields.length;
   }, [fields]);
 
   return {
     fields,
-    activeAccordionId,
-    setActiveAccordionId,
+    activeAccordionIds,
+    setActiveAccordionIds,
     sensors,
     handleDragEnd,
     handleAddRow,

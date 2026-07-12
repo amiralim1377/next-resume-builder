@@ -1,5 +1,5 @@
 "use client";
-import { ResumeFormProvider } from "@/features/resume/components/ResumeFormProvider";
+import { ResumeFormWrapper } from "@/features/resume/components/ResumeFormWrapper";
 import { ResumeFormValues } from "@/features/resume/schemas/resume.schema";
 import { getDefaultResumeValues } from "@/features/resume/utils/formDefaultResumeValues";
 
@@ -23,7 +23,7 @@ const NewResumePage = () => {
 
   return (
     <div className="flex w-full items-center justify-center p-6">
-      <ResumeFormProvider
+      <ResumeFormWrapper
         initialData={getDefaultResumeValues()}
         mode="create"
         onSubmit={handleFinalSubmit}

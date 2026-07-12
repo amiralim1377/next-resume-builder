@@ -3,25 +3,22 @@ import { CustomResumeCardComponents } from "@/components/ui/CustomResumeCardComp
 import { Language } from "@/lib/i18n/settings";
 import { CalendarType } from "@/types";
 import { TFunction } from "i18next";
-import { useEffect, useState } from "react";
+import { memo, useCallback, useEffect, useState } from "react";
 import { useGetJobInfoStepData } from "../../hooks/useGetJobInfoStepData";
-import { useFormContext, useWatch, Watch } from "react-hook-form";
+import { useFormContext, useWatch } from "react-hook-form";
 import { CustomControlledSelect } from "@/components/ui/CustomControlledSelect";
 import { CustomControlledCheckBox } from "@/components/ui/CustomControlledCheckBox";
-import { CustomButton } from "@/components/ui/CustomButton";
 import { CustomRadio } from "@/components/ui/CustomRadio";
 import { JobSummary } from "../JobSummary";
-import { RowStatusObserver } from "@/features/resume/components/RowStatusObserver";
 import { CustomControlledCalendar } from "@/components/ui/CustomControlledCalendar";
 
 type JobSectionType = {
   t: TFunction<string, undefined>;
   lng: Language;
-  onDelete: (index: number) => void;
   index: number;
 };
 
-const JobItem = ({ lng, t, index, onDelete }: JobSectionType) => {
+const JobItemComponent = ({ lng, t, index }: JobSectionType) => {
   const [calendarType, setCalendarType] = useState<CalendarType>(
     lng === "en" ? "gregorian" : "persian",
   );
@@ -56,13 +53,17 @@ const JobItem = ({ lng, t, index, onDelete }: JobSectionType) => {
       provinceId,
       calendarType,
     });
-  return (
-    <CustomResumeCardComponents
-      classNames={{ cardClassName: "grid grid-cols-12 gap-4" }}
-    >
-      {/* Background worker tracking state changes cleanly */}
-      <RowStatusObserver fieldName="job" index={index} />
 
+  const handleSetPersian = useCallback(() => {
+    setCalendarType("persian");
+  }, []);
+
+  const handleSetGregorian = useCallback(() => {
+    setCalendarType("gregorian");
+  }, []);
+
+  return (
+    <div className="grid grid-cols-12 gap-3">
       {/* Job Title */}
       <div className="col-span-12 md:col-span-6">
         <CustomControlledInput
@@ -152,13 +153,13 @@ const JobItem = ({ lng, t, index, onDelete }: JobSectionType) => {
         <CustomRadio.Group className="flex flex-row">
           <CustomRadio
             checked={calendarType === "persian"}
-            onChange={() => setCalendarType("persian")}
+            onChange={handleSetPersian}
             label={t("solarHijri")}
           />
 
           <CustomRadio
             checked={calendarType === "gregorian"}
-            onChange={() => setCalendarType("gregorian")}
+            onChange={handleSetGregorian}
             label={t("gregorian")}
           />
         </CustomRadio.Group>
@@ -178,16 +179,8 @@ const JobItem = ({ lng, t, index, onDelete }: JobSectionType) => {
       <div className="col-span-12">
         <JobSummary index={index} t={t} />
       </div>
-
-      <CustomButton
-        onClick={() => onDelete(index)}
-        variant="outlined-negative"
-        className="text-nowrap"
-      >
-        {t("deleteThis")}
-      </CustomButton>
-    </CustomResumeCardComponents>
+    </div>
   );
 };
 
-export { JobItem };
+export const JobItem = memo(JobItemComponent);

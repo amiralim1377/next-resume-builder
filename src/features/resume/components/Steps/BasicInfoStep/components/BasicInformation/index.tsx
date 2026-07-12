@@ -1,22 +1,22 @@
-import { Language } from "@/lib/i18n/settings";
-import { TFunction } from "i18next";
 import { useGetBasicInfoStepData } from "../../hooks/useGetBasicInfoStepData";
 import { CustomControlledInput } from "@/components/ui/CustomControlledInput";
 import { CustomControlledSelect } from "@/components/ui/CustomControlledSelect";
 import { CustomControlledCalendar } from "@/components/ui/CustomControlledCalendar";
 import { CalendarType } from "@/types";
+import { memo, useMemo } from "react";
+import { useLang } from "@/provider/lngProvider";
+import { useTranslation } from "@/lib/i18n/client";
 
-type BasicInformationProps = {
-  t: TFunction<string, undefined>;
-  lng: Language;
-};
-
-const BasicInformation = ({ t, lng }: BasicInformationProps) => {
+const BasicInformationComponent = () => {
+  const { lng } = useLang();
+  const { t } = useTranslation(lng, "form");
   const { maritalOptions, militaryOptions, sexOptions } =
     useGetBasicInfoStepData({ t, lng });
 
-  const calendarType: CalendarType = lng === "fa" ? "persian" : "gregorian";
-
+  const calendarType: CalendarType = useMemo(
+    () => (lng === "fa" ? "persian" : "gregorian"),
+    [lng],
+  );
   return (
     <div className="grid w-full grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-12">
       {/* Personal Information */}
@@ -80,4 +80,5 @@ const BasicInformation = ({ t, lng }: BasicInformationProps) => {
   );
 };
 
-export { BasicInformation };
+export const BasicInformation = memo(BasicInformationComponent);
+BasicInformation.displayName = "BasicInformation";

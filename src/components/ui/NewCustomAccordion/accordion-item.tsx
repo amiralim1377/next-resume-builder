@@ -1,6 +1,5 @@
 "use client";
-
-import React, { useId } from "react";
+import React, { useId, useMemo } from "react";
 import { cn } from "@/utils/cn";
 import {
   useAccordion,
@@ -28,12 +27,15 @@ export const AccordionItem = ({
     ? activeValue.includes(value)
     : activeValue === value;
 
-  const contextValue: AccordionItemContextValue = {
-    value,
-    id: uniqueId,
-    disabled,
-    isOpen,
-  };
+  const contextValue: AccordionItemContextValue = useMemo(
+    () => ({
+      value,
+      id: uniqueId,
+      disabled,
+      isOpen,
+    }),
+    [value, uniqueId, disabled, isOpen],
+  );
 
   return (
     <AccordionItemContext.Provider value={contextValue}>

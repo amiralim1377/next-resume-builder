@@ -14,7 +14,7 @@ export const StepperContext = createContext<StepperContextType | null>(null);
 export const useStepper = () => {
   const context = useContext(StepperContext);
   if (!context) {
-    throw new Error("useStepper must be used inside a <ResumeFormProvider />");
+    throw new Error("useStepper must be used inside a <ResumeFormWrapper />");
   }
   return context;
 };
