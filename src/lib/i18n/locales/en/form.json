@@ -205,6 +205,7 @@
   "projectSummaryDescription": "In this section, write a short summary of your completed projects. You can mention key projects, your role in each project, the technologies used, and major achievements.",
   "projectItemDescription": "In this section, provide a description of this project. You can mention your role in the project, the technologies used, and the key achievements or outcomes.",
   "researchSummaryDescription": "In this section, write a short summary of your research activities. You can mention your research topics, areas of focus, methods used, publications, and key findings or achievements.",
+  "researchItemDescription": "In this section, describe your research activity. You can mention the research topic, methods used, and key achievements or outcomes.",
   "graduationBeforeEntry": "Graduation year cannot be earlier than the entry year.",
   "summaryTooLong": "The summary exceeds the allowed length.",
   "invalidYear": "The entered year is invalid.",
