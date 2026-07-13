@@ -43,7 +43,7 @@ export const RESUME_STEPS: StepConfig[] = [
     titleKey: "skills",
     titleEn: "Skills",
     component: SkillsStep,
-    fieldNames: ["skills", "languages", "coursesAndCertifications"],
+    fieldNames: ["coursesAndCertifications"],
     isOptional: true,
     icon: "⚡",
   },
