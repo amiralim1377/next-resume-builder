@@ -9,7 +9,10 @@ export const getStrictCoursesAndCertificationsSchema = (
   t: TFunction = identityT,
 ) => {
   return z.object({
-    coursesAndCertificationsName: z.string().optional(),
+    coursesAndCertificationsName: z
+      .string()
+      .trim()
+      .min(1, { message: t("courseOrCertificationNameRequired") }),
     instituteName: z.string().optional(),
     certificateIssueDate: z.string().optional(),
     certificateUrl: z
