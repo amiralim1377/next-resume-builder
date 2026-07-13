@@ -75,7 +75,10 @@ type TitleProps = {
   name: string;
   index: number;
   titleDependencies: string[];
-  formatTitle: (values: unknown[], t: TFunction<string, undefined>) => string;
+  formatTitle: (
+    values: unknown[],
+    t: TFunction<string, undefined>,
+  ) => React.ReactNode;
   t: TFunction<string, undefined>;
 };
 
@@ -115,7 +118,10 @@ export type GenericAccordionHeaderProps<T> = {
   index: number;
   engine: StatusEngine<T>;
   titleDependencies: Array<keyof T & string>;
-  formatTitle: (values: unknown[], t: TFunction<string, undefined>) => string;
+  formatTitle: (
+    values: unknown[],
+    t: TFunction<string, undefined>,
+  ) => React.ReactNode;
   actionsSlot?: React.ReactNode;
   t: TFunction<string, undefined>;
 };
