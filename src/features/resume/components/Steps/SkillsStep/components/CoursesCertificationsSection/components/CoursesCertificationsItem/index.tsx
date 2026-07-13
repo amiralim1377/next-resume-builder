@@ -54,6 +54,7 @@ const CoursesCertificationsItem = ({
           name={`coursesAndCertifications.${index}.certificateIssueDate`}
           label={t("certificateIssueDate")}
           placeholder={t("optional")}
+          calendarSystem={calendarType}
         />
       </div>
 

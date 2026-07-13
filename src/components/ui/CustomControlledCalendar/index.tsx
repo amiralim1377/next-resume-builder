@@ -2,9 +2,19 @@ import { Controller, FieldPath, useFormContext } from "react-hook-form";
 import { parseDate, getLocalTimeZone } from "@internationalized/date";
 import { ResumeFormValues } from "@/features/resume/schemas/resume.schema";
 import { Calendar } from "../CustomCalendar/Calendar";
-import { useRef, useState } from "react";
-import { useOnClickOutside } from "./hooks/useOnClickOutside";
+import { useState } from "react";
 import { CustomInput } from "../CustomInput";
+import {
+  useFloating,
+  autoUpdate,
+  offset,
+  flip,
+  shift,
+  useDismiss,
+  useInteractions,
+  FloatingPortal,
+  useClick,
+} from "@floating-ui/react";
 
 type CustomControlledCalendarProps = {
   name: FieldPath<ResumeFormValues>;
@@ -32,9 +42,25 @@ export const CustomControlledCalendar = ({
 }: CustomControlledCalendarProps) => {
   const { control } = useFormContext<ResumeFormValues>();
   const [isOpen, setIsOpen] = useState(false);
-  const containerRef = useRef<HTMLDivElement>(null);
 
-  useOnClickOutside(containerRef, () => setIsOpen(false));
+  const { refs, floatingStyles, context } = useFloating({
+    open: isOpen,
+    onOpenChange: setIsOpen,
+    placement: "bottom-start",
+    whileElementsMounted: autoUpdate,
+    middleware: [
+      offset(4),
+      flip({ fallbackPlacements: ["top-start"] }),
+      shift({ padding: 8 }),
+    ],
+  });
+
+  const click = useClick(context);
+  const dismiss = useDismiss(context);
+  const { getReferenceProps, getFloatingProps } = useInteractions([
+    click,
+    dismiss,
+  ]);
 
   return (
     <Controller
@@ -59,38 +85,51 @@ export const CustomControlledCalendar = ({
         const isValid = disabled || (!fieldState.invalid && Boolean(value));
 
         return (
-          <div className="relative w-full">
-            <CustomInput
-              type="text"
-              readOnly
-              disabled={disabled}
-              label={label}
-              isValid={isValid}
-              error={fieldState.error?.message}
-              value={displayValue}
-              placeholder={placeholder}
-              onClick={() => setIsOpen(!isOpen)}
-              onBlur={onBlur}
-              className="w-full cursor-pointer rounded-md"
-              ref={ref}
-            />
+          <div className="w-full">
+            <div
+              ref={refs.setReference}
+              {...getReferenceProps()}
+              className="w-full"
+            >
+              <CustomInput
+                type="text"
+                readOnly
+                disabled={disabled}
+                label={label}
+                isValid={isValid}
+                error={fieldState.error?.message}
+                value={displayValue}
+                placeholder={placeholder}
+                onBlur={onBlur}
+                className="w-full cursor-pointer rounded-md"
+                ref={ref}
+              />
+            </div>
 
-            {isOpen && (
-              <div className="absolute z-50 mt-1 w-full">
-                <Calendar
-                  ref={containerRef}
-                  value={dateValue}
-                  onChange={(date: unknown) => {
-                    onChange(String(date));
-                    setIsOpen(false);
+            <FloatingPortal>
+              {isOpen && (
+                <div
+                  ref={refs.setFloating}
+                  style={{
+                    ...floatingStyles,
+                    zIndex: 9999,
                   }}
-                  {...props}
+                  {...getFloatingProps()}
                 >
-                  <Calendar.Header />
-                  <Calendar.Content />
-                </Calendar>
-              </div>
-            )}
+                  <Calendar
+                    value={dateValue}
+                    onChange={(date: unknown) => {
+                      onChange(String(date));
+                      setIsOpen(false);
+                    }}
+                    {...props}
+                  >
+                    <Calendar.Header />
+                    <Calendar.Content />
+                  </Calendar>
+                </div>
+              )}
+            </FloatingPortal>
           </div>
         );
       }}
