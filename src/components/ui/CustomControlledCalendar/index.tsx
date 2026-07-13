@@ -80,8 +80,8 @@ export const CustomControlledCalendar = ({
                 <Calendar
                   ref={containerRef}
                   value={dateValue}
-                  onChange={(date) => {
-                    onChange(date.toString());
+                  onChange={(date: unknown) => {
+                    onChange(String(date));
                     setIsOpen(false);
                   }}
                   {...props}
