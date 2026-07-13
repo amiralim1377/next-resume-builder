@@ -36,6 +36,13 @@ const ResumeFormWrapper = ({
   const { reset } = form;
 
   useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: "auto",
+    });
+  }, [currentStep]);
+
+  useEffect(() => {
     const restoreDraftData = async () => {
       try {
         if (mode === "create") {
@@ -72,7 +79,9 @@ const ResumeFormWrapper = ({
       );
 
       if (firstErrorStepIndex !== -1 && firstErrorStepIndex !== currentStep) {
-        setCurrentStep(firstErrorStepIndex);
+        setTimeout(() => {
+          setCurrentStep(firstErrorStepIndex);
+        }, 100);
         console.warn(
           `Redirected to step ${firstErrorStepIndex + 1} due to validation errors.`,
         );
