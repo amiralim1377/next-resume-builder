@@ -1,5 +1,6 @@
 import { cn } from "@/utils/cn";
 import { useState } from "react";
+import { Star } from "lucide-react";
 
 export interface CustomRateStarProps {
   totalStars?: number;
@@ -48,8 +49,9 @@ const CustomRateStar = ({
         const isFilled = index < (hoverRating || rating);
 
         return (
-          <svg
+          <Star
             key={index}
+            size={size}
             onClick={() => handleClick(index)}
             onMouseEnter={() => handleMouseEnter(index)}
             onMouseLeave={handleMouseLeave}
@@ -57,15 +59,9 @@ const CustomRateStar = ({
               "transition-colors duration-200",
               isReadOnly ? "cursor-default" : "cursor-pointer",
             )}
-            width={size}
-            height={size}
-            viewBox="0 0 24 24"
-            style={{ fill: isFilled ? activeColor : inactiveColor }}
             fill={isFilled ? activeColor : inactiveColor}
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" />
-          </svg>
+            color={isFilled ? activeColor : inactiveColor}
+          />
         );
       })}
     </div>

@@ -2,7 +2,6 @@ import { ResumeFormValues } from "@/features/resume/schemas/resume.schema";
 import { CustomLabel } from "@/components/ui/CustomLabel";
 import { useThemeColors } from "@/provider/themeProvider/useThemeColors";
 import { ArrowDown, ArrowUp, CopyIcon, Star, Trash2Icon } from "lucide-react";
-
 import { SkillItem } from "./components/SkillItem";
 import { useLang } from "@/provider/lngProvider";
 import { useTranslation } from "@/lib/i18n/client";
