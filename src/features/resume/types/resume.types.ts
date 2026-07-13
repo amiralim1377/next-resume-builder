@@ -6,7 +6,7 @@ export type StepName =
   | "education"
   | "job"
   | "experience"
-  | "skills"
+  | "qualifications"
   | "projects"
   | "research";
 

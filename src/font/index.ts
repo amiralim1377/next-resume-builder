@@ -28,7 +28,7 @@ export const yekanbakh = localFont({
       style: "normal",
     },
     {
-      path: "../../public/fonts/yekanbakh/YekanBakhFaNum-Black.woff2",
+      path: "../../public/fonts/yekanbakh/YekanBakhFaNum-ExtraBlack.woff2",
       weight: "900",
       style: "normal",
     },

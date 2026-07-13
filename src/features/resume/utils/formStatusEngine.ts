@@ -23,17 +23,18 @@ export const createArrayStepEngine = <T>(rules: ArrayStepRules<T>) => {
     hasStepError: boolean,
   ): StepStatus => {
     if (hasStepError) return "invalid";
+
     if (!rows || rows.length === 0) return "empty";
 
     const rowStatuses = rows.map((row) => getRowStatus(row, false));
 
-    if (rowStatuses.every((status) => status === "empty")) return "empty";
-
-    if (rowStatuses.includes("draft") || rowStatuses.includes("empty"))
+    if (rowStatuses.includes("draft") || rowStatuses.includes("empty")) {
       return "draft";
+    }
 
-    if (rowStatuses.every((status) => status === "completed"))
+    if (rowStatuses.every((status) => status === "completed")) {
       return "completed";
+    }
 
     return "draft";
   };

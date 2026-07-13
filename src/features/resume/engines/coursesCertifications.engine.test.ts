@@ -1,49 +1,83 @@
-import { describe, it, expect } from "vitest";
+import { describe, it, expect, vi, beforeEach } from "vitest";
 import { CoursesCertificationsStatusEngine } from "./coursesCertifications.engine";
+import { isGenericRowEmpty } from "../utils/isGenericRowEmpty";
+import { getStrictCoursesAndCertificationsSchema } from "../schemas/CoursesAndCertificationsSchema";
 
-describe("Courses & Certifications Status Engine Tests", () => {
-  it("should return empty when the rows are empty", () => {
-    const mockEmptyData = [
-      { coursesAndCertificationsName: "", institutionName: "" },
-    ];
-    const hasError = false;
+vi.mock("../utils/isGenericRowEmpty");
+vi.mock("../schemas/CoursesAndCertificationsSchema");
 
-    const result = CoursesCertificationsStatusEngine.getStepStatus(
-      mockEmptyData,
-      hasError,
-    );
+describe("CoursesCertificationsStatusEngine", () => {
+  const mockSafeParse = vi.fn();
 
-    expect(result).toBe("empty");
+  beforeEach(() => {
+    vi.clearAllMocks();
+
+    vi.mocked(getStrictCoursesAndCertificationsSchema).mockReturnValue({
+      safeParse: mockSafeParse,
+    } as unknown as ReturnType<typeof getStrictCoursesAndCertificationsSchema>);
   });
 
-  it("should return invalid when form validation errors exist", () => {
-    const mockData = [
-      { coursesAndCertificationsName: "React Course", institutionName: "" },
-    ];
-    const hasError = true;
+  it("should return 'empty' when no course rows exist", () => {
+    const status = CoursesCertificationsStatusEngine.getStepStatus([], false);
+    expect(status).toBe("empty");
+  });
 
+  it("should return 'draft' when the rows are added but completely empty", () => {
+    vi.mocked(isGenericRowEmpty).mockReturnValue(true);
+    mockSafeParse.mockReturnValue({ success: false });
+
+    const mockData = [{ coursesAndCertificationsName: "" }];
     const result = CoursesCertificationsStatusEngine.getStepStatus(
       mockData,
-      hasError,
+      false,
     );
 
-    expect(result).toBe("invalid");
+    expect(result).toBe("draft");
   });
 
-  it("should return completed when fields satisfy the strict validation schema", () => {
-    const mockCompleteData = [
-      {
-        coursesAndCertificationsName: "Senior Frontend Engineering Course",
-        institutionName: "Alpha Educational Institute",
-      },
-    ];
-    const hasError = false;
+  it("should return 'draft' when rows are neither completely empty nor fully valid", () => {
+    vi.mocked(isGenericRowEmpty).mockReturnValue(false);
+    mockSafeParse.mockReturnValue({ success: false });
 
-    const result = CoursesCertificationsStatusEngine.getStepStatus(
-      mockCompleteData,
-      hasError,
+    const mockData = [{ coursesAndCertificationsName: "Next.js Course" }];
+    const status = CoursesCertificationsStatusEngine.getStepStatus(
+      mockData,
+      false,
     );
 
-    expect(result).toBe("completed");
+    expect(status).toBe("draft");
+  });
+
+  it("should return 'invalid' if there is a step error, even if rows seem valid", () => {
+    vi.mocked(isGenericRowEmpty).mockReturnValue(false);
+    mockSafeParse.mockReturnValue({ success: true });
+
+    const mockData = [{ coursesAndCertificationsName: "Valid Course Data" }];
+    const status = CoursesCertificationsStatusEngine.getStepStatus(
+      mockData,
+      true,
+    );
+
+    expect(status).toBe("invalid");
+  });
+
+  it("should return 'completed' when all rows are valid according to schema and there are no errors", () => {
+    vi.mocked(isGenericRowEmpty).mockReturnValue(false);
+    mockSafeParse.mockReturnValue({ success: true });
+
+    const mockData = [
+      {
+        coursesAndCertificationsName: "React Clean Code",
+        instituteName: "Coursera",
+        certificateIssueDate: "2026-01-01",
+        certificateUrl: "https://example.com/cert",
+      },
+    ];
+    const status = CoursesCertificationsStatusEngine.getStepStatus(
+      mockData,
+      false,
+    );
+
+    expect(status).toBe("completed");
   });
 });

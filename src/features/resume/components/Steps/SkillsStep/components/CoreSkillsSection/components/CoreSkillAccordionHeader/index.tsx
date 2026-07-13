@@ -1,37 +1,43 @@
-import { CustomLabel } from "@/components/ui/CustomLabel";
+import { MemoizedGenericAccordionHeader } from "@/features/resume/components/GenericAccordionHeader";
+import { coreSkillStatusEngine } from "@/features/resume/engines/coreSkills.engine";
+import { SkillsRowValues } from "@/features/resume/schemas/SkillsSchema";
 import { Language } from "@/lib/i18n/settings";
 import { TFunction } from "i18next";
-import { useEffect, useState } from "react";
-import { useWatch } from "react-hook-form";
 
 type HeaderProps = {
   index: number;
-  t?: TFunction<string, undefined>;
+  t: TFunction<string, undefined>;
   lng?: Language;
+  actionsSlot?: React.ReactNode;
 };
 
-const CoreSkillAccordionHeader = ({ index }: HeaderProps) => {
-  const skillName = useWatch({
-    name: `skills.${index}.skillName`,
-    exact: true,
-  });
+const titleDependencies: Array<keyof SkillsRowValues & string> = [
+  "skillName",
+  "skillLevel",
+];
 
-  const [displayedLabel, setDisplayedLabel] = useState("...");
+const formatTitle = (values: unknown[]) => {
+  const [skillLevel, skillName] = values as [
+    string | undefined,
+    string | undefined,
+  ];
 
-  useEffect(() => {
-    const targetLabel = skillName ? `${skillName ?? ""} `.trim() : "...";
+  const title = [skillName, skillLevel].filter(Boolean).join(" ");
 
-    const timer = setTimeout(() => {
-      setDisplayedLabel(targetLabel);
-    }, 500);
+  return title || "...";
+};
 
-    return () => clearTimeout(timer);
-  }, [skillName]);
-
+const CoreSkillAccordionHeader = ({ index, actionsSlot, t }: HeaderProps) => {
   return (
-    <div className="flex items-center gap-2">
-      <CustomLabel size="lg">{displayedLabel}</CustomLabel>
-    </div>
+    <MemoizedGenericAccordionHeader<SkillsRowValues>
+      name="skills"
+      index={index}
+      engine={coreSkillStatusEngine}
+      titleDependencies={titleDependencies}
+      formatTitle={formatTitle}
+      t={t}
+      actionsSlot={actionsSlot}
+    />
   );
 };
 

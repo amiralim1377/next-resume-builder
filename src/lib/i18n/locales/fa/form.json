@@ -239,6 +239,7 @@
   "noJobAddedYet": "هنوز سابقه کاری اضافه نشده است",
   "addJobDescription": "سوابق کاری خود را از جدیدترین به قدیمی‌ترین اضافه کنید.",
   "addJob": "افزودن سوابق کاری",
+  "addCoursesAndCertificationsDescription": "دوره‌ها و مدارک تخصصی خود را از جدیدترین به قدیمی‌ترین اضافه کنید.",
   "emptyStepJobDescription": "هر شغلی که به رشد حرفه‌ای شما کمک کرده است را اضافه کنید و تجربه‌های ارزشمند خود را به نمایش بگذارید.",
   "emptyStepEducationDescription": "هر مدرک و تجربه آموزشی، بخشی از مسیر یادگیری شماست. از اینجا شروع کنید.",
   "addProjectsDescription": "پروژه‌هایی که روی آن‌ها کار کرده‌اید را از جدید به قدیم اضافه کنید و تجربه عملی خود را نمایش دهید.",
@@ -258,5 +259,10 @@
   "deleteRowDescription": "آیا مطمئن هستید که می‌خواهید این ردیف را حذف کنید؟",
   "noCourseOrCertificationAddedYet": "هنوز دوره یا مدرکی ثبت نشده است.",
   "emptyStepCourseOrCertificationDescription": "دوره‌های آموزشی و گواهینامه‌های خود را به رزومه اضافه کنید.",
-  "addCourseOrCertification": "افزودن دوره"
+  "addCourseOrCertification": "افزودن دوره",
+  "noSkillAddedYet": "هنوز مهارتی اضافه نشده است.",
+  "emptyStepSkillDescription": "مهارت‌های تخصصی و توانمندی‌های خود را برای تکمیل رزومه اضافه کنید.",
+  "addSkill": "افزودن مهارت",
+  "skillNameRequired": "نام مهارت الزامی است.",
+  "skillLevelRequired": "سطح مهارت الزامی است."
 }

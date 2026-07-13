@@ -1,10 +1,11 @@
+import { CoreSkillsSection } from "./components/CoreSkillsSection";
 import { CoursesCertificationsSection } from "./components/CoursesCertificationsSection";
 
 function SkillsStep() {
   return (
     <div className="flex w-full flex-col space-y-2.5">
       {/* <LanguageSection  /> */}
-      {/* <CoreSkillsSection /> */}
+      <CoreSkillsSection />
       <CoursesCertificationsSection />
     </div>
   );

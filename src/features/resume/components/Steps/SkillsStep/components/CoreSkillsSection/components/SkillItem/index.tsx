@@ -2,18 +2,15 @@ import { CustomControlledInput } from "@/components/ui/CustomControlledInput";
 import { CustomControlledSelect } from "@/components/ui/CustomControlledSelect";
 import { Language } from "@/lib/i18n/settings";
 import { TFunction } from "i18next";
-import { UseFieldArrayRemove } from "react-hook-form";
-import { CustomButton } from "@/components/ui/CustomButton";
 import { useGetSkillsInfoStepData } from "../../../../hooks/useGetSkillsInfoStepData";
 
 type SkillItemProps = {
   lng: Language;
   t: TFunction<string, undefined>;
   index: number;
-  onDelete: UseFieldArrayRemove;
 };
 
-const SkillItem = ({ index, lng, onDelete, t }: SkillItemProps) => {
+const SkillItem = ({ index, lng, t }: SkillItemProps) => {
   const { graphicLevelsOptions } = useGetSkillsInfoStepData({
     lng,
   });
@@ -36,15 +33,6 @@ const SkillItem = ({ index, lng, onDelete, t }: SkillItemProps) => {
         label={t("level")}
         options={graphicLevelsOptions}
       />
-
-      <CustomButton
-        className="w-1/2 capitalize"
-        type="button"
-        variant="outlined-negative"
-        onClick={() => onDelete(index)}
-      >
-        {t("deleteThis")}
-      </CustomButton>
     </div>
   );
 };

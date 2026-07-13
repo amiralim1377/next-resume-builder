@@ -48,7 +48,7 @@ const STEP_STATUS_ENGINES: Partial<Record<ResumeStepId, StandardStatusEngine>> =
     job: withSingleField(jobStatusEngine.getStepStatus),
     projects: withSingleField(ProjectStatusEngine.getStepStatus),
     research: withSingleField(researchStatusEngine.getStepStatus),
-    skills: withCompositeFields(skillsStepStatusEngine.getStepStatus),
+    qualifications: withCompositeFields(skillsStepStatusEngine.getStepStatus),
   };
 
 // ─── 4. The Smart Hook ──────────────────────────────────────────────────
