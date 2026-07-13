@@ -259,5 +259,10 @@
   "deleteRowDescription": "آیا مطمئن هستید که می‌خواهید این ردیف را حذف کنید؟",
   "noCourseOrCertificationAddedYet": "هنوز دوره یا مدرکی ثبت نشده است.",
   "emptyStepCourseOrCertificationDescription": "دوره‌های آموزشی و گواهینامه‌های خود را به رزومه اضافه کنید.",
-  "addCourseOrCertification": "افزودن دوره"
+  "addCourseOrCertification": "افزودن دوره",
+  "noSkillAddedYet": "هنوز مهارتی اضافه نشده است.",
+  "emptyStepSkillDescription": "مهارت‌های تخصصی و توانمندی‌های خود را برای تکمیل رزومه اضافه کنید.",
+  "addSkill": "افزودن مهارت",
+  "skillNameRequired": "نام مهارت الزامی است.",
+  "skillLevelRequired": "سطح مهارت الزامی است."
 }

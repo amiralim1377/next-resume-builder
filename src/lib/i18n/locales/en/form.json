@@ -257,5 +257,10 @@
   "deleteRowDescription": "Are you sure you want to delete this row? This action cannot be undone?",
   "noCourseOrCertificationAddedYet": "No courses or certifications have been added yet.",
   "emptyStepCourseOrCertificationDescription": "Add your courses, training programs, and certifications to highlight your skills and professional development.",
-  "addCourseOrCertification": "Add Course or Certification"
+  "addCourseOrCertification": "Add Course or Certification",
+  "noSkillAddedYet": "No skills added yet.",
+  "emptyStepSkillDescription": "Add your technical skills and professional abilities to complete your resume.",
+  "addSkill": "Add Skill",
+  "skillNameRequired": "Skill name is required.",
+  "skillLevelRequired": "Skill level is required."
 }
