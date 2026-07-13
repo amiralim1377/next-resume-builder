@@ -1,6 +1,4 @@
 import { CustomButton } from "@/components/ui/CustomButton";
-import { Language } from "@/lib/i18n/settings";
-import { TFunction } from "i18next";
 import { useFieldArray } from "react-hook-form";
 import { CustomLabel } from "@/components/ui/CustomLabel";
 import { Globe } from "lucide-react";
@@ -14,15 +12,14 @@ import {
 import { useEffect, useState } from "react";
 import { LanguageItem } from "./components/LanguageItem";
 import { LanguageAccordionHeader } from "./components/LanguageAccordionHeader";
+import { useLang } from "@/provider/lngProvider";
+import { useTranslation } from "@/lib/i18n/client";
 
-type LanguageSectionProps = {
-  t: TFunction<string, undefined>;
-  lng: Language;
-};
-
-const LanguageSection = ({ t, lng }: LanguageSectionProps) => {
+const LanguageSection = () => {
   const [activeAccordionId, setActiveAccordionId] = useState<string>("");
   const { colors } = useThemeColors();
+  const { lng } = useLang();
+  const { t } = useTranslation(lng, "form");
   const { fields, append, remove } = useFieldArray({
     name: "languages",
   });

@@ -2,28 +2,32 @@ import { CustomControlledInput } from "@/components/ui/CustomControlledInput";
 import { Language } from "@/lib/i18n/settings";
 import { CalendarType } from "@/types";
 import { TFunction } from "i18next";
-import { useState } from "react";
-import { UseFieldArrayRemove } from "react-hook-form";
+import { useCallback, useState } from "react";
 import { CustomRadio } from "@/components/ui/CustomRadio";
-import { CustomButton } from "@/components/ui/CustomButton";
 import { CustomControlledCalendar } from "@/components/ui/CustomControlledCalendar";
 
 type CoursesCertificationsItemProps = {
   lng: Language;
   t: TFunction<string, undefined>;
   index: number;
-  onDelete: UseFieldArrayRemove;
 };
 
 const CoursesCertificationsItem = ({
   index,
   lng,
-  onDelete,
   t,
 }: CoursesCertificationsItemProps) => {
   const [calendarType, setCalendarType] = useState<CalendarType>(
     lng === "en" ? "gregorian" : "persian",
   );
+
+  const handleSetPersian = useCallback(() => {
+    setCalendarType("persian");
+  }, []);
+
+  const handleSetGregorian = useCallback(() => {
+    setCalendarType("gregorian");
+  }, []);
 
   return (
     <div className="grid grid-cols-2 gap-4">
@@ -49,6 +53,7 @@ const CoursesCertificationsItem = ({
         <CustomControlledCalendar
           name={`coursesAndCertifications.${index}.certificateIssueDate`}
           label={t("certificateIssueDate")}
+          placeholder={t("optional")}
         />
       </div>
 
@@ -57,6 +62,7 @@ const CoursesCertificationsItem = ({
         <CustomControlledInput
           name={`coursesAndCertifications.${index}.certificateUrl`}
           label={t("certificateUrl")}
+          placeholder={t("optional")}
         />
       </div>
 
@@ -65,26 +71,16 @@ const CoursesCertificationsItem = ({
         <CustomRadio.Group className="flex flex-row gap-4">
           <CustomRadio
             checked={calendarType === "persian"}
-            onChange={() => setCalendarType("persian")}
+            onChange={handleSetPersian}
             label={t("solarHijri")}
           />
 
           <CustomRadio
             checked={calendarType === "gregorian"}
-            onChange={() => setCalendarType("gregorian")}
+            onChange={handleSetGregorian}
             label={t("gregorian")}
           />
         </CustomRadio.Group>
-      </div>
-
-      {/* Delete button */}
-      <div className="col-span-2 flex justify-end">
-        <CustomButton
-          onClick={() => onDelete(index)}
-          variant="outlined-negative"
-        >
-          {t("deleteThis")}
-        </CustomButton>
       </div>
     </div>
   );

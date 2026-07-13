@@ -1,45 +1,48 @@
-import { CustomLabel } from "@/components/ui/CustomLabel";
+import { MemoizedGenericAccordionHeader } from "@/features/resume/components/GenericAccordionHeader";
+import { CoursesCertificationsStatusEngine } from "@/features/resume/engines/coursesCertifications.engine";
+import { CoursesAndCertificationsRowValues } from "@/features/resume/schemas/CoursesAndCertificationsSchema";
 import { Language } from "@/lib/i18n/settings";
 import { TFunction } from "i18next";
-import { useEffect, useState } from "react";
-import { useWatch } from "react-hook-form";
 
 type HeaderProps = {
   index: number;
-  t?: TFunction<string, undefined>;
+  t: TFunction<string, undefined>;
   lng?: Language;
+  actionsSlot?: React.ReactNode;
 };
 
-const CoursesCertificationsAccordionHeader = ({ index }: HeaderProps) => {
-  const coursesAndCertificationsName = useWatch({
-    name: `coursesAndCertifications.${index}.coursesAndCertificationsName`,
-    exact: true,
-  });
+const titleDependencies: Array<
+  keyof CoursesAndCertificationsRowValues & string
+> = ["coursesAndCertificationsName", "instituteName"];
 
-  const instituteName = useWatch({
-    name: `coursesAndCertifications.${index}.instituteName`,
-    exact: true,
-  });
+const formatTitle = (values: unknown[]) => {
+  const [coursesAndCertificationsName, instituteName] = values as [
+    string | undefined,
+    string | undefined,
+  ];
 
-  const [displayedLabel, setDisplayedLabel] = useState("...");
+  const title = [coursesAndCertificationsName, instituteName]
+    .filter(Boolean)
+    .join(" ");
 
-  useEffect(() => {
-    const targetLabel =
-      coursesAndCertificationsName || instituteName
-        ? `${coursesAndCertificationsName ?? ""}  ${instituteName ?? ""}`.trim()
-        : "...";
+  return title || "...";
+};
 
-    const timer = setTimeout(() => {
-      setDisplayedLabel(targetLabel);
-    }, 500);
-
-    return () => clearTimeout(timer);
-  }, [instituteName, coursesAndCertificationsName]);
-
+const CoursesCertificationsAccordionHeader = ({
+  index,
+  actionsSlot,
+  t,
+}: HeaderProps) => {
   return (
-    <div className="flex items-center gap-2">
-      <CustomLabel size="lg">{displayedLabel}</CustomLabel>
-    </div>
+    <MemoizedGenericAccordionHeader<CoursesAndCertificationsRowValues>
+      name="coursesAndCertifications"
+      index={index}
+      engine={CoursesCertificationsStatusEngine}
+      titleDependencies={titleDependencies}
+      formatTitle={formatTitle}
+      t={t}
+      actionsSlot={actionsSlot}
+    />
   );
 };
 

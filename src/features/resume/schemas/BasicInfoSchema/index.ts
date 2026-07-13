@@ -17,6 +17,7 @@ export const getStrictBasicInfoSchema = (t: TFunction = identityT) => {
   return z.object({
     firstName: z
       .string()
+      .trim()
       .min(1, { message: t("firstNameRequired") })
       .refine((value) => !/^\d+$/.test(value), {
         message: t("numberIsNotAllowed"),
@@ -30,6 +31,7 @@ export const getStrictBasicInfoSchema = (t: TFunction = identityT) => {
 
     lastName: z
       .string()
+      .trim()
       .min(1, { message: t("lastNameRequired") })
       .refine((value) => !/^\d+$/.test(value), {
         message: t("numberIsNotAllowed"),
@@ -43,6 +45,7 @@ export const getStrictBasicInfoSchema = (t: TFunction = identityT) => {
 
     jobTitle: z
       .string()
+      .trim()
       .min(1, { message: t("jobTitleRequired") })
       .refine((value) => !/^\d+$/.test(value), {
         message: t("numberIsNotAllowed"),
@@ -172,6 +175,7 @@ export const getStrictBasicInfoSchema = (t: TFunction = identityT) => {
 
     address: z
       .string()
+      .trim()
       .optional()
       .refine((val) => !val || val.length >= 5, {
         message: t("addressFiveCharacters"),

@@ -145,6 +145,7 @@
   "coursesAndCertificationsName": "عنوان دوره-مدرک",
   "trainingAndCertificates": "دوره‌ها و مدارک",
   "courseOrCertificationTitle": "عنوان دوره سپری شده و یا مدرک دریافت شده",
+  "courseOrCertificationNameRequired": "وارد کردن نام دوره یا مدرک الزامی است.",
   "instituteName": "نام موسسه",
   "issueMonth": "ماه دریافت",
   "issueYear": "سال دریافت",
@@ -208,6 +209,7 @@
   "projectItemDescription": "در این بخش توضیحات مربوط به این پروژه را بنویسید. می‌توانید به نقش خود در پروژه، تکنولوژی‌های استفاده‌شده و دستاوردها یا نتایج مهم آن اشاره کنید.",
   "researchSummaryDescription": "در این بخش یک خلاصه کوتاه از فعالیت‌های تحقیقاتی خود بنویسید. می‌توانید به موضوعات تحقیق، حوزه‌های کاری، روش‌های استفاده‌شده، مقالات یا نتایج مهم و دستاوردهای پژوهشی خود اشاره کنید.",
   "graduationBeforeEntry": "سال فارغ‌التحصیلی نمی‌تواند قبل از سال ورود باشد",
+  "researchItemDescription": "در این بخش توضیحات مربوط به فعالیت تحقیقاتی خود را بنویسید. می‌توانید به موضوع تحقیق، روش‌های استفاده‌شده و دستاوردهای مهم آن اشاره کنید.",
   "summaryTooLong": "خلاصه زیاد تر از مقدار مد نظر است ",
   "invalidYear": "سال وارد شده نامعتبر است",
   "invalidYearFormat": "سال باید چهار رقم داشته باشد",
@@ -253,5 +255,8 @@
   "moveDown": "انتقال به پایین",
   "duplicate": "کپی",
   "deleteRowTitle": "تایید حذف ردیف",
-  "deleteRowDescription": "آیا مطمئن هستید که می‌خواهید این ردیف را حذف کنید؟"
+  "deleteRowDescription": "آیا مطمئن هستید که می‌خواهید این ردیف را حذف کنید؟",
+  "noCourseOrCertificationAddedYet": "هنوز دوره یا مدرکی ثبت نشده است.",
+  "emptyStepCourseOrCertificationDescription": "دوره‌های آموزشی و گواهینامه‌های خود را به رزومه اضافه کنید.",
+  "addCourseOrCertification": "افزودن دوره"
 }

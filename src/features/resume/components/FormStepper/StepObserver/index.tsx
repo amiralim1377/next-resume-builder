@@ -20,10 +20,10 @@ export const StepObserver = ({
   isLast,
   onClick,
 }: StepObserverProps) => {
-  const primaryFieldName = step.fieldNames[0] as keyof ResumeFormValues;
-
-  const status = useSectionStatus(step.id, primaryFieldName);
-
+  const status = useSectionStatus(
+    step.id,
+    step.fieldNames as (keyof ResumeFormValues)[],
+  );
   const isCompleted = status === "completed";
   const isDraft = status === "draft";
   const isEmpty = status === "empty";

@@ -1,33 +1,19 @@
 // src/features/resume/schemas/ResearchSchema.ts
 import { TFunction } from "i18next";
 import { z } from "zod";
+import { isGenericRowEmpty } from "../../utils/isGenericRowEmpty";
 
 // ─── Constants ────────────────────────────────────────────────────────────────
-const YEAR_REGEX = /^\d{4}$/;
+const identityT = ((key: string) => key) as TFunction;
 
 // ─── Schema Factory ───────────────────────────────────────────────────────────
-export const createResearchSchema = (t: TFunction<string, undefined>) => {
-  // ─── Shared Rich Text Core ──────────────────────────────────────────────────
-  // Strict object definition to satisfy React Hook Form Resolver types
+export const getStrictResearchSchema = (t: TFunction = identityT) => {
   const summarySchema = z.object({
     type: z.string(),
-    content: z.array(z.unknown()),
+    content: z.array(z.any()),
   });
 
-  // ─── 1. EMPTY STATE SCHEMA ──────────────────────────────────────────────────
-  const emptyResearchSchema = z.object({
-    status: z.literal("empty"),
-    researchTitle: z.string(),
-    publisher: z.string(),
-    researchUrl: z.string(),
-    publicationDate: z.string(),
-    summary: summarySchema,
-  });
-
-  // ─── 2. STRICT STATE SCHEMA ─────────────────────────────────────────────────
-  const strictResearchSchema = z.object({
-    status: z.enum(["draft", "completed"]),
-
+  return z.object({
     researchTitle: z
       .string()
       .trim()
@@ -56,12 +42,21 @@ export const createResearchSchema = (t: TFunction<string, undefined>) => {
 
     summary: summarySchema,
   });
-
-  // ─── 3. DISCRIMINATED UNION ─────────────────────────────────────────────────
-  return z.discriminatedUnion("status", [
-    emptyResearchSchema,
-    strictResearchSchema,
-  ]);
 };
 
-export type ResearchValues = z.infer<ReturnType<typeof createResearchSchema>>;
+export type ResearchRowValues = z.infer<
+  ReturnType<typeof getStrictResearchSchema>
+>;
+
+export const createResearchSchema = (t: TFunction<string, undefined>) => {
+  return z.any().superRefine((data, ctx) => {
+    if (isGenericRowEmpty(data)) return;
+
+    const result = getStrictResearchSchema(t).safeParse(data);
+    if (!result.success) {
+      result.error.issues.forEach((issue) => {
+        ctx.addIssue(issue as z.core.$ZodSuperRefineIssue);
+      });
+    }
+  });
+};
