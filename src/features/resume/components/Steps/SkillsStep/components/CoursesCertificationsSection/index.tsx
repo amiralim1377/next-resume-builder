@@ -4,7 +4,6 @@ import {
   ArrowDown,
   ArrowUp,
   BadgeCheck,
-  Briefcase,
   CopyIcon,
   Trash2Icon,
 } from "lucide-react";
@@ -51,17 +50,17 @@ const CoursesCertificationsSection = () => {
         }
       >
         <ArrayFieldStep<ResumeFormValues>
-          fieldName="CoursesCertificationsSection"
+          fieldName="coursesAndCertifications"
           addButtonLabel={t("add")}
           emptyRowValues={defaultObj}
           renderEmptyState={(append) => (
             <EmptyStep
               iconSize={32}
               iconColor="text-brandLight"
-              icon={Briefcase}
-              title={t("noJobAddedYet")}
-              description={t("emptyStepJobDescription")}
-              buttonLabel={t("addJob")}
+              icon={BadgeCheck}
+              title={t("noCourseOrCertificationAddedYet")}
+              description={t("emptyStepCourseOrCertificationDescription")}
+              buttonLabel={t("addCourseOrCertification")}
               onClick={append}
             />
           )}
