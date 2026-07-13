@@ -11,7 +11,7 @@ function SkillsStep() {
     <div className="flex w-full flex-col space-y-2.5">
       <LanguageSection t={t} lng={lng} />
       <CoreSkillsSection t={t} lng={lng} />
-      <CoursesCertificationsSection t={t} lng={lng} />
+      <CoursesCertificationsSection />
     </div>
   );
 }
