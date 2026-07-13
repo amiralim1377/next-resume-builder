@@ -1,5 +1,5 @@
 import { MemoizedGenericAccordionHeader } from "@/features/resume/components/GenericAccordionHeader";
-import { jobStatusEngine } from "@/features/resume/engines/job.engine";
+import { CoursesCertificationsStatusEngine } from "@/features/resume/engines/coursesCertifications.engine";
 import { CoursesAndCertificationsRowValues } from "@/features/resume/schemas/CoursesAndCertificationsSchema";
 import { Language } from "@/lib/i18n/settings";
 import { TFunction } from "i18next";
@@ -16,12 +16,14 @@ const titleDependencies: Array<
 > = ["coursesAndCertificationsName", "instituteName"];
 
 const formatTitle = (values: unknown[]) => {
-  const [jobTitle, companyName] = values as [
+  const [coursesAndCertificationsName, instituteName] = values as [
     string | undefined,
     string | undefined,
   ];
 
-  const title = [jobTitle, companyName].filter(Boolean).join(" ");
+  const title = [coursesAndCertificationsName, instituteName]
+    .filter(Boolean)
+    .join(" ");
 
   return title || "...";
 };
@@ -33,9 +35,9 @@ const CoursesCertificationsAccordionHeader = ({
 }: HeaderProps) => {
   return (
     <MemoizedGenericAccordionHeader<CoursesAndCertificationsRowValues>
-      name="job"
+      name="coursesAndCertifications"
       index={index}
-      engine={jobStatusEngine}
+      engine={CoursesCertificationsStatusEngine}
       titleDependencies={titleDependencies}
       formatTitle={formatTitle}
       t={t}
