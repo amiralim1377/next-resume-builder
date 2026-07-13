@@ -44,6 +44,8 @@ const CoreSkillsSection = () => {
           fieldName="skills"
           addButtonLabel={t("add")}
           emptyRowValues={defaultObj}
+          isGrid={true}
+          listClassName="grid grid-cols-1 md:grid-cols-2 gap-4"
           renderEmptyState={(append) => (
             <EmptyStep
               iconSize={32}
