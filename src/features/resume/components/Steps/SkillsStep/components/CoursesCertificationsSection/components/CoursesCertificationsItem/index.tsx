@@ -53,6 +53,7 @@ const CoursesCertificationsItem = ({
         <CustomControlledCalendar
           name={`coursesAndCertifications.${index}.certificateIssueDate`}
           label={t("certificateIssueDate")}
+          placeholder={t("optional")}
         />
       </div>
 
@@ -61,6 +62,7 @@ const CoursesCertificationsItem = ({
         <CustomControlledInput
           name={`coursesAndCertifications.${index}.certificateUrl`}
           label={t("certificateUrl")}
+          placeholder={t("optional")}
         />
       </div>
 
