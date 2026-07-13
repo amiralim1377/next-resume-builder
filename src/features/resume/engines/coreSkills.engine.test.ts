@@ -17,14 +17,19 @@ describe("coreSkillStatusEngine", () => {
     } as unknown as ReturnType<typeof getStrictSkillSchema>);
   });
 
-  it("should return 'empty' when skill rows are entirely empty", () => {
+  it("should return 'empty' when no skill rows exist", () => {
+    const status = coreSkillStatusEngine.getStepStatus([], false);
+    expect(status).toBe("empty");
+  });
+
+  it("should return 'draft' when skill rows are added but completely empty", () => {
     vi.mocked(isGenericRowEmpty).mockReturnValue(true);
     mockSafeParse.mockReturnValue({ success: false });
 
     const mockData = [{ skillName: "", skillLevel: "" }];
     const status = coreSkillStatusEngine.getStepStatus(mockData, false);
 
-    expect(status).toBe("empty");
+    expect(status).toBe("draft");
   });
 
   it("should return 'draft' when user has filled some fields but schema validation fails", () => {
