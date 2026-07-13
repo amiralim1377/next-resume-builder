@@ -5,8 +5,6 @@ import { Calendar } from "../CustomCalendar/Calendar";
 import { useRef, useState } from "react";
 import { useOnClickOutside } from "./hooks/useOnClickOutside";
 import { CustomInput } from "../CustomInput";
-import { useLang } from "@/provider/lngProvider";
-import { boolean } from "zod";
 
 type CustomControlledCalendarProps = {
   name: FieldPath<ResumeFormValues>;
