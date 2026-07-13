@@ -145,6 +145,7 @@
   "coursesAndCertificationsName": "عنوان دوره-مدرک",
   "trainingAndCertificates": "دوره‌ها و مدارک",
   "courseOrCertificationTitle": "عنوان دوره سپری شده و یا مدرک دریافت شده",
+  "courseOrCertificationNameRequired": "وارد کردن نام دوره یا مدرک الزامی است.",
   "instituteName": "نام موسسه",
   "issueMonth": "ماه دریافت",
   "issueYear": "سال دریافت",
@@ -254,5 +255,8 @@
   "moveDown": "انتقال به پایین",
   "duplicate": "کپی",
   "deleteRowTitle": "تایید حذف ردیف",
-  "deleteRowDescription": "آیا مطمئن هستید که می‌خواهید این ردیف را حذف کنید؟"
+  "deleteRowDescription": "آیا مطمئن هستید که می‌خواهید این ردیف را حذف کنید؟",
+  "noCourseOrCertificationAddedYet": "هنوز دوره یا مدرکی ثبت نشده است.",
+  "emptyStepCourseOrCertificationDescription": "دوره‌های آموزشی و گواهینامه‌های خود را به رزومه اضافه کنید.",
+  "addCourseOrCertification": "افزودن دوره"
 }

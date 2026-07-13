@@ -206,6 +206,7 @@
   "projectItemDescription": "In this section, provide a description of this project. You can mention your role in the project, the technologies used, and the key achievements or outcomes.",
   "researchSummaryDescription": "In this section, write a short summary of your research activities. You can mention your research topics, areas of focus, methods used, publications, and key findings or achievements.",
   "researchItemDescription": "In this section, describe your research activity. You can mention the research topic, methods used, and key achievements or outcomes.",
+  "courseOrCertificationNameRequired": "Course or certification name is required.",
   "graduationBeforeEntry": "Graduation year cannot be earlier than the entry year.",
   "summaryTooLong": "The summary exceeds the allowed length.",
   "invalidYear": "The entered year is invalid.",
@@ -252,5 +253,8 @@
   "moveDown": "Move down",
   "duplicate": "Duplicate",
   "deleteRowTitle": "Confirm Deletion",
-  "deleteRowDescription": "Are you sure you want to delete this row? This action cannot be undone?"
+  "deleteRowDescription": "Are you sure you want to delete this row? This action cannot be undone?",
+  "noCourseOrCertificationAddedYet": "No courses or certifications have been added yet.",
+  "emptyStepCourseOrCertificationDescription": "Add your courses, training programs, and certifications to highlight your skills and professional development.",
+  "addCourseOrCertification": "Add Course or Certification"
 }
