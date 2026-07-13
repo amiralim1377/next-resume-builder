@@ -1,5 +1,3 @@
-import { Language } from "@/lib/i18n/settings";
-import { TFunction } from "i18next";
 import { useFieldArray } from "react-hook-form";
 import { CustomButton } from "@/components/ui/CustomButton";
 import { ResumeFormValues } from "@/features/resume/schemas/resume.schema";
@@ -15,13 +13,12 @@ import {
 } from "@/components/ui/NewCustomAccordion";
 import { CoreSkillAccordionHeader } from "./components/CoreSkillAccordionHeader";
 import { SkillItem } from "./components/SkillItem";
+import { useLang } from "@/provider/lngProvider";
+import { useTranslation } from "@/lib/i18n/client";
 
-type CoreSkillsSectionSectionProps = {
-  t: TFunction<string, undefined>;
-  lng: Language;
-};
-
-const CoreSkillsSection = ({ lng, t }: CoreSkillsSectionSectionProps) => {
+const CoreSkillsSection = () => {
+  const { lng } = useLang();
+  const { t } = useTranslation(lng, "form");
   const [activeAccordionId, setActiveAccordionId] = useState<
     string | undefined
   >();

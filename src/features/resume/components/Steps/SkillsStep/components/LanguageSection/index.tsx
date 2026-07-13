@@ -1,6 +1,4 @@
 import { CustomButton } from "@/components/ui/CustomButton";
-import { Language } from "@/lib/i18n/settings";
-import { TFunction } from "i18next";
 import { useFieldArray } from "react-hook-form";
 import { CustomLabel } from "@/components/ui/CustomLabel";
 import { Globe } from "lucide-react";
