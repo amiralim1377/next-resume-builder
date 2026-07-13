@@ -1,5 +1,4 @@
 import { CustomControlledInput } from "@/components/ui/CustomControlledInput";
-import { CustomResumeCardComponents } from "@/components/ui/CustomResumeCardComponents";
 import { Language } from "@/lib/i18n/settings";
 import { CalendarType } from "@/types";
 import { TFunction } from "i18next";
