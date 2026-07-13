@@ -1,3 +1,4 @@
+import { CustomRateStar } from "@/components/ui/CustomRateStar";
 import { MemoizedGenericAccordionHeader } from "@/features/resume/components/GenericAccordionHeader";
 import { coreSkillStatusEngine } from "@/features/resume/engines/coreSkills.engine";
 import { SkillsRowValues } from "@/features/resume/schemas/SkillsSchema";
@@ -17,14 +18,18 @@ const titleDependencies: Array<keyof SkillsRowValues & string> = [
 ];
 
 const formatTitle = (values: unknown[]) => {
-  const [skillLevel, skillName] = values as [
+  const [skillName, skillLevel] = values as [
     string | undefined,
     string | undefined,
   ];
+  const level = parseInt(skillLevel || "0", 10);
 
-  const title = [skillName, skillLevel].filter(Boolean).join(" ");
-
-  return title || "...";
+  return (
+    <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+      <span>{skillName || "..."}</span>
+      <CustomRateStar key={level} initialRating={level} isReadOnly size={16} />
+    </div>
+  );
 };
 
 const CoreSkillAccordionHeader = ({ index, actionsSlot, t }: HeaderProps) => {
