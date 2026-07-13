@@ -236,6 +236,7 @@
   "add": "add",
   "noJobAddedYet": "No work experience added yet",
   "addJobDescription": "Add your work experience in reverse chronological order, starting with your most recent position.",
+  "addCoursesAndCertificationsDescription": "Add your courses and professional certifications from the newest to the oldest.",
   "addJob": "Add Work Experience",
   "emptyStepJobDescription": "Add the roles that have shaped your career and showcase the experience you've gained along the way.",
   "emptyStepEducationDescription": "Every qualification is part of your learning journey. Start by adding your education.",

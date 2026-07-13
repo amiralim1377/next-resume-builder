@@ -43,6 +43,8 @@ const CoursesCertificationsSection = () => {
           <CustomLabel
             size="lg"
             variant="bold"
+            description={t("addCoursesAndCertificationsDescription")}
+            descriptionSize="md"
             icon={<BadgeCheck color={colors.brand?.brandPrimary} />}
           >
             {t("trainingAndCertificates")}
