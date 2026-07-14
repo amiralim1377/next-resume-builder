@@ -4,22 +4,17 @@ import { ResumeFormValues } from "@/features/resume/schemas/resume.schema";
 import { RESUME_STEPS } from "@/features/resume/constants/steps";
 import { useSectionStatus } from "@/features/resume/hooks/useSectionStatus";
 import { useMemo } from "react";
+import { useStepper } from "../../ResumeFormWrapper/StepperContext";
 
 interface StepObserverProps {
   step: (typeof RESUME_STEPS)[0];
   index: number;
-  isActive: boolean;
   isLast: boolean;
-  onClick: () => void;
 }
 
-export const StepObserver = ({
-  step,
-  index,
-  isActive,
-  isLast,
-  onClick,
-}: StepObserverProps) => {
+export const StepObserver = ({ step, index, isLast }: StepObserverProps) => {
+  const { handleStepClick, currentStep } = useStepper();
+
   const status = useSectionStatus(
     step.id,
     step.fieldNames as (keyof ResumeFormValues)[],
@@ -28,6 +23,7 @@ export const StepObserver = ({
   const isDraft = status === "draft";
   const isEmpty = status === "empty";
   const isInvalid = status === "invalid";
+  const isActive = index === currentStep;
 
   return useMemo(
     () => (
@@ -40,7 +36,7 @@ export const StepObserver = ({
         isEmpty={isEmpty}
         isInvalid={isInvalid}
         isLast={isLast}
-        onClick={onClick}
+        onClick={() => handleStepClick(index)}
       />
     ),
     [
@@ -52,7 +48,7 @@ export const StepObserver = ({
       isEmpty,
       isInvalid,
       isLast,
-      onClick,
+      handleStepClick,
     ],
   );
 };
