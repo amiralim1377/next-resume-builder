@@ -12,14 +12,7 @@ import {
 import { GripVertical, Trash2 } from "lucide-react";
 
 import { DndContext, pointerWithin } from "@dnd-kit/core";
-import {
-  SortableContext,
-  verticalListSortingStrategy,
-} from "@dnd-kit/sortable";
-import {
-  restrictToVerticalAxis,
-  restrictToParentElement,
-} from "@dnd-kit/modifiers";
+import { SortableContext } from "@dnd-kit/sortable";
 import { SortableItem } from "../SortableItem";
 import { useLang } from "@/provider/lngProvider";
 import { useTranslation } from "@/lib/i18n/client";
@@ -32,6 +25,8 @@ interface ArrayFieldStepProps<TFieldValues extends FieldValues> {
   emptyRowValues: FieldArray<TFieldValues, FieldArrayPath<TFieldValues>>;
   addButtonLabel: string;
   emptyStateLabel?: string;
+  listClassName?: string;
+  isGrid?: boolean;
   renderEmptyState?: (append: () => void) => React.ReactNode;
   renderHeader: (
     index: number,
@@ -52,6 +47,8 @@ function ArrayFieldStep<TFieldValues extends FieldValues>({
   emptyRowValues,
   addButtonLabel,
   emptyStateLabel = "No entries added yet.",
+  listClassName,
+  isGrid = false,
   renderEmptyState,
   renderHeader,
   renderItem,
@@ -73,7 +70,9 @@ function ArrayFieldStep<TFieldValues extends FieldValues>({
     handleConfirmDelete,
     remove,
     move,
-  } = useArrayFieldStep({ fieldName, emptyRowValues });
+    dndModifiers,
+    dndStrategy,
+  } = useArrayFieldStep({ fieldName, emptyRowValues, isGrid });
 
   const accordionKey = fields.map((field) => field.id).join("-");
 
@@ -116,18 +115,18 @@ function ArrayFieldStep<TFieldValues extends FieldValues>({
               sensors={sensors}
               collisionDetection={pointerWithin}
               onDragEnd={handleDragEnd}
-              modifiers={[restrictToVerticalAxis, restrictToParentElement]}
+              modifiers={dndModifiers}
             >
               <SortableContext
                 items={fields.map((f) => f.id)}
-                strategy={verticalListSortingStrategy}
+                strategy={dndStrategy}
               >
                 <Accordion
                   type="multiple"
                   key={accordionKey}
                   value={activeAccordionIds}
                   onValueChange={setActiveAccordionIds}
-                  className="w-full space-y-3"
+                  className={listClassName || "w-full space-y-3"}
                 >
                   {fields.map((field, index) => (
                     <SortableItem key={field.id} id={field.id}>

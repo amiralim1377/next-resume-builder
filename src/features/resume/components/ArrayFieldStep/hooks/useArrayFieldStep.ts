@@ -14,14 +14,25 @@ import {
   useSensors,
 } from "@dnd-kit/core";
 
+import {
+  rectSortingStrategy,
+  verticalListSortingStrategy,
+} from "@dnd-kit/sortable";
+import {
+  restrictToVerticalAxis,
+  restrictToParentElement,
+} from "@dnd-kit/modifiers";
+
 interface UseArrayFieldStepProps<TFieldValues extends FieldValues> {
   fieldName: FieldArrayPath<TFieldValues>;
   emptyRowValues: FieldArray<TFieldValues, FieldArrayPath<TFieldValues>>;
+  isGrid: boolean;
 }
 
 export const useArrayFieldStep = <TFieldValues extends FieldValues>({
   fieldName,
   emptyRowValues,
+  isGrid,
 }: UseArrayFieldStepProps<TFieldValues>) => {
   const { control, getValues, trigger } = useFormContext<TFieldValues>();
   const [activeAccordionIds, setActiveAccordionIds] = useState<string[]>([]);
@@ -102,6 +113,14 @@ export const useArrayFieldStep = <TFieldValues extends FieldValues>({
     prevLengthRef.current = fields.length;
   }, [fields]);
 
+  const dndModifiers = isGrid
+    ? [restrictToParentElement]
+    : [restrictToVerticalAxis, restrictToParentElement];
+
+  const dndStrategy = isGrid
+    ? rectSortingStrategy
+    : verticalListSortingStrategy;
+
   return {
     fields,
     activeAccordionIds,
@@ -116,5 +135,7 @@ export const useArrayFieldStep = <TFieldValues extends FieldValues>({
     handleConfirmDelete,
     remove,
     move,
+    dndModifiers,
+    dndStrategy,
   };
 };
