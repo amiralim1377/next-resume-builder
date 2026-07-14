@@ -1,7 +1,7 @@
 import { ResumeFormValues } from "@/features/resume/schemas/resume.schema";
 import { CustomLabel } from "@/components/ui/CustomLabel";
 import { useThemeColors } from "@/provider/themeProvider/useThemeColors";
-import { ArrowDown, ArrowUp, CopyIcon, Star, Trash2Icon } from "lucide-react";
+import { CopyIcon, Star, Trash2Icon } from "lucide-react";
 import { SkillItem } from "./components/SkillItem";
 import { useLang } from "@/provider/lngProvider";
 import { useTranslation } from "@/lib/i18n/client";
@@ -57,30 +57,12 @@ const CoreSkillsSection = () => {
               onClick={append}
             />
           )}
-          renderHeader={(index, remove, copy, move, isFirst, isLast) => (
+          renderHeader={(index, remove, copy) => (
             <CoreSkillAccordionHeader
               index={index}
               t={t}
               actionsSlot={
                 <>
-                  {!isFirst && (
-                    <AccordionRowAction
-                      icon={
-                        <ArrowUp className="text-text-secondary hover:text-brandHover hover:ring-brandHover h-7 w-7 rounded-md p-1 transition-all hover:ring-2 hover:ring-offset-2" />
-                      }
-                      onClick={() => move(index, index - 1)}
-                      title={t("moveUp")}
-                    />
-                  )}
-                  {!isLast && (
-                    <AccordionRowAction
-                      icon={
-                        <ArrowDown className="text-text-secondary hover:text-brandHover hover:ring-brandHover h-7 w-7 rounded-md p-1 transition-all hover:ring-2 hover:ring-offset-2" />
-                      }
-                      onClick={() => move(index, index + 1)}
-                      title={t("moveDown")}
-                    />
-                  )}
                   <AccordionRowAction
                     icon={
                       <CopyIcon className="text-text-secondary hover:text-brandHover hover:ring-brandHover h-7 w-7 rounded-md p-1 transition-all hover:ring-2 hover:ring-offset-2" />
