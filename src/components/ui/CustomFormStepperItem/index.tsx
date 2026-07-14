@@ -36,30 +36,30 @@ export const FormStepperItem = ({
 
   return (
     <div
-      className="relative flex flex-1 cursor-pointer flex-col items-center gap-2"
+      className="relative flex min-w-0 flex-1 cursor-pointer flex-col items-center gap-2"
       onClick={onClick}
     >
-      {!isLast && <ConnectorLine isCompleted={isCompleted} />}
+      {!isLast && (
+        <ConnectorLine
+          isDraft={isDraft}
+          isInvalid={isInvalid}
+          isCompleted={isCompleted}
+          isActive={isActive}
+          isEmpty={isEmpty}
+        />
+      )}
 
       <div
         className={cn(
-          "z-10 flex h-8 w-8 items-center justify-center rounded-full border-2 transition-all duration-300",
-
+          "relative z-10 flex h-8 w-8 shrink-0 items-center justify-center rounded-full border-2 bg-white transition-all duration-300",
           isEmpty && !isActive && "border-gray-200 bg-gray-100 text-gray-400",
-
           isDraft &&
             !isActive &&
             !isInvalid &&
-            "border-state-warning text-state-warning bg-white",
-
-          isCompleted && !isActive && "border-teal-600 text-white",
-
-          isInvalid &&
-            !isActive &&
-            "border-state-error text-state-error bg-state-error/10",
-
-          isActive &&
-            "border-blue-600 bg-white text-blue-600 ring-4 ring-blue-50",
+            "border-state-warning text-state-warning",
+          isCompleted && !isActive && "border-teal-600",
+          isInvalid && !isActive && "border-state-error text-state-error",
+          isActive && "border-blue-600 text-blue-600",
         )}
       >
         {isCompleted ? (
@@ -69,14 +69,14 @@ export const FormStepperItem = ({
         )}
       </div>
 
-      <div className="mt-2 text-center">
-        <p className="text-[10px] font-semibold tracking-wider text-gray-400 uppercase">
+      <div className="mt-2 w-full max-w-full px-1 text-center">
+        <p className="w-full truncate text-[10px] font-semibold tracking-wider text-gray-400 uppercase">
           Step {stepNumber}
         </p>
 
         <p
           className={cn(
-            "text-sm font-semibold",
+            "w-full truncate text-sm font-semibold",
             isInvalid
               ? "text-state-error"
               : isActive
@@ -89,7 +89,7 @@ export const FormStepperItem = ({
 
         <p
           className={cn(
-            "mt-1 inline-block rounded px-2 py-0.5 text-xs",
+            "mt-1 inline-block max-w-full truncate rounded px-2 py-0.5 text-xs",
             isCompleted
               ? "text-teal-600"
               : isInvalid
