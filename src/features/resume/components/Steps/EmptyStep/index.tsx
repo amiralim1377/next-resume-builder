@@ -48,9 +48,11 @@ const EmptyStep = ({
       <p className="text-text-secondary mt-1 max-w-xs text-sm">{description}</p>
 
       {/* Action button */}
+
       <CustomButton
         onClick={onClick}
-        className="mt-5 shadow-(--shadow-elegant)"
+        type="button"
+        className="mt-5 flex items-center gap-x-1.5"
       >
         <Icon className="h-4 w-4" />
         {buttonLabel}
