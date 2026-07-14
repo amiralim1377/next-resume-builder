@@ -34,13 +34,6 @@ const StepWrapper = ({ currentStep }: { currentStep: number }) => {
           <StepComponent />
         </motion.div>
       </AnimatePresence>
-      {/* {Object.keys(errors).length > 0 && (
-        <div className="mt-6 rounded-xl border border-red-200 bg-red-50 p-4 dark:border-red-900 dark:bg-red-950">
-          <p className="mb-2 text-sm font-medium text-red-600 dark:text-red-400">
-            لطفاً خطاهای زیر را برطرف کنید:
-          </p>
-        </div>
-      )} */}
     </div>
   );
 };
