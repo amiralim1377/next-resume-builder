@@ -27,11 +27,3 @@ export const createResumeSchema = (t: TFunction<string, undefined>) => {
 };
 
 export type ResumeFormValues = z.infer<ReturnType<typeof createResumeSchema>>;
-export type EducationFormValue = ResumeFormValues["education"][number];
-export type JobFormValue = ResumeFormValues["job"][number];
-export type LanguageFormValue = ResumeFormValues["languages"][number];
-export type SkillsFormValue = ResumeFormValues["skills"][number];
-export type CoursesAndCertificationsFormValue =
-  ResumeFormValues["coursesAndCertifications"][number];
-export type ProjectsFormValue = ResumeFormValues["projects"][number];
-export type ResearchFormValue = ResumeFormValues["research"][number];
