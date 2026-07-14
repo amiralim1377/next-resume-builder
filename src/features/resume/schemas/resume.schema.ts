@@ -25,3 +25,5 @@ export const createResumeSchema = (t: TFunction<string, undefined>) => {
     research: z.array(createResearchSchema(t)),
   });
 };
+
+export type ResumeFormValues = z.infer<ReturnType<typeof createResumeSchema>>;
