@@ -11,7 +11,6 @@ export const ResumeStepEnum = z.enum([
   "basicInfo",
   "education",
   "job",
-  "languages",
   "skills",
   "coursesAndCertifications",
   "projects",
