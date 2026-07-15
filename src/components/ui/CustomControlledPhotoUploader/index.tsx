@@ -5,6 +5,7 @@ import { CustomPhotoUploader } from "../CustomPhotoUploader";
 type CustomControlledPhotoUploaderProps = {
   name: FieldPath<ResumeFormValues>;
   label: string;
+  onUploadProcess?: (file: File) => Promise<string | null>;
 } & Omit<
   React.ComponentProps<typeof CustomPhotoUploader>,
   "name" | "label" | "error" | "isValid" | "value" | "onChange"
@@ -13,6 +14,7 @@ type CustomControlledPhotoUploaderProps = {
 const CustomControlledPhotoUploader = ({
   name,
   label,
+  onUploadProcess,
   ...props
 }: CustomControlledPhotoUploaderProps) => {
   const { control } = useFormContext<ResumeFormValues>();
@@ -22,10 +24,26 @@ const CustomControlledPhotoUploader = ({
       control={control}
       name={name}
       render={({ field, fieldState }) => {
-        const handleChange = (file: File | undefined) => {
-          field.onChange(file ?? undefined);
-        };
+        const handleChange = async (file: File | undefined) => {
+          if (!file) {
+            field.onChange(undefined);
+            return;
+          }
 
+          if (onUploadProcess) {
+            try {
+              const uploadedUrl = await onUploadProcess(file);
+
+              if (uploadedUrl) {
+                field.onChange(uploadedUrl);
+              }
+            } catch (error) {
+              console.error("خطا در فرآیند آپلود:", error);
+            }
+          } else {
+            field.onChange(file);
+          }
+        };
         const isValid =
           !fieldState.invalid && fieldState.isDirty && !!field.value;
 
