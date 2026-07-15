@@ -27,7 +27,6 @@ export type UseResumeFormManagerReturn = {
   handlePrev: () => void;
   handleStepClick: (index: number) => void;
   executeSubmit: (e?: React.BaseSyntheticEvent) => void;
-  onSaveDraft: () => Promise<void>;
 };
 
 export const useResumeFormManager = ({
@@ -44,7 +43,6 @@ export const useResumeFormManager = ({
 
   const { reset } = form;
 
-  // Scroll to top on step change
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "auto" });
   }, [currentStep]);
@@ -145,11 +143,6 @@ export const useResumeFormManager = ({
 
   const executeSubmit = form.handleSubmit(handleFormSubmit, onInvalidSubmit);
 
-  const onSaveDraft = useCallback(async () => {
-    const values = form.getValues();
-    console.log("💾 Draft Saved:", values);
-  }, [form]);
-
   return {
     form,
     currentStep,
@@ -160,6 +153,5 @@ export const useResumeFormManager = ({
     handlePrev,
     handleStepClick,
     executeSubmit,
-    onSaveDraft,
   };
 };
