@@ -49,6 +49,7 @@
     "idb-keyval": "^6.3.0",
     "jalaali-js": "^1.2.8",
     "lucide-react": "^1.18.0",
+    "nanoid": "^5.1.16",
     "next": "16.2.6",
     "pg": "^8.22.0",
     "react": "^19.2.7",
