@@ -2,7 +2,7 @@ import { ComponentType } from "react";
 import { ResumeFormValues } from "../schemas/resume.schema";
 
 export type StepName =
-  | "basic"
+  | "basicInfo"
   | "education"
   | "job"
   | "experience"
