@@ -45,6 +45,7 @@ model User {
 
 model Resume {
   id                       String   @id @default(uuid())
+  shortId                  String   @unique 
   userId                   String
   createdAt                DateTime @default(now())
   updatedAt                DateTime @updatedAt
@@ -58,6 +59,7 @@ model Resume {
   research                 Json?    // آرایه‌ای از تحقیقات
 
   @@index([userId])
+  @@index([shortId]) // 🔥 ایندکس‌گذاری برای بالا بردن سرعت جستجو بر اساس آدرس URL
 }
 
 model Ticket {
