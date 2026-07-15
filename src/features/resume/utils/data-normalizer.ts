@@ -1,5 +1,4 @@
 export function normalizeFormData<T>(data: T): T | null {
-  // ۱. داده‌های خالی یا تعریف‌نشده
   if (data === undefined || data === null) {
     return null;
   }
