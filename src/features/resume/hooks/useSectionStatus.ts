@@ -43,7 +43,7 @@ const withCompositeFields = <T extends unknown[], E extends boolean[], R>(
 // ─── 3. The Registry ────────────────────────────────────────────────────
 const STEP_STATUS_ENGINES: Partial<Record<ResumeStepId, StandardStatusEngine>> =
   {
-    basic: withSingleField(basicInfoStatusEngine.getStepStatus),
+    basicInfo: withSingleField(basicInfoStatusEngine.getStepStatus),
     education: withSingleField(educationStatusEngine.getStepStatus),
     job: withSingleField(jobStatusEngine.getStepStatus),
     projects: withSingleField(ProjectStatusEngine.getStepStatus),
