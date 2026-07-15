@@ -51,24 +51,24 @@ export default async function RootLayout({ children, params }: LayoutProps) {
         fontFamily: locale === "en" ? inter.variable : yekanbakh.variable,
       }}
     >
-      <MainProvider
-        themeFromCookie={themeFromCookie as ThemeScheme}
-        lng={locale}
+      <body
+        className={cn(
+          locale === "fa" ? "font-yekanbakh" : "font-inter",
+          "grid min-h-screen grid-rows-[auto_1fr_auto]",
+        )}
+        suppressHydrationWarning={true}
       >
-        <body
-          className={cn(
-            locale === "fa" ? "font-yekanbakh" : "font-inter",
-            "grid min-h-screen grid-rows-[auto_1fr_auto]",
-          )}
-          suppressHydrationWarning={true}
+        <MainProvider
+          themeFromCookie={themeFromCookie as ThemeScheme}
+          lng={locale}
         >
           <ConditionalRenderer desktop={<Header />} mobile={<MobileHeader />} />
           <main className="bg-ui-bg flex grow">{children}</main>
           <footer className="bg-brandFooter">
             <Footer />
           </footer>
-        </body>
-      </MainProvider>
+        </MainProvider>
+      </body>
     </html>
   );
 }
