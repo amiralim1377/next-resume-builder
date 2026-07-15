@@ -39,7 +39,6 @@ model User {
   email     String   @unique
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  resumes   Resume[]
   tickets   Ticket[]
   orders    Order[]
 }
@@ -47,7 +46,6 @@ model User {
 model Resume {
   id                       String   @id @default(uuid())
   userId                   String
-  user                     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   createdAt                DateTime @default(now())
   updatedAt                DateTime @updatedAt
   profileImage             String?  // آدرس ذخیره شده عکس در استوریج
