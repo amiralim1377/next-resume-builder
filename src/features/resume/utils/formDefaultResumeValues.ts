@@ -27,7 +27,6 @@ export const getDefaultResumeValues = (): ResumeFormValues => ({
   },
   education: [],
   job: [],
-  languages: [],
   skills: [],
   coursesAndCertifications: [],
   projects: [],
