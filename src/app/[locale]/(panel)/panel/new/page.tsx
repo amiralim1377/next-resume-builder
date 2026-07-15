@@ -5,14 +5,11 @@ import { useRouter } from "next/navigation";
 import { ResumeFormWrapper } from "@/features/resume/components/ResumeFormWrapper";
 import { ResumeFormValues } from "@/features/resume/schemas/resume.schema";
 import { getDefaultResumeValues } from "@/features/resume/utils/formDefaultResumeValues";
-
-// هوک‌های جهش دیتای تان‌استک
 import {
   useCreateResume,
   useSaveResumeStep,
 } from "@/features/resume/hooks/use-resume-mutations";
 import { ResumeStep } from "@/domain/dtos/resume.dto";
-
 import { useTranslation } from "@/lib/i18n/client";
 import { useLang } from "@/provider/lngProvider";
 
@@ -27,13 +24,11 @@ const NewResumePage = () => {
   const { mutate: createResume, isPending: isCreating } = useCreateResume();
   const { mutate: saveStep, isPending: isSaving } = useSaveResumeStep();
 
-  // ⚡ ایجاد خودکار رکورد رزومه در دیتابیس به محض لود شدن صفحه (Mount)
   useEffect(() => {
     const mockUserId = "user-unique-uuid-placeholder";
 
     createResume(mockUserId, {
       onSuccess: (newResume) => {
-        // 🔥 ۲. رفع ارور possibly undefined با اضافه کردن شرط و Optional Chaining
         if (newResume?.id) {
           setResumeId(newResume.id);
           console.log("✅ [SUCCESS]:", t("success_draftInitialized"));
