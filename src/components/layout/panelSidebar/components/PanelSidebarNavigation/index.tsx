@@ -4,6 +4,7 @@ import { CustomButton } from "@/components/ui/CustomButton";
 import { StyledLink } from "@/components/ui/CustomStyledLink";
 import { RoutesName } from "@/core/constants/routesName";
 import { Language } from "@/lib/i18n/settings";
+import { CreateResumeSidebarButton } from "../CreateResumeSidebarButton";
 
 type PanelSidebarNavigationProps = {
   t: TFunction<string, undefined>;
@@ -13,12 +14,8 @@ type PanelSidebarNavigationProps = {
 function PanelSidebarNavigation({ t, lng }: PanelSidebarNavigationProps) {
   return (
     <>
-      <StyledLink
-        variant="primary"
-        href={getHref({ lng, destination: RoutesName.newResume })}
-      >
-        {t("buildNewResume")}
-      </StyledLink>
+      <CreateResumeSidebarButton t={t} lng={lng} />
+
       <StyledLink
         href={getHref({ lng, destination: RoutesName.panel })}
         variant="primary"
