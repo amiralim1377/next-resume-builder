@@ -2,8 +2,6 @@
 
 import { useCallback, useEffect, useState } from "react";
 import { FieldErrors, UseFormReturn } from "react-hook-form";
-import { get } from "idb-keyval";
-
 import { ResumeStep } from "@/domain/dtos/resume.dto";
 import { ResumeFormValues } from "@/features/resume/schemas/resume.schema";
 import { useResumeForm } from "@/features/resume/hooks/useResumeForm";
@@ -41,30 +39,9 @@ export const useResumeFormManager = ({
   const isLastStep = currentStep === RESUME_STEPS.length - 1;
   const isFirstStep = currentStep === 0;
 
-  const { reset } = form;
-
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "auto" });
   }, [currentStep]);
-
-  // Restore draft from IndexedDB when creating
-  useEffect(() => {
-    const restoreDraftData = async () => {
-      try {
-        if (mode === "create") {
-          const savedDraft = await get("current_resume_draft");
-          if (savedDraft) {
-            reset(savedDraft);
-            console.log("🔄 Draft successfully restored from IndexedDB");
-          }
-        }
-      } catch (error) {
-        console.error("❌ Failed to restore draft from IndexedDB", error);
-      }
-    };
-
-    restoreDraftData();
-  }, [reset, mode]);
 
   const saveCurrentStepData = useCallback(() => {
     const currentStepConfig = RESUME_STEPS[currentStep];
