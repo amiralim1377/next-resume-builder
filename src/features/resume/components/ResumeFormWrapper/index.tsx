@@ -5,15 +5,9 @@ import { ResumeFormValues } from "../../schemas/resume.schema";
 import StepWrapper from "../StepWrapper";
 import { FormStepper } from "../FormStepper";
 import { NavigationButtons } from "../NavigationButtons";
-import { useAutoSave } from "../../hooks/useAutoSave";
 import { StepperContext } from "./StepperContext";
 import { ResumeStep } from "@/domain/dtos/resume.dto";
 import { useResumeFormManager } from "./hooks/useResumeFormManager";
-
-const AutoSaveManager = () => {
-  useAutoSave("current_resume_draft");
-  return null;
-};
 
 type ResumeFormProviderProps = {
   initialData?: Partial<ResumeFormValues>;
@@ -61,7 +55,6 @@ const ResumeFormWrapper = ({
   return (
     <FormProvider {...form}>
       <StepperContext.Provider value={stepperValue}>
-        <AutoSaveManager />
         <form
           onSubmit={executeSubmit}
           className="mx-auto grid w-full grid-rows-[auto_1fr_auto] gap-6"
