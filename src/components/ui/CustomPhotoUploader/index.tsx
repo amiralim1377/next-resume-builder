@@ -130,9 +130,6 @@ const CustomPhotoUploader = ({
       {showEditor && image && (
         <CustomModal
           className="p-6"
-          classNames={{
-            inner: cn("h-40"),
-          }}
           onClose={closeEditor}
           isOpen={showEditor && Boolean(image)}
         >
