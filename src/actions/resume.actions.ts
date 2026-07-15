@@ -6,20 +6,22 @@ import { ResumeStep } from "@/domain/dtos/resume.dto";
 import { ActionResponse } from "@/domain/types/action-response";
 import { Resume } from "@/generated/prisma/client";
 
-// ایمپورت اعتبارسنجی‌های تفکیک‌شده کلاینت/سرور
+import { customAlphabet } from "nanoid";
 import { ResumeDraftValidator } from "@/domain/dtos/validators/resume/resume-draft.validator";
 import { ResumeFinalValidator } from "@/domain/dtos/validators/resume/resume-final.validator";
 
 const resumeRepository = new PrismaResumeRepository();
 
-/**
- * ۱. ایجاد یک رزومه جدید و خالی برای کاربر
- */
+const generateShortId = customAlphabet(
+  "23456789abcdefghijkmnpqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ",
+  8,
+);
 export async function createResumeAction(
   userId: string,
 ): Promise<ActionResponse<Resume>> {
   try {
-    const newResume = await resumeRepository.create(userId);
+    const shortId = generateShortId();
+    const newResume = await resumeRepository.create(userId, shortId);
     revalidatePath("/resumes");
 
     return {
