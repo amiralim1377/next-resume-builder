@@ -1,0 +1,6 @@
+{
+  "error_createResumeFailed": "خطا در ایجاد رزومه جدید. لطفاً دوباره تلاش کنید.",
+  "error_invalidRequestStructure": "ساختار درخواست نامعتبر است.",
+  "error_cloudSyncFailed": "خطا در ارتباط با سرور. اطلاعات شما به صورت خودکار در مرورگر ذخیره شد.",
+  "error_invalidResumeId": "شناسه رزومه نامعتبر است. لطفاً صفحه را رفرش کنید."
+}

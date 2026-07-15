@@ -1,0 +1,6 @@
+{
+  "error_createResumeFailed": "Failed to create a new resume. Please try again.",
+  "error_invalidRequestStructure": "Invalid request structure.",
+  "error_cloudSyncFailed": "Server connection failed. Your data was saved locally in the browser.",
+  "error_invalidResumeId": "Invalid resume ID. Please refresh the page."
+}
