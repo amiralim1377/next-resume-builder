@@ -73,10 +73,6 @@ const ResumeFormWrapper = ({
             onPrev={handlePrev}
             isLastStep={isLastStep}
             isFirstStep={isFirstStep}
-            onSaveDraft={async () => {
-              const values = form.getValues();
-              console.log("💾 Draft Saved:", values);
-            }}
           />
         </form>
       </StepperContext.Provider>
