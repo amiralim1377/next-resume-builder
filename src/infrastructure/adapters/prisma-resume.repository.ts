@@ -15,10 +15,11 @@ export class PrismaResumeRepository implements IResumeRepository {
     });
   }
 
-  async create(userId: string): Promise<Resume> {
+  async create(userId: string, shortId: string): Promise<Resume> {
     return prisma.resume.create({
       data: {
         userId,
+        shortId,
       },
     });
   }
@@ -35,6 +36,12 @@ export class PrismaResumeRepository implements IResumeRepository {
   async delete(id: string): Promise<void> {
     await prisma.resume.delete({
       where: { id },
+    });
+  }
+
+  async findByShortId(shortId: string): Promise<Resume | null> {
+    return await prisma.resume.findUnique({
+      where: { shortId },
     });
   }
 }
