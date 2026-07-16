@@ -14,7 +14,7 @@ const CustomControlledInput = ({
   label,
   ...props
 }: CustomControlledInputProps) => {
-  const { control } = useFormContext<ResumeFormValues>();
+  const { control, trigger } = useFormContext<ResumeFormValues>();
 
   return (
     <Controller
@@ -25,13 +25,18 @@ const CustomControlledInput = ({
 
         const isValid = !fieldState.invalid && Boolean(field.value);
 
+        const handleChange = async (value: unknown) => {
+          onChange(value);
+          await trigger(name);
+        };
+
         return (
           <CustomInput
             label={label}
             isValid={isValid}
             error={fieldState.error?.message}
             value={value as string | number | readonly string[] | undefined}
-            onChange={onChange}
+            onChange={handleChange}
             onBlur={onBlur}
             ref={ref}
             {...safeField}

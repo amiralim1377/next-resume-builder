@@ -40,7 +40,7 @@ export const CustomControlledCalendar = ({
   disabled,
   ...props
 }: CustomControlledCalendarProps) => {
-  const { control } = useFormContext<ResumeFormValues>();
+  const { control, trigger } = useFormContext<ResumeFormValues>();
   const [isOpen, setIsOpen] = useState(false);
 
   const { refs, floatingStyles, context } = useFloating({
@@ -82,6 +82,12 @@ export const CustomControlledCalendar = ({
             }).format(dateValue.toDate(getLocalTimeZone()))
           : "";
 
+        const handleChange = async (date: unknown) => {
+          onChange(String(date));
+          setIsOpen(false);
+          await trigger(name);
+        };
+
         const isValid = disabled || (!fieldState.invalid && Boolean(value));
 
         return (
@@ -118,10 +124,7 @@ export const CustomControlledCalendar = ({
                 >
                   <Calendar
                     value={dateValue}
-                    onChange={(date: unknown) => {
-                      onChange(String(date));
-                      setIsOpen(false);
-                    }}
+                    onChange={handleChange}
                     {...props}
                   >
                     <Calendar.Header />
