@@ -1,27 +1,31 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { Resume } from "@/generated/prisma/client";
-
 import { customAlphabet } from "nanoid";
+import {
+  ResumeDto,
+  ResumeStep,
+} from "@/modules/resume-builder/domain/dtos/resume.dto";
+import { ActionResponse } from "@/modules/resume-builder/domain/types/action-response";
 import { ResumeDraftValidator } from "@/modules/resume-builder/domain/schemas/validators/resume/resume-draft.validator";
 import { ResumeFinalValidator } from "@/modules/resume-builder/domain/schemas/validators/resume/resume-final.validator";
-import { PrismaResumeRepository } from "../../infrastructure/repositories/prisma-resume.repository";
-import { ResumeStep } from "../../domain/dtos/resume.dto";
-import { ActionResponse } from "../../domain/types/action-response";
+import { ResumeService } from "@/modules/resume-builder/application/services/resume.service";
 
-const resumeRepository = new PrismaResumeRepository();
+const resumeService = new ResumeService();
 
 const generateShortId = customAlphabet(
   "23456789abcdefghijkmnpqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ",
   8,
 );
+
 export async function createResumeAction(
   userId: string,
-): Promise<ActionResponse<Resume>> {
+): Promise<ActionResponse<ResumeDto>> {
   try {
     const shortId = generateShortId();
-    const newResume = await resumeRepository.create(userId, shortId);
+
+    const newResume = await resumeService.createResume(userId, shortId);
+
     revalidatePath("/resumes");
 
     return {
@@ -29,9 +33,7 @@ export async function createResumeAction(
       data: newResume,
     };
   } catch (error) {
-    // لاگ کردن خطای سیستمی فقط در سمت سرور جهت امنیت و دیباگ
     console.error("❌ Error creating resume:", error);
-
     return {
       success: false,
       error: "error_createResumeFailed",
@@ -39,17 +41,12 @@ export async function createResumeAction(
   }
 }
 
-/**
- * ۲. ذخیره خودکار و گام‌به‌گام پیش‌نویس رزومه (منعطف)
- * این متد دیتای ناقص را بدون ایراد گرفتن در دیتابیس ذخیره می‌کند.
- */
 export async function saveResumeStepAction(
   resumeId: string,
   step: ResumeStep,
   data: unknown,
-): Promise<ActionResponse<Resume>> {
+): Promise<ActionResponse<ResumeDto>> {
   try {
-    // اعتبارسنجی اولیه ساختار درخواست (فقط تایید آیدی و مرحله)
     const parsedData = ResumeDraftValidator.safeParse({ resumeId, step, data });
 
     if (!parsedData.success) {
@@ -59,8 +56,7 @@ export async function saveResumeStepAction(
       };
     }
 
-    // ذخیره داده‌های دریافتی در PostgreSQL
-    const updatedResume = await resumeRepository.updateStep(
+    const updatedResume = await resumeService.saveStep(
       parsedData.data.resumeId,
       parsedData.data.step,
       parsedData.data.data,
@@ -71,32 +67,22 @@ export async function saveResumeStepAction(
       data: updatedResume,
     };
   } catch (error: unknown) {
-    // چاپ خطای کامل در ترمینال سرور
     console.error("❌ [SERVER ERROR DETAILS]:", error);
-
-    // استخراج امن پیام خطا به جای استفاده از any
     const errorMessage =
       error instanceof Error ? error.message : "Unknown Error";
 
     return {
       success: false,
-      // 🔥 ارسال خطای واقعی دیتابیس به کلاینت (به جای کلید ترجمه)
-      // با کست کردن کل آبجکت خروجی، تایپ‌اسکریپت و ESLint هر دو راضی می‌شوند
       error: `🔴 PRISMA_ERROR: ${errorMessage}`,
-    } as ActionResponse<Resume>;
+    };
   }
 }
 
-/**
- * ۳. بررسی سخت‌گیرانه و ثبت نهایی رزومه (مرحله ششم)
- * این متد کل فیلدهای رزومه را از دیتابیس خوانده و با اسکیمای سخت‌گیرانه نهایی می‌سنجد.
- */
 export async function finalizeResumeAction(
   resumeId: string,
-): Promise<ActionResponse<Resume>> {
+): Promise<ActionResponse<ResumeDto>> {
   try {
-    // دریافت دیتای کامل رزومه از دیتابیس
-    const resume = await resumeRepository.findById(resumeId);
+    const resume = await resumeService.getResumeById(resumeId);
 
     if (!resume) {
       return {
@@ -105,28 +91,14 @@ export async function finalizeResumeAction(
       };
     }
 
-    // اعتبارسنجی سخت‌گیرانه تمام بخش‌های ذخیره‌شده رزومه
-    const parsedData = ResumeFinalValidator.safeParse({
-      resumeId: resume.id,
-      basicInfo: resume.basicInfo,
-      education: resume.education,
-      job: resume.job,
-      skills: resume.skills,
-      coursesAndCertifications: resume.coursesAndCertifications,
-      projects: resume.projects,
-      research: resume.research,
-    });
+    const parsedData = ResumeFinalValidator.safeParse(resume);
 
     if (!parsedData.success) {
-      // بازگرداندن کلید خطای عدم تکمیل اطلاعات به کلاینت
       return {
         success: false,
         error: "error_incompleteResumeData",
       };
     }
-
-    // در اینجا می‌توانید وضعیت رزومه را در دیتابیس به "PUBLISHED" یا "COMPLETED" تغییر دهید
-    // await resumeRepository.publish(resumeId);
 
     revalidatePath("/resumes");
 
@@ -136,7 +108,6 @@ export async function finalizeResumeAction(
     };
   } catch (error) {
     console.error("❌ Error finalising resume:", error);
-
     return {
       success: false,
       error: "error_finaliseFailed",
