@@ -13,7 +13,6 @@ export class ResumeService {
     return await this.resumeRepository.create(userId, shortId);
   }
 
-  // 🚀 تغییر مهم: userId اضافه شد
   async saveStep(
     userId: string,
     resumeId: string,
