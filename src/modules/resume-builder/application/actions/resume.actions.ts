@@ -18,13 +18,22 @@ const generateShortId = customAlphabet(
   8,
 );
 
+async function getSecureSessionUserId(): Promise<string | null> {
+  return "MOCK_USER_ID";
+}
+
 export async function createResumeAction(
-  userId: string,
+  clientUserId?: string,
 ): Promise<ActionResponse<ResumeDto>> {
   try {
-    const shortId = generateShortId();
+    const serverUserId = await getSecureSessionUserId();
 
-    const newResume = await resumeService.createResume(userId, shortId);
+    if (!serverUserId) {
+      return { success: false, error: "error_unauthorized" };
+    }
+
+    const shortId = generateShortId();
+    const newResume = await resumeService.createResume(serverUserId, shortId);
 
     revalidatePath("/resumes");
 
@@ -47,6 +56,11 @@ export async function saveResumeStepAction(
   data: unknown,
 ): Promise<ActionResponse<ResumeDto>> {
   try {
+    const userId = await getSecureSessionUserId();
+    if (!userId) {
+      return { success: false, error: "error_unauthorized" };
+    }
+
     const parsedData = ResumeDraftValidator.safeParse({ resumeId, step, data });
 
     if (!parsedData.success) {
@@ -57,6 +71,7 @@ export async function saveResumeStepAction(
     }
 
     const updatedResume = await resumeService.saveStep(
+      userId,
       parsedData.data.resumeId,
       parsedData.data.step,
       parsedData.data.data,
@@ -73,7 +88,9 @@ export async function saveResumeStepAction(
 
     return {
       success: false,
-      error: `🔴 PRISMA_ERROR: ${errorMessage}`,
+      error: errorMessage.includes("error_")
+        ? errorMessage
+        : `🔴 SYSTEM_ERROR: ${errorMessage}`,
     };
   }
 }
@@ -82,12 +99,24 @@ export async function finalizeResumeAction(
   resumeId: string,
 ): Promise<ActionResponse<ResumeDto>> {
   try {
+    const userId = await getSecureSessionUserId();
+    if (!userId) {
+      return { success: false, error: "error_unauthorized" };
+    }
+
     const resume = await resumeService.getResumeById(resumeId);
 
     if (!resume) {
       return {
         success: false,
         error: "error_resumeNotFound",
+      };
+    }
+
+    if (resume.userId !== userId) {
+      return {
+        success: false,
+        error: "error_unauthorizedAccess",
       };
     }
 

@@ -13,11 +13,25 @@ export class ResumeService {
     return await this.resumeRepository.create(userId, shortId);
   }
 
+  // 🚀 تغییر مهم: userId اضافه شد
   async saveStep(
+    userId: string,
     resumeId: string,
     step: ResumeStep,
     data: unknown,
   ): Promise<ResumeDto> {
+    // ۱. بررسی منطق بیزینس: رزومه وجود دارد؟
+    const resume = await this.resumeRepository.findById(resumeId);
+    if (!resume) {
+      throw new Error("error_resumeNotFound");
+    }
+
+    // ۲. بررسی منطق بیزینس: آیا کاربر صاحب رزومه است؟ (جلوگیری از هک)
+    if (resume.userId !== userId) {
+      throw new Error("error_unauthorizedAccess");
+    }
+
+    // ۳. حالا با خیال راحت آپدیت کن
     return await this.resumeRepository.updateStep(resumeId, step, data);
   }
 
