@@ -1,6 +1,6 @@
-import { IResumeRepository } from "@/domain/ports/resume-repository.interface";
 import prisma from "@/lib/prisma";
 import { Resume } from "@/generated/prisma/client";
+import { IResumeRepository } from "../../domain/ports/resume.repository.interface";
 
 export class PrismaResumeRepository implements IResumeRepository {
   async findById(id: string): Promise<Resume | null> {
