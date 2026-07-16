@@ -6,8 +6,8 @@ import StepWrapper from "../StepWrapper";
 import { FormStepper } from "../FormStepper";
 import { NavigationButtons } from "../NavigationButtons";
 import { StepperContext } from "./StepperContext";
-import { ResumeStep } from "@/domain/dtos/resume.dto";
 import { useResumeFormManager } from "./hooks/useResumeFormManager";
+import { ResumeStep } from "@/modules/resume-builder/domain/dtos/resume.dto";
 
 type ResumeFormProviderProps = {
   initialData?: Partial<ResumeFormValues>;
