@@ -58,16 +58,19 @@ export const getStrictBasicInfoSchema = (t: TFunction = identityT) => {
       }),
 
     sex: z
-      .string()
+      .string({
+        message: t("selectGender"),
+      })
       .refine(
         (val) => SEX_OPTIONS.includes(val as (typeof SEX_OPTIONS)[number]),
         {
           message: t("selectGender"),
         },
       ),
-
     maritalStatus: z
-      .string()
+      .string({
+        message: t("maritalStatusMessage"),
+      })
       .refine(
         (val) =>
           MARITAL_OPTIONS.includes(val as (typeof MARITAL_OPTIONS)[number]),
@@ -75,8 +78,11 @@ export const getStrictBasicInfoSchema = (t: TFunction = identityT) => {
           message: t("maritalStatusMessage"),
         },
       ),
+
     militaryServiceStatus: z
-      .string()
+      .string({
+        message: t("militaryServiceStatusMessage"),
+      })
       .refine(
         (val) =>
           MILITARY_OPTIONS.includes(val as (typeof MILITARY_OPTIONS)[number]),
@@ -147,7 +153,7 @@ export const getStrictBasicInfoSchema = (t: TFunction = identityT) => {
     location: z.object({
       country: z
         .string({
-          error: t("countryRequired"),
+          message: t("countryRequired"),
         })
         .min(1, { message: t("countryRequired") })
         .refine((val) => !val.includes("@"), {
