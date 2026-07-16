@@ -5,13 +5,16 @@ import { ResumeFormWrapper } from "@/features/resume/components/ResumeFormWrappe
 import { ResumeFormValues } from "@/features/resume/schemas/resume.schema";
 import { getDefaultResumeValues } from "@/features/resume/utils/formDefaultResumeValues";
 import { useSaveResumeStep } from "@/features/resume/hooks/use-resume-mutations";
-import { ResumeStep } from "@/domain/dtos/resume.dto";
+import {
+  ResumeStep,
+  ResumeDto,
+} from "@/modules/resume-builder/domain/dtos/resume.dto";
 import { useTranslation } from "@/lib/i18n/client";
 import { useLang } from "@/provider/lngProvider";
 
 interface ResumeBuilderClientProps {
   resumeId: string;
-  initialData?: Partial<ResumeFormValues>;
+  initialData?: ResumeDto;
 }
 
 export const ResumeBuilderClient = ({
@@ -27,7 +30,7 @@ export const ResumeBuilderClient = ({
   const mergedData: ResumeFormValues = {
     ...getDefaultResumeValues(),
     ...(initialData || {}),
-  };
+  } as ResumeFormValues;
 
   const handleStepSubmit = async (step: ResumeStep, stepData: unknown) => {
     saveStep(
