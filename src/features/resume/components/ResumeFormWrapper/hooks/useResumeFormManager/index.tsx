@@ -2,11 +2,11 @@
 
 import { useCallback, useEffect, useState } from "react";
 import { FieldErrors, UseFormReturn } from "react-hook-form";
-import { ResumeStep } from "@/domain/dtos/resume.dto";
 import { ResumeFormValues } from "@/features/resume/schemas/resume.schema";
 import { useResumeForm } from "@/features/resume/hooks/useResumeForm";
 import { RESUME_STEPS } from "@/features/resume/constants/steps";
 import { normalizeFormData } from "@/features/resume/utils/data-normalizer";
+import { ResumeStep } from "@/modules/resume-builder/domain/dtos/resume.dto";
 
 export type UseResumeFormManagerProps = {
   initialData?: Partial<ResumeFormValues>;
