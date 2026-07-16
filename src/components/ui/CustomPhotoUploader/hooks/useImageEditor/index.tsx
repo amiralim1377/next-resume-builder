@@ -115,13 +115,13 @@ const useImageEditor = (
 
     const canvas = editorRef.current.getImageScaledToCanvas();
     canvas.toBlob(
-      (blob) => {
+      async (blob) => {
         if (blob) {
           const editedFile = new File([blob], `profile-${Date.now()}.png`, {
             type: "image/png",
           });
 
-          onChange?.(editedFile);
+          await onChange?.(editedFile);
           closeEditor();
         }
       },
@@ -136,11 +136,10 @@ const useImageEditor = (
 
       if (file && file.type.startsWith("image/")) {
         setImage(file);
-        onChange?.(file);
         openEditor();
       }
     },
-    [openEditor, onChange],
+    [openEditor],
   );
 
   const handleDrop = useCallback(
