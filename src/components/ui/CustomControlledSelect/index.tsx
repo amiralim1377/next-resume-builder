@@ -15,7 +15,7 @@ const CustomControlledSelect = ({
   label,
   ...props
 }: CustomControlledSelectProps) => {
-  const { control } = useFormContext<ResumeFormValues>();
+  const { control, trigger } = useFormContext<ResumeFormValues>();
 
   return (
     <Controller
@@ -24,6 +24,12 @@ const CustomControlledSelect = ({
       render={({ field, fieldState }) => {
         const { value, onChange, onBlur, ref, ...safeField } = field;
 
+        const handleChange = async (value: unknown) => {
+          onChange(value);
+
+          await trigger(name);
+        };
+
         const isValid = !fieldState.invalid && Boolean(field.value);
 
         return (
@@ -31,7 +37,7 @@ const CustomControlledSelect = ({
             error={fieldState?.error?.message}
             label={label}
             value={value as string | number | readonly string[] | undefined}
-            onChange={onChange}
+            onChange={handleChange}
             onBlur={onBlur}
             ref={ref}
             isValid={isValid}
