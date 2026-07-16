@@ -1,11 +1,9 @@
 import { z } from "zod";
-import { ResumeStepEnum } from "../../resume.dto";
+import { ResumeStepSchema } from "../../../dtos/resume.dto";
 
 export const ResumeDraftValidator = z.object({
   resumeId: z.uuid({ message: "error_invalidResumeId" }),
-
-  step: ResumeStepEnum,
-
+  step: ResumeStepSchema,
   data: z.any(),
 });
 
