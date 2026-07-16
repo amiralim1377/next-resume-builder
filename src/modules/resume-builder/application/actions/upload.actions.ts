@@ -15,6 +15,7 @@ export async function uploadProfileImageAction(
       return {
         success: false,
         error: "error_noFileProvided",
+        statusCode: 400,
       };
     }
 
@@ -23,12 +24,14 @@ export async function uploadProfileImageAction(
     return {
       success: true,
       data: { url: fileUrl },
+      statusCode: 201,
     };
   } catch (error) {
     console.error("❌ [Server Action Upload Error]:", error);
     return {
       success: false,
       error: "error_uploadFailed",
+      statusCode: 500,
     };
   }
 }
