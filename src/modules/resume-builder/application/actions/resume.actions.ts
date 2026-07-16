@@ -7,9 +7,9 @@ import {
   ResumeStep,
 } from "@/modules/resume-builder/domain/dtos/resume.dto";
 import { ActionResponse } from "@/modules/resume-builder/domain/types/action-response";
-import { ResumeDraftValidator } from "@/modules/resume-builder/domain/schemas/validators/resume/resume-draft.validator";
-import { ResumeFinalValidator } from "@/modules/resume-builder/domain/schemas/validators/resume/resume-final.validator";
 import { ResumeService } from "@/modules/resume-builder/application/services/resume.service";
+import { ResumeDraftValidator } from "../../domain/validators/resume/resume-draft.validator";
+import { ResumeFinalValidator } from "../../domain/validators/resume/resume-final.validator";
 
 const resumeService = new ResumeService();
 

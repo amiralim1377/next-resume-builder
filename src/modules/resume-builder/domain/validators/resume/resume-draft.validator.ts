@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { ResumeStepSchema } from "../../../dtos/resume.dto";
+import { ResumeStepSchema } from "../../dtos/resume.dto";
 
 export const ResumeDraftValidator = z.object({
   resumeId: z.uuid({ message: "error_invalidResumeId" }),
