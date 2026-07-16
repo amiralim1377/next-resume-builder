@@ -5,6 +5,7 @@ import { CustomPhotoUploader } from "../CustomPhotoUploader";
 type CustomControlledPhotoUploaderProps = {
   name: FieldPath<ResumeFormValues>;
   label: string;
+  isImageUploading?: boolean;
   onUploadProcess?: (file: File) => Promise<string | null>;
 } & Omit<
   React.ComponentProps<typeof CustomPhotoUploader>,
@@ -14,6 +15,7 @@ type CustomControlledPhotoUploaderProps = {
 const CustomControlledPhotoUploader = ({
   name,
   label,
+  isImageUploading,
   onUploadProcess,
   ...props
 }: CustomControlledPhotoUploaderProps) => {
@@ -44,13 +46,15 @@ const CustomControlledPhotoUploader = ({
             field.onChange(file);
           }
         };
+
         const isValid =
           !fieldState.invalid && fieldState.isDirty && !!field.value;
 
         return (
           <CustomPhotoUploader
+            isImageUploading={isImageUploading}
             label={label}
-            value={field.value as File | undefined}
+            value={field.value as string | File | undefined}
             onChange={handleChange}
             error={fieldState.error?.message}
             isValid={isValid}
