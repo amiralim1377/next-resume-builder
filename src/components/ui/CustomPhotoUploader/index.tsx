@@ -14,7 +14,7 @@ type CustomPhotoUploaderProps = {
   label: string;
   error?: string | undefined;
   isValid: boolean;
-  value?: File;
+  value?: File | string;
   onChange?: (file?: File) => void;
 };
 
@@ -27,15 +27,25 @@ const CustomPhotoUploader = ({
   value,
   isValid,
 }: CustomPhotoUploaderProps) => {
-  const previewUrl = useMemo(
-    () => (value ? URL.createObjectURL(value) : undefined),
-    [value],
-  );
+  const previewUrl = useMemo(() => {
+    if (!value) return undefined;
+
+    if (typeof value === "string") {
+      return value;
+    }
+
+    return URL.createObjectURL(value as File);
+  }, [value]);
 
   useEffect(() => {
     if (!previewUrl) return;
-    return () => URL.revokeObjectURL(previewUrl);
-  }, [previewUrl]);
+
+    return () => {
+      if (value && typeof value !== "string") {
+        URL.revokeObjectURL(previewUrl);
+      }
+    };
+  }, [previewUrl, value]);
 
   const {
     image,
@@ -120,9 +130,6 @@ const CustomPhotoUploader = ({
       {showEditor && image && (
         <CustomModal
           className="p-6"
-          classNames={{
-            inner: cn("h-40"),
-          }}
           onClose={closeEditor}
           isOpen={showEditor && Boolean(image)}
         >

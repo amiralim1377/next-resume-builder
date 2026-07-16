@@ -17,7 +17,9 @@ describe("useSectionStatus Hook Tests", () => {
 
     vi.mocked(useWatch).mockReturnValue([{}]);
 
-    const { result } = renderHook(() => useSectionStatus("basic", "basicInfo"));
+    const { result } = renderHook(() =>
+      useSectionStatus("basicInfo", "basicInfo"),
+    );
 
     expect(result.current).toBe("empty");
   });
@@ -29,7 +31,9 @@ describe("useSectionStatus Hook Tests", () => {
 
     vi.mocked(useWatch).mockReturnValue([{ firstName: "John" }]);
 
-    const { result } = renderHook(() => useSectionStatus("basic", "basicInfo"));
+    const { result } = renderHook(() =>
+      useSectionStatus("basicInfo", "basicInfo"),
+    );
 
     expect(result.current).toBe("invalid");
   });

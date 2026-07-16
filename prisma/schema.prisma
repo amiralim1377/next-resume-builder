@@ -1,0 +1,91 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+
+
+
+datasource db {
+  provider = "postgresql"
+}
+
+
+
+
+enum TicketStatus {
+  OPEN
+  IN_PROGRESS
+  RESOLVED
+  CLOSED
+}
+
+enum OrderStatus {
+  PENDING
+  COMPLETED
+  FAILED
+  REFUNDED
+}
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  tickets   Ticket[]
+  orders    Order[]
+}
+
+model Resume {
+  id                       String   @id @default(uuid())
+  shortId                  String   @unique 
+  userId                   String
+  createdAt                DateTime @default(now())
+  updatedAt                DateTime @updatedAt
+  profileImage             String?  // آدرس ذخیره شده عکس در استوریج
+  basicInfo                Json?
+  education                Json?    // آرایه‌ای از مدارک تحصیلی
+  job                      Json?    // آرایه‌ای از سوابق کاری
+  skills                   Json?    // آرایه‌ای از مهارت‌ها
+  coursesAndCertifications Json?    // آرایه‌ای از دوره‌ها
+  projects                 Json?    // آرایه‌ای از پروژه‌ها
+  research                 Json?    // آرایه‌ای از تحقیقات
+
+  @@index([userId])
+  @@index([shortId]) // 🔥 ایندکس‌گذاری برای بالا بردن سرعت جستجو بر اساس آدرس URL
+}
+
+model Ticket {
+  id        String       @id @default(uuid())
+  userId    String
+  user      User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  title     String
+  message   String
+  status    TicketStatus @default(OPEN)
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @updatedAt
+
+  @@index([userId])
+}
+
+model Order {
+  id         String      @id @default(uuid())
+  userId     String
+  user       User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  amount     Float
+  status     OrderStatus @default(PENDING)
+  templateId String
+  paymentId  String?     @unique
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
+
+  @@index([userId])
+}
+

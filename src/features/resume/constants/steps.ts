@@ -8,7 +8,7 @@ import { StepConfig } from "../types/resume.types";
 
 export const RESUME_STEPS: StepConfig[] = [
   {
-    id: "basic",
+    id: "basicInfo",
     title: "اطلاعات پایه",
     titleKey: "basicInformation",
     titleEn: "Basic Information",

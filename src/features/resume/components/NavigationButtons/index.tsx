@@ -22,7 +22,6 @@ function NavigationButtons({
   isLastStep,
   isFirstStep,
   isLoading = false,
-  onSaveDraft,
 }: NavigationButtonsProps) {
   const { lng } = useLang();
   const { t } = useTranslation(lng, "form");
@@ -46,11 +45,10 @@ function NavigationButtons({
 
       <div className="flex items-center gap-3">
         {/* Save Draft Button */}
-        {onSaveDraft && !isLastStep && (
+        {!isLastStep && (
           <CustomButton
             type="button"
             variant="secondary"
-            onClick={onSaveDraft}
             disabled={isLoading || isSubmitting}
             className="flex items-center gap-2"
           >
