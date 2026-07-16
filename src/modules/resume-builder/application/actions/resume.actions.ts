@@ -1,14 +1,14 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { PrismaResumeRepository } from "@/infrastructure/adapters/prisma-resume.repository";
-import { ResumeStep } from "@/domain/dtos/resume.dto";
-import { ActionResponse } from "@/domain/types/action-response";
 import { Resume } from "@/generated/prisma/client";
 
 import { customAlphabet } from "nanoid";
-import { ResumeDraftValidator } from "@/domain/dtos/validators/resume/resume-draft.validator";
-import { ResumeFinalValidator } from "@/domain/dtos/validators/resume/resume-final.validator";
+import { ResumeDraftValidator } from "@/modules/resume-builder/domain/schemas/validators/resume/resume-draft.validator";
+import { ResumeFinalValidator } from "@/modules/resume-builder/domain/schemas/validators/resume/resume-final.validator";
+import { PrismaResumeRepository } from "../../infrastructure/repositories/prisma-resume.repository";
+import { ResumeStep } from "../../domain/dtos/resume.dto";
+import { ActionResponse } from "../../domain/types/action-response";
 
 const resumeRepository = new PrismaResumeRepository();
 
