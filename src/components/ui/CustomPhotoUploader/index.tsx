@@ -15,7 +15,8 @@ type CustomPhotoUploaderProps = {
   error?: string | undefined;
   isValid: boolean;
   value?: File | string;
-  onChange?: (file?: File) => void;
+  onChange?: (file?: File) => Promise<string | null | void> | void;
+  isImageUploading?: boolean;
 };
 
 const CustomPhotoUploader = ({
@@ -26,6 +27,7 @@ const CustomPhotoUploader = ({
   onChange,
   value,
   isValid,
+  isImageUploading,
 }: CustomPhotoUploaderProps) => {
   const previewUrl = useMemo(() => {
     if (!value) return undefined;
@@ -149,6 +151,7 @@ const CustomPhotoUploader = ({
             toggleFlipVertical={toggleFlipVertical}
             zoomIn={zoomIn}
             zoomOut={zoomOut}
+            isImageUploading={isImageUploading}
           />
         </CustomModal>
       )}
