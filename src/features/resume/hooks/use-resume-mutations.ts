@@ -4,6 +4,7 @@ import {
   saveResumeStepAction,
 } from "@/modules/resume-builder/application/actions/resume.actions";
 import { ResumeStep } from "@/modules/resume-builder/domain/dtos/resume.dto";
+import { uploadProfileImageAction } from "@/modules/resume-builder/application/actions/upload.actions";
 
 export function useCreateResume() {
   const queryClient = useQueryClient();
@@ -49,6 +50,23 @@ export function useSaveResumeStep() {
       });
 
       queryClient.invalidateQueries({ queryKey: ["resumes"] });
+    },
+  });
+}
+
+export function useUploadProfileImage() {
+  return useMutation({
+    mutationFn: async (file: File) => {
+      const formData = new FormData();
+      formData.append("file", file);
+
+      const result = await uploadProfileImageAction(formData);
+
+      if (!result.success) {
+        throw new Error(result.error || "uploadFailed");
+      }
+
+      return result.data.url;
     },
   });
 }
