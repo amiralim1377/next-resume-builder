@@ -23,7 +23,7 @@ export const useResumeForm = (
     resolver: zodResolver(schema),
     defaultValues: initialData ?? getDefaultResumeValues(),
     mode: "onBlur",
-    reValidateMode: "onChange",
+    reValidateMode: "onBlur",
     shouldUnregister: false,
     criteriaMode: "all",
     shouldFocusError: true,
