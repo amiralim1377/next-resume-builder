@@ -1,6 +1,7 @@
+import { ResumeFormValues } from "@/features/resume/schemas/resume.schema";
 import { z } from "zod";
 
-export const ResumeStepEnum = z.enum([
+export const ResumeStepSchema = z.enum([
   "profileImage",
   "basicInfo",
   "education",
@@ -11,4 +12,13 @@ export const ResumeStepEnum = z.enum([
   "research",
 ]);
 
-export type ResumeStep = z.infer<typeof ResumeStepEnum>;
+export type ResumeStep = z.infer<typeof ResumeStepSchema>;
+
+export interface ResumeDto extends Omit<ResumeFormValues, "profileImage"> {
+  id: string;
+  shortId: string;
+  userId: string;
+  createdAt: Date;
+  updatedAt: Date;
+  profileImage: string | null;
+}
