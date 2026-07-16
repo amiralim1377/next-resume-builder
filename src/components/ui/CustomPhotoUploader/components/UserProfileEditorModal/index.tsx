@@ -33,6 +33,8 @@ type EditorModalProps = {
   toggleFlipVertical: () => void;
   resetEditor: () => void;
   handleSave: () => void;
+
+  isImageUploading?: boolean;
 };
 
 const UserProfileEditorModal = ({
@@ -51,6 +53,7 @@ const UserProfileEditorModal = ({
   toggleFlipVertical,
   zoomIn,
   zoomOut,
+  isImageUploading,
 }: EditorModalProps) => {
   if (!image) {
     return <div className="py-10 text-center">No image loaded</div>;
@@ -145,6 +148,7 @@ const UserProfileEditorModal = ({
         <CustomButton
           variant="primary"
           onClick={handleSave}
+          disabled={isImageUploading}
           className="flex flex-1 items-center justify-center gap-2 text-sm font-semibold transition-colors"
         >
           {t("saveUpload")}
