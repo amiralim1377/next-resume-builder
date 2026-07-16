@@ -5,27 +5,27 @@ import { ImageUp } from "lucide-react";
 import { useThemeColors } from "@/provider/themeProvider/useThemeColors";
 import { useLang } from "@/provider/lngProvider";
 import { useTranslation } from "@/lib/i18n/client";
-
-import { uploadProfileImageAction } from "@/modules/resume-builder/application/actions/upload.actions";
+import { useUploadProfileImage } from "@/features/resume/hooks/use-resume-mutations";
 
 const UserProfileSection = () => {
   const { colors } = useThemeColors();
   const { lng } = useLang();
   const { t } = useTranslation(lng, "form");
 
+  const { mutateAsync: uploadImage, isPending: isUploading } =
+    useUploadProfileImage();
+
   const handleProfileImageUpload = async (file: File) => {
-    const formData = new FormData();
-    formData.append("file", file);
+    try {
+      const imageUrl = await uploadImage(file);
+      return imageUrl;
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        throw new Error(t(error.message));
+      }
 
-    const result = await uploadProfileImageAction(formData);
-
-    if (result.success) {
-      return result.data.url;
+      throw new Error(t("upload_failed"));
     }
-
-    throw new Error(
-      result.error || t("uploadFailed") || "آپلود با خطا مواجه شد",
-    );
   };
 
   return (
@@ -46,6 +46,7 @@ const UserProfileSection = () => {
         t={t}
         label="hi"
         name="profileImage"
+        isImageUploading={isUploading}
       />
     </CustomResumeCardComponents>
   );
